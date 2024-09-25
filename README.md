@@ -1,2 +1,2 @@
 # hons-moorhouse-p
-My honour's project
+My Honours project
