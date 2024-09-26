@@ -1,10 +1,7 @@
 
-
-
-
 Ethical concerns are hard for me, it's okay to have none but:
 - Transparency is key in my work - the aligner must be explainable
-- Tests should be reproducible - what testcases did I use, exact settings
+- Tests should be reproducible-ish (my tool won't be deterministic remember) - what testcases did I use, exact settings
 - Make my program available for reproducing my testing & make this easy
 - I shouldn't misrepresent the effectiveness of my tool.
 
