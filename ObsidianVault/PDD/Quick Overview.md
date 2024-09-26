@@ -1,4 +1,8 @@
 
+What, Why, How, When
+
+Think of it as a business pitch almost
+
 
 Remember I have a research gap!
 - single state metaheuristics for MSA is underrepresented
@@ -25,7 +29,7 @@ I intend to use an iterative methodology:
 - release it regularly
 
 What benefit is there to my project:
-- are iterative aligners even available as CLI tools?
+- are any iterative aligners even available as CLI tools?
 - potentially bring single-state methods into the spotlight as candidates for further MSA research
 - potentially make a meaningful contribution to the exploration of multiple-objective approaches for MSA
 
