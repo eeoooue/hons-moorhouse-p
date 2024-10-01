@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "a035b5746421484e",
+        "id": "643f97a9f4b97dd7",
         "type": "tabs",
         "children": [
           {
-            "id": "eb9e73d0ad5b5617",
+            "id": "b7331472697a361c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md"
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md"
               }
             }
           }
@@ -146,35 +146,35 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f6c6ea3a47e4fb1a",
+  "active": "b7331472697a361c",
   "lastOpenFiles": [
+    "00-PDD/Part1/1-02-Objectives.md",
+    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+    "00-PDD/Part1/1-05-Constraints.md",
+    "00-PDD/Part1/1-03-Scope.md",
+    "00-PDD/Part1/1-04-Deliverables.md",
+    "00-PDD/Part1/1-01-Introduction.md",
+    "00-PDD/Part1/1-06-Assumptions.md",
+    "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
     "03-Lit-Review/Metaheuristics/05-Multi-Objective-Optimization.md",
     "03-Lit-Review/Metaheuristics/04-Population-Based-Methods.md",
     "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
     "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
     "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
-    "00-PDD/Part1/1-01-Introduction.md",
-    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
-    "00-PDD/Part1/1-02-Objectives.md",
-    "00-PDD/Part1/1-03-Scope.md",
     "03-Lit-Review/Sequence Alignment/Sequence Alignment.md",
     "03-Lit-Review/Metaheuristics/03-Single-State-Methods.md",
-    "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
     "SMART Objectives.md",
     "Meeting-Notes/02-10-25 Meeting.md",
     "Meeting-Notes/24-09-25 Meeting.md",
     "02-Tech-Background",
     "Untitled.md",
     "Key Terminology.md",
-    "00-PDD/Part1/1-05-Constraints.md",
-    "00-PDD/Part1/1-04-Deliverables.md",
     "00-PDD/Part2/2-01 Project Benefits.md",
     "03-Lit-Review/Sequence Alignment",
     "03-Lit-Review/Metaheuristics",
     "Meeting-Notes",
     "00-PDD/Part3/3-01-Initial-Project-Plan.md",
     "00-PDD/Part3/3-02-Project Control.md",
-    "00-PDD/Part1/1-06-Assumptions.md",
     "00-PDD/Part2/2-02-Project Operation.md",
     "00-PDD/Part2/2-03 Options.md",
     "00-PDD/Part2/2-04-Risks-Mits.md",
