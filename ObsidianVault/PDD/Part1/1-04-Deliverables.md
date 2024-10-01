@@ -14,6 +14,12 @@ My report is a deliverable
 
 
 
+#### Paperwork
+
+An unambiguous Project Definition Document (2500 words max.) which clarifies the scope, objectives, and deliverables of the project. The document should propose a timeline (including a Gantt chart) and evidence consideration of project risks, mitigations and any ethical issues.
+
+A comprehensive Final Report (15000 words max.) which details key elements of the project, evidences independent research in the form of a literature review, and details a high-level design of the software to be delivered. Further, the report should convey a timeline of efforts to meet the objectives outlined, and include a brief report for each experiment conducted in improving the alignment algorithm.
+
 ------
 
 

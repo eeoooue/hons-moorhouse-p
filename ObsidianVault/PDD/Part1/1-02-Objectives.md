@@ -6,49 +6,55 @@
 
 Objectives need to be **SMART** - [[SMART Objectives]]
 
+### Aims
 
+To create a command line alignment tool capable of performing Multiple Sequence Alignment (MSA) on authentic test cases/data.
 
-#### Paperwork
+To explore, understand and communicate the strengths and weaknesses of a single-state metaheuristic strategy for sequence alignment.
 
-Deliver an unambiguous Project Definition Document (2500 words max.) which clarifies the scope, objectives, and deliverables of the project. The document should propose a timeline (including a Gantt chart) and evidence consideration of project risks, mitigations and any ethical issues.
-
-Deliver a comprehensive Final Report (15000 words max.) which details key elements of the project, evidences independent research in the form of a literature review, and details a high-level design of the software to be delivered. Further, the report should convey a timeline of efforts to meet the objectives outlined, and include a brief report for each experiment conducted in improving the alignment algorithm.
-
+To consider and discuss whether population-based methods should be favoured over single-state methods in regards to the problem of MSA.
 #### Performing MSA
 
-**correctly**
+Produce an alignment tool that performs MSA on a set of supplied sequences, conserving the sequence identifiers and biological information of the sequences themselves. **(Sprint 3)**
 
-Produce alignment tool that performs MSA on a set of supplied sequences, conserving the sequence identifiers and biological information of the sequences themselves. (i.e. no information loss/misinformation)
+Deliver a command-line tool that (on a university desktop computer) can perform multiple sequence alignment efficiently, aligning:
+- a testcase of 3 protein sequences within 60 seconds. **(Sprint 3)**
+- a testcase of 6 protein sequences within 10 seconds. **(Sprint 6)**
 
-**efficiently**
+#### Work With Established File Formats
 
-Deliver a command-line tool that can perform multiple sequence alignment on a testcase of 3 protein sequences on a university desktop computer within 5 minutes. **(Sprint 3)**
+Support an established file format as an input source for biological data. Sufficient justification should be given for the choice of this file format. **(Sprint 4)** 
 
-Deliver a command-line tool that can perform multiple sequence alignment on a testcase of 5 protein sequences on a university desktop computer within 1 minute. **(Sprint 5)**
-
-Deliver a command-line tool that can perform multiple sequence alignment on a testcase of 8 protein sequences on a university desktop computer within 10 seconds. **(Sprint 6)**
-
-**Trying Named Objective Functions**
-
-Experiment with using a Weighted Sum-of-Pairs objective function (alone or in combination) to guide the process of sequence alignment. 
-
-Experiment with using a Gap Penalty objective function alongside other function(s) to guide the process of sequence alignment.
-
-Experiment with using a Totally Conserved Columns objective function alongside other function(s) to guide the process of sequence alignment.
-
-#### Work with Established File Formats
-
-Deliver an alignment tool that can read a set of biological sequences from a FASTA file (.faa) specified as a command line argument. **(Sprint 4)** 
-
-Deliver an alignment tool that can output an alignment of biological sequences as a FASTA file (.faa) to the location specified in a command-line argument. **(Sprint 4)** 
+Support an established file format as output for the alignment of sequences produced by the software. Sufficient justification should be given for the choice of this format, which may differ from the input format. **(Sprint 4)** 
 
 #### Experiment with metaheuristics
 
-By conducting an experiment, identify a heuristic for deciding on the number of iterations of improvement to be performed for each set of input sequences. **(Sprint 6)**
+By conducting an experiment, identify a suitable heuristic for deciding on the number of iterations of improvement to be performed for each set of input sequences. **(Sprint 6)**
 
 By conducting an experiment, contrast, assess and discuss quantitative differences between using a population-based or single-state metaheuristic method as the basis for the alignment software. **(Sprint 7**)
 
 
+**Trying Named Objective Functions**
+
+Assess the use of the Weighted Sum-of-Pairs objective function to guide the process of sequence alignment. 
+
+Assess the use of the Gap Penalty objective function alongside other function(s) to guide the process of sequence alignment.
+
+Assess the use of the Totally Conserved Columns objective function alongside other function(s) to guide the process of sequence alignment.
+
+Assess the use of the following objective functions to guide the process of sequence alignment :
+- **Weighted Sum-of-Pairs**
+- **Gap Penalty**
+- **Totally Conserved Columns**
+
+**Using Multi-Objective Metaheuristics**
+
+By conducting an experiment, compare the effectiveness single-objective and multi-objective approaches for MSA, as evaluated using structural benchmarking.
+
+
+
+To contribute to current research surrounding Multiple Sequence Alignment (MSA), the program should demonstrate multi-objective optimisation for the alignment methods supported.
+TODO: isnt SMART
 
 #### Case Study
 
