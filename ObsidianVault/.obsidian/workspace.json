@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PDD/Part1/1-02-Objectives.md",
+                "file": "Meeting-Notes/24-09-25 Meeting.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "PDD/Part1/1-02-Objectives.md",
+                "file": "Meeting-Notes/24-09-25 Meeting.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "PDD/Part1/1-02-Objectives.md",
+                "file": "Meeting-Notes/24-09-25 Meeting.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PDD/Part1/1-02-Objectives.md"
+                "file": "Meeting-Notes/24-09-25 Meeting.md"
               }
             }
           }
@@ -148,10 +148,12 @@
   },
   "active": "d16dba1d29c3971e",
   "lastOpenFiles": [
+    "PDD/Part1/1-02-Objectives.md",
+    "Meeting-Notes/24-09-25 Meeting.md",
+    "Meeting-Notes",
     "PDD/Part1/1-01-Introduction.md",
     "PDD/Part3/3-01-Initial-Project-Plan.md",
     "PDD/Part3/3-02-Project Control.md",
-    "PDD/Part1/1-02-Objectives.md",
     "PDD/Part1/1-03-Scope.md",
     "PDD/Part1/1-04-Deliverables.md",
     "PDD/Part1/1-06-Assumptions.md",
