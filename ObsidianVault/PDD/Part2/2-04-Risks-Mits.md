@@ -1,4 +1,6 @@
 
+#### There will be a lecture on how to discuss these
+
 
 
 
