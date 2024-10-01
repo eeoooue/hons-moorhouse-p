@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Meeting-Notes/24-09-25 Meeting.md",
+                "file": "Lit-Review/Sequence Alignment/Sequence Alignment.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Meeting-Notes/24-09-25 Meeting.md",
+                "file": "Lit-Review/Sequence Alignment/Sequence Alignment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Meeting-Notes/24-09-25 Meeting.md",
+                "file": "Lit-Review/Sequence Alignment/Sequence Alignment.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Meeting-Notes/24-09-25 Meeting.md"
+                "file": "Lit-Review/Sequence Alignment/Sequence Alignment.md"
               }
             }
           }
@@ -148,8 +148,12 @@
   },
   "active": "d16dba1d29c3971e",
   "lastOpenFiles": [
-    "PDD/Part1/1-02-Objectives.md",
+    "Lit-Review/Metaheuristics/Metaheuristics.md",
+    "Lit-Review/Sequence Alignment/Sequence Alignment.md",
     "Meeting-Notes/24-09-25 Meeting.md",
+    "Lit-Review/Sequence Alignment",
+    "Lit-Review/Metaheuristics",
+    "PDD/Part1/1-02-Objectives.md",
     "Meeting-Notes",
     "PDD/Part1/1-01-Introduction.md",
     "PDD/Part3/3-01-Initial-Project-Plan.md",
@@ -177,7 +181,6 @@
     "PDD/Part4",
     "PDD/Part3",
     "PDD/Part2",
-    "PDD/Part1",
-    "PDD"
+    "PDD/Part1"
   ]
 }
