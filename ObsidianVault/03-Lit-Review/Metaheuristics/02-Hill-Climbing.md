@@ -5,5 +5,6 @@ How calculus can tell us if we are at a local minima
 
 How we want to minimize or maximise 'objective functions' in metaheuristics in different contexts.
 
-#### Exploration & Exploitation?
+
+
 

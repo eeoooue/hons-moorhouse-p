@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "aba19fe3e4220426",
+        "id": "05e04e814235e8a9",
         "type": "tabs",
         "children": [
           {
-            "id": "17b26354f97f54d3",
+            "id": "1ba46a1f34deb61d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
+                "file": "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
+                "file": "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
+                "file": "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "03-Lit-Review/Metaheuristics/01-Metaheuristics.md"
+                "file": "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md"
               }
             }
           }
@@ -146,12 +146,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "17b26354f97f54d3",
+  "active": "f6c6ea3a47e4fb1a",
   "lastOpenFiles": [
-    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
-    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
     "03-Lit-Review/Metaheuristics/03-Single-State-Methods.md",
+    "03-Lit-Review/Metaheuristics/05-Multi-Objective-Optimization.md",
+    "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
+    "03-Lit-Review/Sequence Alignment/1-Pairwise Sequence Alignment.md",
+    "03-Lit-Review/Sequence Alignment/2-Multiple Sequence Alignment.md",
+    "03-Lit-Review/Sequence Alignment/0-Bioinformatics.md",
+    "03-Lit-Review/Sequence Alignment/3-Quality of Alignments.md",
+    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
     "03-Lit-Review/Metaheuristics/04-Population-Based-Methods.md",
+    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
+    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
     "00-PDD/Part2/2-01 Project Benefits.md",
     "00-PDD/Part2/2-02-Project Operation.md",
     "00-PDD/Part1/1-04-Deliverables.md",
@@ -167,13 +174,6 @@
     "00-PDD/Part1/1-02c-Old-Objectives.md",
     "00-PDD/Part1/1-01-Introduction.md",
     "Key Terminology.md",
-    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
-    "00-PDD/Part3/3-01-Initial-Project-Plan.md",
-    "00-PDD/Part3/3-02-Project Control.md",
-    "00-PDD/Part3/3-03-Project Eval.md",
-    "00-PDD/4-References.md",
-    "00-PDD/5-Appendix.md",
-    "00-PDD/Competencies Assessed.md",
     "02-Tech-Background",
     "03-Lit-Review/Sequence Alignment",
     "03-Lit-Review/Metaheuristics",
