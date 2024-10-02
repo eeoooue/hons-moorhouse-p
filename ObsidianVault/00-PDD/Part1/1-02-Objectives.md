@@ -8,11 +8,13 @@ Objectives need to be **SMART** - [[SMART Objectives]]
 
 ### Aims
 
-To create a command line alignment tool capable of performing Multiple Sequence Alignment (MSA) on authentic test cases/data.
+TODO: simplify 
 
-To explore, understand and communicate the strengths and weaknesses of a single-state metaheuristic strategy for sequence alignment.
+To create an (command line) alignment tool capable of performing Multiple Sequence Alignment (MSA) on authentic test cases/data. (say the goal is speed and quality!)
 
-To consider and discuss whether population-based methods should be favoured over single-state methods in regards to the problem of MSA.
+(To explore, understand and communicate the strengths and weaknesses of a single-state metaheuristic strategy for sequence alignment.
+
+To consider and discuss whether population-based methods should be favoured over single-state methods in regards to the problem of MSA.)
 #### Performing MSA
 
 Produce an alignment tool that performs MSA on a set of supplied sequences, conserving the sequence identifiers and biological information of the sequences themselves. **(Sprint 3)**

@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "643f97a9f4b97dd7",
+        "id": "aba19fe3e4220426",
         "type": "tabs",
         "children": [
           {
-            "id": "b7331472697a361c",
+            "id": "17b26354f97f54d3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "file": "00-PDD/Part2/2-04-Risks-Mits.md",
                 "mode": "source",
                 "source": false
               }
@@ -69,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 224.50152587890625
   },
   "right": {
     "id": "33c1943aa43bd87e",
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "file": "00-PDD/Part2/2-04-Risks-Mits.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "file": "00-PDD/Part2/2-04-Risks-Mits.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md"
+                "file": "00-PDD/Part2/2-04-Risks-Mits.md"
               }
             }
           }
@@ -146,38 +146,38 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "b7331472697a361c",
+  "active": "17b26354f97f54d3",
   "lastOpenFiles": [
-    "00-PDD/Part1/1-02-Objectives.md",
+    "Key Terminology.md",
+    "00-PDD/Part2/2-06-Ethics-Legal.md",
     "00-PDD/Part1/1-02b-Reduced-Objectives.md",
-    "00-PDD/Part1/1-05-Constraints.md",
+    "00-PDD/Part2/2-02-Project Operation.md",
+    "00-PDD/Part2/2-01 Project Benefits.md",
+    "00-PDD/Part2/2-07-Commercial.md",
+    "00-PDD/Part2/2-05-Resources-Required.md",
+    "00-PDD/Part2/2-04-Risks-Mits.md",
     "00-PDD/Part1/1-03-Scope.md",
+    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
+    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
+    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
     "00-PDD/Part1/1-04-Deliverables.md",
     "00-PDD/Part1/1-01-Introduction.md",
+    "00-PDD/Part1/1-02-Objectives.md",
+    "00-PDD/Part3/3-01-Initial-Project-Plan.md",
+    "00-PDD/Part3/3-02-Project Control.md",
+    "00-PDD/Part3/3-03-Project Eval.md",
+    "00-PDD/4-References.md",
+    "00-PDD/5-Appendix.md",
+    "00-PDD/Competencies Assessed.md",
+    "Meeting-Notes/24-10-02 Meeting.md",
+    "Meeting-Notes/24-09-25 Meeting.md",
+    "00-PDD/Part1/1-05-Constraints.md",
     "00-PDD/Part1/1-06-Assumptions.md",
     "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
-    "03-Lit-Review/Metaheuristics/05-Multi-Objective-Optimization.md",
-    "03-Lit-Review/Metaheuristics/04-Population-Based-Methods.md",
-    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
-    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
-    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
-    "03-Lit-Review/Sequence Alignment/Sequence Alignment.md",
-    "03-Lit-Review/Metaheuristics/03-Single-State-Methods.md",
-    "SMART Objectives.md",
-    "Meeting-Notes/02-10-25 Meeting.md",
-    "Meeting-Notes/24-09-25 Meeting.md",
     "02-Tech-Background",
-    "Untitled.md",
-    "Key Terminology.md",
-    "00-PDD/Part2/2-01 Project Benefits.md",
     "03-Lit-Review/Sequence Alignment",
     "03-Lit-Review/Metaheuristics",
     "Meeting-Notes",
-    "00-PDD/Part3/3-01-Initial-Project-Plan.md",
-    "00-PDD/Part3/3-02-Project Control.md",
-    "00-PDD/Part2/2-02-Project Operation.md",
-    "00-PDD/Part2/2-03 Options.md",
-    "00-PDD/Part2/2-04-Risks-Mits.md",
     "03-Lit-Review",
     "New folder",
     "00-PDD/Part5",

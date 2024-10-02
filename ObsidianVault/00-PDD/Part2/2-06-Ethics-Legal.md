@@ -8,3 +8,14 @@ Ethical concerns are hard for me, it's okay to have none but:
 I might also need to check the licenses of the structural benchmarks I'm using and how I'm allowed to share them etc.
 
 Licenses for using QScore & the other aligners when I'm testing them?
+
+---
+
+licenses on the tools + the datasets?
+can think beyond the release of the project
+in further work - would might need considering?
+
+digital accessibility?
+misuse or dual use of technology?
+accountability? transparency?
+academic integrity?
