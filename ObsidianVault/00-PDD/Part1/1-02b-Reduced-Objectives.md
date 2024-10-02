@@ -23,7 +23,7 @@ As assessed in a case study using structural benchmarking, the alignment tool sh
 ## Secondary Objectives
 
 #### Output a Set of Alignments Offering Compromises Between Objectives
-Keeping step with recent research, the software should leverage multiple objective functions to guide the optimization process. As output, the tool should produce a non-dominated set of at least 5 alignments that represent different compromises between the objectives.
+Keeping step with recent research, the software should leverage multiple objective functions to guide the pareto-optimization process. As output, the tool should produce a non-dominated set of at least 5 alignments that represent different compromises between the objectives.
 
 #### Support Batch Alignment
 The alignment tool should support the alignment of a series of input files from a specified directory. The user should be able to specify a source and destination directory using command-line arguments. The software should work through each input in sequence and output the resulting alignments to the destination directory.
