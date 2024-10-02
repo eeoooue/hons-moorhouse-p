@@ -15,3 +15,8 @@ If there is some way to game the scores while producing output useless to bioinf
 my primary assumption is about how a strong performance in terms of the QScore/BAliBASE metrics on the structural benchmarks is indicative of a high quality alignment tool.
 
 
+----
+
+chance to show that I have done my research?
+
+structural benchmarking used by a number of studies.

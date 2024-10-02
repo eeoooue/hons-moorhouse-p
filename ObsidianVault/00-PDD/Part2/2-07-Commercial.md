@@ -1,20 +1,20 @@
 
 
-While typically not directly monetised
-
-Open-access attitude to benchmarks and alignment software? for reproducibility etc.
-
-Work of this nature can present genuine opportunity to move the field forward and as such may be eligible for research funding / grants. 
+While typically not directly monetised, work of this nature may be able to source funding from avenues such as charitable funding. This work is most relevant to bioinformatics and applied soft computing.
 
 ----
 
+Timeline needing funds: September - May (9 months)
 
 Access to scholarly resources & general university facilities? (don't know)
-Access to highly qualified supervisor ~25-50 h? @ £/h ~
-My time ~400h max. ? @ £14/h = £5600
-paid github plan
-visual studio enterprise
+Access to highly qualified supervisor (what is the rate for PhD consultation) ~ £160/h?
+My time ~400h max. ? @ £14/h = £5600 (what is rate for undergraduate work?)
 
-insurances? evidence / cite sources? for the rates & 
+GitHub Enterprise Plan @ 21 USD/mo = 189 USD
+Visual Studio Enterprise @ 250 USD/mo = 2250 USD
+
+Insurances (against being sued?)? evidence / cite sources? for the rates & 
+
+No insurance on the project as it is not believed to be high risk.
 
 = £6850?
