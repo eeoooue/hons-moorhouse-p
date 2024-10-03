@@ -11,8 +11,12 @@
             "id": "0799ad637169e794",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md"
+              }
             }
           }
         ]
@@ -140,6 +148,11 @@
   },
   "active": "0799ad637169e794",
   "lastOpenFiles": [
+    "00-PDD/Part1/1-02c-Old-Objectives.md",
+    "00-PDD/Part1/1-03-Scope.md",
+    "00-PDD/Part1/1-04-Deliverables.md",
+    "00-PDD/Part2/2-01 Project Benefits.md",
+    "00-PDD/4-References.md",
     "Advice/critical path.md",
     "Progress-Log",
     "qs.md",
@@ -151,9 +164,6 @@
     "Advice",
     "00-PDD/Part1/1-01-Introduction.md",
     "00-PDD/Part1/1-02b-Reduced-Objectives.md",
-    "00-PDD/Part1/1-04-Deliverables.md",
-    "00-PDD/Part1/1-03-Scope.md",
-    "00-PDD/Part1/1-02c-Old-Objectives.md",
     "00-PDD/Part2/2-07-Commercial.md",
     "00-PDD/Part3/3-03-Project Eval.md",
     "00-PDD/Part3/3-02-Project Control.md",
@@ -165,7 +175,6 @@
     "00-PDD/Part2/2-04-Risks-Mits.md",
     "Key Terminology.md",
     "00-PDD/Part2/2-02-Project Operation.md",
-    "00-PDD/Part2/2-01 Project Benefits.md",
     "00-PDD/Part2/2-05-Resources-Required.md",
     "02-Tech-Background",
     "03-Lit-Review/Sequence Alignment",
