@@ -19,3 +19,15 @@ digital accessibility?
 misuse or dual use of technology?
 accountability? transparency?
 academic integrity?
+
+----
+
+
+#### Legal
+
+
+copyright infringement
+licenses of the software and datasets i use
+
+health and safety considerations
+- leaving machines running ?
