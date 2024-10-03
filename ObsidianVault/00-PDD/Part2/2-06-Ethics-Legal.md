@@ -34,3 +34,7 @@ licenses of the software and datasets i use
 
 health and safety considerations
 - leaving machines running ?
+
+---
+
+specific mention of GDPR & computer misuse act

@@ -5,6 +5,10 @@ roughly seemed to be ~4 primary & ~3 secondary
 
 ----
 
+TODO: use more basic terms to convey the objectives
+TODO: do these align with my aims>>
+
+
 ## Primary Objectives
 
 #### Perform Multiple Sequence Alignment in a Time-Efficient Manner
