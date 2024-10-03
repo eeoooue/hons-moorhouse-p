@@ -15,6 +15,9 @@ licenses on the tools + the datasets?
 can think beyond the release of the project
 in further work - would might need considering?
 
+-----
+
+
 digital accessibility?
 misuse or dual use of technology?
 accountability? transparency?
