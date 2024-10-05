@@ -1,4 +1,4 @@
-**For Development**
+**For Development Tools**
 
 C++ is one option, offers performance & OO development
 
@@ -10,6 +10,12 @@ I like C# for the support for me as a developer, especially in the automated tes
 Why have I chosen this tooling for the project:
 - C# has lots of support for tooling and automated testing
 - When working across disciplines, testing for established behaviours is even more valuable. 
+
+---
+
+**For Development Theory**
+
+Could use design patterns: strategy pattern, observer pattern, singleton pattern (for randomness?)?
 
 **For Comparison**
 

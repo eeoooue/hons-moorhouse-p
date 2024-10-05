@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "file": "00-PDD/Part2/2-03 Options.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "file": "00-PDD/Part2/2-03 Options.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+                "file": "00-PDD/Part2/2-03 Options.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "00-PDD/Part1/1-02b-Reduced-Objectives.md"
+                "file": "00-PDD/Part2/2-03 Options.md"
               }
             }
           }
@@ -148,6 +148,8 @@
   },
   "active": "0799ad637169e794",
   "lastOpenFiles": [
+    "00-PDD/Part2/2-04-Risks-Mits.md",
+    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
     "00-PDD/Part1/1-02c-Old-Objectives.md",
     "00-PDD/Part1/1-03-Scope.md",
     "00-PDD/Part1/1-04-Deliverables.md",
@@ -163,7 +165,6 @@
     "00-PDD/Part3/3-01-Initial-Project-Plan.md",
     "Advice",
     "00-PDD/Part1/1-01-Introduction.md",
-    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
     "00-PDD/Part2/2-07-Commercial.md",
     "00-PDD/Part3/3-03-Project Eval.md",
     "00-PDD/Part3/3-02-Project Control.md",
@@ -172,7 +173,6 @@
     "03-Lit-Review/Sequence Alignment/2-Multiple Sequence Alignment.md",
     "03-Lit-Review/Sequence Alignment/1-Pairwise Sequence Alignment.md",
     "03-Lit-Review/Sequence Alignment/0-Bioinformatics.md",
-    "00-PDD/Part2/2-04-Risks-Mits.md",
     "Key Terminology.md",
     "00-PDD/Part2/2-02-Project Operation.md",
     "00-PDD/Part2/2-05-Resources-Required.md",
