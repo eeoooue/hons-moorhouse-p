@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00-PDD/Part2/2-03 Options.md",
+                "file": "00-PDD/Part1/1-02d-new-objective.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-PDD/Part2/2-03 Options.md",
+                "file": "00-PDD/Part1/1-02d-new-objective.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-PDD/Part2/2-03 Options.md",
+                "file": "00-PDD/Part1/1-02d-new-objective.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "00-PDD/Part2/2-03 Options.md"
+                "file": "00-PDD/Part1/1-02d-new-objective.md"
               }
             }
           }
@@ -148,12 +148,20 @@
   },
   "active": "0799ad637169e794",
   "lastOpenFiles": [
-    "00-PDD/Part2/2-04-Risks-Mits.md",
-    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
     "00-PDD/Part1/1-02c-Old-Objectives.md",
-    "00-PDD/Part1/1-03-Scope.md",
+    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+    "00-PDD/Part1/1-06-Assumptions.md",
     "00-PDD/Part1/1-04-Deliverables.md",
+    "00-PDD/Part1/1-03-Scope.md",
+    "00-PDD/Part1/1-02d-new-objective.md",
+    "00-PDD/Part1/1-01-Introduction.md",
+    "00-PDD/Part3/3-02-Project Control.md",
+    "00-PDD/Part3/3-03-Project Eval.md",
     "00-PDD/Part2/2-01 Project Benefits.md",
+    "00-PDD/Part3/3-01-Initial-Project-Plan.md",
+    "00-PDD/Part2/2-07-Commercial.md",
+    "00-PDD/Part2/2-03 Options.md",
+    "00-PDD/Part2/2-04-Risks-Mits.md",
     "00-PDD/4-References.md",
     "Advice/critical path.md",
     "Progress-Log",
@@ -162,20 +170,12 @@
     "Advice/user eval suggested.md",
     "Advice/SMART Objectives.md",
     "Advice/Work Breakdown.md",
-    "00-PDD/Part3/3-01-Initial-Project-Plan.md",
     "Advice",
-    "00-PDD/Part1/1-01-Introduction.md",
-    "00-PDD/Part2/2-07-Commercial.md",
-    "00-PDD/Part3/3-03-Project Eval.md",
-    "00-PDD/Part3/3-02-Project Control.md",
     "00-PDD/Part2/2-06-Ethics-Legal.md",
     "03-Lit-Review/Sequence Alignment/3-Quality of Alignments.md",
     "03-Lit-Review/Sequence Alignment/2-Multiple Sequence Alignment.md",
     "03-Lit-Review/Sequence Alignment/1-Pairwise Sequence Alignment.md",
     "03-Lit-Review/Sequence Alignment/0-Bioinformatics.md",
-    "Key Terminology.md",
-    "00-PDD/Part2/2-02-Project Operation.md",
-    "00-PDD/Part2/2-05-Resources-Required.md",
     "02-Tech-Background",
     "03-Lit-Review/Sequence Alignment",
     "03-Lit-Review/Metaheuristics",

@@ -12,6 +12,10 @@ If there is some way to game the scores while producing output useless to bioinf
 
 ----
 
+I could say something to the effect of; this work is predicated on the assumption that a tool that performs well according to the balibase metrics obtained from structural benchmarking is indicative of a high quality alignment tool in general.
+
+
+
 my primary assumption is about how a strong performance in terms of the QScore/BAliBASE metrics on the structural benchmarks is indicative of a high quality alignment tool.
 
 
