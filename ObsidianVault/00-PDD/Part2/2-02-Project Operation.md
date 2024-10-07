@@ -1,12 +1,8 @@
 
-
-
-
 I intend to use an iterative methodology:
 - make something that makes a limping attempt at the job
 - iteratively improve it & make it better
 - release it regularly
-
 
 Testing using established process popular in the literature; use of publicly available structural benchmarks to access established scoring metrics for my software's performance against test cases
 

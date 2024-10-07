@@ -17,6 +17,12 @@ Why have I chosen this tooling for the project:
 
 Could use design patterns: strategy pattern, observer pattern, singleton pattern (for randomness?)?
 
+choice of algorithms?
+single state methods in; simulated annealing, tabu search, iterated local search
+population based; cuckoo search, genetic algorithm
+number of iterations
+how to model the problem
+
 **For Comparison**
 
 I have access to other alignment tools for comparison against my own tool:
@@ -27,10 +33,8 @@ I have access to other alignment tools for comparison against my own tool:
 Can I find a metaheuristic aligner exe to compare against?
 - If not, why not? is this an opportunity/benefit for my project?
 
-**For Communication**
+**Choice of structural benchmarking dataset**
 
-When it comes to presenting my data from testing the performance and effectiveness
-I will likely use python for its data visualization libraries
 
 **For Experimentation**
 
@@ -40,3 +44,4 @@ objective functions to choose from in the literature
 I will use experimentation process to pick best performers and aim to improve the efficiency and scoring of my tool wherever possible?
 
 There is a wealth of research on the problem, while many combinations of objective functions remain unexplored.
+

@@ -9,3 +9,10 @@ My milestones are:
 - completion of case study
 - Submission of PDD
 - Submission of Final Report
+
+
+------
+
+Also need a task list
+
+I need to include my MS project stuff here

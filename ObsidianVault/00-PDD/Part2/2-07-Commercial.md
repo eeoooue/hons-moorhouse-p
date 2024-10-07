@@ -18,7 +18,3 @@ No insurance on the project as it is not believed to be high risk.
 
 = £6850?
 
-----
-
-
-mention potential market; bioinformaticians? (how many professionals are there?) who are the competitors?
