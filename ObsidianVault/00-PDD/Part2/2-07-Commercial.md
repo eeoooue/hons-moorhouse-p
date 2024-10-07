@@ -6,7 +6,6 @@ While typically not directly monetised, work of this nature may be able to sourc
 
 Timeline needing funds: September - May (9 months)
 
-Access to scholarly resources & general university facilities? (don't know)
 Access to highly qualified supervisor (what is the rate for PhD consultation) ~ £160/h?
 My time ~400h max. ? @ £14/h = £5600 (what is rate for undergraduate work?)
 

@@ -4,23 +4,8 @@
 I'll make a project task list in excel? then convert it into a list later
 
 My milestones are:
-- completion of individual experiments
-- completion of specific objectives
-- software iteration releases
+- software iteration releases (x6)
 - nfrs testing session (late in the project)
 - completion of case study
-- delivery of PDD
-- delivery of Final Report
-
-----
-
-TODO: mentions that selecting and using appropriate tools is a competency
-
----
-
-Says not to use **Excel** for gantt chart, nor word.
-
-Probably going to suggest **MS Project**?
-
-TODO: mind map to break down the work (based on objectives?)
-- doesn't need to be part of the submission
+- Submission of PDD
+- Submission of Final Report

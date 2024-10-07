@@ -1,26 +1,17 @@
 
 > If there are unknown elements or missing information relevant to the project, what assumptions will you make to account for these?  How are these assumptions justified?
 
-(I'm not really sure these are assumptions at all? maybe revisit everything here)
 
-I don't have a full understanding of the biology side of things & I can't make algorithmic improvements or new objective functions powered by some deep insight into the field
+An external review by a qualified bioinformatician will not be undertaken as part of this project, due to financial constraints. As such, this work is predicated on the assumption that the performance of alignment software as assessed via structural benchmarking is indicative of the performance of the tool at multiple sequence alignment in real-world contexts.
 
-Nor can I identify sensitive errors that my program maybe making
-- I do not have an experts opinion assessing my software, it is assessed in terms of the established balibase metrics measured by QScore
-
-If there is some way to game the scores while producing output useless to bioinformaticians my program may fall into this trap
-
-----
-
-I could say something to the effect of; this work is predicated on the assumption that a tool that performs well according to the balibase metrics obtained from structural benchmarking is indicative of a high quality alignment tool in general.
-
-
-
-my primary assumption is about how a strong performance in terms of the QScore/BAliBASE metrics on the structural benchmarks is indicative of a high quality alignment tool.
-
+In a review of 45 recent papers, structural benchmarking was found to be the most popular quality measure for MSA (Ibrahim et al., 2024). However, Gori & Dessimoz (2014) advocate for a context-specific choice of benchmarking strategy, informed by the intended application of the tool.
 
 ----
 
 chance to show that I have done my research?
 
 structural benchmarking used by a number of studies.
+
+> 
+While Gori & Dessimoz (2014) note that simulation-based benchmarking produces a different set of ranks to stru
+
