@@ -12,7 +12,7 @@
 - Revise gantt chart (simplify?)
 - Write up task list
 - Finishing + submitting my PDD
-- Ethics checklist
+- Ethics checklist !!
 
 #### Expected problems
 - Gantt chart too big
