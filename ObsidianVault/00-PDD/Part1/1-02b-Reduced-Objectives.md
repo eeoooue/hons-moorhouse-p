@@ -12,7 +12,7 @@ TODO: do these align with my aims>>
 ## Primary Objectives
 
 #### Perform Multiple Sequence Alignment in a Time-Efficient Manner
-The produced software should be able to align a typical testcase of 6 protein sequences within 10 seconds on a university desktop computer. The resulting alignment of sequences must conserve the original sequence content and identifiers given as input.
+The produced software should be able to align a typical testcase of 6 protein sequences within 10 seconds on a university desktop computer. The resulting alignment of sequences must be a valid solution – conserving the original sequence content and identifiers given as input.
 
 #### Assess the Viability of a Single-State Approach for Iterative Alignment
 To address their underrepresentation in recent studies, a single-state metaheuristic algorithm such as 'Simulated Annealing' should be implemented and assessed in its ability to guide an effective optimization process for MSA. The single-state method could be contrasted against a population-based approach, or assessed against an external tool such as Clustal Omega. (TODO mention how the comparison will be done)

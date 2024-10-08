@@ -45,5 +45,5 @@ specific mention of GDPR & computer misuse act
 
 This project has no foreseeable ethical implications and complies with relevant legislation such as The Computer Misuse Act. In compliance with the Data Protection Act, the project will not involve test subjects nor sensitive user data. All data to be used with the software will be either entirely synthetic or sourced from named public datasets with clear licenses.
 
-Transparency and reproducibility are highly relevant to this work. While alignment tools are typically non-deterministic in nature, a deliberate effort will be made to communicate the methodology of all experiments undertaken as part of the project. Such details will likely include the initial settings and versioning for the tool, with reference to named test cases or datasets where feasible.
+Transparency and reproducibility are highly relevant to this work. While alignment tools are typically non-deterministic in nature, a deliberate effort will be made to communicate the methodology of all experiments undertaken as part of the project to support reproduction of results. Such details will likely include the initial settings and versioning for the tool, with reference to named test cases or datasets where feasible.
 

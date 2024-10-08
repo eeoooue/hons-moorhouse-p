@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00-PDD/Part2/2-03b-Options-Writeup.md",
+                "file": "00-PDD/Part2/2-06-Ethics-Legal.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-PDD/Part2/2-03b-Options-Writeup.md",
+                "file": "00-PDD/Part2/2-06-Ethics-Legal.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-PDD/Part2/2-03b-Options-Writeup.md",
+                "file": "00-PDD/Part2/2-06-Ethics-Legal.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "00-PDD/Part2/2-03b-Options-Writeup.md"
+                "file": "00-PDD/Part2/2-06-Ethics-Legal.md"
               }
             }
           }
@@ -148,18 +148,18 @@
   },
   "active": "c13ace71510f6702",
   "lastOpenFiles": [
-    "00-PDD/Part2/2-03 Options.md",
+    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
+    "00-PDD/Part1/1-02c-Old-Objectives.md",
+    "00-PDD/Part1/1-01-Introduction.md",
     "00-PDD/Part2/2-03b-Options-Writeup.md",
+    "00-PDD/Part2/2-03 Options.md",
     "00-PDD/Part2/2-04-Risks-Mits.md",
     "00-PDD/Part2/2-02-Project Operation.md",
     "00-PDD/Part2/2-01 Project Benefits.md",
     "00-PDD/Part1/1-02d-new-objective.md",
-    "00-PDD/Part1/1-02c-Old-Objectives.md",
     "00-PDD/Part1/1-06-Assumptions.md",
     "Comms-Aid/Weekly Narrative.md",
     "00-PDD/Part2/2-06-Ethics-Legal.md",
-    "00-PDD/Part1/1-01-Introduction.md",
-    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
     "00-PDD/Part1/1-03-Scope.md",
     "00-PDD/Part1/1-04-Deliverables.md",
     "Comms-Aid/Lecture Timeline.md",
