@@ -23,9 +23,9 @@ A series of iterations of a 'Metaheuristic Aligner' (MAli) will be released on G
 - Should approximate the 'pareto front' of MSA solutions, producing a set of alignments as output for a decision maker to choose from.
 
 **MAli v1.3** (February 4th, 2025) (2 weeks)
-- Should fulfil the documented functional and non-function requirements, and offer a performance or quality improvement relative to all previous iterations of the software.
+- Should fulfil the documented functional and non-function requirements and offer a performance or quality improvement relative to all previous iterations of the software.
 
-#### Paperwork
+#### Documents
 
 **Project Definition Document** (October 15th, 2024) (4 weeks)
 
@@ -33,6 +33,5 @@ An unambiguous document (2500 words max.) which clarifies the scope, objectives,
 
 **Final Report** (Expected: April 1st, 2025) (3 months)
 
-A comprehensive report (15000 words max.) which details key elements of the project, evidences independent research and design, while documenting efforts to meet the objectives outlined and concluding with an evaluation and reflection on the project.
-
+A comprehensive report (15000 words max.) which details key elements of the project and documents efforts to meet the objectives outlined. The report should include a literature review and conclude with a critical evaluation of the project.
 

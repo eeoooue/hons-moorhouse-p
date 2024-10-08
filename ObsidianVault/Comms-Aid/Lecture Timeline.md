@@ -1,10 +1,12 @@
 
 #### Overview of lectures so far
 
+
+> Ethics check !!
 #### Week 1
 - Introduction to Hons Project
 - Assignments/Submissions
-	- Github repo, ethics check, PDD
+	- GitHub repo, ethics check, PDD
 	- Interim Report & Midway Review,
 	- Final Report, Software, Demo
 - Overview of the PDD
@@ -16,10 +18,6 @@
 	- mind maps, work breakdowns, time estimates
 	- identify milestones & deliverables
 	- choosing a methodology (agile for me)
-
-
-
-
 
 
 
