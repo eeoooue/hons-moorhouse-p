@@ -11,6 +11,8 @@
 #### Tasks for next week
 - Revise gantt chart (simplify?)
 - Write up task list
+- Adding references
+- Potential change re: [[constraints and assumptions]]
 - Finishing + submitting my PDD
 - Ethics checklist !!
 

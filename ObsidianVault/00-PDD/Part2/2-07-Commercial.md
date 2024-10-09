@@ -42,4 +42,4 @@ If undertaken independently from the University of Hull, an estimated cost for t
 
 **_Table_** _Breakdown of estimated costs for the project – totalling £10863.00._
 
-While typically not directly monetised, work of this nature may be eligible for charitable funding as it has relevance to bioinformatics and applied soft computing.
+While typically not directly monetised, work of this nature may be eligible for charitable funding as it offers potential contribution to bioinformatics and applied soft computing.
