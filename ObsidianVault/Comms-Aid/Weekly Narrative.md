@@ -1,6 +1,6 @@
 
 #### Progress this week
-- More work on PDD (~50% complete?)
+- More work on PDD (~70% complete?) - due on the 15th @ 2pm
 - Adding to my Literature Review
 - project Gantt Chart + tasks
 

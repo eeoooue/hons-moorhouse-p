@@ -20,5 +20,6 @@
 	- choosing a methodology (agile for me)
 
 
-
-
+#### Week 3 
+- **commercial**, planning & lit review
+- 

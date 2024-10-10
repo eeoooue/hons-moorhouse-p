@@ -10,6 +10,8 @@ Constraints: "Needing to work with an established bioinformatics file format for
 
 Assumptions: "That MSA software can be assessed by a non-expert using the methodologies outlined in the literature alone - i.e. scoring well in an evaluation is a sufficient indicator of good performance at MSA"
 
+-----
+
 
 > Feels like a big change, but I only mention structural benchmarking ~5 times so maybe this is a relatively straightforward fix
 
