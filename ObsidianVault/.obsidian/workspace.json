@@ -11,8 +11,12 @@
             "id": "0e3adfadc1a6a9c1",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "00-PDD/Part3/3-03-Project Eval.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "00-PDD/Part3/3-03-Project Eval.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "00-PDD/Part3/3-03-Project Eval.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "00-PDD/Part3/3-03-Project Eval.md"
+              }
             }
           }
         ]
@@ -140,11 +148,15 @@
   },
   "active": "0e3adfadc1a6a9c1",
   "lastOpenFiles": [
-    "Advice/lit review advice.md",
-    "Comms-Aid/Lecture Timeline.md",
     "Advice/evaluation advice.md",
-    "Comms-Aid/constraints and assumptions.md",
+    "Advice/SMART Objectives.md",
+    "Advice/user eval suggested.md",
+    "00-PDD/Part3/3-03-Project Eval.md",
+    "Advice/Work Breakdown.md",
     "Comms-Aid/Weekly Narrative.md",
+    "Comms-Aid/Lecture Timeline.md",
+    "Comms-Aid/constraints and assumptions.md",
+    "Advice/lit review advice.md",
     "00-PDD/Part1/1-02b-Reduced-Objectives.md",
     "00-PDD/Part1/1-02c-Old-Objectives.md",
     "00-PDD/Part1/1-02d-new-objective.md",
@@ -165,10 +177,6 @@
     "00-PDD/Part2/2-02-Project Operation.md",
     "00-PDD/Part2/2-01 Project Benefits.md",
     "00-PDD/Part1/1-06-Assumptions.md",
-    "00-PDD/Part1/1-03-Scope.md",
-    "00-PDD/Part1/1-04-Deliverables.md",
-    "00-PDD/Part2/2-05-Resources-Required.md",
-    "00-PDD/Part3/3-01-Initial-Project-Plan.md",
     "Comms-Aid",
     "00-PDD/Part2/Risks",
     "Progress-Log",
