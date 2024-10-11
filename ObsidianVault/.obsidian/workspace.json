@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "00-PDD/Part3/3-03-Project Eval.md",
+                "file": "Glossary - For PDD.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "structural benchmarking",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-PDD/Part3/3-03-Project Eval.md",
+                "file": "Glossary - For PDD.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-PDD/Part3/3-03-Project Eval.md",
+                "file": "Glossary - For PDD.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "00-PDD/Part3/3-03-Project Eval.md"
+                "file": "Glossary - For PDD.md"
               }
             }
           }
@@ -148,20 +148,25 @@
   },
   "active": "0e3adfadc1a6a9c1",
   "lastOpenFiles": [
+    "Glossary - Key Terminology.md",
+    "Glossary - For PDD.md",
+    "Comms-Aid/constraints and assumptions.md",
+    "00-PDD/4-References.md",
+    "00-PDD/5-Appendix.md",
+    "00-PDD/Quick Overview.md",
+    "00-PDD/Competencies Assessed.md",
+    "00-PDD/Part3/3-03-Project Eval.md",
     "Advice/evaluation advice.md",
     "Advice/SMART Objectives.md",
     "Advice/user eval suggested.md",
-    "00-PDD/Part3/3-03-Project Eval.md",
     "Advice/Work Breakdown.md",
     "Comms-Aid/Weekly Narrative.md",
     "Comms-Aid/Lecture Timeline.md",
-    "Comms-Aid/constraints and assumptions.md",
     "Advice/lit review advice.md",
     "00-PDD/Part1/1-02b-Reduced-Objectives.md",
     "00-PDD/Part1/1-02c-Old-Objectives.md",
     "00-PDD/Part1/1-02d-new-objective.md",
     "qs.md",
-    "Key Terminology.md",
     "00-PDD/Part2/2-07-Commercial.md",
     "Comms-Aid/Images/PDD-Rubric.png",
     "Meeting-Notes/24-10-02 Meeting.md",
@@ -172,11 +177,6 @@
     "00-PDD/Part2/2-06-Ethics-Legal.md",
     "00-PDD/Part1/1-01-Introduction.md",
     "00-PDD/Part2/2-03b-Options-Writeup.md",
-    "00-PDD/Part2/2-03 Options.md",
-    "00-PDD/Part2/2-04-Risks-Mits.md",
-    "00-PDD/Part2/2-02-Project Operation.md",
-    "00-PDD/Part2/2-01 Project Benefits.md",
-    "00-PDD/Part1/1-06-Assumptions.md",
     "Comms-Aid",
     "00-PDD/Part2/Risks",
     "Progress-Log",
