@@ -8,15 +8,11 @@
         "type": "tabs",
         "children": [
           {
-            "id": "0e3adfadc1a6a9c1",
+            "id": "7b0e4fa9c8ccf40c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Glossary - For PDD.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Glossary - For PDD.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Glossary - For PDD.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Glossary - For PDD.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,37 +138,37 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0e3adfadc1a6a9c1",
+  "active": "7b0e4fa9c8ccf40c",
   "lastOpenFiles": [
     "Glossary - Key Terminology.md",
+    "Untitled.md",
     "Glossary - For PDD.md",
+    "Advice/Work Breakdown.md",
+    "Advice/user eval suggested.md",
+    "Advice/SMART Objectives.md",
+    "Advice/lit review advice.md",
+    "Advice/include supervision feedback in schedule.md",
+    "Advice/critical path.md",
+    "03-Lit-Review/Sequence Alignment/0-Bioinformatics.md",
+    "03-Lit-Review/Sequence Alignment/3-Quality of Alignments.md",
+    "03-Lit-Review/Sequence Alignment/2-Multiple Sequence Alignment.md",
+    "03-Lit-Review/Sequence Alignment/1-Pairwise Sequence Alignment.md",
+    "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
+    "03-Lit-Review/Metaheuristics/05-Multi-Objective-Optimization.md",
+    "03-Lit-Review/Metaheuristics/04-Population-Based-Methods.md",
+    "03-Lit-Review/Metaheuristics/03-Single-State-Methods.md",
+    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
+    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
+    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
     "Comms-Aid/constraints and assumptions.md",
     "00-PDD/4-References.md",
     "00-PDD/5-Appendix.md",
     "00-PDD/Quick Overview.md",
     "00-PDD/Competencies Assessed.md",
     "00-PDD/Part3/3-03-Project Eval.md",
-    "Advice/evaluation advice.md",
-    "Advice/SMART Objectives.md",
-    "Advice/user eval suggested.md",
-    "Advice/Work Breakdown.md",
-    "Comms-Aid/Weekly Narrative.md",
-    "Comms-Aid/Lecture Timeline.md",
-    "Advice/lit review advice.md",
-    "00-PDD/Part1/1-02b-Reduced-Objectives.md",
-    "00-PDD/Part1/1-02c-Old-Objectives.md",
-    "00-PDD/Part1/1-02d-new-objective.md",
-    "qs.md",
-    "00-PDD/Part2/2-07-Commercial.md",
     "Comms-Aid/Images/PDD-Rubric.png",
-    "Meeting-Notes/24-10-02 Meeting.md",
-    "Meeting-Notes/24-09-25 Meeting.md",
     "Comms-Aid/Images/Narrative.png",
     "Comms-Aid/Images",
-    "00-PDD/Part3/3-02-Project Control.md",
-    "00-PDD/Part2/2-06-Ethics-Legal.md",
-    "00-PDD/Part1/1-01-Introduction.md",
-    "00-PDD/Part2/2-03b-Options-Writeup.md",
     "Comms-Aid",
     "00-PDD/Part2/Risks",
     "Progress-Log",
