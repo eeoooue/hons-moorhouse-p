@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "b2bc22de09030eff",
+        "id": "034587be7645b6e0",
         "type": "tabs",
         "children": [
           {
-            "id": "7b0e4fa9c8ccf40c",
+            "id": "eae31310a53bdfb9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "00-PDD/Part1/1-02d-new-objective.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -85,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "00-PDD/Part1/1-02d-new-objective.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "00-PDD/Part1/1-02d-new-objective.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -124,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "00-PDD/Part1/1-02d-new-objective.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -146,8 +138,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7b0e4fa9c8ccf40c",
+  "active": "eae31310a53bdfb9",
   "lastOpenFiles": [
+    "what makes high quality paper.md",
+    "key works in msa mheus.md",
+    "lit review as a logical story.md",
+    "Advice/lit review advice.md",
+    "Writing a critical literature review.md",
+    "Comms-Aid/Weekly Narrative.md",
+    "Comms-Aid/constraints and assumptions.md",
+    "Comms-Aid/Lecture Timeline.md",
+    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
+    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
+    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
+    "Where to search for Lit Review.md",
+    "00-PDD/Part1/1-02d-new-objective.md",
     "00-PDD/Part1/1-02c-Old-Objectives.md",
     "Glossary - Key Terminology.md",
     "Untitled.md",
@@ -155,25 +160,12 @@
     "Advice/Work Breakdown.md",
     "Advice/user eval suggested.md",
     "Advice/SMART Objectives.md",
-    "Advice/lit review advice.md",
     "Advice/include supervision feedback in schedule.md",
     "Advice/critical path.md",
     "03-Lit-Review/Sequence Alignment/0-Bioinformatics.md",
     "03-Lit-Review/Sequence Alignment/3-Quality of Alignments.md",
     "03-Lit-Review/Sequence Alignment/2-Multiple Sequence Alignment.md",
     "03-Lit-Review/Sequence Alignment/1-Pairwise Sequence Alignment.md",
-    "03-Lit-Review/Metaheuristics/06-Applications-of-Metaheuristics.md",
-    "03-Lit-Review/Metaheuristics/05-Multi-Objective-Optimization.md",
-    "03-Lit-Review/Metaheuristics/04-Population-Based-Methods.md",
-    "03-Lit-Review/Metaheuristics/03-Single-State-Methods.md",
-    "03-Lit-Review/Metaheuristics/02b-Exploration-Exploitation.md",
-    "03-Lit-Review/Metaheuristics/02-Hill-Climbing.md",
-    "03-Lit-Review/Metaheuristics/01-Metaheuristics.md",
-    "Comms-Aid/constraints and assumptions.md",
-    "00-PDD/4-References.md",
-    "00-PDD/5-Appendix.md",
-    "00-PDD/Quick Overview.md",
-    "00-PDD/Competencies Assessed.md",
     "Comms-Aid/Images/PDD-Rubric.png",
     "Comms-Aid/Images/Narrative.png",
     "Comms-Aid/Images",
