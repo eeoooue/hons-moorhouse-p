@@ -1,1 +1,0 @@
-the series of tasks which if completed in sequence eliminate all slack from the schedule (?)
