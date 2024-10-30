@@ -24,5 +24,16 @@ namespace MAli
             Console.WriteLine($"Payload: {sequence.Payload}");
             Console.WriteLine($"");
         }
+
+        public void PrintAlignmentState(Alignment alignment)
+        {
+            Console.WriteLine($"Printing Alignment State:");
+
+            for(int i=0; i<alignment.Height; i++)
+            {
+                string alignedSequence = alignment.GetAlignedPayload(i);
+                Console.WriteLine($"    {alignedSequence}");
+            }
+        }
     }
 }

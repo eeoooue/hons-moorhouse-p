@@ -10,7 +10,7 @@ namespace MAli
         static void Main(string[] args)
         {
             Console.WriteLine("MAli - dev. build");
-            TestFastaReader();
+            TestAlignmentCanBeInitialized();
         }
 
         static void TestFastaReader()
@@ -20,6 +20,16 @@ namespace MAli
 
             List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
             Helper.PrintSequences(sequences);
+        }
+
+        static void TestAlignmentCanBeInitialized()
+        {
+            FastaReader reader = new FastaReader();
+            string filename = "BB11001";
+
+            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
+            Alignment alignment = new Alignment(sequences);
+            Helper.PrintAlignmentState(alignment);
         }
     }
 }
