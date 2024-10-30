@@ -17,27 +17,27 @@
 
         #region methods to be implemented
 
-        public void ContainsNucleicsOnly()
+        public bool ContainsNucleicsOnly()
         {
             throw new NotImplementedException();
         }
 
-        public void ContainsProteinsOnly()
+        public bool ContainsProteinsOnly()
         {
             throw new NotImplementedException();
         }
 
-        public void GetAlignedSequences()
+        public List<BioSequence> GetAlignedSequences()
         {
             throw new NotImplementedException();
         }
 
-        public void GetCharacterAt()
+        public char GetCharacterAt(int i, int j)
         {
             throw new NotImplementedException();
         }
 
-        public void GetColumn()
+        public string GetColumn(int j)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,8 @@
         {
             throw new NotImplementedException();
         }
-        public void SequencesCanBeAligned()
+
+        public bool SequencesCanBeAligned()
         {
             throw new NotImplementedException();
         }
