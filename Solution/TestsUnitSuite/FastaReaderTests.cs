@@ -11,6 +11,8 @@ namespace TestsUnitSuite
         private ExampleSequences ExampleSequences = new ExampleSequences();
         private TestingHarness Harness = new TestingHarness();
 
+        #region Testing individual sequences can be read
+
         [TestMethod]
         public void CanParseSequenceA()
         {
@@ -81,5 +83,73 @@ namespace TestsUnitSuite
             Assert.AreEqual(expected.Identifier, actual.Identifier);
             Assert.AreEqual(expected.Payload, actual.Payload);
         }
+
+        #endregion
+
+
+
+
+
+        #region Testing identifier positions can be collected
+
+        [TestMethod]
+        public void CanFindIdentifiersTestA()
+        {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+            };
+
+            List<int> expected = new List<int> { 0, 2, 4, 6 };
+            List<int> actual = FastaReader.CollectIdentifierLocations(contents);
+
+            Assert.AreEqual(expected.Count, actual.Count);
+            for(int i=0; i<expected.Count; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        [TestMethod]
+        public void CanFindIdentifiersTestB()
+        {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleA",
+                "ACGT", 
+                "ACGT", 
+                "",
+                ">ExampleA",
+                "ACGTA--",
+                "CG--TACG",
+                "TACGTACGT",
+                "",
+                "",
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+            };
+
+            List<int> expected = new List<int> { 0, 4, 10 };
+            List<int> actual = FastaReader.CollectIdentifierLocations(contents);
+
+            Assert.AreEqual(expected.Count, actual.Count);
+            for (int i = 0; i < expected.Count; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+
+        #endregion
+
+
+
     }
 }
