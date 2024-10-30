@@ -16,7 +16,16 @@ namespace LibFileIO.AlignmentWriters
 
         public List<string> CreateAlignmentLines(Alignment alignment)
         {
-            throw new NotImplementedException();
+            List<string> result = new List<string>();
+
+            List<BioSequence> aligned = alignment.GetAlignedSequences();
+            foreach(BioSequence sequence in aligned)
+            {
+                List<string> lines = CreateSequenceLines(sequence);
+                result.AddRange(lines);
+            }
+
+            return result;
         }
 
         public List<string> CreateSequenceLines(BioSequence sequence)
