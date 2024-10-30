@@ -18,7 +18,6 @@ namespace TestsUnitSuite
             {
                 ">ExampleA",
                 "ACGTACGTACGTACGTACGT",
-                "",
             };
 
             BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleA);
@@ -31,24 +30,56 @@ namespace TestsUnitSuite
         [TestMethod]
         public void CanParseSequenceB()
         {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleB",
+                "ACGTTTT",
+                "TT",
+                "TT",
+                "",
+            };
 
+            BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleB);
+            BioSequence actual = FastaReader.ParseAsSequence(contents);
 
+            Assert.AreEqual(expected.Identifier, actual.Identifier);
+            Assert.AreEqual(expected.Payload, actual.Payload);
         }
 
         [TestMethod]
         public void CanParseSequenceC()
         {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleC",
+                "CCCCCCCCCCCCCCCCCCCCCCCCCCC",
+                "",
+                "C",
+                "",
+            };
 
+            BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleC);
+            BioSequence actual = FastaReader.ParseAsSequence(contents);
 
-
+            Assert.AreEqual(expected.Identifier, actual.Identifier);
+            Assert.AreEqual(expected.Payload, actual.Payload);
         }
 
         [TestMethod]
         public void CanParseSequenceD()
         {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleD",
+                "ACGTACGT--",
+                "--ACGT",
+            };
 
+            BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleD);
+            BioSequence actual = FastaReader.ParseAsSequence(contents);
 
-
+            Assert.AreEqual(expected.Identifier, actual.Identifier);
+            Assert.AreEqual(expected.Payload, actual.Payload);
         }
     }
 }
