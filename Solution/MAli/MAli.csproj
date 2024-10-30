@@ -13,4 +13,10 @@
     <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="BB11001">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
