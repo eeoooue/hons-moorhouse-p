@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite.Harness
+namespace TestsUnitSuite.HarnessTools
 {
     internal enum ExampleSequence
     {
