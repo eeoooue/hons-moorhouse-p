@@ -11,5 +11,22 @@ namespace TestsUnitSuite
     internal class TestingHarness
     {
         public ExampleSequences ExampleSequences = new ExampleSequences();
+
+
+        public void AssertSequencesAreEqual(List<BioSequence> expected, List<BioSequence> actual)
+        {
+            Assert.AreEqual(expected.Count, actual.Count);
+
+            for (int i = 0; i < expected.Count; i++)
+            {
+                AssertSequencesMatch(expected[i], actual[i]);
+            }
+        }
+
+        public void AssertSequencesMatch(BioSequence expected, BioSequence actual)
+        {
+            Assert.AreEqual(expected.Identifier, actual.Identifier);
+            Assert.AreEqual(expected.Payload, actual.Payload);
+        }
     }
 }

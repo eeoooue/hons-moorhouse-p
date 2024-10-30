@@ -87,9 +87,6 @@ namespace TestsUnitSuite
         #endregion
 
 
-
-
-
         #region Testing identifier positions can be collected
 
         [TestMethod]
@@ -150,6 +147,77 @@ namespace TestsUnitSuite
         #endregion
 
 
+        #region Testing multiple sequences can be read from lines of a FASTA file
+
+        [TestMethod]
+        public void CanParseFastaTestA()
+        {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+                ">ExampleA",
+                "ACGT",
+                "ACGT",
+                "ACGT",
+                "ACGT",
+                "ACGT",
+                ">ExampleA",
+                "ACGTACGTAC",
+                "GTACGTACGT",
+            };
+
+            List<BioSequence> expected = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+            };
+
+            List<BioSequence> actual = FastaReader.UnpackSequences(contents);
+
+            Harness.AssertSequencesAreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CanParseFastaTestB()
+        {
+            List<string> contents = new List<string>()
+            {
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT",
+                "",
+                "",
+                ">ExampleB",
+                "ACGTTTTTTTT",
+                "",
+                "",
+                ">ExampleC",
+                "CCCCCCCCCCC",
+                "CCCCCCCCCCC",
+                "CCCCCC",
+                "",
+                "",
+                ">ExampleD",
+                "ACGTACGT----ACGT",
+                "",
+                "",
+            };
+
+            List<BioSequence> expected = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            List<BioSequence> actual = FastaReader.UnpackSequences(contents);
+
+            Harness.AssertSequencesAreEqual(expected, actual);
+        }
+
+        #endregion
 
     }
 }
