@@ -110,7 +110,7 @@ namespace TestsUnitSuite.LibFileIO
                 ">ExampleC",
                 "CCCCCCCCCCCCCCCCCCCCCCCCCCCC--------",
                 ">ExampleD",
-                "ACGTACGT----ACGT--------------------",
+                "ACGTACGTACGT------------------------",
             };
 
             List<BioSequence> original = new List<BioSequence>
