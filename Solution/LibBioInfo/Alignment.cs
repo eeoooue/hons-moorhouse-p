@@ -1,4 +1,6 @@
-﻿namespace LibBioInfo
+﻿using System.Text;
+
+namespace LibBioInfo
 {
     public class Alignment
     {
@@ -15,44 +17,67 @@
             State = new bool[Height,Width];
         }
 
-        #region methods to be implemented
-
-        public bool ContainsNucleicsOnly()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool ContainsProteinsOnly()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<BioSequence> GetAlignedSequences()
         {
-            throw new NotImplementedException();
+            List<BioSequence> result = new List<BioSequence>();
+
+            for (int i = 0; i < Height; i++)
+            {
+                string identifier = Sequences[i].Identifier;
+                string alignedPayload = GetAlignedPayload(i);
+                BioSequence aligned = new BioSequence(identifier, alignedPayload);
+                result.Add(aligned);
+            }
+
+            return result;
+        }
+
+        private string GetAlignedPayload(int i)
+        {
+            BioSequence sequence = Sequences[i];
+
+            StringBuilder sb = new StringBuilder();
+
+            string residues = sequence.Residues;
+            int residuesPlaced = 0;
+
+            for (int j = 0; j < Width; j++)
+            {
+                bool positionIsEmpty = State[i, j];
+                if (positionIsEmpty)
+                {
+                    sb.Append('-');
+                }
+                else
+                {
+                    sb.Append(residues[residuesPlaced]);
+                    residuesPlaced++;
+                }
+            }
+
+            return sb.ToString();
         }
 
         public char GetCharacterAt(int i, int j)
         {
-            throw new NotImplementedException();
+            string alignedPayload = GetAlignedPayload(i);
+            return alignedPayload[j];
         }
 
         public string GetColumn(int j)
         {
-            throw new NotImplementedException();
-        }
+            // using an inefficient strategy temporarily
 
-        public void InitializeAlignmentState()
-        {
-            throw new NotImplementedException();
-        }
+            StringBuilder sb = new StringBuilder();
 
-        public bool SequencesCanBeAligned()
-        {
-            throw new NotImplementedException();
-        }
+            for (int i = 0; i < Height; i++)
+            {
+                char c = GetCharacterAt(i, j);
+                sb.Append(c);
+            }
 
-        #endregion
+            return sb.ToString();
+        }
 
         private int DecideWidth()
         {
@@ -61,11 +86,68 @@
             int width = 0;
             foreach (BioSequence seq in Sequences)
             {
-                int doubledWidth = seq.Payload.Length * 2;
+                int doubledWidth = seq.Residues.Length * 2;
                 width = Math.Max(width, doubledWidth);
             }
 
             return width;
+        }
+
+        public bool ContainsNucleicsOnly()
+        {
+            foreach (BioSequence sequence in Sequences)
+            {
+                if (!sequence.IsNucleic())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool ContainsProteinsOnly()
+        {
+            foreach (BioSequence sequence in Sequences)
+            {
+                if (!sequence.IsProtein())
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void InitializeAlignmentState()
+        {
+            for (int i = 0; i < Height; i++)
+            {
+                InitializeAlignmentRow(i);
+            }
+        }
+
+        private void InitializeAlignmentRow(int i)
+        {
+            int unusedCharacters = Sequences[i].Residues.Length;
+
+            for (int j = 0; j < Width; j++)
+            {
+                if (unusedCharacters > 0)
+                {
+                    unusedCharacters--;
+                    State[i, j] = false;
+                }
+                else
+                {
+                    State[i, j] = true; // indicates that a gap is placed at state[i,j]
+                }
+            }
+        }
+
+        public bool SequencesCanBeAligned()
+        {
+            return ContainsNucleicsOnly() || ContainsProteinsOnly();
         }
     }
 }
