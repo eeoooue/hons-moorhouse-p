@@ -96,5 +96,42 @@ namespace TestsUnitSuite.LibFileIO
         #endregion
 
 
+        #region Testing whole alignments can turned into lines
+
+        [TestMethod]
+        public void CanBuildAlignmentLinesABCD()
+        {
+            List<string> expected = new List<string>()
+            {
+                ">ExampleA",
+                "ACGTACGTACGTACGTACGT----------------",
+                ">ExampleB",
+                "ACGTTTTTTTT-------------------------",
+                ">ExampleC",
+                "CCCCCCCCCCCCCCCCCCCCCCCCCCCC--------",
+                ">ExampleD",
+                "ACGTACGT----ACGT--------------------",
+            };
+
+            List<BioSequence> original = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            Alignment alignment = new Alignment(original);
+            List<string> actual = FastaWriter.CreateAlignmentLines(alignment);
+
+            for (int i = 0; i < expected.Count; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+
+        #endregion
+
     }
 }

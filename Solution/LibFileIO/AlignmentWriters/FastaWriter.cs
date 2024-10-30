@@ -14,7 +14,7 @@ namespace LibFileIO.AlignmentWriters
             throw new NotImplementedException();
         }
 
-        public List<string> CreateWriteableLines(Alignment alignment)
+        public List<string> CreateAlignmentLines(Alignment alignment)
         {
             throw new NotImplementedException();
         }
