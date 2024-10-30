@@ -1,15 +1,15 @@
 using LibBioInfo;
 using LibFileIO.Readers;
-using TestsUnitSuite.Harness;
+using TestsUnitSuite.HarnessTools;
 
-namespace TestsUnitSuite
+namespace TestsUnitSuite.LibFileIO
 {
     [TestClass]
     public class FastaReaderTests
     {
         private FastaReader FastaReader = new FastaReader();
-        private ExampleSequences ExampleSequences = new ExampleSequences();
-        private TestingHarness Harness = new TestingHarness();
+        private ExampleSequences ExampleSequences = Harness.ExampleSequences;
+        private SequenceEquality SequenceEquality = Harness.SequenceEquality;
 
         #region Testing individual sequences can be read
 
@@ -24,9 +24,7 @@ namespace TestsUnitSuite
 
             BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleA);
             BioSequence actual = FastaReader.ParseAsSequence(contents);
-
-            Assert.AreEqual(expected.Identifier, actual.Identifier);
-            Assert.AreEqual(expected.Payload, actual.Payload);
+            SequenceEquality.AssertSequencesMatch(expected, actual);
         }
 
         [TestMethod]
@@ -43,9 +41,7 @@ namespace TestsUnitSuite
 
             BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleB);
             BioSequence actual = FastaReader.ParseAsSequence(contents);
-
-            Assert.AreEqual(expected.Identifier, actual.Identifier);
-            Assert.AreEqual(expected.Payload, actual.Payload);
+            SequenceEquality.AssertSequencesMatch(expected, actual);
         }
 
         [TestMethod]
@@ -62,9 +58,7 @@ namespace TestsUnitSuite
 
             BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleC);
             BioSequence actual = FastaReader.ParseAsSequence(contents);
-
-            Assert.AreEqual(expected.Identifier, actual.Identifier);
-            Assert.AreEqual(expected.Payload, actual.Payload);
+            SequenceEquality.AssertSequencesMatch(expected, actual);
         }
 
         [TestMethod]
@@ -79,9 +73,7 @@ namespace TestsUnitSuite
 
             BioSequence expected = ExampleSequences.GetSequence(ExampleSequence.ExampleD);
             BioSequence actual = FastaReader.ParseAsSequence(contents);
-
-            Assert.AreEqual(expected.Identifier, actual.Identifier);
-            Assert.AreEqual(expected.Payload, actual.Payload);
+            SequenceEquality.AssertSequencesMatch(expected, actual);
         }
 
         #endregion
@@ -108,7 +100,7 @@ namespace TestsUnitSuite
             List<int> actual = FastaReader.CollectIdentifierLocations(contents);
 
             Assert.AreEqual(expected.Count, actual.Count);
-            for(int i=0; i<expected.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
                 Assert.AreEqual(expected[i], actual[i]);
             }
@@ -120,8 +112,8 @@ namespace TestsUnitSuite
             List<string> contents = new List<string>()
             {
                 ">ExampleA",
-                "ACGT", 
-                "ACGT", 
+                "ACGT",
+                "ACGT",
                 "",
                 ">ExampleA",
                 "ACGTA--",
@@ -175,8 +167,7 @@ namespace TestsUnitSuite
             };
 
             List<BioSequence> actual = FastaReader.UnpackSequences(contents);
-
-            Harness.AssertSequencesAreEqual(expected, actual);
+            SequenceEquality.AssertSequencesMatch(expected, actual);
         }
 
         [TestMethod]
@@ -213,8 +204,7 @@ namespace TestsUnitSuite
             };
 
             List<BioSequence> actual = FastaReader.UnpackSequences(contents);
-
-            Harness.AssertSequencesAreEqual(expected, actual);
+            SequenceEquality.AssertSequencesMatch(expected, actual);
         }
 
         #endregion

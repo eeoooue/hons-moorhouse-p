@@ -4,16 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsUnitSuite.Harness;
 
-namespace TestsUnitSuite
+namespace TestsUnitSuite.HarnessTools
 {
-    internal class TestingHarness
+    internal class SequenceEquality
     {
-        public ExampleSequences ExampleSequences = new ExampleSequences();
-
-
-        public void AssertSequencesAreEqual(List<BioSequence> expected, List<BioSequence> actual)
+        public void AssertSequencesMatch(List<BioSequence> expected, List<BioSequence> actual)
         {
             Assert.AreEqual(expected.Count, actual.Count);
 
@@ -27,6 +23,7 @@ namespace TestsUnitSuite
         {
             Assert.AreEqual(expected.Identifier, actual.Identifier);
             Assert.AreEqual(expected.Payload, actual.Payload);
+            Assert.AreEqual(expected.Residues, actual.Residues);
         }
     }
 }
