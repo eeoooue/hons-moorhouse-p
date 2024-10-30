@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace LibFileIO
     {
         public string Directory = "";
 
-        public List<int> ReadSequencesFrom(string filename)
+        public List<BioSequence> ReadSequencesFrom(string filename)
         {
             throw new NotImplementedException();
         }
@@ -20,7 +21,7 @@ namespace LibFileIO
            throw new NotImplementedException();
         }
 
-        public List<int> ParseAsSequence(List<string> contents)
+        public BioSequence ParseAsSequence(List<string> contents)
         {
             throw new NotImplementedException();
         }
