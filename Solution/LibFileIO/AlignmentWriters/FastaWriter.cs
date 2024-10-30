@@ -11,7 +11,8 @@ namespace LibFileIO.AlignmentWriters
     {
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
-            throw new NotImplementedException();
+            List<string> lines = CreateAlignmentLines(alignment);
+            File.WriteAllLines(filename, lines);
         }
 
         public List<string> CreateAlignmentLines(Alignment alignment)
