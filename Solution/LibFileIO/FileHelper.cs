@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibFileIO.Readers;
+using LibFileIO.SequenceReaders;
 
 namespace LibFileIO
 {

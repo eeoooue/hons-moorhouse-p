@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibFileIO.Writers
+namespace LibFileIO.AlignmentWriters
 {
     public class FastaWriter : IAlignmentWriter
     {

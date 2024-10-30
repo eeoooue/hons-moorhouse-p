@@ -1,5 +1,5 @@
 using LibBioInfo;
-using LibFileIO.Readers;
+using LibFileIO.SequenceReaders;
 using TestsUnitSuite.HarnessTools;
 
 namespace TestsUnitSuite.LibFileIO
