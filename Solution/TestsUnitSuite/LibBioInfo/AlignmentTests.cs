@@ -40,5 +40,72 @@ namespace TestsUnitSuite.LibBioInfo
         }
 
         #endregion
+
+
+        #region Checking initial alignment state is left-justified
+
+        [TestMethod]
+        public void CheckingInitialStateIsLeftJustified()
+        {
+            List<BioSequence> original = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            Alignment alignment = new Alignment(original);
+            List<BioSequence> aligned = alignment.GetAlignedSequences();
+
+            for (int i = 0; i < original.Count; i++)
+            {
+                string residues = original[i].Residues;
+                string alignedPayload = aligned[i].Payload;
+                bool isLeftJustified = alignedPayload.StartsWith(residues);
+                Assert.IsTrue(isLeftJustified);
+            }
+        }
+
+        #endregion
+
+
+        #region Checking alignment composition validation
+
+        [TestMethod]
+        public void CanIdentifyAlignableContents()
+        {
+            List<BioSequence> original = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            Alignment alignment = new Alignment(original);
+            bool verdict = alignment.SequencesCanBeAligned();
+            Assert.IsTrue(verdict);
+        }
+
+        [TestMethod]
+        public void CanIdentifyUnalignableContents()
+        {
+            List<BioSequence> original =
+            [
+                new BioSequence("bad", "XXXX-X"),
+                new BioSequence("bad", "KRYPT-X"),
+                new BioSequence("normal", "--ACGT"),
+                new BioSequence("normal", "--ACGT"),
+            ];
+
+            Alignment alignment = new Alignment(original);
+            bool verdict = alignment.SequencesCanBeAligned();
+            Assert.IsFalse(verdict);
+        }
+
+        #endregion
+
+
     }
 }
