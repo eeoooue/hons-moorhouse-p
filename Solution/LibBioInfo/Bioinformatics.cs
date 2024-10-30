@@ -39,6 +39,5 @@ namespace LibBioInfo
         {
             return ProteinResidues.Contains(residue);
         }
-
     }
 }

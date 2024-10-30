@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite
+namespace TestsUnitSuite.LibBioInfo
 {
     [TestClass]
     public class BioSequenceTests
     {
-
         #region Testing basic data representation
 
         [TestMethod]
