@@ -21,7 +21,12 @@ namespace LibFileIO.AlignmentWriters
 
         public List<string> CreateSequenceLines(BioSequence sequence)
         {
-            throw new NotImplementedException();
+            List<string> result = new List<string>();
+
+            result.Add($">{sequence.Identifier}");
+            result.Add(sequence.Payload);
+
+            return result;
         }
     }
 }
