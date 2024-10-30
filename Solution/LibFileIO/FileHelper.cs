@@ -9,7 +9,7 @@ namespace LibFileIO
 
         public List<BioSequence> ReadSequencesFrom(string filename)
         {
-            throw new NotImplementedException();
+            return Reader.ReadSequencesFrom(filename);
         }
 
         public void WriteAlignmentTo(Alignment alignment, string filename)
