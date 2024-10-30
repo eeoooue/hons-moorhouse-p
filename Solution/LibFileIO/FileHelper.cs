@@ -1,11 +1,13 @@
 ﻿using LibBioInfo;
-using LibFileIO.Readers;
+using LibFileIO.AlignmentWriters;
+using LibFileIO.SequenceReaders;
 
 namespace LibFileIO
 {
-    public class FileHelper
+    public class FileHelper : ISequenceReader, IAlignmentWriter
     {
         private ISequenceReader Reader = new FastaReader();
+        private IAlignmentWriter Writer = new FastaWriter();
 
         public List<BioSequence> ReadSequencesFrom(string filename)
         {
@@ -14,7 +16,7 @@ namespace LibFileIO
 
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
-            throw new NotImplementedException();
+            Writer.WriteAlignmentTo(alignment, filename);
         }
     }
 }

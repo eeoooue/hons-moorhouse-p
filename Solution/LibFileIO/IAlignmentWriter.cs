@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace LibFileIO
 {
     public interface IAlignmentWriter
     {
-
-
+        public void WriteAlignmentTo(Alignment alignment, string filename);
     }
 }
