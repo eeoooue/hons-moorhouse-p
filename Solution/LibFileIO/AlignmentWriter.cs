@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibFileIO
 {
-    interface IAlignmentWriter
+    public interface IAlignmentWriter
     {
 
 

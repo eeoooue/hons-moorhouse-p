@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibFileIO.Readers
 {
-    internal class FastaReader : ISequenceReader
+    public class FastaReader : ISequenceReader
     {
         public string Directory = "";
 
