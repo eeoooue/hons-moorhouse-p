@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
+    <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
+  </ItemGroup>
+
 </Project>

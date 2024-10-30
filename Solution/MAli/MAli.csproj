@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LibAlignment\LibAlignment.csproj" />
+    <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
+    <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
+  </ItemGroup>
+
 </Project>
