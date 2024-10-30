@@ -8,13 +8,14 @@ namespace LibBioInfo
         public int Height { get { return Sequences.Count; } }
         public int Width { get; private set; } = 0;
 
-        public bool[,] State;
+        public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
 
         public Alignment(List<BioSequence> sequences)
         {
             Sequences = sequences;
             Width = DecideWidth();
             State = new bool[Height,Width];
+            InitializeAlignmentState();
         }
 
         public List<BioSequence> GetAlignedSequences()
@@ -32,7 +33,7 @@ namespace LibBioInfo
             return result;
         }
 
-        private string GetAlignedPayload(int i)
+        public string GetAlignedPayload(int i)
         {
             BioSequence sequence = Sequences[i];
 
@@ -81,13 +82,13 @@ namespace LibBioInfo
 
         private int DecideWidth()
         {
-            // placeholder logic - alignment width is double the length of the longest sequence
+            // placeholder logic - alignment width 8 + the length of the longest sequence
 
             int width = 0;
             foreach (BioSequence seq in Sequences)
             {
-                int doubledWidth = seq.Residues.Length * 2;
-                width = Math.Max(width, doubledWidth);
+                int extraWidth = seq.Residues.Length + 8;
+                width = Math.Max(width, extraWidth);
             }
 
             return width;
