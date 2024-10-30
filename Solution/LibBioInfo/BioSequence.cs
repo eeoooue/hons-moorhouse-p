@@ -12,8 +12,7 @@ namespace LibBioInfo
         public string Payload { get; private set; }
         public string Residues { get; private set; }
 
-        private static HashSet<char> AllowedNucleicResidues = new HashSet<char> { 'A', 'C', 'G', 'T', 'U' };
-        private static HashSet<char> AllowedProteinResidues = new HashSet<char> { 'A', 'C', 'G', 'T', 'U' };
+        private static Bioinformatics Bioinformatics = new Bioinformatics();
 
         public BioSequence(string identifier, string payload)
         {
@@ -26,7 +25,7 @@ namespace LibBioInfo
         {
             foreach(char c in Residues)
             {
-                if (!AllowedNucleicResidues.Contains(c))
+                if (!Bioinformatics.IsNucleicChar(c))
                 {
                     return false;
                 }
@@ -39,7 +38,7 @@ namespace LibBioInfo
         {
             foreach (char c in Residues)
             {
-                if (!AllowedProteinResidues.Contains(c))
+                if (!Bioinformatics.IsProteinChar(c))
                 {
                     return false;
                 }
@@ -53,7 +52,11 @@ namespace LibBioInfo
             StringBuilder sb = new StringBuilder();
             foreach(char c in Payload)
             {
-                if (char.IsLetter(c))
+                if (Bioinformatics.IsGapChar(c))
+                {
+                    continue;
+                }
+                else
                 {
                     sb.Append(c);
                 }
