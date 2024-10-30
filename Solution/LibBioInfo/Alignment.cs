@@ -1,6 +1,6 @@
 ﻿namespace LibBioInfo
 {
-    public class Class1
+    public class Alignment
     {
 
     }
