@@ -1,11 +1,11 @@
 ﻿using LibBioInfo;
+using LibFileIO.Readers;
 
 namespace LibFileIO
 {
     public class FileHelper
     {
-        private SequenceReader Reader = new SequenceReader();
-        private AlignmentWriter Writer = new AlignmentWriter();
+        private ISequenceReader Reader = new FastaReader();
 
         public List<BioSequence> ReadSequencesFrom(string filename)
         {

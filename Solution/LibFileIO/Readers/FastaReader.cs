@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibFileIO
+namespace LibFileIO.Readers
 {
-    internal class SequenceReader
+    internal class FastaReader : ISequenceReader
     {
         public string Directory = "";
 
@@ -20,7 +20,7 @@ namespace LibFileIO
 
             List<BioSequence> result = new List<BioSequence>();
 
-            for(int s=0; s<identifierIndexes.Count - 1; s++)
+            for (int s = 0; s < identifierIndexes.Count - 1; s++)
             {
                 int i = identifierIndexes[s];
                 int j = identifierIndexes[s + 1];
@@ -34,7 +34,7 @@ namespace LibFileIO
 
         public List<int> CollectIdentifierLocations(List<string> contents)
         {
-           throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public BioSequence ParseAsSequence(List<string> contents)
