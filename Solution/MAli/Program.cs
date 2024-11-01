@@ -7,11 +7,19 @@ namespace MAli
     internal class Program
     {
         private static DevHelper Helper = new DevHelper();
+        private static MAliInterface Interface = new MAliInterface();
 
         static void Main(string[] args)
         {
-            Console.WriteLine("MAli - dev. build");
-            TestFastaReadAndWrite();
+            if (args.Length == 0)
+            {
+                Console.WriteLine("MAli - dev. build");
+                TestFastaReadAndWrite();
+            }
+            else
+            {
+                Interface.ProcessArguments(args);
+            }
         }
 
         static void TestFastaReader()
