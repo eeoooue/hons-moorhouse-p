@@ -30,7 +30,7 @@ namespace MAli
             }
         }
 
-        public Dictionary<string, string?> InterpretArguments(string[] args)
+        private Dictionary<string, string?> InterpretArguments(string[] args)
         {
             Dictionary<string, string?> table = new Dictionary<string, string?>();
 
@@ -54,7 +54,7 @@ namespace MAli
             return table;
         }
 
-        public bool ContainsForeignCommands(Dictionary<string, string?> table)
+        private bool ContainsForeignCommands(Dictionary<string, string?> table)
         {
             MAliSpecification spec = new MAliSpecification();
 
@@ -69,7 +69,7 @@ namespace MAli
             return false;
         }
 
-        public bool IsAlignmentRequest(Dictionary<string, string?> table)
+        private bool IsAlignmentRequest(Dictionary<string, string?> table)
         {
             if (table.ContainsKey("input") && table.ContainsKey("output"))
             {
@@ -82,12 +82,12 @@ namespace MAli
             return false;
         }
 
-        public bool IsInfoRequest(Dictionary<string, string?> table)
+        private bool IsInfoRequest(Dictionary<string, string?> table)
         {
             return table.ContainsKey("info");
         }
 
-        public bool IsHelpRequest(Dictionary<string, string?> table)
+        private bool IsHelpRequest(Dictionary<string, string?> table)
         {
             return table.ContainsKey("help");
         }
