@@ -6,7 +6,7 @@ name: .NET Build & Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "sprint-01", "sprint-02", "sprint-03", "sprint-04", "sprint-05", "sprint-06" ]
   pull_request:
     branches: [ "main", "sprint-01", "sprint-02", "sprint-03", "sprint-04", "sprint-05", "sprint-06" ]
 

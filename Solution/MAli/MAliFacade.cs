@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    internal class MAliFacade
+    public class MAliFacade
     {
         private MAliSpecification Specification = new MAliSpecification();
         private FileHelper FileHelper = new FileHelper();
+        private ResponseBank ResponseBank = new ResponseBank();
 
         public void PerformAlignment(string inputPath, string outputPath)
         {
@@ -35,6 +36,10 @@ namespace MAli
             Specification.ListCurrentVersion();
             Console.WriteLine($"For directions try 'readme.txt' or use '-help'");
         }
-        
+
+        public void NotifyUserError(UserRequestError error)
+        {
+            ResponseBank.NotifyUserError(error);
+        }
     }
 }
