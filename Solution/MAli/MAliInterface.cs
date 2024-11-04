@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
+
+    public enum UserRequestError
+    {
+        ContainsForeignCommands,
+        RequestIsAmbiguous
+    }
+
+
     public class MAliInterface
     {
         private MAliFacade Facade = new MAliFacade();
@@ -13,6 +21,16 @@ namespace MAli
         public void ProcessArguments(string[] args)
         {
             Dictionary<string, string?> table = InterpretArguments(args);
+
+            if (ContainsForeignCommands(table))
+            {
+                Facade.NotifyUserError(UserRequestError.ContainsForeignCommands);
+            }
+
+            if (IsAmbiguousRequest(table))
+            {
+                Facade.NotifyUserError(UserRequestError.RequestIsAmbiguous);
+            }
 
             if (IsAlignmentRequest(table))
             {

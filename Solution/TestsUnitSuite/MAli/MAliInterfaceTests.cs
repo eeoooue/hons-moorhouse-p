@@ -106,6 +106,25 @@ namespace TestsUnitSuite.MAli
             Assert.AreEqual(true, verdict4);
         }
 
+
+        [TestMethod]
+        public void CanIdentifyForeignCommands()
+        {
+            MAliInterface mAliInterface = new MAliInterface();
+            string[] args = { "-buypizza", "-playgolf" };
+            Dictionary<string, string?> table = mAliInterface.InterpretArguments(args);
+            bool verdict1 = mAliInterface.IsAlignmentRequest(table);
+            bool verdict2 = mAliInterface.IsHelpRequest(table);
+            bool verdict3 = mAliInterface.IsInfoRequest(table);
+            bool verdict4 = mAliInterface.IsAmbiguousRequest(table);
+            bool verdict5 = mAliInterface.ContainsForeignCommands(table);
+            Assert.AreEqual(false, verdict1);
+            Assert.AreEqual(false, verdict2);
+            Assert.AreEqual(false, verdict3);
+            Assert.AreEqual(false, verdict4);
+            Assert.AreEqual(true, verdict5);
+        }
+
         #endregion
 
 
