@@ -48,9 +48,11 @@ namespace TestsUnitSuite.MAli
             bool verdict1 = mAliInterface.IsAlignmentRequest(table);
             bool verdict2 = mAliInterface.IsHelpRequest(table);
             bool verdict3 = mAliInterface.IsInfoRequest(table);
+            bool verdict4 = mAliInterface.IsAmbiguousRequest(table);
             Assert.AreEqual(true, verdict1);
             Assert.AreEqual(false, verdict2);
             Assert.AreEqual(false, verdict3);
+            Assert.AreEqual(false, verdict4);
         }
 
 
@@ -63,9 +65,11 @@ namespace TestsUnitSuite.MAli
             bool verdict1 = mAliInterface.IsAlignmentRequest(table);
             bool verdict2 = mAliInterface.IsHelpRequest(table);
             bool verdict3 = mAliInterface.IsInfoRequest(table);
+            bool verdict4 = mAliInterface.IsAmbiguousRequest(table);
             Assert.AreEqual(false, verdict1);
             Assert.AreEqual(true, verdict2);
             Assert.AreEqual(false, verdict3);
+            Assert.AreEqual(false, verdict4);
         }
 
 
@@ -78,13 +82,29 @@ namespace TestsUnitSuite.MAli
             bool verdict1 = mAliInterface.IsAlignmentRequest(table);
             bool verdict2 = mAliInterface.IsHelpRequest(table);
             bool verdict3 = mAliInterface.IsInfoRequest(table);
+            bool verdict4 = mAliInterface.IsAmbiguousRequest(table);
             Assert.AreEqual(false, verdict1);
             Assert.AreEqual(false, verdict2);
             Assert.AreEqual(true, verdict3);
+            Assert.AreEqual(false, verdict4);
         }
 
 
-
+        [TestMethod]
+        public void CanIdentifyAmbiguousRequest()
+        {
+            MAliInterface mAliInterface = new MAliInterface();
+            string[] args = { "-info", "-help" };
+            Dictionary<string, string?> table = mAliInterface.InterpretArguments(args);
+            bool verdict1 = mAliInterface.IsAlignmentRequest(table);
+            bool verdict2 = mAliInterface.IsHelpRequest(table);
+            bool verdict3 = mAliInterface.IsInfoRequest(table);
+            bool verdict4 = mAliInterface.IsAmbiguousRequest(table);
+            Assert.AreEqual(false, verdict1);
+            Assert.AreEqual(false, verdict2);
+            Assert.AreEqual(false, verdict3);
+            Assert.AreEqual(true, verdict4);
+        }
 
         #endregion
 
