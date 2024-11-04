@@ -30,7 +30,7 @@ namespace MAli
             }
         }
 
-        private Dictionary<string, string?> InterpretArguments(string[] args)
+        public Dictionary<string, string?> InterpretArguments(string[] args)
         {
             Dictionary<string, string?> table = new Dictionary<string, string?>();
 
@@ -54,7 +54,7 @@ namespace MAli
             return table;
         }
 
-        private bool ContainsForeignCommands(Dictionary<string, string?> table)
+        public bool ContainsForeignCommands(Dictionary<string, string?> table)
         {
             MAliSpecification spec = new MAliSpecification();
 
@@ -69,7 +69,7 @@ namespace MAli
             return false;
         }
 
-        private bool IsAlignmentRequest(Dictionary<string, string?> table)
+        public bool IsAlignmentRequest(Dictionary<string, string?> table)
         {
             if (table.ContainsKey("input") && table.ContainsKey("output"))
             {
@@ -82,26 +82,24 @@ namespace MAli
             return false;
         }
 
-        private bool IsInfoRequest(Dictionary<string, string?> table)
+        public bool IsInfoRequest(Dictionary<string, string?> table)
         {
             return table.ContainsKey("info");
         }
 
-        private bool IsHelpRequest(Dictionary<string, string?> table)
+        public bool IsHelpRequest(Dictionary<string, string?> table)
         {
             return table.ContainsKey("help");
         }
 
-        private bool IsCommand(string candidate)
+        public bool IsCommand(string candidate)
         {
             return candidate.StartsWith('-');
         }
 
-        private bool IsArgument(string candidate)
+        public bool IsArgument(string candidate)
         {
             return !candidate.StartsWith('-');
         }
-
-        
     }
 }
