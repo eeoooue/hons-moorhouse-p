@@ -1,0 +1,50 @@
+
+name: Build & Test
+
+# - creates test report using https://github.com/marketplace/actions/test-reporter
+
+# run the workflow when:
+# - a push is made to 'main'
+# - a pull request is made to 'main'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main", "sprint-01", "sprint-02", "sprint-03", "sprint-04", "sprint-05", "sprint-06" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies (MAli)
+      working-directory: ./Solution/MAli/
+      run: dotnet restore
+
+    - name: Build project (MAli)
+      working-directory: ./Solution/MAli/
+      run: dotnet build --no-restore
+
+    - name: Test
+      working-directory: ./Solution/TestsUnitSuite/
+      run: dotnet test --logger "trx;LogFileName=test-results.trx"
+      
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: Report - Unit Tests
+        working-directory: ./Solution/TestsUnitSuite/TestResults/
+        path: test-results.trx  # Path to test results
+        reporter: dotnet-trx  # Format of test results
+
