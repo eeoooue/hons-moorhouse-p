@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    internal class MAliSpecification
+    public class MAliSpecification
     {
         public HashSet<string> SupportedCommands = new HashSet<string>();
         public string Version = "v0.1";

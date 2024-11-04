@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    internal class MAliInterface
+    public class MAliInterface
     {
         private MAliFacade Facade = new MAliFacade();
 

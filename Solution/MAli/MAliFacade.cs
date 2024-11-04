@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    internal class MAliFacade
+    public class MAliFacade
     {
         private MAliSpecification Specification = new MAliSpecification();
         private FileHelper FileHelper = new FileHelper();
