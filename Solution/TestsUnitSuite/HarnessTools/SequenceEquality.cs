@@ -21,9 +21,15 @@ namespace TestsUnitSuite.HarnessTools
 
         public void AssertSequencesMatch(BioSequence expected, BioSequence actual)
         {
-            Assert.AreEqual(expected.Identifier, actual.Identifier);
-            Assert.AreEqual(expected.Payload, actual.Payload);
-            Assert.AreEqual(expected.Residues, actual.Residues);
+            Assert.IsTrue(SequencesMatch(expected, actual));
+        }
+
+        public bool SequencesMatch(BioSequence expected, BioSequence actual)
+        {
+            bool identifiersMatch = expected.Identifier == actual.Identifier;
+            bool payloadsMatch = expected.Payload == actual.Payload;
+            bool residuesMatch = expected.Residues == actual.Residues;
+            return identifiersMatch && payloadsMatch && residuesMatch;
         }
     }
 }
