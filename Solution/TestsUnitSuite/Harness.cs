@@ -14,6 +14,7 @@ namespace TestsUnitSuite
         public static SequenceConservation SequenceConservation = new SequenceConservation();
         public static SequenceEquality SequenceEquality = new SequenceEquality();
         public static AlignmentEquality AlignmentEquality = new AlignmentEquality();
+        public static AlignmentConservation AlignmentConservation = new AlignmentConservation();
 
     }
 }
