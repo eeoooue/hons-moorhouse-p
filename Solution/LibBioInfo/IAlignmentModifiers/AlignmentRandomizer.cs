@@ -43,7 +43,7 @@ namespace LibBioInfo.IAlignmentModifiers
             for (int j = 0; j < n; j++)
             {
                 int randomValue = Randomizer.Random.Next(0, int.MaxValue);
-                pairs.Add(new Tuple<int, bool>(j, matrix[i, j]));
+                pairs.Add(new Tuple<int, bool>(randomValue, matrix[i, j]));
             }
 
             pairs = pairs.OrderBy(x => x.Item1).ToList();
