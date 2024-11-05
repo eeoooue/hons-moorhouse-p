@@ -15,6 +15,7 @@ namespace TestsUnitSuite.LibBioInfo
 
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
+        SequenceEquality SequenceEquality = Harness.SequenceEquality;
 
 
         #region Basic data representation tests
@@ -107,5 +108,29 @@ namespace TestsUnitSuite.LibBioInfo
         #endregion
 
 
+        #region Testing alignment copy
+
+        [TestMethod]
+        public void CanCopyAlignment()
+        {
+            List<BioSequence> original = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            Alignment alignment = new Alignment(original);
+            Alignment copy = alignment.GetCopy();
+
+            List<BioSequence> originalAligned = alignment.GetAlignedSequences();
+            List<BioSequence> copyAligned = copy.GetAlignedSequences();
+
+            SequenceConservation.AssertDataIsConserved(originalAligned, copyAligned);
+            SequenceEquality.AssertSequencesMatch(originalAligned, copyAligned);
+        }
+
+        #endregion
     }
 }

@@ -33,6 +33,12 @@ namespace LibBioInfo
             return result;
         }
 
+        public Alignment GetCopy()
+        {
+            List<BioSequence> sequences = GetAlignedSequences();
+            return new Alignment(sequences);
+        }
+
         public string GetAlignedPayload(int i)
         {
             BioSequence sequence = Sequences[i];
