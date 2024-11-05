@@ -17,6 +17,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
+        AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
         AlignmentRandomizer AlignmentRandomizer = new AlignmentRandomizer();
 
@@ -39,23 +40,31 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(original, copy);
             Assert.IsFalse(alignmentsMatch);
 
-            List<BioSequence> originalSeqs = original.GetAlignedSequences();
-            List<BioSequence> randomizedSeqs = copy.GetAlignedSequences();
-            SequenceConservation.AssertDataIsConserved(originalSeqs, randomizedSeqs);
+            AlignmentConservation.AssertAlignmentsAreConserved(copy, original);
+
         }
 
-        private void PrintAlignmentState(Alignment alignment)
+        [TestMethod]
+        public void SequentialRandomizationsAreDifferent()
         {
-            bool[,] state = alignment.State;
-
-            for (int i = 0; i < state.GetLength(0); i++)
+            List<BioSequence> inputs = new List<BioSequence>
             {
-                for (int j = 0; j < state.GetLength(1); j++)
-                {
-                    Console.Write(state[i, j] ? "1" : "0");
-                }
-                Console.WriteLine();
-            }
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            Alignment a = new Alignment(inputs);
+            AlignmentRandomizer.ModifyAlignment(a);
+
+            Alignment b = a.GetCopy();
+            AlignmentRandomizer.ModifyAlignment(b);
+
+            bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(a, b);
+            Assert.IsFalse(alignmentsMatch);
+
+            AlignmentConservation.AssertAlignmentsAreConserved(a, b);
         }
     }
 }
