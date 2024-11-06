@@ -14,7 +14,6 @@ namespace MAli
             if (args.Length == 0)
             {
                 Console.WriteLine("MAli - dev. build");
-                TestFastaReadAndWrite();
             }
             else
             {
@@ -22,34 +21,11 @@ namespace MAli
             }
         }
 
-        static void TestFastaReader()
+        public void CheckTestcaseCanBeAligned(string filename)
         {
-            FastaReader reader = new FastaReader();
-            string filename = "BB11001";
-
-            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
-            Helper.PrintSequences(sequences);
+            throw new NotImplementedException();
         }
 
-        static void TestFastaReadAndWrite()
-        {
-            FastaReader reader = new FastaReader();
-            string filename = "BB11001";
-
-            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
-            FastaWriter writer = new FastaWriter();
-            writer.WriteAlignmentTo(alignment, "testoutput.faa");
-        }
-
-        static void TestAlignmentCanBeInitialized()
-        {
-            FastaReader reader = new FastaReader();
-            string filename = "BB11001";
-
-            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
-            Helper.PrintAlignmentState(alignment);
-        }
+        
     }
 }
