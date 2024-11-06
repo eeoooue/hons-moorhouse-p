@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibBioInfo.IAlignmentModifiers;
 using LibFileIO;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,14 @@ namespace MAli
 
         public void PerformAlignment(string inputPath, string outputPath)
         {
-            Console.WriteLine($"Performing Multiple Sequence Alignment (dev build only):");
+            Console.WriteLine($"Performing Multiple Sequence Alignment (low quality - produced randomly):");
             Console.WriteLine($" - specified source: {inputPath}");
             Console.WriteLine($" - specified destination: {outputPath}");
 
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
             Alignment alignment = new Alignment(sequences);
+            IAlignmentModifier modifier = new AlignmentRandomizer();
+            modifier.ModifyAlignment(alignment);
             FileHelper.WriteAlignmentTo(alignment, outputPath);
         }
 
