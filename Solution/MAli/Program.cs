@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibFileIO.SequenceReaders;
 
@@ -13,19 +14,12 @@ namespace MAli
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("MAli - dev. build");
+                Interface.ProcessArguments(args);
             }
             else
             {
                 Interface.ProcessArguments(args);
             }
         }
-
-        public void CheckTestcaseCanBeAligned(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
-        
     }
 }
