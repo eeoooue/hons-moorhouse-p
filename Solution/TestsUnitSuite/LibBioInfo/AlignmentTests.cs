@@ -94,8 +94,8 @@ namespace TestsUnitSuite.LibBioInfo
         {
             List<BioSequence> original =
             [
-                new BioSequence("bad", "XXXX-X"),
-                new BioSequence("bad", "KRYPT-X"),
+                new BioSequence("bad", "X!!#-X"),
+                new BioSequence("bad", "KRYPT-#"),
                 new BioSequence("normal", "--ACGT"),
                 new BioSequence("normal", "--ACGT"),
             ];

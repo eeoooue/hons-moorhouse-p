@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibFileIO.SequenceReaders;
 
@@ -13,43 +14,12 @@ namespace MAli
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("MAli - dev. build");
-                TestFastaReadAndWrite();
+                Interface.ProcessArguments(args);
             }
             else
             {
                 Interface.ProcessArguments(args);
             }
-        }
-
-        static void TestFastaReader()
-        {
-            FastaReader reader = new FastaReader();
-            string filename = "BB11001";
-
-            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
-            Helper.PrintSequences(sequences);
-        }
-
-        static void TestFastaReadAndWrite()
-        {
-            FastaReader reader = new FastaReader();
-            string filename = "BB11001";
-
-            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
-            FastaWriter writer = new FastaWriter();
-            writer.WriteAlignmentTo(alignment, "testoutput.faa");
-        }
-
-        static void TestAlignmentCanBeInitialized()
-        {
-            FastaReader reader = new FastaReader();
-            string filename = "BB11001";
-
-            List<BioSequence> sequences = reader.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
-            Helper.PrintAlignmentState(alignment);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace TestsUnitSuite.LibBioInfo
         public void CanIdentifyNonProteinSequence()
         {
             string identifier = "exampleSequence";
-            string payload = "ACXXA-CGT--ACGT";
+            string payload = "AC?!?-CGT--ACGT";
 
             BioSequence sequence = new BioSequence(identifier, payload);
             Assert.IsFalse(sequence.IsProtein());
@@ -96,7 +96,7 @@ namespace TestsUnitSuite.LibBioInfo
         public void CanIdentifyInvalidPayload()
         {
             string identifier = "exampleSequence";
-            string payload = "AGCTXXX--XYXXX--XXX";
+            string payload = "AGCT???--XYXXX--XXX";
 
             BioSequence sequence = new BioSequence(identifier, payload);
             Assert.IsFalse(sequence.PayloadIsValid());
