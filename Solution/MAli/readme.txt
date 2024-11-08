@@ -6,7 +6,7 @@
 
 #################################################################
 
-MAli is a tool for Multiple Sequence Alignment.
+'MAli' is a tool for performing Multiple Sequence Alignment.
 The current version (v0.1) is a proof-of-concept only.
 This version of the tool is not intended for professional use.
 
@@ -20,7 +20,6 @@ Functionality:
 	
 	- Currently produces a random alignment state for the
 	  set of sequences provided. i.e. a low quality alignment.
-
 
 Example usage:
 
