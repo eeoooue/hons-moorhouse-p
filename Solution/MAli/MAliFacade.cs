@@ -11,33 +11,45 @@ namespace MAli
 {
     public class MAliFacade
     {
-        private MAliSpecification Specification = new MAliSpecification();
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
 
         public void PerformAlignment(string inputPath, string outputPath)
         {
-            Console.WriteLine($"Performing Multiple Sequence Alignment (low quality - produced randomly):");
-            Console.WriteLine($" - specified source: {inputPath}");
-            Console.WriteLine($" - specified destination: {outputPath}");
+            Console.WriteLine($"Performing Multiple Sequence Alignment:");
 
-            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
-            Alignment alignment = new Alignment(sequences);
-            IAlignmentModifier modifier = new AlignmentRandomizer();
-            modifier.ModifyAlignment(alignment);
-            FileHelper.WriteAlignmentTo(alignment, outputPath);
+            try
+            {
+                Console.WriteLine($"Reading sequences from source: '{inputPath}'");
+                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+                Alignment alignment = new Alignment(sequences);
+
+                if (alignment.SequencesCanBeAligned())
+                {
+                    IAlignmentModifier modifier = new AlignmentRandomizer();
+                    modifier.ModifyAlignment(alignment);
+                    FileHelper.WriteAlignmentTo(alignment, outputPath);
+                    Console.WriteLine($"Alignment written to destination: '{outputPath}'");
+                }
+                else
+                {
+                    Console.WriteLine("Error: Sequences cannot be aligned.");
+                }
+            }
+            catch (Exception e)
+            {
+                ResponseBank.ExplainException(e);
+            }
         }
 
         public void ProvideHelp()
         {
-            Specification.ListCurrentVersion();
-            Specification.ListSupportedCommands();
+            ResponseBank.ProvideHelp();
         }
 
         public void ProvideInfo()
         {
-            Specification.ListCurrentVersion();
-            Console.WriteLine($"For directions try 'readme.txt' or use '-help'");
+            ResponseBank.ProvideInfo();
         }
 
         public void NotifyUserError(UserRequestError error)
