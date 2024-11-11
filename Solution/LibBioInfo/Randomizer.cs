@@ -9,5 +9,10 @@ namespace LibBioInfo
     public static class Randomizer
     {
         public static Random Random = new Random();
+
+        public static void SetSeed(int value)
+        {
+            Random = new Random(value);
+        }
     }
 }
