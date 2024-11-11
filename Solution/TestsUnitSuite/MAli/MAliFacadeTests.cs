@@ -17,6 +17,7 @@ namespace TestsUnitSuite.MAli
         MAliFacade MAliFacade = new MAliFacade();
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
+        AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
 
         [DataTestMethod]
         [DataRow("BB11001", "testoutput1.faa")]
@@ -38,5 +39,28 @@ namespace TestsUnitSuite.MAli
             AlignmentConservation.AssertAlignmentsAreConserved(leftJustified, alignment);
         }
 
+
+        [DataTestMethod]
+        [DataRow("BB11001", "testoutput1.faa", "1756")]
+        [DataRow("BB11002", "testoutput2.faa", "81")]
+        [DataRow("BB11003", "testoutput3.faa", "0")]
+        public void ProducesIdenticalAlignmentsWhenSeeded(string inputFile, string outputFile, string seed)
+        {
+            string filename_a = $"a_{outputFile}";
+            string filename_b = $"b_{outputFile}";
+
+            MAliFacade.SetSeed(seed);
+            MAliFacade.PerformAlignment(inputFile, filename_a);
+            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom(filename_a);
+            Alignment alignmentA = new Alignment(alignedA);
+
+            MAliFacade.SetSeed(seed);
+            MAliFacade.PerformAlignment(inputFile, filename_b);
+            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom(filename_b);
+            Alignment alignmentB = new Alignment(alignedB);
+
+            AlignmentConservation.AssertAlignmentsAreConserved(alignmentA, alignmentB);
+            AlignmentEquality.AssertAlignmentsMatch(alignmentA, alignmentB);
+        }
     }
 }
