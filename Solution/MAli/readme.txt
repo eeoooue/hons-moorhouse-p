@@ -28,3 +28,6 @@ Example usage:
 	output as a valid alignment 'my_alignment.faa' using the
 	FASTA file format.
 
+Dependencies:
+
+	In order to use MAli, the .NET 8.0 must be installed.
