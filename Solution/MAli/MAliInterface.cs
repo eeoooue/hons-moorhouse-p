@@ -28,6 +28,10 @@ namespace MAli
                 return;
             }
 
+            if (SpecifiesSeed(table))
+            {
+                Facade.SetSeed(table["seed"]!);
+            }
 
             if (ContainsForeignCommands(table))
             {
@@ -137,6 +141,11 @@ namespace MAli
             }
 
             return table.ContainsKey("help");
+        }
+
+        public bool SpecifiesSeed(Dictionary<string, string?> table)
+        {
+            return table.ContainsKey("seed");
         }
 
         public bool IsAmbiguousRequest(Dictionary<string, string?> table)

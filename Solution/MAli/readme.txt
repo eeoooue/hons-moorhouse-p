@@ -28,3 +28,13 @@ Example usage:
 	output as a valid alignment 'my_alignment.faa' using the
 	FASTA file format.
 
+	> MAli.exe -input BB11001 -output my_alignment.faa -seed 101
+
+	In the above example, a seed value of 101 is used to ensure
+	that the same seed is used for the source of randomness when
+	alignment is performed - this means results can be reproduced
+	given that the version of MAli used is the same.
+
+Dependencies:
+
+	In order to use MAli, the .NET 8.0 must be installed.

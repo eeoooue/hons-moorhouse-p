@@ -14,6 +14,20 @@ namespace MAli
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
 
+
+        public void SetSeed(string value)
+        {
+            try
+            {
+                int seedValue = int.Parse(value);
+                Randomizer.SetSeed(seedValue);
+            }
+            catch
+            {
+                return;
+            }
+        }
+
         public void PerformAlignment(string inputPath, string outputPath)
         {
             Console.WriteLine($"Performing Multiple Sequence Alignment:");

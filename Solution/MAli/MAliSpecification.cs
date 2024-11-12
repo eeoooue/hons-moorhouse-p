@@ -23,7 +23,7 @@ namespace MAli
             SupportedCommands.Add("input");
             SupportedCommands.Add("output");
             SupportedCommands.Add("help");
-            SupportedCommands.Add("info");
+            SupportedCommands.Add("seed");
         }
 
         public void AddCommandDescriptions()
@@ -31,7 +31,8 @@ namespace MAli
             CommandDescriptions.Add("input", "Specify the input file of sequences to be aligned.");
             CommandDescriptions.Add("output", "Specify the output file path for the alignment of sequences.");
             CommandDescriptions.Add("help", "Display the list of supported commands.");
-            CommandDescriptions.Add("info", "Display the current version and additional information.");
+            CommandDescriptions.Add("seed", "Specify a seed value for reproducible results.");
+
         }
 
         public void ListCurrentVersion()
