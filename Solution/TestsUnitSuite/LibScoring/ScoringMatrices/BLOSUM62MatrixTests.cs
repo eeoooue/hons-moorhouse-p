@@ -302,6 +302,29 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
         }
 
 
+        [DataTestMethod]
+        [DataRow('Q', 5)]
+        [DataRow('N', 0)]
+
+        [DataRow('H', 0)]
+        [DataRow('R', 1)]
+        [DataRow('K', 1)]
+
+        [DataRow('M', 0)]
+        [DataRow('I', -3)]
+        [DataRow('L', -2)]
+        [DataRow('V', -2)]
+
+        [DataRow('W', -2)]
+        [DataRow('Y', -1)]
+        [DataRow('F', -3)]
+        public void ColumnQIsCorrect(char pair, int expected)
+        {
+            int scoreAB = Matrix.ScorePair('Q', pair);
+            int scoreBA = Matrix.ScorePair(pair, 'Q');
+            Assert.AreEqual(expected, scoreAB);
+            Assert.AreEqual(expected, scoreBA);
+        }
 
     }
 }
