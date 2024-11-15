@@ -18,7 +18,7 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
         [DataRow('S', 4)]
         [DataRow('T', 5)]
         [DataRow('A', 4)]
-        [DataRow('C', 6)]
+        [DataRow('G', 6)]
         [DataRow('P', 7)]
 
         [DataRow('D', 6)]
