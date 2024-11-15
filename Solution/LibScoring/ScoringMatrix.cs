@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibScoring
 {
-    internal class ScoringMatrix
+    public abstract class ScoringMatrix
     {
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibScoring.ScoringMatrices
 {
-    public class IdentityMatrix
+    public class IdentityMatrix : ScoringMatrix
     {
         public int ScorePair(char a, char b)
         {
