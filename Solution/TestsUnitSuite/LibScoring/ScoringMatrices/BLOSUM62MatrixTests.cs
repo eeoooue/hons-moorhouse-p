@@ -1,0 +1,48 @@
+﻿using LibScoring.ScoringMatrices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TestsUnitSuite.LibScoring.ScoringMatrices
+{
+    [TestClass]
+    public class BLOSUM62MatrixTests
+    {
+        BLOSUM62Matrix Matrix = new BLOSUM62Matrix();
+
+        [DataTestMethod]
+        [DataRow('C', 9)]
+
+        [DataRow('S', 4)]
+        [DataRow('T', 5)]
+        [DataRow('A', 4)]
+        [DataRow('C', 6)]
+        [DataRow('P', 7)]
+
+        [DataRow('D', 6)]
+        [DataRow('E', 5)]
+        [DataRow('Q', 5)]
+        [DataRow('N', 6)]
+
+        [DataRow('H', 8)]
+        [DataRow('R', 5)]
+        [DataRow('K', 5)]
+
+        [DataRow('M', 5)]
+        [DataRow('I', 4)]
+        [DataRow('L', 4)]
+        [DataRow('V', 4)]
+
+        [DataRow('W', 11)]
+        [DataRow('Y', 7)]
+        [DataRow('F', 6)]
+
+        public void MatchingPairScoresAreCorrect(char a, int expected)
+        {
+            int score = Matrix.ScorePair(a, a);
+            Assert.AreEqual(expected, score);
+        }
+    }
+}
