@@ -47,7 +47,6 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
 
 
         [DataTestMethod]
-
         [DataRow('A', 'K', -1)]
         [DataRow('P', 'T', -1)]
         [DataRow('S', 'R', -1)]
@@ -57,6 +56,42 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
         {
             int scoreAB = Matrix.ScorePair(a, b);
             int scoreBA = Matrix.ScorePair(b, a);
+            Assert.AreEqual(expected, scoreAB);
+            Assert.AreEqual(expected, scoreBA);
+        }
+
+
+        [DataTestMethod]
+        [DataRow('C', 9)]
+
+        [DataRow('S', -1)]
+        [DataRow('T', -1)]
+        [DataRow('A', 0)]
+        [DataRow('G', -3)]
+        [DataRow('P', -3)]
+
+        [DataRow('D', -3)]
+        [DataRow('E', -4)]
+        [DataRow('Q', -3)]
+        [DataRow('N', -3)]
+
+        [DataRow('H', -3)]
+        [DataRow('R', -3)]
+        [DataRow('K', -3)]
+
+        [DataRow('M', -1)]
+        [DataRow('I', -1)]
+        [DataRow('L', -1)]
+        [DataRow('V', -1)]
+
+        [DataRow('W', -2)]
+        [DataRow('Y', -2)]
+        [DataRow('F', -2)]
+
+        public void RowCIsCorrect(char pair, int expected)
+        {
+            int scoreAB = Matrix.ScorePair('C', pair);
+            int scoreBA = Matrix.ScorePair(pair, 'C');
             Assert.AreEqual(expected, scoreAB);
             Assert.AreEqual(expected, scoreBA);
         }
