@@ -17,9 +17,16 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
 
         [TestMethod]
-        public void CanInstantiateObjective()
+        public void CanInstantiateObjectiveWithIdentityMatrix()
         {
             IScoringMatrix matrix = new IdentityMatrix();
+            IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
+        }
+
+        [TestMethod]
+        public void CanInstantiateObjectiveWithBLOSUM26Matrix()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
         }
 
