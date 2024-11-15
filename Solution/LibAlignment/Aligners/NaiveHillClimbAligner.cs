@@ -49,9 +49,9 @@ namespace LibAlignment.Aligners
 
         public override void Iterate()
         {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            IAlignmentModifier shifter = new GapShifter();
             Alignment candidate = CurrentAlignment!.GetCopy();
-            randomizer.ModifyAlignment(candidate);
+            shifter.ModifyAlignment(candidate);
             AcceptIfImprovement(candidate);
         }
     }
