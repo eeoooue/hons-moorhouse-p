@@ -390,5 +390,43 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
             Assert.AreEqual(expected, scoreAB);
             Assert.AreEqual(expected, scoreBA);
         }
+
+        [DataTestMethod]
+        [DataRow('K', 5)]
+
+        [DataRow('M', -1)]
+        [DataRow('I', -3)]
+        [DataRow('L', -2)]
+        [DataRow('V', -2)]
+
+        [DataRow('W', -3)]
+        [DataRow('Y', -2)]
+        [DataRow('F', -3)]
+        public void ColumnKIsCorrect(char pair, int expected)
+        {
+            int scoreAB = Matrix.ScorePair('K', pair);
+            int scoreBA = Matrix.ScorePair(pair, 'K');
+            Assert.AreEqual(expected, scoreAB);
+            Assert.AreEqual(expected, scoreBA);
+        }
+
+        [DataTestMethod]
+        [DataRow('M', 5)]
+        [DataRow('I', 1)]
+        [DataRow('L', 2)]
+        [DataRow('V', 1)]
+
+        [DataRow('W', -1)]
+        [DataRow('Y', -1)]
+        [DataRow('F', 0)]
+        public void ColumnMIsCorrect(char pair, int expected)
+        {
+            int scoreAB = Matrix.ScorePair('M', pair);
+            int scoreBA = Matrix.ScorePair(pair, 'M');
+            Assert.AreEqual(expected, scoreAB);
+            Assert.AreEqual(expected, scoreBA);
+        }
+
+
     }
 }
