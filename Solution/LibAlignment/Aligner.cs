@@ -12,7 +12,7 @@ namespace LibAlignment
 
         public int IterationsLimit { get; private set; } = 0;
 
-        public float AlignmentScore { get; protected set; } = 0;
+        public double AlignmentScore { get; protected set; } = 0;
 
         public Aligner(IObjectiveFunction objective, int iterations)
         {
@@ -22,7 +22,9 @@ namespace LibAlignment
 
         public abstract Alignment AlignSequences(List<BioSequence> sequences);
 
-        public abstract void Initialize();
+        public abstract void Initialize(List<BioSequence> sequences);
+
+        public abstract void Iterate();
 
         public double ScoreAlignment(Alignment alignment)
         {
