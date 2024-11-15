@@ -10,8 +10,4 @@
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ObjectiveFunctions\" />
-  </ItemGroup>
-
 </Project>

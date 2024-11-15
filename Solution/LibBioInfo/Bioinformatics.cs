@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo
 {
-    internal class Bioinformatics
+    public class Bioinformatics
     {
         public HashSet<char> DNAResidues = new HashSet<char> { 'A', 'C', 'G', 'T' };
         public HashSet<char> RNAResidues = new HashSet<char> { 'A', 'C', 'G', 'U' };

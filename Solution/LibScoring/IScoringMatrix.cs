@@ -1,5 +1,4 @@
-﻿using LibBioInfo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibScoring
 {
-    public interface IObjectiveFunction
+    public interface IScoringMatrix
     {
-        public double ScoreAlignment(Alignment alignment);
+        public abstract int ScorePair(char a, char b);
     }
 }
