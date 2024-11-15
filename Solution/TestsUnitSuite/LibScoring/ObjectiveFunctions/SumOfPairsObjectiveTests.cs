@@ -19,7 +19,7 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
         [TestMethod]
         public void CanInstantiateObjective()
         {
-            ScoringMatrix matrix = new IdentityMatrix();
+            IScoringMatrix matrix = new IdentityMatrix();
             IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
         }
 
@@ -27,7 +27,7 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
         public void CanScoreAlignment()
         {
             Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
-            ScoringMatrix matrix = new IdentityMatrix();
+            IScoringMatrix matrix = new IdentityMatrix();
             IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
             double score = function.ScoreAlignment(alignment);
         }

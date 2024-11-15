@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibScoring
 {
-    public abstract class ScoringMatrix
+    public interface IScoringMatrix
     {
+        public abstract int ScorePair(char a, char b);
     }
 }
