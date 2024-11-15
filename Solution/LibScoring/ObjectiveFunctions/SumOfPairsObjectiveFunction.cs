@@ -25,26 +25,24 @@ namespace LibScoring.ObjectiveFunctions
                 result += ScoreColumn(alignment, j);
             }
 
-            return 0;
+            return result;
         }
 
         public double ScoreColumn(Alignment alignment, int j)
         {
-            for(int i1 = 0; i1 < alignment.Height; i1++)
+            double result = 0;
+            for (int i1 = 0; i1 < alignment.Height; i1++)
             {
                 char a = alignment.GetCharacterAt(i1, j);
 
                 for (int i2 = 0; i2 < alignment.Height; i2++)
                 {
                     char b = alignment.GetCharacterAt(i2, j);
+                    result += Matrix.ScorePair(a, b);
                 }
             }
 
-
-
-
-
-            return 0;
+            return result;
         }
     }
 }

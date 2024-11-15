@@ -31,5 +31,14 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
             IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
             double score = function.ScoreAlignment(alignment);
         }
+
+        [TestMethod]
+        public void CanScoreAlignmentColumn()
+        {
+            Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
+            IScoringMatrix matrix = new IdentityMatrix();
+            SumOfPairsObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
+            double score = function.ScoreColumn(alignment, 0);
+        }
     }
 }
