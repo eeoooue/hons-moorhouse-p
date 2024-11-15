@@ -44,5 +44,21 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
             int score = Matrix.ScorePair(a, a);
             Assert.AreEqual(expected, score);
         }
+
+
+        [DataTestMethod]
+
+        [DataRow('A', 'K', -1)]
+        [DataRow('P', 'T', -1)]
+        [DataRow('S', 'R', -1)]
+        [DataRow('G', 'Y', -3)]
+
+        public void RandomSelectionOfPairsAreCorrectlyScored(char a, char b, int expected)
+        {
+            int scoreAB = Matrix.ScorePair(a, b);
+            int scoreBA = Matrix.ScorePair(b, a);
+            Assert.AreEqual(expected, scoreAB);
+            Assert.AreEqual(expected, scoreBA);
+        }
     }
 }
