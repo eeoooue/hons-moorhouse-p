@@ -152,6 +152,36 @@ namespace LibBioInfo
             }
         }
 
+        public List<int> GetResiduePositionsInRow(Alignment alignment, int i)
+        {
+            List<int> result = new List<int>();
+
+            for(int j=0; j<alignment.Width; j++)
+            {
+                if (State[i,j] == false)
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
+        public List<int> GetGapPositionsInRow(Alignment alignment, int i)
+        {
+            List<int> result = new List<int>();
+
+            for (int j = 0; j < alignment.Width; j++)
+            {
+                if (State[i, j] == true)
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
         public bool SequencesCanBeAligned()
         {
             return ContainsNucleicsOnly() || ContainsProteinsOnly();
