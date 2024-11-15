@@ -19,6 +19,16 @@ namespace LibScoring.ObjectiveFunctions
 
         public double ScoreAlignment(Alignment alignment)
         {
+            for(int i=0; i<alignment.Width; i++)
+            {
+
+            }
+
+            return 0;
+        }
+
+        public double ScoreColumn(Alignment alignment, int i)
+        {
             return 0;
         }
     }
