@@ -5,7 +5,7 @@ namespace LibAlignment
 {
     public abstract class Aligner
     {
-        public IObjectiveFunction Objective;
+        private IObjectiveFunction Objective;
         public Alignment? CurrentAlignment = null;
 
         public int IterationsCompleted { get; protected set; } = 0;
@@ -20,5 +20,13 @@ namespace LibAlignment
             IterationsLimit = iterations;
         }
 
+        public abstract Alignment AlignSequences(List<BioSequence> sequences);
+
+        public abstract void Initialize();
+
+        public double ScoreAlignment(Alignment alignment)
+        {
+            return Objective.ScoreAlignment(alignment);
+        }
     }
 }
