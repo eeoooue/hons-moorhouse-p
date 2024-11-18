@@ -14,8 +14,8 @@ namespace LibBioInfo.IAlignmentModifiers
         {
             for(int repeat=0; repeat<MaxAttempts; repeat++)
             {
-                int column = Randomizer.Random.Next(alignment.Height);
-                bool success = TryShiftGapInRow(alignment, column);
+                int row = Randomizer.Random.Next(alignment.Height);
+                bool success = TryShiftGapInRow(alignment, row);
                 if (success)
                 {
                     return;
@@ -30,19 +30,19 @@ namespace LibBioInfo.IAlignmentModifiers
 
             if (residuePositions.Count == 0 || gapPositions.Count == 0)
             {
-                int residueChoiceIndex = Randomizer.Random.Next(residuePositions.Count);
-                int gapChoiceIndex = Randomizer.Random.Next(gapPositions.Count);
-
-                int posToBecomeGap = residuePositions[residueChoiceIndex];
-                int posToBecomeResidue = gapPositions[gapChoiceIndex];
-
-                alignment.State[i, posToBecomeResidue] = false;
-                alignment.State[i, posToBecomeGap] = true;
-
-                return true;
+                return false;
             }
 
-            return false;
+            int residueChoiceIndex = Randomizer.Random.Next(residuePositions.Count);
+            int gapChoiceIndex = Randomizer.Random.Next(gapPositions.Count);
+
+            int posToBecomeGap = residuePositions[residueChoiceIndex];
+            int posToBecomeResidue = gapPositions[gapChoiceIndex];
+
+            alignment.State[i, posToBecomeResidue] = false;
+            alignment.State[i, posToBecomeGap] = true;
+
+            return true;
         }
     }
 }
