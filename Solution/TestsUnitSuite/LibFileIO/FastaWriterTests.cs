@@ -104,13 +104,13 @@ namespace TestsUnitSuite.LibFileIO
             List<string> expected = new List<string>()
             {
                 ">ExampleA",
-                "ACGTACGTACGTACGTACGT----------------",
+                "ACGTACGTACGTACGTACGT--------------------",
                 ">ExampleB",
-                "ACGTTTTTTTT-------------------------",
+                "ACGTTTTTTTT-----------------------------",
                 ">ExampleC",
-                "CCCCCCCCCCCCCCCCCCCCCCCCCCCC--------",
+                "CCCCCCCCCCCCCCCCCCCCCCCCCCCC------------",
                 ">ExampleD",
-                "ACGTACGTACGT------------------------",
+                "ACGTACGTACGT----------------------------",
             };
 
             List<BioSequence> original = new List<BioSequence>
