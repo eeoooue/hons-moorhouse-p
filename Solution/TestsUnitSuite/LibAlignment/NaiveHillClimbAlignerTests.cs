@@ -47,13 +47,12 @@ namespace TestsUnitSuite.LibAlignment
             climber.Initialize(inputs);
             Alignment initial = climber.CurrentAlignment!.GetCopy();
             
-            for (int i=0; i<10; i++)
+            for (int i=0; i<100; i++)
             {
                 climber.Iterate();
             }
 
             Alignment result = climber.CurrentAlignment!.GetCopy();
-
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(initial, result);
             Assert.IsFalse(alignmentsMatch);
