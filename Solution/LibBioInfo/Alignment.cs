@@ -88,16 +88,16 @@ namespace LibBioInfo
 
         private int DecideWidth()
         {
-            // placeholder logic - alignment width 8 + the length of the longest sequence
+            // placeholder logic
 
             int width = 0;
             foreach (BioSequence seq in Sequences)
             {
-                int extraWidth = seq.Residues.Length + 8;
-                width = Math.Max(width, extraWidth);
+                width = Math.Max(width, seq.Residues.Length);
             }
+            int extra = (int)Math.Ceiling(width * 0.4);
 
-            return width;
+            return width + extra;
         }
 
         public bool ContainsNucleicsOnly()
