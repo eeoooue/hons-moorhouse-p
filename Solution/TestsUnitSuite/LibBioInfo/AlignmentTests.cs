@@ -155,6 +155,30 @@ namespace TestsUnitSuite.LibBioInfo
             Assert.IsFalse(alignmentsMatch);
         }
 
+
+
+        [TestMethod]
+        public void CopyingConservesAlignmentState()
+        {
+            List<BioSequence> inputs = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            Alignment original = new Alignment(inputs);
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(original);
+
+            Alignment copy = original.GetCopy();
+
+            bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(original, copy);
+            Assert.IsTrue(alignmentsMatch);
+        }
+
+
         #endregion
     }
 }
