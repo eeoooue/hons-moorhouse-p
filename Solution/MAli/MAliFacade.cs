@@ -1,6 +1,10 @@
-﻿using LibBioInfo;
+﻿using LibAlignment;
+using LibAlignment.Aligners;
+using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
 using LibFileIO;
+using LibScoring;
+using MAli.AlignmentConfigs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +17,7 @@ namespace MAli
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-
+        public AlignmentConfig Config = new StochasticHillClimbConfig();
 
         public void SetSeed(string value)
         {
@@ -28,7 +32,7 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(string inputPath, string outputPath)
+        public void PerformAlignment(string inputPath, string outputPath, int iterations=0)
         {
             Console.WriteLine($"Performing Multiple Sequence Alignment:");
 
@@ -40,8 +44,13 @@ namespace MAli
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IAlignmentModifier modifier = new AlignmentRandomizer();
-                    modifier.ModifyAlignment(alignment);
+                    Aligner aligner = Config.CreateAligner();
+                    if (iterations > 0)
+                    {
+                        aligner.IterationsLimit = iterations;
+                    }
+
+                    alignment = aligner.AlignSequences(sequences);
                     FileHelper.WriteAlignmentTo(alignment, outputPath);
                     Console.WriteLine($"Alignment written to destination: '{outputPath}'");
                 }
