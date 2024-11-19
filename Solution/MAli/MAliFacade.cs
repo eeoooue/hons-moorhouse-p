@@ -32,7 +32,7 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(string inputPath, string outputPath)
+        public void PerformAlignment(string inputPath, string outputPath, int iterations=0)
         {
             Console.WriteLine($"Performing Multiple Sequence Alignment:");
 
@@ -45,6 +45,11 @@ namespace MAli
                 if (alignment.SequencesCanBeAligned())
                 {
                     Aligner aligner = Config.CreateAligner();
+                    if (iterations > 0)
+                    {
+                        aligner.IterationsLimit = iterations;
+                    }
+
                     alignment = aligner.AlignSequences(sequences);
                     FileHelper.WriteAlignmentTo(alignment, outputPath);
                     Console.WriteLine($"Alignment written to destination: '{outputPath}'");
