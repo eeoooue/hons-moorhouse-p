@@ -32,6 +32,8 @@ namespace TestsUnitSuite.LibAlignment
             return aligner;
         }
 
+
+
         [TestMethod]
         public void AlignerModifiesAlignment()
         {
@@ -52,16 +54,12 @@ namespace TestsUnitSuite.LibAlignment
                 climber.Iterate();
             }
 
-            Alignment result = climber.CurrentAlignment!.GetCopy();
+            Alignment result = climber.CurrentAlignment!;
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(initial, result);
             Assert.IsFalse(alignmentsMatch);
 
             AlignmentConservation.AssertAlignmentsAreConserved(initial, result);
         }
-
-
-
-        
     }
 }

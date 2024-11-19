@@ -12,7 +12,6 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
     [TestClass]
     public class GapShifterTests
     {
-
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
@@ -33,7 +32,6 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             };
 
             Alignment original = new Alignment(inputs);
-
             Alignment copy = original.GetCopy();
             GapShifter.ModifyAlignment(copy);
 
