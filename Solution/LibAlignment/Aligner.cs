@@ -10,7 +10,7 @@ namespace LibAlignment
 
         public int IterationsCompleted { get; protected set; } = 0;
 
-        public int IterationsLimit { get; private set; } = 0;
+        public int IterationsLimit { get; set; } = 0;
 
         public double AlignmentScore { get; protected set; } = 0;
 
