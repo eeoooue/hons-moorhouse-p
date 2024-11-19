@@ -18,6 +18,21 @@ namespace LibBioInfo
             InitializeAlignmentState();
         }
 
+        public Alignment(Alignment other)
+        {
+            Sequences = other.GetAlignedSequences();
+            Width = other.Width;
+            State = new bool[other.Height, other.Width];
+
+            for(int i=0; i<other.Height; i++)
+            {
+                for(int j=0; j<other.Width; j++)
+                {
+                    State[i, j] = other.State[i, j];
+                }
+            }
+        }
+
         public List<BioSequence> GetAlignedSequences()
         {
             List<BioSequence> result = new List<BioSequence>();
@@ -35,8 +50,7 @@ namespace LibBioInfo
 
         public Alignment GetCopy()
         {
-            List<BioSequence> sequences = GetAlignedSequences();
-            return new Alignment(sequences);
+            return new Alignment(this);
         }
 
         public string GetAlignedPayload(int i)
