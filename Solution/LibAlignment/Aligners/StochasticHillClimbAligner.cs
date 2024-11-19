@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public sealed class NaiveHillClimbAligner : Aligner
+    public sealed class StochasticHillClimbAligner : Aligner
     {
-        public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public StochasticHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
 
         }

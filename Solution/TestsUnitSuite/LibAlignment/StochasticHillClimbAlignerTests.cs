@@ -15,7 +15,7 @@ using TestsUnitSuite.HarnessTools;
 namespace TestsUnitSuite.LibAlignment
 {
     [TestClass]
-    public class NaiveHillClimbAlignerTests
+    public class StochasticHillClimbAlignerTests
     {
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
@@ -28,7 +28,7 @@ namespace TestsUnitSuite.LibAlignment
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
             const int maxIterations = 50;
-            NaiveHillClimbAligner aligner = new NaiveHillClimbAligner(objective, maxIterations);
+            StochasticHillClimbAligner aligner = new StochasticHillClimbAligner(objective, maxIterations);
             return aligner;
         }
 
