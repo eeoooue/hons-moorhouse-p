@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
-            const int maxIterations = 100;
+            const int maxIterations = 1000;
             NaiveHillClimbAligner aligner = new NaiveHillClimbAligner(objective, maxIterations);
             return aligner;
         }
