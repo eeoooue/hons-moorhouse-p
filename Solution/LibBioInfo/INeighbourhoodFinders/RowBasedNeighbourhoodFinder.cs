@@ -16,12 +16,59 @@ namespace LibBioInfo.INeighbourhoodFinders
 
         public List<bool[,]> FindNeighboursForRow(bool[,] state, int i)
         {
-            throw new NotImplementedException();
+            int m = state.GetLength(0);
+            bool[] originalRow = ExtractRow(state, i);
+
+            List<bool[,]> result = new List<bool[,]>();
+
+            foreach (bool[] row in GetNeighboursOfRow(originalRow))
+            {
+                bool[,] neighbour = GetStateWithReplacedRow(state, i, row);
+                result.Add(neighbour);
+            }
+
+            return result;
         }
 
-        public bool[] GetStateWithReplacedRow(bool[,] state, int i, bool[] row)
+
+        public bool[] ExtractRow(bool[,] matrix, int i)
         {
-            throw new NotImplementedException();
+            int n = matrix.GetLength(1);
+            bool[] result = new bool[n];
+
+            for (int j = 0; j < n; j++)
+            {
+                result[j] = matrix[i, j];
+            }
+
+            return result;
+        }
+
+        public bool[,] GetStateWithReplacedRow(bool[,] state, int rowIndex, bool[] row)
+        {
+            int m = state.GetLength(0);
+            int n = state.GetLength(1);
+
+            bool[,] result = new bool[m, n];
+
+            for(int i=0; i<m; i++)
+            {
+                if (i == rowIndex)
+                {
+                    continue;
+                }
+                for(int j=0; j<n; j++)
+                {
+                    result[i, j] = state[i, j];
+                }
+            }
+
+            for(int j=0; j<n; j++)
+            {
+                result[rowIndex, j] = row[j];
+            }
+
+            return result;
         }
 
         public List<bool[]> GetNeighboursOfRow(bool[] row)
@@ -34,7 +81,8 @@ namespace LibBioInfo.INeighbourhoodFinders
                     if (row[i] != row[j])
                     {
                         bool[] neighbour = GetRowAfterSwap(row, i, j);
-                        result.Append(neighbour);
+                        Console.WriteLine($"added for {i} and {j}");
+                        result.Add(neighbour);
                     }
                 }
             }
