@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    internal class NaiveHillClimbAligner : Aligner
+    public class NaiveHillClimbAligner : Aligner
     {
         public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
@@ -67,6 +67,7 @@ namespace LibAlignment.Aligners
             {
                 Alignment neighbour = alignment.GetCopy();
                 neighbour.State = state;
+                result.Add(neighbour);
             }
 
             return result;
