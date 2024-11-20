@@ -58,8 +58,7 @@ namespace LibAlignment.Aligners
         public List<Alignment> GetNeighbouringAlignments(Alignment alignment)
         {
             List<Alignment> result = new List<Alignment>();
-
-            INeighbourhoodFinder finder = new RowBasedNeighbourhoodFinder();
+            INeighbourhoodFinder finder = new SwapBasedNeighbourhoodFinder();
 
             List<bool[,]> neighbouringStates = finder.FindNeighbours(alignment.State);
 
