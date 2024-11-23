@@ -30,12 +30,14 @@ class WrappedAligner:
     def align_testcase(self, testcase, testcase_path):
 
         line = f"{self.exec_path} -input {testcase_path} -output {self.output_folder}/{testcase}"
-        print(line)
-        subprocess.run(line)
+        if self.seed > 0:
+            line += f" -seed {self.seed}"
+
+        subprocess.run(line, capture_output=True)
     
     def get_alignment_path(self, testcase):
 
-        return f"{self.directory}/{self.output_folder}/{testcase}"
+        return f"{self.output_folder}/{testcase}"
 
         
         
