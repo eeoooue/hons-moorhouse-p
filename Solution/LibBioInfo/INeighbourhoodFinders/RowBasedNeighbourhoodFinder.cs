@@ -81,7 +81,7 @@ namespace LibBioInfo.INeighbourhoodFinders
                     if (row[i] != row[j])
                     {
                         bool[] neighbour = GetRowAfterSwap(row, i, j);
-                        Console.WriteLine($"added for {i} and {j}");
+                        // Console.WriteLine($"added for {i} and {j}");
                         result.Add(neighbour);
                     }
                 }
