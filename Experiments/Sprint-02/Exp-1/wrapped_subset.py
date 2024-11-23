@@ -1,7 +1,7 @@
 
 import os
 
-class TestSubset:
+class WrappedSubset:
     def __init__(self, directory: str) -> None:
         
         self.directory = directory
