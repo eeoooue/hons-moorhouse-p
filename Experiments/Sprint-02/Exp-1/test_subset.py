@@ -8,12 +8,20 @@ class TestSubset:
 
     def list_files_in_subfolder(self, subfolder: str):
 
-        return []
-
-    def get_test_cases(self):
-
-        return []
+        return os.listdir(f"{self.directory}/{subfolder}")
     
-    def get_references(self):
+    def get_testcases(self):
 
-        return []
+        result = []
+        for filename in self.list_files_in_subfolder("in"):
+            result.append(filename)
+        return result
+    
+    def get_input_path(self, testcase):
+
+        return f"{self.directory}/in/{testcase}"
+    
+    def get_reference_path(self, testcase):
+
+        return f"{self.directory}/ref/{testcase}"
+
