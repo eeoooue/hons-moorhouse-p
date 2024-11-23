@@ -16,5 +16,6 @@ namespace TestsUnitSuite
         public static AlignmentEquality AlignmentEquality = new AlignmentEquality();
         public static AlignmentConservation AlignmentConservation = new AlignmentConservation();
         public static ExampleAlignments ExampleAlignments = new ExampleAlignments();
+        public static StateEquality StateEquality = new StateEquality();
     }
 }

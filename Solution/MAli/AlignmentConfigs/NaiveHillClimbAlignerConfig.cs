@@ -1,8 +1,8 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
-using LibScoring;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
+using LibScoring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MAli.AlignmentConfigs
 {
-    public class StochasticHillClimbConfig : AlignmentConfig
+    internal class NaiveHillClimbAlignerConfig : AlignmentConfig
     {
         public override Aligner CreateAligner()
         {
@@ -23,7 +23,7 @@ namespace MAli.AlignmentConfigs
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
             const int maxIterations = 10;
-            StochasticHillClimbAligner aligner = new StochasticHillClimbAligner(objective, maxIterations);
+            NaiveHillClimbAligner aligner = new NaiveHillClimbAligner(objective, maxIterations);
             return aligner;
         }
     }

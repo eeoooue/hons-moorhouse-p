@@ -20,6 +20,7 @@ namespace TestsUnitSuite.MAli
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
 
         [DataTestMethod]
+        [Timeout(5000)]
         [DataRow("BB11001", "testoutput1.faa")]
         [DataRow("BB11002", "testoutput2.faa")]
         [DataRow("BB11003", "testoutput3.faa")]
@@ -41,6 +42,7 @@ namespace TestsUnitSuite.MAli
 
 
         [DataTestMethod]
+        [Timeout(5000)]
         [DataRow("BB11001", "testoutput1.faa", "1756")]
         [DataRow("BB11002", "testoutput2.faa", "81")]
         [DataRow("BB11003", "testoutput3.faa", "0")]
