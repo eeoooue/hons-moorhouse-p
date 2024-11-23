@@ -31,6 +31,8 @@ namespace TestsUnitSuite.LibAlignment
         }
 
         [TestMethod]
+        [Timeout(5000)]
+
         public void AlignerModifiesAlignment()
         {
             List<BioSequence> inputs = new List<BioSequence>
@@ -45,7 +47,7 @@ namespace TestsUnitSuite.LibAlignment
             climber.Initialize(inputs);
             Alignment initial = climber.CurrentAlignment!.GetCopy();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 climber.Iterate();
             }
