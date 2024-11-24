@@ -48,6 +48,11 @@ namespace LibBioInfo
                 return true;
             }
 
+            if (residue == 'B' || residue == 'Z')
+            {
+                return true;
+            }
+
             return ProteinResidues.Contains(residue);
         }
     }

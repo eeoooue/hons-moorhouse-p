@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibFileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,38 @@ namespace TestsUnitSuite.LibBioInfo
     [TestClass]
     public class BioSequenceTests
     {
+        private FileHelper FileHelper = new FileHelper();
+
+        #region Can evaluate real sequences
+
+        [DataTestMethod]
+        [DataRow("BB11001")]
+        [DataRow("BB11002")]
+        [DataRow("BB11003")]
+        [DataRow("1axkA_2nlrA")]
+        [DataRow("1eagA_1smrA")]
+        [DataRow("1ggxA_1h4uA")]
+        public void RecognisesRealProteinSequences(string filename)
+        {
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+
+            bool purity = true;
+            foreach(BioSequence sequence in sequences)
+            {
+                bool verdict = sequence.IsProtein();
+                if (verdict == false)
+                {
+                    purity = false;
+                    Console.WriteLine($"{sequence.Identifier} was impure");
+                }
+            }
+
+            Assert.IsTrue(purity);
+
+        }
+
+        #endregion
+
         #region Testing basic data representation
 
         [TestMethod]

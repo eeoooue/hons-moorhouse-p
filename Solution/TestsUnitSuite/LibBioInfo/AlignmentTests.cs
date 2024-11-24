@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
+using LibFileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,32 @@ namespace TestsUnitSuite.LibBioInfo
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
+
+        private FileHelper FileHelper = new FileHelper();
+
+
+        #region Supports alignment of real sequences
+
+
+        [DataTestMethod]
+        [DataRow("BB11001")]
+        [DataRow("BB11002")]
+        [DataRow("BB11003")]
+        [DataRow("1axkA_2nlrA")]
+        [DataRow("1eagA_1smrA")]
+        [DataRow("1ggxA_1h4uA")]
+        public void RealSequencesCanBeAligned(string filename)
+        {
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            Alignment ali = new Alignment(sequences);
+            Assert.IsNotNull(ali);
+            Assert.IsTrue(ali.SequencesCanBeAligned());
+        }
+
+        #endregion
+
+
+
 
 
         #region Basic data representation tests
