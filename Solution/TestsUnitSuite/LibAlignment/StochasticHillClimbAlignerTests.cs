@@ -16,7 +16,7 @@ using LibFileIO;
 namespace TestsUnitSuite.LibAlignment
 {
     [TestClass]
-    public class StochasticHillClimbAlignerTests
+    public class SelectiveRandomWalkAlignerTests
     {
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
@@ -64,7 +64,7 @@ namespace TestsUnitSuite.LibAlignment
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
             const int maxIterations = 50;
-            StochasticHillClimbAligner aligner = new StochasticHillClimbAligner(objective, maxIterations);
+            SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
             return aligner;
         }
 
