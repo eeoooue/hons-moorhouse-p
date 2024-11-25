@@ -16,6 +16,31 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
     {
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
 
+        #region
+
+        [DataTestMethod]
+        [DataRow(8)]
+        [DataRow(16)]
+        [DataRow(32)]
+        [DataRow(64)]
+        [DataRow(128)]
+        [Timeout(500)]
+        public void CanScoreAlignmentsEfficiently(int times)
+        {
+            List<Alignment> result = new List<Alignment>();
+
+            Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
+
+            for (int i = 0; i < times; i++)
+            {
+                IScoringMatrix matrix = new IdentityMatrix();
+                IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
+                double score = function.ScoreAlignment(alignment);
+            }
+        }
+
+        #endregion
+
         [TestMethod]
         public void CanInstantiateObjectiveWithIdentityMatrix()
         {
