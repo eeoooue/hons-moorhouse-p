@@ -30,8 +30,6 @@ namespace LibScoring.ObjectiveFunctions
 
         public double ScoreColumn(Alignment alignment, int j)
         {
-            // TODO use combinatorics counter hashtable stuff.
-
             string column = alignment.GetColumn(j);
 
             Dictionary<char, int> table = ConstructCounterHashTable(column);
@@ -66,51 +64,23 @@ namespace LibScoring.ObjectiveFunctions
                 }
             }
 
-
             return result;
         }
-
-        public double LegacyScoreColumn(Alignment alignment, int j)
-        {
-            double result = 0;
-            for (int i1 = 0; i1 < alignment.Height; i1++)
-            {
-                char a = alignment.GetCharacterAt(i1, j);
-
-                for (int i2 = i1+1; i2 < alignment.Height; i2++)
-                {
-                    char b = alignment.GetCharacterAt(i2, j);
-                    result += Matrix.ScorePair(a, b);
-                }
-            }
-
-            return result;
-        }
-
-
 
         public Dictionary<char, int> ConstructCounterHashTable(string column)
         {
-            Dictionary<char, int> result = InitialiseCounterHashTable();
+            Dictionary<char, int> result = new Dictionary<char, int>();
+            foreach (char residue in Matrix.GetResidues())
+            {
+                result[residue] = 0;
+            }
 
-            foreach(char x in column)
+            foreach (char x in column)
             {
                 if (result.ContainsKey(x))
                 {
                     result[x] += 1;
                 }
-            }
-
-            return result;
-        }
-
-
-        public Dictionary<char, int> InitialiseCounterHashTable()
-        {
-            Dictionary<char, int> result = new Dictionary<char, int>();
-            foreach(char residue in Matrix.GetResidues())
-            {
-                result[residue] = 0;
             }
 
             return result;
