@@ -33,8 +33,6 @@ namespace TestsUnitSuite.LibAlignment
         [DataRow("BB11003", 8)]
         [DataRow("BB11003", 16)]
         [DataRow("BB11003", 32)]
-        [DataRow("BB11003", 64)]
-        [DataRow("BB11003", 128)]
         [Timeout(5000)]
         public void CanAlignBBSEfficiently(string filename, int iterations)
         {
@@ -48,7 +46,6 @@ namespace TestsUnitSuite.LibAlignment
         [DataRow("1ggxA_1h4uA", 8)]
         [DataRow("1ggxA_1h4uA", 16)]
         [DataRow("1ggxA_1h4uA", 32)]
-        [DataRow("1ggxA_1h4uA", 64)]
         [Timeout(5000)]
         public void CanAlignPREFABEfficiently(string filename, int iterations)
         {

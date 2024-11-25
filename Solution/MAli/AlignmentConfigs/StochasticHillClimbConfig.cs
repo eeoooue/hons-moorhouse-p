@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
-            const int maxIterations = 10;
+            const int maxIterations = 100;
             StochasticHillClimbAligner aligner = new StochasticHillClimbAligner(objective, maxIterations);
             return aligner;
         }
