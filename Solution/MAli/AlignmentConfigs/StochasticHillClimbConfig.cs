@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MAli.AlignmentConfigs
 {
-    public class StochasticHillClimbConfig : AlignmentConfig
+    public class SelectiveRandomWalkAlignerConfig : AlignmentConfig
     {
         public override Aligner CreateAligner()
         {
@@ -22,8 +22,8 @@ namespace MAli.AlignmentConfigs
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
-            const int maxIterations = 10;
-            StochasticHillClimbAligner aligner = new StochasticHillClimbAligner(objective, maxIterations);
+            const int maxIterations = 100;
+            SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
             return aligner;
         }
     }

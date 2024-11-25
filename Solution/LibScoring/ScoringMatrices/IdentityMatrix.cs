@@ -11,6 +11,12 @@ namespace LibScoring.ScoringMatrices
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
+        public List<char> GetResidues()
+        {
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return alphabet.ToList();
+        }
+
         public int ScorePair(char a, char b)
         {
             if (Bioinformatics.IsGapChar(a) || Bioinformatics.IsGapChar(b))

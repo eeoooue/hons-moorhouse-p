@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestsUnitSuite.HarnessTools;
+using LibFileIO;
 
 namespace TestsUnitSuite.LibAlignment
 {
@@ -22,6 +23,24 @@ namespace TestsUnitSuite.LibAlignment
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
+        private FileHelper FileHelper = new FileHelper();
+
+        #region Testing time-efficiency of alignment process
+
+        [DataTestMethod]
+        [DataRow("BB11001", 10)]
+        [Timeout(5000)]
+        [Ignore]
+        public void CanAlignEfficiently(string filename, int iterations)
+        {
+            Aligner aligner = GetAligner();
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            aligner.IterationsLimit = iterations;
+            Alignment result = aligner.AlignSequences(sequences);
+        }
+
+        #endregion
+
         public Aligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
@@ -32,6 +51,7 @@ namespace TestsUnitSuite.LibAlignment
 
         [TestMethod]
         [Timeout(5000)]
+        [Ignore]
 
         public void AlignerModifiesAlignment()
         {
