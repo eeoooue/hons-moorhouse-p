@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestsUnitSuite.HarnessTools;
+using LibFileIO;
 
 namespace TestsUnitSuite.LibAlignment
 {
@@ -22,6 +23,45 @@ namespace TestsUnitSuite.LibAlignment
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
+
+
+        private FileHelper FileHelper = new FileHelper();
+
+        #region Testing time-efficiency of alignment process
+
+        [DataTestMethod]
+        [DataRow("BB11003", 8)]
+        [DataRow("BB11003", 16)]
+        [DataRow("BB11003", 32)]
+        [DataRow("BB11003", 64)]
+        [DataRow("BB11003", 128)]
+        [Timeout(5000)]
+        public void CanAlignBBSEfficiently(string filename, int iterations)
+        {
+            Aligner aligner = GetAligner();
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            aligner.IterationsLimit = iterations;
+            Alignment result = aligner.AlignSequences(sequences);
+        }
+
+        [DataTestMethod]
+        [DataRow("1ggxA_1h4uA", 8)]
+        [DataRow("1ggxA_1h4uA", 16)]
+        [DataRow("1ggxA_1h4uA", 32)]
+        [DataRow("1ggxA_1h4uA", 64)]
+        [DataRow("1ggxA_1h4uA", 128)]
+        [Timeout(5000)]
+        public void CanAlignPREFABEfficiently(string filename, int iterations)
+        {
+            Aligner aligner = GetAligner();
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            aligner.IterationsLimit = iterations;
+            Alignment result = aligner.AlignSequences(sequences);
+        }
+
+        #endregion
+
+
 
         public Aligner GetAligner()
         {

@@ -27,19 +27,41 @@ namespace TestsUnitSuite.LibBioInfo
         #region Timing alignment duplication
 
         [DataTestMethod]
-        [DataRow(8)]
-        [DataRow(16)]
-        [DataRow(32)]
-        [DataRow(64)]
-        [DataRow(128)]
+        [DataRow("BB11003", 8)]
+        [DataRow("BB11003", 16)]
+        [DataRow("BB11003", 32)]
+        [DataRow("BB11003", 64)]
+        [DataRow("BB11003", 128)]
         [Timeout(500)]
-        public void CanDuplicateAlignmentsEfficiently(int duplicates)
+        public void CanDuplicateBBSAlignmentsEfficiently(string filename, int duplicates)
         {
             List<Alignment> result = new List<Alignment>();
 
-            Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            Alignment alignment = new Alignment(sequences);
 
-            for(int i=0; i<duplicates; i++)
+            for (int i=0; i<duplicates; i++)
+            {
+                Alignment copy = alignment.GetCopy();
+                result.Add(copy);
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow("1ggxA_1h4uA", 8)]
+        [DataRow("1ggxA_1h4uA", 16)]
+        [DataRow("1ggxA_1h4uA", 32)]
+        [DataRow("1ggxA_1h4uA", 64)]
+        [DataRow("1ggxA_1h4uA", 128)]
+        [Timeout(500)]
+        public void CanDuplicatePREFABAlignmentsEfficiently(string filename, int duplicates)
+        {
+            List<Alignment> result = new List<Alignment>();
+
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            Alignment alignment = new Alignment(sequences);
+
+            for (int i = 0; i < duplicates; i++)
             {
                 Alignment copy = alignment.GetCopy();
                 result.Add(copy);

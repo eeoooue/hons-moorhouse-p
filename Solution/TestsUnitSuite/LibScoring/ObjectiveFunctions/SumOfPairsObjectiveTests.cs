@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibFileIO;
 using LibScoring;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
@@ -15,21 +16,45 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
     public class SumOfPairsObjectiveTests
     {
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
+        FileHelper FileHelper = new FileHelper();
 
-        #region
+        #region Is Time Efficient
 
         [DataTestMethod]
-        [DataRow(8)]
-        [DataRow(16)]
-        [DataRow(32)]
-        [DataRow(64)]
-        [DataRow(128)]
+        [DataRow("BB11001", 8)]
+        [DataRow("BB11001", 16)]
+        [DataRow("BB11001", 32)]
+        [DataRow("BB11001", 64)]
+        [DataRow("BB11001", 128)]
         [Timeout(500)]
-        public void CanScoreAlignmentsEfficiently(int times)
+        public void CanScoreBBSAlignmentsEfficiently(string filename, int times)
         {
             List<Alignment> result = new List<Alignment>();
 
-            Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            Alignment alignment = new Alignment(sequences);
+
+            for (int i = 0; i < times; i++)
+            {
+                IScoringMatrix matrix = new IdentityMatrix();
+                IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
+                double score = function.ScoreAlignment(alignment);
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow("1ggxA_1h4uA", 8)]
+        [DataRow("1ggxA_1h4uA", 16)]
+        [DataRow("1ggxA_1h4uA", 32)]
+        [DataRow("1ggxA_1h4uA", 64)]
+        [DataRow("1ggxA_1h4uA", 128)]
+        [Timeout(500)]
+        public void CanScorePREFABAlignmentsEfficiently(string filename, int times)
+        {
+            List<Alignment> result = new List<Alignment>();
+
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
+            Alignment alignment = new Alignment(sequences);
 
             for (int i = 0; i < times; i++)
             {
