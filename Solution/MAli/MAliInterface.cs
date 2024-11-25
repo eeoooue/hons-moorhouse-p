@@ -47,7 +47,22 @@ namespace MAli
 
             if (IsAlignmentRequest(table))
             {
-                Facade.PerformAlignment(table["input"]!, table["output"]!);
+                int iterations = 0;
+
+                if (table.ContainsKey("iterations"))
+                {
+                    try
+                    {
+                        string value = table["iterations"]!;
+                        iterations = int.Parse(value);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                Facade.PerformAlignment(table["input"]!, table["output"]!, iterations);
                 return;
             }
 

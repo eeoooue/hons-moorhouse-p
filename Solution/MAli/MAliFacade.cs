@@ -34,7 +34,6 @@ namespace MAli
 
         public void PerformAlignment(string inputPath, string outputPath, int iterations=0)
         {
-            Console.WriteLine($"Performing Multiple Sequence Alignment:");
 
             try
             {
@@ -49,6 +48,8 @@ namespace MAli
                     {
                         aligner.IterationsLimit = iterations;
                     }
+
+                    Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
 
                     alignment = aligner.AlignSequences(sequences);
                     FileHelper.WriteAlignmentTo(alignment, outputPath);
