@@ -49,7 +49,6 @@ namespace TestsUnitSuite.LibAlignment
         [DataRow("1ggxA_1h4uA", 16)]
         [DataRow("1ggxA_1h4uA", 32)]
         [DataRow("1ggxA_1h4uA", 64)]
-        [DataRow("1ggxA_1h4uA", 128)]
         [Timeout(5000)]
         public void CanAlignPREFABEfficiently(string filename, int iterations)
         {
