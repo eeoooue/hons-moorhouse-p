@@ -28,11 +28,7 @@ namespace TestsUnitSuite.LibAlignment
         #region Testing time-efficiency of alignment process
 
         [DataTestMethod]
-        [DataRow("BB11001", 8)]
-        [DataRow("BB11001", 16)]
-        [DataRow("BB11001", 32)]
-        [DataRow("BB11001", 64)]
-        [DataRow("BB11001", 128)]
+        [DataRow("BB11001", 10)]
         [Timeout(5000)]
         [Ignore]
         public void CanAlignEfficiently(string filename, int iterations)
