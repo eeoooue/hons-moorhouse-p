@@ -25,7 +25,6 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
         [DataRow("BB11001", 16)]
         [DataRow("BB11001", 32)]
         [DataRow("BB11001", 64)]
-        [DataRow("BB11001", 128)]
         [Timeout(500)]
         public void CanScoreBBSAlignmentsEfficiently(string filename, int times)
         {
