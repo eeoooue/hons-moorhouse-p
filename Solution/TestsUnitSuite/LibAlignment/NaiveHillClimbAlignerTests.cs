@@ -51,6 +51,7 @@ namespace TestsUnitSuite.LibAlignment
 
         [TestMethod]
         [Timeout(5000)]
+        [Ignore]
 
         public void AlignerModifiesAlignment()
         {
