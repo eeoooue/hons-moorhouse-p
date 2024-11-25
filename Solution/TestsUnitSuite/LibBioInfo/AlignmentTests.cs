@@ -15,6 +15,7 @@ namespace TestsUnitSuite.LibBioInfo
     public class AlignmentTests
     {
 
+        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
@@ -22,6 +23,31 @@ namespace TestsUnitSuite.LibBioInfo
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
         private FileHelper FileHelper = new FileHelper();
+
+        #region Timing alignment duplication
+
+        [DataTestMethod]
+        [DataRow(8)]
+        [DataRow(16)]
+        [DataRow(32)]
+        [DataRow(64)]
+        [DataRow(128)]
+        [Timeout(500)]
+        public void CanDuplicateAlignmentsEfficiently(int duplicates)
+        {
+            List<Alignment> result = new List<Alignment>();
+
+            Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
+
+            for(int i=0; i<duplicates; i++)
+            {
+                Alignment copy = alignment.GetCopy();
+                result.Add(copy);
+            }
+        }
+
+        #endregion
+
 
 
         #region Supports alignment of real sequences
@@ -43,9 +69,6 @@ namespace TestsUnitSuite.LibBioInfo
         }
 
         #endregion
-
-
-
 
 
         #region Basic data representation tests
