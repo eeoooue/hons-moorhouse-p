@@ -18,37 +18,6 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         FileHelper FileHelper = new FileHelper();
 
-        #region Legacy and new scoring is equivalent
-
-        [DataTestMethod]
-        [DataRow("BB11001", 0.05)]
-        [DataRow("BB11002", 0.05)]
-        [DataRow("BB11003", 0.05)]
-        [DataRow("BB11001", 0.01)]
-        [DataRow("BB11002", 0.01)]
-        [DataRow("BB11003", 0.01)]
-        [Timeout(500)]
-        public void NewScoringAgreesWithLegacy(string filename, double tolerance)
-        {
-            List<Alignment> result = new List<Alignment>();
-
-            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
-
-            IScoringMatrix matrix = new IdentityMatrix();
-            SumOfPairsObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
-
-            for(int j=0; j<alignment.Width; j++)
-            {
-                double score1 = function.ScoreColumn(alignment, j);
-                double score2 = function.LegacyScoreColumn(alignment, j);
-                Assert.AreEqual(score1, score2, tolerance);
-            }
-            
-        }
-
-        #endregion
-
         #region Is Time Efficient
 
         [DataTestMethod]

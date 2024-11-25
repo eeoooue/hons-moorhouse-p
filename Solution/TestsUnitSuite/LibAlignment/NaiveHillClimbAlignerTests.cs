@@ -41,8 +41,6 @@ namespace TestsUnitSuite.LibAlignment
 
         #endregion
 
-
-
         public Aligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
