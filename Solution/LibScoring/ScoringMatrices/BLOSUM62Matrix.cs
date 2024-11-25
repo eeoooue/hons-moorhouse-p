@@ -68,6 +68,10 @@ namespace LibScoring.ScoringMatrices
             ResidueIndexes['F'] = 19;
         }
 
+        public List<char> GetResidues()
+        {
+            return ResidueIndexes.Keys.ToList();
+        }
 
         public int ScorePair(char a, char b)
         {

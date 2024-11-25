@@ -9,5 +9,7 @@ namespace LibScoring
     public interface IScoringMatrix
     {
         public abstract int ScorePair(char a, char b);
+
+        public abstract List<char> GetResidues();
     }
 }
