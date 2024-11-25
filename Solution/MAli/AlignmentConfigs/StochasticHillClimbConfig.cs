@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
-            const int maxIterations = 100;
+            const int maxIterations = 1000;
             SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
             return aligner;
         }

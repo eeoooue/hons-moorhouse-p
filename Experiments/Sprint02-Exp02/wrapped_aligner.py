@@ -13,6 +13,13 @@ class WrappedAligner:
         self.exec_path = f"{directory}/{executable}"
         self.output_folder = f"{directory}/output"
         self.prepare_output_folder()
+        self.indicate_iterations = False
+        self.iteration_count = 0
+
+    def specify_iterations(self, iters: int):
+
+        self.iteration_count = iters
+        self.indicate_iterations = True
 
     def set_seed(self, x: int):
 
@@ -32,6 +39,8 @@ class WrappedAligner:
         line = f"{self.exec_path} -input {testcase_path} -output {self.output_folder}/{testcase}"
         if self.seed > 0:
             line += f" -seed {self.seed}"
+        if self.indicate_iterations:
+            line += f" -iterations {self.iteration_count}"
 
         subprocess.run(line, capture_output=True)
     
