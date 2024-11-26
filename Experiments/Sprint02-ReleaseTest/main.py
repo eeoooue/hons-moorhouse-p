@@ -17,5 +17,3 @@ SEED_VALUE = 102
 aligner.set_seed(SEED_VALUE)
 
 batch_scorer.record_scores(f"{aligner.title}_seed_{SEED_VALUE}.csv")
-
-# needs timers
