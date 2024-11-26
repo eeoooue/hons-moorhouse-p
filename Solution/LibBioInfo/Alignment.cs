@@ -109,7 +109,8 @@ namespace LibBioInfo
             {
                 width = Math.Max(width, seq.Residues.Length);
             }
-            int extra = (int)Math.Ceiling(width * 0.4);
+            // int extra = (int)Math.Ceiling(width * 0.4);
+            int extra = 8;
 
             return width + extra;
         }
