@@ -11,7 +11,7 @@ aligner = WrappedAligner("MAli Candidate", "MAli", "MAli-candidate")
 scorer = WrappedScorer("qscore")
 batch_scorer = BatchScorer(aligner, subset, scorer)
 
-aligner.specify_iterations(1000)
+aligner.specify_iterations(10)
 
 SEED_VALUE = 102
 aligner.set_seed(SEED_VALUE)
