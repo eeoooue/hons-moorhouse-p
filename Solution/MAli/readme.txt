@@ -1,12 +1,12 @@
 
 ################################################################# 
 
-Metaheuristic Aligner - MAli (v0.1)
+Metaheuristic Aligner - MAli (v0.2)
 
 #################################################################
 
 'MAli' is a tool for performing Multiple Sequence Alignment.
-The current version (v0.1) is a proof-of-concept only.
+The current version (v0.2) is a proof-of-concept only.
 This version of the tool is not intended for professional use.
 
 Functionality:
@@ -17,8 +17,9 @@ Functionality:
 	- Outputs an alignment of these sequences using the FASTA
 	  format also.
 	
-	- Currently produces a random alignment state for the
-	  set of sequences provided. i.e. a low quality alignment.
+	- Number of iterations can be specified using '-iterations <count>'
+
+	- Can specify a seed value using '-seed <value>'
 
 Example usage:
 

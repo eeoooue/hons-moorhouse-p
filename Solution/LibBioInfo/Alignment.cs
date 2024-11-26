@@ -18,6 +18,21 @@ namespace LibBioInfo
             InitializeAlignmentState();
         }
 
+        public Alignment(Alignment other)
+        {
+            Sequences = other.GetAlignedSequences();
+            Width = other.Width;
+            State = new bool[other.Height, other.Width];
+
+            for(int i=0; i<other.Height; i++)
+            {
+                for(int j=0; j<other.Width; j++)
+                {
+                    State[i, j] = other.State[i, j];
+                }
+            }
+        }
+
         public List<BioSequence> GetAlignedSequences()
         {
             List<BioSequence> result = new List<BioSequence>();
@@ -35,8 +50,7 @@ namespace LibBioInfo
 
         public Alignment GetCopy()
         {
-            List<BioSequence> sequences = GetAlignedSequences();
-            return new Alignment(sequences);
+            return new Alignment(this);
         }
 
         public string GetAlignedPayload(int i)
@@ -88,16 +102,17 @@ namespace LibBioInfo
 
         private int DecideWidth()
         {
-            // placeholder logic - alignment width 8 + the length of the longest sequence
+            // placeholder logic
 
             int width = 0;
             foreach (BioSequence seq in Sequences)
             {
-                int extraWidth = seq.Residues.Length + 8;
-                width = Math.Max(width, extraWidth);
+                width = Math.Max(width, seq.Residues.Length);
             }
+            // int extra = (int)Math.Ceiling(width * 0.4);
+            int extra = 8;
 
-            return width;
+            return width + extra;
         }
 
         public bool ContainsNucleicsOnly()
@@ -150,6 +165,36 @@ namespace LibBioInfo
                     State[i, j] = true; // indicates that a gap is placed at state[i,j]
                 }
             }
+        }
+
+        public List<int> GetResiduePositionsInRow(Alignment alignment, int i)
+        {
+            List<int> result = new List<int>();
+
+            for(int j=0; j<alignment.Width; j++)
+            {
+                if (State[i,j] == false)
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
+        public List<int> GetGapPositionsInRow(Alignment alignment, int i)
+        {
+            List<int> result = new List<int>();
+
+            for (int j = 0; j < alignment.Width; j++)
+            {
+                if (State[i, j] == true)
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
         }
 
         public bool SequencesCanBeAligned()

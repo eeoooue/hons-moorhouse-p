@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo
 {
-    internal class Bioinformatics
+    public class Bioinformatics
     {
         public HashSet<char> DNAResidues = new HashSet<char> { 'A', 'C', 'G', 'T' };
         public HashSet<char> RNAResidues = new HashSet<char> { 'A', 'C', 'G', 'U' };
@@ -44,6 +44,11 @@ namespace LibBioInfo
         public bool IsProteinChar(char residue)
         {
             if (residue == 'X') // denotes an unknown residue
+            {
+                return true;
+            }
+
+            if (residue == 'B' || residue == 'Z')
             {
                 return true;
             }

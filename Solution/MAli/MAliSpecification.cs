@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MAli.AlignmentConfigs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace MAli
             SupportedCommands.Add("output");
             SupportedCommands.Add("help");
             SupportedCommands.Add("seed");
+            SupportedCommands.Add("iterations");
         }
 
         public void AddCommandDescriptions()
@@ -32,7 +34,7 @@ namespace MAli
             CommandDescriptions.Add("output", "Specify the output file path for the alignment of sequences.");
             CommandDescriptions.Add("help", "Display the list of supported commands.");
             CommandDescriptions.Add("seed", "Specify a seed value for reproducible results.");
-
+            CommandDescriptions.Add("iterations", "Specify the number of iterations of refinement to be performed.");
         }
 
         public void ListCurrentVersion()

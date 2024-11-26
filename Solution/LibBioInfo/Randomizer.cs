@@ -14,5 +14,7 @@ namespace LibBioInfo
         {
             Random = new Random(value);
         }
+
+       
     }
 }
