@@ -4,7 +4,7 @@ from wrapped_subset import WrappedSubset
 from wrapped_aligner import WrappedAligner
 from wrapped_scorer import WrappedScorer
 
-subset = WrappedSubset("PREFAB-I")
+subset = WrappedSubset("PREFAB-B")
 # aligner = WrappedAligner("MAli v0.1", "MAli", "MAli-v0.1")
 aligner = WrappedAligner("MAli Candidate", "MAli", "MAli-candidate")
 
