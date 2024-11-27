@@ -114,7 +114,7 @@ namespace MAli
 
         public string GetTimeStamp()
         {
-            string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             return timestamp;
         }
 
