@@ -95,7 +95,7 @@ namespace MAli
 
             if (table.ContainsKey("timestamp"))
             {
-                result += GetTimeStamp();
+                result += $"_{GetTimeStamp()}";
             }
 
             if (table.ContainsKey("tag"))
