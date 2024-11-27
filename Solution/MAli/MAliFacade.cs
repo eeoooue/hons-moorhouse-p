@@ -71,7 +71,7 @@ namespace MAli
 
         public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
         {
-            if (table.ContainsKey(""))
+            if (table.ContainsKey("iterations"))
             {
                 string? iterationsValue = table["iterations"];
 

@@ -19,6 +19,11 @@ namespace TestsUnitSuite.MAli
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
 
+
+
+
+        #region Testing high-level behaviour
+
         [DataTestMethod]
         [Timeout(5000)]
         [DataRow("BB11001", "testoutput1.faa")]
@@ -27,7 +32,10 @@ namespace TestsUnitSuite.MAli
 
         public void ProducesValidAlignment(string inputFile, string outputFile)
         {
-            MAliFacade.PerformAlignment(inputFile, outputFile, iterations: 3);
+            Dictionary<string, string?> table = new Dictionary<string, string?>();
+            table["iterations"] = "3";
+
+            MAliFacade.PerformAlignment(inputFile, outputFile, table);
 
             List<BioSequence> original = FileHelper.ReadSequencesFrom(inputFile);
             List<BioSequence> aligned = FileHelper.ReadSequencesFrom(outputFile);
@@ -45,24 +53,52 @@ namespace TestsUnitSuite.MAli
         [Timeout(5000)]
         [DataRow("BB11001", "testoutput1.faa", "1756")]
         [DataRow("BB11002", "testoutput2.faa", "81")]
-        [DataRow("BB11003", "testoutput3.faa", "0")]
+        [DataRow("BB11003", "testoutput3.faa", "1")]
         public void ProducesIdenticalAlignmentsWhenSeeded(string inputFile, string outputFile, string seed)
         {
+            Dictionary<string, string?> table = new Dictionary<string, string?>();
+            table["iterations"] = "3";
+
             string filename_a = $"a_{outputFile}";
             string filename_b = $"b_{outputFile}";
 
             MAliFacade.SetSeed(seed);
-            MAliFacade.PerformAlignment(inputFile, filename_a, iterations: 3);
+            MAliFacade.PerformAlignment(inputFile, filename_a, table);
             List<BioSequence> alignedA = FileHelper.ReadSequencesFrom(filename_a);
             Alignment alignmentA = new Alignment(alignedA);
 
             MAliFacade.SetSeed(seed);
-            MAliFacade.PerformAlignment(inputFile, filename_b, iterations: 3);
+            MAliFacade.PerformAlignment(inputFile, filename_b, table);
             List<BioSequence> alignedB = FileHelper.ReadSequencesFrom(filename_b);
             Alignment alignmentB = new Alignment(alignedB);
 
             AlignmentConservation.AssertAlignmentsAreConserved(alignmentA, alignmentB);
             AlignmentEquality.AssertAlignmentsMatch(alignmentA, alignmentB);
         }
+
+        #endregion
+
+
+
+        #region Testing iterations are unpacked correctly 
+
+
+        [DataTestMethod]
+        [DataRow(1756)]
+        [DataRow(81)]
+        [DataRow(1)]
+
+        public void TestingIterationsAreUnpacked(int counter)
+        {
+            Dictionary<string, string?> table = new Dictionary<string, string?>();
+            table["iterations"] = counter.ToString();
+
+            int actual = MAliFacade.UnpackSpecifiedIterations(table);
+            Assert.AreEqual(counter, actual);
+        }
+
+
+
+        #endregion
     }
 }
