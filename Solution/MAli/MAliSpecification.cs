@@ -11,7 +11,7 @@ namespace MAli
     {
         public HashSet<string> SupportedCommands = new HashSet<string>();
         public Dictionary<string, string> CommandDescriptions = new Dictionary<string, string>();
-        public string Version = "v0.1";
+        public string Version = "v0.2";
 
         public MAliSpecification()
         {
