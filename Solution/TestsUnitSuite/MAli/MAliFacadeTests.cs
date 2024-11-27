@@ -3,6 +3,7 @@ using LibFileIO;
 using MAli;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,9 +80,23 @@ namespace TestsUnitSuite.MAli
         #endregion
 
 
+        #region Testing tagging
+
+        [DataTestMethod]
+        [DataRow("output", "one", "output_one.faa")]
+        [DataRow("output_this_please", "two", "output_this_please_two.faa")]
+
+        public void TestingIterationsAreUnpacked(string outputpath, string tag, string expected)
+        {
+            Dictionary<string, string?> table = new Dictionary<string, string?>();
+            table["tag"] = tag;
+            string actual = MAliFacade.BuildFullOutputFilename(outputpath, table);
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
 
         #region Testing iterations are unpacked correctly 
-
 
         [DataTestMethod]
         [DataRow(1756)]
@@ -96,8 +111,6 @@ namespace TestsUnitSuite.MAli
             int actual = MAliFacade.UnpackSpecifiedIterations(table);
             Assert.AreEqual(counter, actual);
         }
-
-
 
         #endregion
     }
