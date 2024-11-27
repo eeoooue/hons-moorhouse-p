@@ -56,7 +56,7 @@ namespace MAli
                     string outputFilename = BuildFullOutputFilename(outputPath, table);
 
                     FileHelper.WriteAlignmentTo(alignment, outputFilename);
-                    Console.WriteLine($"Alignment written to destination: '{outputPath}'");
+                    Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
                 }
                 else
                 {
