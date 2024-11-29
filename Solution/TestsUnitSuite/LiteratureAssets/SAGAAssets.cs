@@ -14,13 +14,12 @@ namespace TestsUnitSuite.LiteratureAssets
 
         public List<BioSequence> GetFigure2Sequences()
         {
-            List<BioSequence> sequences = new List<BioSequence>();
             BioSequence seq1 = new BioSequence("1", "MGKVNVDEVGGEAL");
             BioSequence seq2 = new BioSequence("2", "MDKVNEEEVGGKAL");
-            BioSequence seq3 = new BioSequence("3", "MGKVGADEVYGEAL");
-            BioSequence seq4 = new BioSequence("4", "MGKVGGHAGEAL");
+            BioSequence seq3 = new BioSequence("3", "MGKVGAHAGEYGAEAL");
+            BioSequence seq4 = new BioSequence("4", "MGKVGGHAGEYGAEAL");
 
-            return sequences;
+            return new List<BioSequence>() { seq1, seq2, seq3, seq4 };
         }
 
         public Alignment GetFigure2ParentAlignment1()
