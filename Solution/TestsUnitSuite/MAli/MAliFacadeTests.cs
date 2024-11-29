@@ -80,7 +80,7 @@ namespace TestsUnitSuite.MAli
         #endregion
 
 
-            #region Testing tagging
+        #region Testing tagging
 
         [DataTestMethod]
         [DataRow("output", "one", "output_one.faa")]
