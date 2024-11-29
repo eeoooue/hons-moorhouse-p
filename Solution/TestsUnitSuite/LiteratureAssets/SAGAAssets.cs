@@ -61,7 +61,7 @@ namespace TestsUnitSuite.LiteratureAssets
         }
 
 
-        public Alignment GetFigure2ParentChild1()
+        public Alignment GetFigure2ChildAlignment1()
         {
             List<BioSequence> sequences = GetFigure2Sequences();
 
@@ -80,7 +80,7 @@ namespace TestsUnitSuite.LiteratureAssets
             return alignment;
         }
 
-        public Alignment GetFigure2ParentChild2()
+        public Alignment GetFigure2ChildAlignment2()
         {
             List<BioSequence> sequences = GetFigure2Sequences();
 
