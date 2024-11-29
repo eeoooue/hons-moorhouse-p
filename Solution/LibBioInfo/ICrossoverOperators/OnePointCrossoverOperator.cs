@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.ICrossoverOperators
 {
-    internal class OnePointCrossoverOperator : ICrossoverOperator
+    public class OnePointCrossoverOperator : ICrossoverOperator
     {
 
         // based on One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
 
-        public Alignment CreateChildAlignment(Alignment a, Alignment b)
+        public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
 
             // the alignment A is cut at a randomly chosen position
@@ -22,7 +22,7 @@ namespace LibBioInfo.ICrossoverOperators
             return CrossoverAtPosition(a, b, i);
         }
 
-        public Alignment CrossoverAtPosition(Alignment a, Alignment b, int i)
+        public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int i)
         {
 
 

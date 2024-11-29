@@ -8,7 +8,7 @@ namespace LibBioInfo
 {
     public interface ICrossoverOperator
     {
-        public Alignment CreateChildAlignment(Alignment a, Alignment b);
+        public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b);
 
     }
 }
