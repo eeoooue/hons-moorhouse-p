@@ -5,7 +5,7 @@ namespace LibBioInfo
     public class Alignment
     {
         public List<BioSequence> Sequences;
-        public int Height { get { return Sequences.Count; } }
+        public int Height { get { return State.GetLength(0); } }
         public int Width { get { return State.GetLength(1); } }
 
         public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
@@ -14,7 +14,7 @@ namespace LibBioInfo
         {
             Sequences = sequences;
             int width = DecideWidth();
-            State = new bool[Height, width];
+            State = new bool[sequences.Count, width];
             InitializeAlignmentState();
         }
 
