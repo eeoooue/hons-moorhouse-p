@@ -6,22 +6,21 @@ namespace LibBioInfo
     {
         public List<BioSequence> Sequences;
         public int Height { get { return Sequences.Count; } }
-        public int Width { get; private set; } = 0;
+        public int Width { get { return State.GetLength(1); } }
 
         public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
 
         public Alignment(List<BioSequence> sequences)
         {
             Sequences = sequences;
-            Width = DecideWidth();
-            State = new bool[Height,Width];
+            int width = DecideWidth();
+            State = new bool[Height, width];
             InitializeAlignmentState();
         }
 
         public Alignment(Alignment other)
         {
             Sequences = other.GetAlignedSequences();
-            Width = other.Width;
             State = new bool[other.Height, other.Width];
 
             for(int i=0; i<other.Height; i++)
