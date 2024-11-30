@@ -5,8 +5,8 @@ from wrapped_aligner import WrappedAligner
 from wrapped_scorer import WrappedScorer
 
 subset = WrappedSubset("PREFAB-J")
-# aligner = WrappedAligner("MAli v0.1", "MAli", "MAli-v0.1")
-aligner = WrappedAligner("MAli Candidate", "MAli", "MAli-candidate")
+aligner = WrappedAligner("MAli v0.2", "MAli", "MAli-v0.2")
+# aligner = WrappedAligner("MAli Candidate", "MAli", "MAli-candidate")
 
 scorer = WrappedScorer("qscore")
 batch_scorer = BatchScorer(aligner, subset, scorer)
