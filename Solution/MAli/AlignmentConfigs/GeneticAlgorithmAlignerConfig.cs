@@ -22,10 +22,10 @@ namespace MAli.AlignmentConfigs
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
-            const int maxIterations = 1000;
+            const int maxIterations = 100;
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations);
-            aligner.PopulationSize = 10;
-            aligner.SelectionSize = 6;
+            aligner.PopulationSize = 16;
+            aligner.SelectionSize = 8;
 
             return aligner;
         }

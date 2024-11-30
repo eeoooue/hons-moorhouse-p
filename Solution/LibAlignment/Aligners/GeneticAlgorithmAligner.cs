@@ -31,7 +31,7 @@ namespace LibAlignment.Aligners
                 Iterate();
             }
 
-            return CurrentAlignment!;
+            return SelectFittestMember(Population);
         }
 
         public override void Initialize(List<BioSequence> sequences)
@@ -46,8 +46,6 @@ namespace LibAlignment.Aligners
             List<Alignment> children = BreedAlignments(selectedParents, PopulationSize);
             MutateAlignments(children);
             Population = children;
-            CurrentAlignment = SelectFittestMember(Population);
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
         public void MutateAlignments(List<Alignment> alignments)
