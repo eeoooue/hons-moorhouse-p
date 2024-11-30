@@ -16,8 +16,8 @@ namespace LibAlignment.Aligners
         public ICrossoverOperator CrossoverOperator = new OnePointCrossoverOperator();
         public IAlignmentModifier Modifier = new GapShifter();
 
-        public int PopulationSize = 12;
-        public int SelectionSize = 6;
+        public int PopulationSize = 6;
+        public int SelectionSize = 4;
 
         public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
