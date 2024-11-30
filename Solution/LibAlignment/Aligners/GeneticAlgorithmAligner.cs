@@ -60,9 +60,11 @@ namespace LibAlignment.Aligners
 
         public void InitializePopulation(List<BioSequence> sequences)
         {
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
             for (int i = 0; i < PopulationSize; i++)
             {
                 Alignment alignment = new Alignment(sequences);
+                randomizer.ModifyAlignment(alignment);
                 Population.Add(alignment);
             }
             CurrentAlignment = Population[0];
