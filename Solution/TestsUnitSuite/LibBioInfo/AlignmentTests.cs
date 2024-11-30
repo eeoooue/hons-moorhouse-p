@@ -26,6 +26,28 @@ namespace TestsUnitSuite.LibBioInfo
 
         private FileHelper FileHelper = new FileHelper();
 
+        #region Can create alignment conserving state
+
+        [DataTestMethod]
+        [DataRow(17)]
+        [DataRow(56)]
+        [DataRow(525)]
+        [DataRow(1756)]
+        public void CanOptToConserveAlignmentState(int seed)
+        {
+            Randomizer.SetSeed(seed);
+            Alignment expected = ExampleAlignments.GetExampleA();
+            AlignmentRandomizer randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(expected);
+
+            Alignment actual = new Alignment(expected.GetAlignedSequences(), true);
+
+            AlignmentConservation.AssertAlignmentsAreConserved(expected, actual);
+            AlignmentEquality.AssertAlignmentsMatch(expected, actual);
+        }
+
+
+        #endregion
 
 
         #region Supports alignment of real sequences
