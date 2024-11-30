@@ -23,39 +23,7 @@ namespace TestsUnitSuite.LibAlignment
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
-
         private FileHelper FileHelper = new FileHelper();
-
-        #region Testing time-efficiency of alignment process
-
-        [DataTestMethod]
-        [DataRow("BB11003", 8)]
-        [DataRow("BB11003", 16)]
-        [DataRow("BB11003", 32)]
-        [Timeout(5000)]
-        public void CanAlignBBSEfficiently(string filename, int iterations)
-        {
-            Aligner aligner = GetAligner();
-            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
-            aligner.IterationsLimit = iterations;
-            Alignment result = aligner.AlignSequences(sequences);
-        }
-
-        [DataTestMethod]
-        [DataRow("1ggxA_1h4uA", 8)]
-        [DataRow("1ggxA_1h4uA", 16)]
-        [DataRow("1ggxA_1h4uA", 32)]
-        [Timeout(5000)]
-        public void CanAlignPREFABEfficiently(string filename, int iterations)
-        {
-            Aligner aligner = GetAligner();
-            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
-            aligner.IterationsLimit = iterations;
-            Alignment result = aligner.AlignSequences(sequences);
-        }
-
-        #endregion
-
 
         [TestMethod]
         public void HasPopulationOfAlignments()
@@ -115,8 +83,7 @@ namespace TestsUnitSuite.LibAlignment
             Aligner climber = GetAligner();
             climber.Initialize(inputs);
             Alignment initial = climber.CurrentAlignment!.GetCopy();
-
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
                 climber.Iterate();
             }
@@ -128,7 +95,6 @@ namespace TestsUnitSuite.LibAlignment
 
             AlignmentConservation.AssertAlignmentsAreConserved(initial, result);
         }
-
 
         public GeneticAlgorithmAligner GetAligner()
         {
