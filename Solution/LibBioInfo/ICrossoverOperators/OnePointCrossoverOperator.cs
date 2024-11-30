@@ -8,7 +8,7 @@ namespace LibBioInfo.ICrossoverOperators
 {
     public class OnePointCrossoverOperator : ICrossoverOperator
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
+        private static Bioinformatics Bioinformatics = new Bioinformatics();
 
         // based on One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
 
@@ -53,7 +53,22 @@ namespace LibBioInfo.ICrossoverOperators
             string prefix = GetPayloadUntilPosition(left, position);
             string suffix = ExtractComplementForPrefix(prefix, right);
             string payload = $"{prefix}{suffix}";
+            payload = TrimTrailingGaps(payload);
             return new BioSequence(left.Identifier, payload);
+        }
+
+        public string TrimTrailingGaps(string payload)
+        {
+            for(int i=payload.Length-1; i>=0; i--)
+            {
+                char x = payload[i];
+                if (Bioinformatics.IsGapChar(x) == false)
+                {
+                    return payload.Substring(0, i + 1);
+                }
+            }
+
+            return payload;
         }
 
         public string GetPayloadUntilPosition(BioSequence sequence, int i)
@@ -65,7 +80,8 @@ namespace LibBioInfo.ICrossoverOperators
         public string ExtractComplementForPrefix(string prefix, BioSequence source)
         {
             int residuesToSkip = CountResidues(prefix);
-            return CropFirstNResidues(source.Payload, residuesToSkip);
+            string result = CropFirstNResidues(source.Payload, residuesToSkip);
+            return result;
         }
 
         public string CropFirstNResidues(string payload, int count)

@@ -42,10 +42,22 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         }
 
 
+
+
+        [DataTestMethod]
+        [DataRow("ACGT----", "ACGT")]
+        [DataRow("ACGT-A--", "ACGT-A")]
+        [DataRow("ACGT-AAA", "ACGT-AAA")]
+        public void CanTrimTrailingGaps(string payload, string expected)
+        {
+            string actual = Operator.TrimTrailingGaps(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
         [DataTestMethod]
         [DataRow("ACGT", "ACGT", 1, "ACGT")]
-        [DataRow("AC--GT", "ACGT--", 1, "ACGT--")]
-        [DataRow("AC--GT", "ACGT--", 4, "AC--GT--")]
+        [DataRow("AC--GT", "ACGT--", 1, "ACGT")]
+        [DataRow("AC--GT", "ACGT--", 4, "AC--GT")]
         [DataRow("AC--GT", "--ACGT", 6, "AC--GT")]
 
         public void CanCrossoverSequencesAtPosition(string payloadA, string payloadB, int position, string expected)
