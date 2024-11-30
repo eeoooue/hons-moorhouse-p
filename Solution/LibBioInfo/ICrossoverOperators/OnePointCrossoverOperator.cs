@@ -53,9 +53,44 @@ namespace LibBioInfo.ICrossoverOperators
             string prefix = GetPayloadUntilPosition(left, position);
             string suffix = ExtractComplementForPrefix(prefix, right);
             string payload = $"{prefix}{suffix}";
-            payload = TrimTrailingGaps(payload);
+            payload = AdjustToContainAtLeastSixGaps(payload);
             return new BioSequence(left.Identifier, payload);
         }
+
+        public string AdjustToContainAtLeastSixGaps(string payload)
+        {
+            int lastResiduePosition = 0;
+            int gapsObserved = 0;
+
+            for(int i=0; i<payload.Length; i++)
+            {
+                if (Bioinformatics.IsGapChar(payload[i]))
+                {
+                    gapsObserved++;
+                }
+                else
+                {
+                    lastResiduePosition = i;
+                }
+            }
+
+            int trailingGaps = payload.Length - (lastResiduePosition + 1);
+            int gapsBetweenResidues = gapsObserved - trailingGaps;
+
+            int gapsToReplaceTrail = Math.Max(0, 6 - gapsBetweenResidues);
+
+
+            string croppedPayload = payload.Substring(0, lastResiduePosition + 1);
+            StringBuilder sb = new StringBuilder();
+            sb.Append(croppedPayload);
+            for(int i=0; i<gapsToReplaceTrail; i++)
+            {
+                sb.Append('-');
+            }
+
+            return sb.ToString();
+        }
+
 
         public string TrimTrailingGaps(string payload)
         {
