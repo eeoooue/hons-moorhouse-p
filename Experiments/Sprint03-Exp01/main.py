@@ -11,11 +11,10 @@ aligner = WrappedAligner("MAli Candidate", "MAli", "MAli-candidate")
 scorer = WrappedScorer("qscore")
 batch_scorer = BatchScorer(aligner, subset, scorer)
 
-aligner.specify_iterations(100)
+ITERATIONS = 100
+aligner.specify_iterations(ITERATIONS)
 
 SEED_VALUE = 525
 aligner.set_seed(SEED_VALUE)
 
-batch_scorer.record_scores(f"{aligner.title}_seed_{SEED_VALUE}.csv")
-
-# needs timers
+batch_scorer.record_scores(f"{aligner.title}_seed{SEED_VALUE}_iters{ITERATIONS}.csv")
