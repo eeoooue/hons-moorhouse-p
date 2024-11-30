@@ -41,7 +41,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             AlignmentConservation.AssertAlignmentsAreConserved(a, results[1]);
         }
 
-
         [DataTestMethod]
         [DataRow("ACGT----", "ACGT------")]
         [DataRow("ACG------T", "ACG------T")]
@@ -51,8 +50,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             string actual = Operator.AdjustToContainAtLeastSixGaps(payload);
             Assert.AreEqual(expected, actual);
         }
-
-
 
         [DataTestMethod]
         [DataRow("ACGT----", "ACGT")]
