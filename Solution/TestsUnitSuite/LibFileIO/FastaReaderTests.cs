@@ -1,6 +1,9 @@
 using LibBioInfo;
 using LibFileIO.SequenceReaders;
-using TestsUnitSuite.HarnessTools;
+
+using TestsHarness;
+using TestsHarness.Tools;
+
 
 namespace TestsUnitSuite.LibFileIO
 {
