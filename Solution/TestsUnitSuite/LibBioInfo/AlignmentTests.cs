@@ -26,52 +26,28 @@ namespace TestsUnitSuite.LibBioInfo
 
         private FileHelper FileHelper = new FileHelper();
 
-        #region Timing alignment duplication
+        #region Can create alignment conserving state
 
         [DataTestMethod]
-        [DataRow("BB11003", 8)]
-        [DataRow("BB11003", 16)]
-        [DataRow("BB11003", 32)]
-        [DataRow("BB11003", 64)]
-        [DataRow("BB11003", 128)]
-        [Timeout(500)]
-        public void CanDuplicateBBSAlignmentsEfficiently(string filename, int duplicates)
+        [DataRow(17)]
+        [DataRow(56)]
+        [DataRow(525)]
+        [DataRow(1756)]
+        public void CanOptToConserveAlignmentState(int seed)
         {
-            List<Alignment> result = new List<Alignment>();
+            Randomizer.SetSeed(seed);
+            Alignment expected = ExampleAlignments.GetExampleA();
+            AlignmentRandomizer randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(expected);
 
-            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
+            Alignment actual = new Alignment(expected.GetAlignedSequences(), true);
 
-            for (int i=0; i<duplicates; i++)
-            {
-                Alignment copy = alignment.GetCopy();
-                result.Add(copy);
-            }
+            AlignmentConservation.AssertAlignmentsAreConserved(expected, actual);
+            AlignmentEquality.AssertAlignmentsMatch(expected, actual);
         }
 
-        [DataTestMethod]
-        [DataRow("1ggxA_1h4uA", 8)]
-        [DataRow("1ggxA_1h4uA", 16)]
-        [DataRow("1ggxA_1h4uA", 32)]
-        [DataRow("1ggxA_1h4uA", 64)]
-        [DataRow("1ggxA_1h4uA", 128)]
-        [Timeout(500)]
-        public void CanDuplicatePREFABAlignmentsEfficiently(string filename, int duplicates)
-        {
-            List<Alignment> result = new List<Alignment>();
-
-            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
-            Alignment alignment = new Alignment(sequences);
-
-            for (int i = 0; i < duplicates; i++)
-            {
-                Alignment copy = alignment.GetCopy();
-                result.Add(copy);
-            }
-        }
 
         #endregion
-
 
 
         #region Supports alignment of real sequences

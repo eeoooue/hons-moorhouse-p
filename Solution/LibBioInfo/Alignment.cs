@@ -10,13 +10,52 @@ namespace LibBioInfo
 
         public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
 
-        public Alignment(List<BioSequence> sequences)
+        private static Bioinformatics Bioinformatics = new Bioinformatics();
+
+        public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
             Sequences = sequences;
-            int width = DecideWidth();
-            State = new bool[sequences.Count, width];
-            InitializeAlignmentState();
+
+            if (conserveState)
+            {
+                State = ConstructStateBasedOnSequences(sequences);
+            }
+            else
+            {
+                int width = DecideWidth();
+                State = new bool[sequences.Count, width];
+                InitializeAlignmentState();
+            }
         }
+
+        public bool[,] ConstructStateBasedOnSequences(List<BioSequence> sequences)
+        {
+            int width = 0;
+            foreach(BioSequence sequence in sequences)
+            {
+                width = Math.Max(width, sequence.Payload.Length);
+            }
+
+            bool[,] result = new bool[sequences.Count, width];
+
+            for(int i=0; i<sequences.Count; i++)
+            {
+                string payload = sequences[i].Payload;
+
+                for(int j=0; j<payload.Length; j++)
+                {
+                    result[i, j] = Bioinformatics.IsGapChar(payload[j]);
+                }
+
+                for(int j=payload.Length; j<width; j++)
+                {
+                    result[i, j] = true;
+                }
+            }
+
+            return result;
+        }
+
 
         public Alignment(Alignment other)
         {

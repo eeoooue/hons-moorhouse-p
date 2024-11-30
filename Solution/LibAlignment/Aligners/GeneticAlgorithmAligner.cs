@@ -14,7 +14,6 @@ namespace LibAlignment.Aligners
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new OnePointCrossoverOperator();
-        public IAlignmentModifier Modifier = new GapShifter();
 
         public int PopulationSize = 6;
         public int SelectionSize = 4;
@@ -32,7 +31,7 @@ namespace LibAlignment.Aligners
                 Iterate();
             }
 
-            return CurrentAlignment!;
+            return SelectFittestMember(Population);
         }
 
         public override void Initialize(List<BioSequence> sequences)
@@ -47,21 +46,20 @@ namespace LibAlignment.Aligners
             List<Alignment> children = BreedAlignments(selectedParents, PopulationSize);
             MutateAlignments(children);
             Population = children;
-            CurrentAlignment = SelectFittestMember(Population);
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
         public void MutateAlignments(List<Alignment> alignments)
         {
+            GapShifter shifter = new GapShifter();
             foreach(Alignment alignment in alignments)
             {
-                Modifier.ModifyAlignment(alignment);
+                shifter.ModifyAlignment(alignment);
             }
         }
 
         public void InitializePopulation(List<BioSequence> sequences)
         {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            AlignmentRandomizer randomizer = new AlignmentRandomizer();
             Population.Clear();
 
             for (int i = 0; i < PopulationSize; i++)
@@ -91,11 +89,10 @@ namespace LibAlignment.Aligners
 
             for(int i=1; i<alignments.Count; i++)
             {
-                Alignment alignment = alignments[i];
                 double score = ScoreAlignment(alignments[i]);
                 if (score > bestScore)
                 {
-                    result = alignment;
+                    result = alignments[i];
                     bestScore = score;
                 }
             }

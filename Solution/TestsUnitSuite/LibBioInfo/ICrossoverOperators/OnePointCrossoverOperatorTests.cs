@@ -41,12 +41,31 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             AlignmentConservation.AssertAlignmentsAreConserved(a, results[1]);
         }
 
+        [DataTestMethod]
+        [DataRow("ACGT----", "ACGT------")]
+        [DataRow("ACG------T", "ACG------T")]
+        [DataRow("ACG--TA-CGTAC-GTAC-GTACGT", "ACG--TA-CGTAC-GTAC-GTACGT-")]
+        public void CanAdjustToContainAtLeastSixGaps(string payload, string expected)
+        {
+            string actual = Operator.AdjustToContainAtLeastSixGaps(payload);
+            Assert.AreEqual(expected, actual);
+        }
 
         [DataTestMethod]
-        [DataRow("ACGT", "ACGT", 1, "ACGT")]
-        [DataRow("AC--GT", "ACGT--", 1, "ACGT--")]
-        [DataRow("AC--GT", "ACGT--", 4, "AC--GT--")]
-        [DataRow("AC--GT", "--ACGT", 6, "AC--GT")]
+        [DataRow("ACGT----", "ACGT")]
+        [DataRow("ACGT-A--", "ACGT-A")]
+        [DataRow("ACGT-AAA", "ACGT-AAA")]
+        public void CanTrimTrailingGaps(string payload, string expected)
+        {
+            string actual = Operator.TrimTrailingGaps(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [DataTestMethod]
+        [DataRow("ACGT", "ACGT", 1, "ACGT------")]
+        [DataRow("AC--GT", "ACGT--", 1, "ACGT------")]
+        [DataRow("AC--GT", "ACGT--", 4, "AC--GT----")]
+        [DataRow("AC--GT", "--ACGT", 6, "AC--GT----")]
 
         public void CanCrossoverSequencesAtPosition(string payloadA, string payloadB, int position, string expected)
         {
