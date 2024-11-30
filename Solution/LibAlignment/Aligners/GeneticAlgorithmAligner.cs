@@ -38,6 +38,7 @@ namespace LibAlignment.Aligners
         public override void Initialize(List<BioSequence> sequences)
         {
             InitializePopulation(sequences);
+            CurrentAlignment = Population[0];
         }
 
         public override void Iterate()
@@ -61,13 +62,14 @@ namespace LibAlignment.Aligners
         public void InitializePopulation(List<BioSequence> sequences)
         {
             IAlignmentModifier randomizer = new AlignmentRandomizer();
+            Population.Clear();
+
             for (int i = 0; i < PopulationSize; i++)
             {
                 Alignment alignment = new Alignment(sequences);
                 randomizer.ModifyAlignment(alignment);
                 Population.Add(alignment);
             }
-            CurrentAlignment = Population[0];
         }
 
         public List<double> ScoreAlignments(List<Alignment> alignments)
@@ -89,8 +91,8 @@ namespace LibAlignment.Aligners
 
             for(int i=1; i<alignments.Count; i++)
             {
-                Alignment alignment = alignments[0];
-                double score = ScoreAlignment(alignments[0]);
+                Alignment alignment = alignments[i];
+                double score = ScoreAlignment(alignments[i]);
                 if (score > bestScore)
                 {
                     result = alignment;
