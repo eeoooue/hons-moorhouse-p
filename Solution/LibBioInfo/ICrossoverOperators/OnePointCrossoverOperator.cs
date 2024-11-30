@@ -14,12 +14,11 @@ namespace LibBioInfo.ICrossoverOperators
 
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
-
             // the alignment A is cut at a randomly chosen position
-
             // complement segments are taken from B such that the resulting child is a valid state
 
-            int i = Randomizer.Random.Next(a.Width);
+            int maxWidth = Math.Min(a.Width, b.Width);
+            int i = Randomizer.Random.Next(maxWidth);
             return CrossoverAtPosition(a, b, i);
         }
 
@@ -46,7 +45,7 @@ namespace LibBioInfo.ICrossoverOperators
                 sequences.Add(crossed);
             }
 
-            return new Alignment(sequences);
+            return new Alignment(sequences, true);
         }
 
         public BioSequence CrossoverSequenceAtPosition(BioSequence left, BioSequence right, int position)
