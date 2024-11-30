@@ -68,6 +68,13 @@ class BatchScorer:
         if os.path.exists(alignment_path):
             (q_score, tc_score) = self.scorer.score_testcase(alignment_path, reference_path)
             self.record_success(testcase, q_score, tc_score, ms_elapsed)
-        else:
-            self.record_failure(testcase)
+            return
+        
+        alignment_path += ".faa"
+        if os.path.exists(alignment_path):
+            (q_score, tc_score) = self.scorer.score_testcase(alignment_path, reference_path)
+            self.record_success(testcase, q_score, tc_score, ms_elapsed)
+            return
+
+        self.record_failure(testcase)
 
