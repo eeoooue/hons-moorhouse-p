@@ -74,6 +74,29 @@ namespace TestsUnitSuite.LibAlignment
             Assert.IsTrue(aligner.Population.Count == 6);
         }
 
+        [TestMethod]
+        public void PopulationMembersDiffer()
+        {
+            List<BioSequence> inputs = new List<BioSequence>
+            {
+                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
+                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
+            };
+
+            GeneticAlgorithmAligner aligner = GetAligner();
+            aligner.PopulationSize = 2;
+            aligner.Initialize(inputs);
+
+            Assert.IsTrue(aligner.Population.Count == 2);
+
+            bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(aligner.Population[0], aligner.Population[1]);
+            Assert.IsFalse(alignmentsMatch);
+
+        }
+
+
 
         [TestMethod]
         [Timeout(5000)]
