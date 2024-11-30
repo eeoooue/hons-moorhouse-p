@@ -30,6 +30,6 @@ jobs:
       working-directory: ./Solution/
       run: dotnet build --no-restore
 
-    - name: Test
-      working-directory: ./Solution/
+    - name: Unit Tests
+      working-directory: ./Solution/TestsUnitSuite/
       run: dotnet test --no-build --verbosity normal

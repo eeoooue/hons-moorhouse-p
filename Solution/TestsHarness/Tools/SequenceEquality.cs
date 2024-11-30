@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite.HarnessTools
+namespace TestsHarness.Tools
 {
-    internal class SequenceEquality
+    public class SequenceEquality
     {
         public void AssertSequencesMatch(List<BioSequence> expected, List<BioSequence> actual)
         {

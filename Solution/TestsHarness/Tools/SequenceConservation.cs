@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite.HarnessTools
+namespace TestsHarness.Tools
 {
-    internal class SequenceConservation
+    public class SequenceConservation
     {
 
         public void AssertDataIsConserved(List<BioSequence> expected, List<BioSequence> actual)
         {
             Assert.AreEqual(expected.Count, actual.Count);
-            for(int i=0; i<expected.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
                 AssertDataIsConserved(expected[i], actual[i]);
             }

@@ -1,7 +1,6 @@
-﻿using LibAlignment;
-using LibAlignment.Aligners;
+﻿using LibAlignment.Aligners;
+using LibAlignment;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
@@ -10,10 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsUnitSuite.HarnessTools;
+using TestsHarness.Tools;
+using TestsHarness;
 using LibFileIO;
 
-namespace TestsUnitSuite.LibAlignment
+namespace TestsPerformance.LibAlignment
 {
     [TestClass]
     public class SelectiveRandomWalkAlignerTests
@@ -23,7 +23,6 @@ namespace TestsUnitSuite.LibAlignment
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
-
 
         private FileHelper FileHelper = new FileHelper();
 
@@ -57,8 +56,6 @@ namespace TestsUnitSuite.LibAlignment
 
         #endregion
 
-
-
         public Aligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
@@ -66,36 +63,6 @@ namespace TestsUnitSuite.LibAlignment
             const int maxIterations = 50;
             SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
             return aligner;
-        }
-
-
-
-        [TestMethod]
-        public void AlignerModifiesAlignment()
-        {
-            List<BioSequence> inputs = new List<BioSequence>
-            {
-                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
-            };
-
-            Aligner climber = GetAligner();
-            climber.Initialize(inputs);
-            Alignment initial = climber.CurrentAlignment!.GetCopy();
-            
-            for (int i=0; i<100; i++)
-            {
-                climber.Iterate();
-            }
-
-            Alignment result = climber.CurrentAlignment!;
-
-            bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(initial, result);
-            Assert.IsFalse(alignmentsMatch);
-
-            AlignmentConservation.AssertAlignmentsAreConserved(initial, result);
         }
     }
 }

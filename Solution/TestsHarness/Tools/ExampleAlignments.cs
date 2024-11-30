@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite.HarnessTools
+namespace TestsHarness.Tools
 {
-    internal enum ExampleAlignment
+    public enum ExampleAlignment
     {
         ExampleA,
     }
 
-    internal class ExampleAlignments
+    public class ExampleAlignments
     {
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
 
@@ -26,7 +26,7 @@ namespace TestsUnitSuite.HarnessTools
                     throw new ArgumentException("Invalid identifier");
             }
         }
-        
+
         public Alignment GetExampleA()
         {
             List<BioSequence> sequences = new List<BioSequence>();

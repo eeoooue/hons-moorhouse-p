@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsUnitSuite.LiteratureAssets;
+using TestsHarness.LiteratureAssets;
 
-namespace TestsUnitSuite.HarnessTools
+namespace TestsHarness.Tools
 {
-    internal class LiteratureHelper
+    public class LiteratureHelper
     {
         public SAGAAssets SAGAAssets = new SAGAAssets();
-
 
 
     }

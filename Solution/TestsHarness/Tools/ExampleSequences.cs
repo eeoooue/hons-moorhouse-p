@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite.HarnessTools
+namespace TestsHarness.Tools
 {
-    internal enum ExampleSequence
+    public enum ExampleSequence
     {
         ExampleA,
         ExampleB,
@@ -15,7 +15,7 @@ namespace TestsUnitSuite.HarnessTools
         ExampleD
     }
 
-    internal class ExampleSequences
+    public class ExampleSequences
     {
         public BioSequence GetSequence(ExampleSequence identifier)
         {

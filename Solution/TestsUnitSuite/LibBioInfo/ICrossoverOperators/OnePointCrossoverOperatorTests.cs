@@ -6,8 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsUnitSuite.HarnessTools;
-using TestsUnitSuite.LiteratureAssets;
+
+
+using TestsHarness;
+using TestsHarness.LiteratureAssets;
+using TestsHarness.Tools;
+
+
 
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {

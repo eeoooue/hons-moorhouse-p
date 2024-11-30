@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsUnitSuite.HarnessTools;
+using TestsHarness.Tools;
 
-namespace TestsUnitSuite.LiteratureAssets
+namespace TestsHarness.LiteratureAssets
 {
-    internal class SAGAAssets
+    public class SAGAAssets
     {
         AlignmentStateConverter Converter = Harness.AlignmentStateConverter;
 
@@ -49,7 +49,7 @@ namespace TestsUnitSuite.LiteratureAssets
             {
                 "--XXXXXXXXXX-XXXX",
                 "XX--XXXXXXXX-XXXX",
-                "XXXXXX-XXXXXXXXXX",    
+                "XXXXXX-XXXXXXXXXX",
                 "XXXXXXXXXX-XXXXXX",
             };
 

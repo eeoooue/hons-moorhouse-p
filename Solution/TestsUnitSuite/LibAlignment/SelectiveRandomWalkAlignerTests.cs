@@ -1,6 +1,7 @@
-﻿using LibAlignment.Aligners;
-using LibAlignment;
+﻿using LibAlignment;
+using LibAlignment.Aligners;
 using LibBioInfo;
+using LibBioInfo.IAlignmentModifiers;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
@@ -11,13 +12,15 @@ using System.Text;
 using System.Threading.Tasks;
 using LibFileIO;
 
+
 using TestsHarness;
 using TestsHarness.Tools;
+
 
 namespace TestsUnitSuite.LibAlignment
 {
     [TestClass]
-    public class NaiveHillClimbAlignerTests
+    public class SelectiveRandomWalkAlignerTests
     {
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
@@ -32,13 +35,11 @@ namespace TestsUnitSuite.LibAlignment
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
             const int maxIterations = 50;
-            return new NaiveHillClimbAligner(objective, maxIterations);
+            SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
+            return aligner;
         }
 
         [TestMethod]
-        [Timeout(5000)]
-        [Ignore]
-
         public void AlignerModifiesAlignment()
         {
             List<BioSequence> inputs = new List<BioSequence>
@@ -52,8 +53,8 @@ namespace TestsUnitSuite.LibAlignment
             Aligner climber = GetAligner();
             climber.Initialize(inputs);
             Alignment initial = climber.CurrentAlignment!.GetCopy();
-
-            for (int i = 0; i < 10; i++)
+            
+            for (int i=0; i<100; i++)
             {
                 climber.Iterate();
             }

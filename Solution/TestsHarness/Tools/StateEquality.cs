@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestsUnitSuite.HarnessTools
+namespace TestsHarness.Tools
 {
-    internal class StateEquality
+    public class StateEquality
     {
 
         public bool StatesMatch(bool[,] expected, bool[,] actual)
@@ -24,7 +24,7 @@ namespace TestsUnitSuite.HarnessTools
                 return false;
             }
 
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
                 bool[] expectedRow = ExtractRow(expected, i);
                 bool[] actualRow = ExtractRow(actual, i);
@@ -43,7 +43,7 @@ namespace TestsUnitSuite.HarnessTools
             int n = matrix.GetLength(1);
             bool[] result = new bool[n];
 
-            for(int j=0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
                 result[j] = matrix[i, j];
             }
@@ -58,7 +58,7 @@ namespace TestsUnitSuite.HarnessTools
                 return false;
             }
 
-            for(int i=0; i<expected.Length; i++)
+            for (int i = 0; i < expected.Length; i++)
             {
                 if (expected[i] != actual[i])
                 {

@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestsUnitSuite;
-using TestsUnitSuite.HarnessTools;
+
+using TestsHarness;
+using TestsHarness.Tools;
 
 namespace TestsUnitSuite.LibBioInfo
 {
