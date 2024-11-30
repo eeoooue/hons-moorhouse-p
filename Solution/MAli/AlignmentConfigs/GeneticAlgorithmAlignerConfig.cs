@@ -24,6 +24,9 @@ namespace MAli.AlignmentConfigs
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
             const int maxIterations = 1000;
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations);
+            aligner.PopulationSize = 10;
+            aligner.SelectionSize = 6;
+
             return aligner;
         }
     }
