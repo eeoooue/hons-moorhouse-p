@@ -80,15 +80,15 @@ namespace TestsUnitSuite.LibAlignment
                 ExampleSequences.GetSequence(ExampleSequence.ExampleD),
             };
 
-            Aligner climber = GetAligner();
-            climber.Initialize(inputs);
-            Alignment initial = climber.CurrentAlignment!.GetCopy();
+            GeneticAlgorithmAligner aligner = GetAligner();
+            aligner.Initialize(inputs);
+            Alignment initial = aligner.Population[0].GetCopy();
             for (int i = 0; i < 3; i++)
             {
-                climber.Iterate();
+                aligner.Iterate();
             }
 
-            Alignment result = climber.CurrentAlignment!;
+            Alignment result = aligner.Population[0].GetCopy();
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(initial, result);
             Assert.IsFalse(alignmentsMatch);
