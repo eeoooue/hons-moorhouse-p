@@ -18,7 +18,10 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
     {
         SAGAAssets SAGAAssets = Harness.LiteratureHelper.SAGAAssets;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
-        OnePointCrossoverOperator Operator = new OnePointCrossoverOperator();
+        AlignmentStateConverter AlignmentStateConverter = Harness.AlignmentStateConverter;
+        StateEquality StateEquality = Harness.StateEquality;
+
+        SAGAOnePointCrossoverOperator Operator = new SAGAOnePointCrossoverOperator();
 
         [DataTestMethod]
         [DataRow(0)]
@@ -42,6 +45,45 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             Alignment actual = actualChildren[childIndex];
 
             bool verdict = AlignmentEquality.AlignmentsMatch(expected, actual);
+            Assert.IsTrue(verdict);
+        }
+
+
+        [TestMethod]
+        public void ProducesParent1VerticalSplitLeftCorrectly()
+        {
+            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
+
+            List<string> mapping = new List<string>()
+            {
+                "XXXX",
+                "XXXX",
+                "XXXX",
+                "XXXX",
+            };
+
+            bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
+            bool[,] actual = Operator.GetVerticalSplitLeft(a, 4);
+            bool verdict = StateEquality.StatesMatch(expected, actual);
+            Assert.IsTrue(verdict);
+        }
+
+        [TestMethod]
+        public void ProducesParent1VerticalSplitRightCorrectly()
+        {
+            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
+
+            List<string> mapping = new List<string>()
+            {
+                "X---XXXXXXXXX-",
+                "XXXX---XXXXXX-",
+                "X--XXXXXXXXXXX",
+                "XXXX--XXXXXXXX",
+            };
+
+            bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
+            bool[,] actual = Operator.GetVerticalSplitRight(a, 4);
+            bool verdict = StateEquality.StatesMatch(expected, actual);
             Assert.IsTrue(verdict);
         }
     }
