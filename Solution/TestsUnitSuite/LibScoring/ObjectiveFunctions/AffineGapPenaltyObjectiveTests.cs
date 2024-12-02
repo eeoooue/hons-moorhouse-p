@@ -12,7 +12,7 @@ using TestsHarness.Tools;
 namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
 {
     [TestClass]
-    public class AffineGapPenaltyObjectiveFunctionTests
+    public class AffineGapPenaltyObjectiveTests
     {
         AffineGapPenaltyObjectiveFunction ObjectiveFunction = new AffineGapPenaltyObjectiveFunction();
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
