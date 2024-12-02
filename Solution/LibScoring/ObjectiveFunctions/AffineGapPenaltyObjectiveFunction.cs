@@ -22,22 +22,56 @@ namespace LibScoring.ObjectiveFunctions
 
         public double ScoreAlignment(Alignment alignment)
         {
-            throw new NotImplementedException();
+            double result = 0;
+            foreach(BioSequence sequence in alignment.GetAlignedSequences())
+            {
+                result += ScorePayload(sequence.Payload);
+            }
+
+            return result;
         }
 
         public double ScorePayload(string payload)
         {
             string trimmed = TrimPayload(payload);
-            List<int> gapSizes = CollectGapSizes(trimmed);
+            List<int> sizes = CollectGapSizes(trimmed);
 
+            double result = 0;
+            foreach(int size in sizes)
+            {
+                result += OpeningCost;
+                result += size * NullCost;
+            }
 
-
-            throw new NotImplementedException();
+            return result;
         }
 
         public List<int> CollectGapSizes(string payload)
         {
             List<int> result = new List<int>();
+
+            int gaplength = 0;
+            for(int i=0; i<payload.Length; i++)
+            {
+                char x = payload[i];
+                if (Bioinformatics.IsGapChar(x))
+                {
+                    gaplength++;
+                }
+                else
+                {
+                    if (gaplength > 0)
+                    {
+                        result.Add(gaplength);
+                    }
+                    gaplength = 0;
+                }
+            }
+
+            if (gaplength > 0)
+            {
+                result.Add(gaplength);
+            }
 
             return result;
         }
