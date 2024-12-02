@@ -59,7 +59,5 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
             Assert.AreEqual(sumOfPairsScoreWithAffineGapPenalties + affineGapPenalty, sumOfPairsScore, 0.001);
             Assert.IsTrue(affineGapPenalty > 0);
         }
-
-
     }
 }
