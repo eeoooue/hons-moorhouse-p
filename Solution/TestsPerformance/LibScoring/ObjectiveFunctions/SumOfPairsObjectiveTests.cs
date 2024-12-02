@@ -16,8 +16,10 @@ namespace TestsPerformance.LibScoring.ObjectiveFunctions
     [TestClass]
     public class SumOfPairsObjectiveTests
     {
-        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         FileHelper FileHelper = new FileHelper();
+        static IScoringMatrix Matrix = new BLOSUM62Matrix();
+        static IObjectiveFunction ObjectiveFunction = new SumOfPairsObjectiveFunction(Matrix);
+
 
         [DataTestMethod]
         [DataRow("BB11001", 8)]
@@ -33,9 +35,7 @@ namespace TestsPerformance.LibScoring.ObjectiveFunctions
 
             for (int i = 0; i < times; i++)
             {
-                IScoringMatrix matrix = new IdentityMatrix();
-                IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
-                double score = function.ScoreAlignment(alignment);
+                double score = ObjectiveFunction.ScoreAlignment(alignment);
             }
         }
 
@@ -50,12 +50,10 @@ namespace TestsPerformance.LibScoring.ObjectiveFunctions
 
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
             Alignment alignment = new Alignment(sequences);
-            IScoringMatrix matrix = new IdentityMatrix();
-            IObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
 
             for (int i = 0; i < times; i++)
             {
-                double score = function.ScoreAlignment(alignment);
+                double score = ObjectiveFunction.ScoreAlignment(alignment);
             }
         }
     }
