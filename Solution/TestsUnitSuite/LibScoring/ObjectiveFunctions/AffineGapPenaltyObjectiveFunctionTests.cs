@@ -1,9 +1,13 @@
-﻿using LibScoring.ObjectiveFunctions;
+﻿using LibBioInfo;
+using LibBioInfo.IAlignmentModifiers;
+using LibScoring.ObjectiveFunctions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestsHarness;
+using TestsHarness.Tools;
 
 namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
 {
@@ -11,18 +15,39 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
     public class AffineGapPenaltyObjectiveFunctionTests
     {
         AffineGapPenaltyObjectiveFunction ObjectiveFunction = new AffineGapPenaltyObjectiveFunction();
+        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
+
+
+        [TestMethod]
+        public void LeftJustifiedAlignmentHasNoPenalty()
+        {
+            Alignment alignment = ExampleAlignments.GetExampleA();
+            double penalty = ObjectiveFunction.ScoreAlignment(alignment);
+            Assert.AreEqual(0, penalty, 0.001);
+        }
+
+        [TestMethod]
+        public void RandomizedAlignmentStateHasPenalty()
+        {
+            Alignment alignment = ExampleAlignments.GetExampleA();
+            AlignmentRandomizer randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(alignment);
+
+            double penalty = ObjectiveFunction.ScoreAlignment(alignment);
+            Assert.IsTrue(penalty > 0);
+        }
 
         [DataTestMethod]
-        [DataRow(4, 1, "----AAAA----", 0)]
+        [DataRow(4, 1, "----ACGT----", 0)]
+        [DataRow(0, 1, "-AC--GT-", 2)]
+        [DataRow(5, 1, "-AC--GG-", 7)]
+        [DataRow(4, 1, "-A-G---C-T-", 17)]
         public void PayloadPenalitiesAreAsExpected(double openingCost, double nullCost, string payload, double expected)
         {
             AffineGapPenaltyObjectiveFunction objective = new AffineGapPenaltyObjectiveFunction(openingCost, nullCost);
             double actual = objective.ScorePayload(payload);
             Assert.AreEqual(expected, actual, 0.001);
         }
-
-
-
 
 
         [DataTestMethod]
