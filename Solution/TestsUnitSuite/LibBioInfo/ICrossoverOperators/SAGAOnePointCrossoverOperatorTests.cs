@@ -26,8 +26,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         [DataTestMethod]
         [DataRow(0)]
         [DataRow(1)]
-        [Ignore]
-
         public void TestFigure2Example(int childIndex)
         {
             Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
@@ -82,9 +80,70 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             };
 
             bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
-            bool[,] actual = Operator.GetVerticalSplitRight(a, 4);
+            bool[,] actual = Operator.GetVerticalSplitRight(a, 3);
+            Assert.AreEqual(expected.GetLength(1), actual.GetLength(1));
+
+
             bool verdict = StateEquality.StatesMatch(expected, actual);
             Assert.IsTrue(verdict);
+        }
+
+
+        [TestMethod]
+        public void ProducesParent2JaggedSplitLeftCorrectly()
+        {
+            Alignment a = SAGAAssets.GetFigure2ParentAlignment2();
+
+            List<string> mapping = new List<string>()
+            {
+                "--XXXX",
+                "XX--XX",
+                "XXXX--",
+                "XXXX--",
+            };
+
+            List<int> positions = new List<int>() { 6, 6, 4, 4 };
+
+            bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
+            bool[,] actual = Operator.CollectLeftsUntilPositions(a.State, positions);
+            bool verdict = StateEquality.StatesMatch(expected, actual);
+            Assert.IsTrue(verdict);
+        }
+
+
+        [TestMethod]
+        public void ProducesParent2JaggedSplitRightCorrectly()
+        {
+            Alignment a = SAGAAssets.GetFigure2ParentAlignment2();
+
+            List<string> mapping = new List<string>()
+            {
+                "--XXXXXX-XXXX",
+                "--XXXXXX-XXXX",
+                "XX-XXXXXXXXXX",
+                "XXXXXX-XXXXXX",
+            };
+
+            List<int> positions = new List<int>() { 5, 5, 3, 3 };
+
+            bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
+            bool[,] actual = Operator.CollectRightsUntilPositions(a.State, positions);
+            bool verdict = StateEquality.StatesMatch(expected, actual);
+            Assert.IsTrue(verdict);
+        }
+
+        public bool[] ExtractRow(bool[,] state, int i)
+        {
+            bool[] result = new bool[state.Length];
+
+            for(int j=0; j<state.GetLength(1); j++)
+            {
+                result[j] = state[i, j];
+            }
+
+            return result;
+
+
         }
     }
 }

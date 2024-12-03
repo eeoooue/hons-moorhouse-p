@@ -15,8 +15,141 @@ namespace LibBioInfo.ICrossoverOperators
 
         public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)
         {
-            throw new NotImplementedException();
+            Alignment child1 = GetABCrossover(a, b, position);
+            Alignment child2 = GetBACrossover(a, b, position);
+            
+            return new List<Alignment> { child1, child2 };
         }
+
+        public Alignment GetABCrossover(Alignment a, Alignment b, int position)
+        {
+            List<int> aLeftPositions = GetListOfPositions(position, a.Height);
+            bool[,] aLeftState = CollectLeftsUntilPositions(a.State, aLeftPositions);
+            List<int> bRightPositions = GetComplementPositionsForLeftState(aLeftState, b);
+            bool[,] bRightState = CollectRightsUntilPositions(b.State, bRightPositions);
+
+            bool[,] childState = CombineAlignmentStates(aLeftState, bRightState);
+
+            Alignment child = a.GetCopy();
+            child.State = childState;
+
+            return child;
+        }
+
+        public Alignment GetBACrossover(Alignment a, Alignment b, int position)
+        {
+            List<int> aRightPositions = GetListOfPositions(position + 1, a.Height);
+            bool[,] aRightState = CollectRightsUntilPositions(a.State, aRightPositions);
+            List<int> bLeftPositions = GetComplementPositionsForRightState(aRightState, b);
+            bool[,] bLeftState = CollectLeftsUntilPositions(b.State, bLeftPositions);
+
+            bool[,] childState = CombineAlignmentStates(bLeftState, aRightState);
+
+            Alignment child = a.GetCopy();
+            child.State = childState;
+
+            return child;
+        }
+
+        public bool[,] CombineAlignmentStates(bool[,] leftState, bool[,] rightState)
+        {
+            int m = leftState.GetLength(0);
+            int leftN = leftState.GetLength(1);
+            int rightN = rightState.GetLength(1);
+
+            bool[,] result = new bool[m, leftN + rightN];
+
+            for(int i=0; i<m; i++)
+            {
+                for(int j=0; j<leftN; j++)
+                {
+                    result[i, j] = leftState[i, j];
+                }
+                
+                for (int j = 0; j < rightN; j++)
+                {
+                    result[i, j + leftN] = rightState[i, j];
+                }
+            }
+
+            return result;
+        }
+
+        public List<int> GetComplementPositionsForLeftState(bool[,] leftState, Alignment source)
+        {
+            List<int> result = new List<int>();
+
+            for(int i=0; i<source.Height; i++)
+            {
+                int n = GetNumberOfResiduesInRow(leftState, i);
+                int position = GetPositionOfNthResidue(source.State, i, n);
+                result.Add(position);
+            }
+
+            return result;
+        }
+
+        public List<int> GetComplementPositionsForRightState(bool[,] rightState, Alignment source)
+        {
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < source.Height; i++)
+            {
+                int residuesInRightState = GetNumberOfResiduesInRow(rightState, i);
+                int totalResidues = GetNumberOfResiduesInRow(source.State, i);
+                int residuesToInclude = totalResidues - residuesInRightState;
+                int position = GetPositionOfNthResidue(source.State, i, residuesToInclude);
+                result.Add(position+1);
+            }
+
+            return result;
+        }
+
+        public int GetPositionOfNthResidue(bool[,] state, int i, int n)
+        {
+            int counter = 0;
+            for(int j=0; j<state.GetLength(1); j++)
+            {
+                if (state[i, j] == false)
+                {
+                    counter++;
+                }
+
+                if (counter == n)
+                {
+                    return j;
+                }
+            }
+
+            return state.GetLength(1);
+        }
+
+        public int GetNumberOfResiduesInRow(bool[,] state, int i)
+        {
+            int result = 0;
+            for(int j = 0; j < state.GetLength(1); j++)
+            {
+                if (state[i,j] == false)
+                {
+                    result++;
+                }
+            }
+
+            return result;
+        }
+
+
+        public List<int> GetListOfPositions(int position, int count)
+        {
+            List<int> result = new List<int>();
+            for(int i=0; i<count; i++)
+            {
+                result.Add(position);
+            }
+
+            return result;
+        }
+
 
         public bool[,] GetVerticalSplitLeft(Alignment a, int position)
         {
@@ -37,15 +170,27 @@ namespace LibBioInfo.ICrossoverOperators
 
         public bool[,] GetVerticalSplitRight(Alignment a, int position)
         {
-            throw new NotImplementedException();
+            int m = a.Height;
+            int n = position;
+
+            bool[,] result = new bool[a.Height, position];
+
+            List<int> positions = new List<int>();
+
+            for (int i = 0; i < m; i++)
+            {
+                positions.Add(position);
+            }
+
+            return CollectRightsUntilPositions(a.State, positions);
         }
 
 
         public bool[,] CollectLeftsUntilPositions(bool[,] source, List<int> positions)
         {
-            int maxLeftPosition = GetMaximumValue(positions);
+            int maxRightPosition = GetMaximumValue(positions);
             int m = positions.Count;
-            int n = maxLeftPosition;
+            int n = maxRightPosition;
 
             bool[,] result = new bool[m, n];
             for(int i=0; i<m; i++)
@@ -60,7 +205,15 @@ namespace LibBioInfo.ICrossoverOperators
         {
             for(int j=0; j<n; j++)
             {
-                destination[i, j] = source[i, j];
+                if (j < n)
+                {
+                    destination[i, j] = source[i, j];
+                }
+            }
+
+            for(int j=n; j<destination.GetLength(1); j++)
+            {
+                destination[i, j] = true;
             }
         }
 
@@ -68,12 +221,33 @@ namespace LibBioInfo.ICrossoverOperators
 
         public bool[,] CollectRightsUntilPositions(bool[,] source, List<int> positions)
         {
-            throw new NotImplementedException();
+            int maxLeftPosition = GetMinimumValue(positions);
+            int m = positions.Count;
+            int n = source.GetLength(1) - (1 + maxLeftPosition);
+
+            bool[,] result = new bool[m, n];
+            for(int i=0; i<m; i++)
+            {
+                WriteRightsUntilPosition(source, result, i, positions[i]);
+            }
+
+            return result;
         }
 
-        public void WriteRightsUntilPosition(bool[,] source, bool[,] destination, int i, int n)
+        public void WriteRightsUntilPosition(bool[,] source, bool[,] destination, int i, int leftMarker)
         {
-            throw new NotImplementedException();
+            for(int j=0; j<destination.GetLength(1); j++)
+            {
+                destination[i, j] = true;
+            }
+
+            int n = source.GetLength(1);
+            int j2 = destination.GetLength(1);
+            for(int j=n-1; j>leftMarker; j--)
+            {
+                j2 -= 1;
+                destination[i, j2] = source[i, j];
+            }
         }
 
 
