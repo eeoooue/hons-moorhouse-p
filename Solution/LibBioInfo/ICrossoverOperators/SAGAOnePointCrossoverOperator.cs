@@ -65,7 +65,6 @@ namespace LibBioInfo.ICrossoverOperators
             return child;
         }
 
-
         public List<int> GetComplementPositionsForLeftState(bool[,] leftState, Alignment source)
         {
             List<int> result = new List<int>();
@@ -96,17 +95,6 @@ namespace LibBioInfo.ICrossoverOperators
             return result;
         }
 
-        public List<int> GetListOfPositions(int position, int count)
-        {
-            List<int> result = new List<int>();
-            for(int i=0; i<count; i++)
-            {
-                result.Add(position);
-            }
-
-            return result;
-        }
-
         public bool[,] CollectLeftsUntilPositions(bool[,] source, List<int> positions)
         {
             int m = positions.Count;
@@ -119,19 +107,6 @@ namespace LibBioInfo.ICrossoverOperators
             }
 
             return result;
-        }
-
-        public void WriteLeftsUntilPosition(bool[,] source, bool[,] destination, int i, int n)
-        {
-            for(int j=0; j<n; j++)
-            {
-                destination[i, j] = source[i, j];
-            }
-
-            for(int j=n; j<destination.GetLength(1); j++)
-            {
-                destination[i, j] = true;
-            }
         }
 
         public bool[,] CollectRightsUntilPositions(bool[,] source, List<int> positions)
@@ -149,6 +124,19 @@ namespace LibBioInfo.ICrossoverOperators
             return result;
         }
 
+        public void WriteLeftsUntilPosition(bool[,] source, bool[,] destination, int i, int n)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                destination[i, j] = source[i, j];
+            }
+
+            for (int j = n; j < destination.GetLength(1); j++)
+            {
+                destination[i, j] = true;
+            }
+        }
+
         public void WriteRightsUntilPosition(bool[,] source, bool[,] destination, int i, int leftMarker)
         {
             for(int j=0; j<destination.GetLength(1); j++)
@@ -163,6 +151,17 @@ namespace LibBioInfo.ICrossoverOperators
                 j2 -= 1;
                 destination[i, j2] = source[i, j];
             }
+        }
+
+        public List<int> GetListOfPositions(int position, int count)
+        {
+            List<int> result = new List<int>();
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(position);
+            }
+
+            return result;
         }
     }
 }
