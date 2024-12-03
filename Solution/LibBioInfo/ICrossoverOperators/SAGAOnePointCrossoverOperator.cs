@@ -107,47 +107,10 @@ namespace LibBioInfo.ICrossoverOperators
             return result;
         }
 
-
-        public bool[,] GetVerticalSplitLeft(Alignment a, int position)
-        {
-            int m = a.Height;
-            int n = position;
-
-            bool[,] result = new bool[a.Height, position];
-
-            List<int> positions = new List<int>();
-
-            for(int i=0; i<m; i++)
-            {
-                positions.Add(position);
-            }
-
-            return CollectLeftsUntilPositions(a.State, positions);
-        }
-
-        public bool[,] GetVerticalSplitRight(Alignment a, int position)
-        {
-            int m = a.Height;
-            int n = position;
-
-            bool[,] result = new bool[a.Height, position];
-
-            List<int> positions = new List<int>();
-
-            for (int i = 0; i < m; i++)
-            {
-                positions.Add(position);
-            }
-
-            return CollectRightsUntilPositions(a.State, positions);
-        }
-
-
         public bool[,] CollectLeftsUntilPositions(bool[,] source, List<int> positions)
         {
-            int maxRightPosition = GetMaximumValue(positions);
             int m = positions.Count;
-            int n = maxRightPosition;
+            int n = positions.Max();
 
             bool[,] result = new bool[m, n];
             for(int i=0; i<m; i++)
@@ -171,11 +134,9 @@ namespace LibBioInfo.ICrossoverOperators
             }
         }
 
-
-
         public bool[,] CollectRightsUntilPositions(bool[,] source, List<int> positions)
         {
-            int maxLeftPosition = GetMinimumValue(positions);
+            int maxLeftPosition = positions.Min();
             int m = positions.Count;
             int n = source.GetLength(1) - (1 + maxLeftPosition);
 
@@ -203,30 +164,5 @@ namespace LibBioInfo.ICrossoverOperators
                 destination[i, j2] = source[i, j];
             }
         }
-
-
-        public int GetMaximumValue(List<int> values)
-        {
-            int result = int.MinValue;
-            foreach(int value in values)
-            {
-                result = Math.Max(value, result);
-            }
-
-            return result;
-        }
-
-        public int GetMinimumValue(List<int> values)
-        {
-            int result = int.MaxValue;
-            foreach (int value in values)
-            {
-                result = Math.Min(value, result);
-            }
-
-            return result;
-        }
-
-
     }
 }
