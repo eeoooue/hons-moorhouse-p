@@ -216,10 +216,7 @@ namespace LibBioInfo.ICrossoverOperators
         {
             for(int j=0; j<n; j++)
             {
-                if (j < n)
-                {
-                    destination[i, j] = source[i, j];
-                }
+                destination[i, j] = source[i, j];
             }
 
             for(int j=n; j<destination.GetLength(1); j++)
