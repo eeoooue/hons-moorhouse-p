@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibBioInfo.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace LibBioInfo.INeighbourhoodFinders
 {
     public class RowBasedNeighbourhoodFinder : INeighbourhoodFinder
     {
+        AlignmentStateHelper StateHelper = new AlignmentStateHelper();
+
         public List<bool[,]> FindNeighbours(bool[,] state)
         {
             int i = Randomizer.Random.Next(state.GetLength(0));
@@ -17,7 +20,7 @@ namespace LibBioInfo.INeighbourhoodFinders
         public List<bool[,]> FindNeighboursForRow(bool[,] state, int i)
         {
             int m = state.GetLength(0);
-            bool[] originalRow = ExtractRow(state, i);
+            bool[] originalRow = StateHelper.ExtractRow(state, i);
 
             List<bool[,]> result = new List<bool[,]>();
 
@@ -25,20 +28,6 @@ namespace LibBioInfo.INeighbourhoodFinders
             {
                 bool[,] neighbour = GetStateWithReplacedRow(state, i, row);
                 result.Add(neighbour);
-            }
-
-            return result;
-        }
-
-
-        public bool[] ExtractRow(bool[,] matrix, int i)
-        {
-            int n = matrix.GetLength(1);
-            bool[] result = new bool[n];
-
-            for (int j = 0; j < n; j++)
-            {
-                result[j] = matrix[i, j];
             }
 
             return result;
@@ -81,7 +70,6 @@ namespace LibBioInfo.INeighbourhoodFinders
                     if (row[i] != row[j])
                     {
                         bool[] neighbour = GetRowAfterSwap(row, i, j);
-                        // Console.WriteLine($"added for {i} and {j}");
                         result.Add(neighbour);
                     }
                 }

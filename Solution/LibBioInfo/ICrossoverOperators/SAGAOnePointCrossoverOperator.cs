@@ -9,6 +9,8 @@ namespace LibBioInfo.ICrossoverOperators
 {
     public class SAGAOnePointCrossoverOperator : ICrossoverOperator
     {
+        // an attempt to reproduce the One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
+
         private AlignmentStateHelper StateHelper = new AlignmentStateHelper();
 
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)

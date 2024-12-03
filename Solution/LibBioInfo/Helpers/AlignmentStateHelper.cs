@@ -51,6 +51,19 @@ namespace LibBioInfo.Helpers
             return state.GetLength(1);
         }
 
+        public bool[] ExtractRow(bool[,] matrix, int i)
+        {
+            int n = matrix.GetLength(1);
+            bool[] result = new bool[n];
+
+            for (int j = 0; j < n; j++)
+            {
+                result[j] = matrix[i, j];
+            }
+
+            return result;
+        }
+
         public int GetNumberOfResiduesInRow(bool[,] state, int i)
         {
             int result = 0;
