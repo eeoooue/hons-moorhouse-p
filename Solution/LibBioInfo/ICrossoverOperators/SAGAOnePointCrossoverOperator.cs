@@ -10,7 +10,18 @@ namespace LibBioInfo.ICrossoverOperators
     {
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
-            throw new NotImplementedException();
+            int heads = Randomizer.Random.Next(0, 2);
+
+            if (heads == 1)
+            {
+                int i = Randomizer.Random.Next(1, a.Width);
+                return CrossoverAtPosition(a, b, i);
+            }
+            else
+            {
+                int i = Randomizer.Random.Next(1, b.Width);
+                return CrossoverAtPosition(b, a, i);
+            }
         }
 
         public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)
@@ -38,7 +49,7 @@ namespace LibBioInfo.ICrossoverOperators
 
         public Alignment GetBACrossover(Alignment a, Alignment b, int position)
         {
-            List<int> aRightPositions = GetListOfPositions(position + 1, a.Height);
+            List<int> aRightPositions = GetListOfPositions(position - 1, a.Height);
             bool[,] aRightState = CollectRightsUntilPositions(a.State, aRightPositions);
             List<int> bLeftPositions = GetComplementPositionsForRightState(aRightState, b);
             bool[,] bLeftState = CollectLeftsUntilPositions(b.State, bLeftPositions);

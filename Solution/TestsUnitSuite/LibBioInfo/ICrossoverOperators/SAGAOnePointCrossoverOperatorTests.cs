@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,21 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentStateConverter AlignmentStateConverter = Harness.AlignmentStateConverter;
         StateEquality StateEquality = Harness.StateEquality;
+        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
 
         SAGAOnePointCrossoverOperator Operator = new SAGAOnePointCrossoverOperator();
+
+        [TestMethod]
+        public void CanCreateAlignmentChildren()
+        {
+            Alignment a = ExampleAlignments.GetExampleA();
+            Alignment b = ExampleAlignments.GetExampleA();
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(a);
+            randomizer.ModifyAlignment(b);
+
+            Operator.CreateAlignmentChildren(a, b);
+        }
 
         [DataTestMethod]
         [DataRow(0)]
@@ -46,6 +60,49 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             Assert.IsTrue(verdict);
         }
 
+        [TestMethod]
+        public void CheckingABWorks()
+        {
+            Alignment a = ExampleAlignments.GetExampleA();
+            Alignment b = ExampleAlignments.GetExampleA();
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(b);
+
+            int n = a.Width;
+
+            for(int i=1; i<n; i++)
+            {
+                Operator.GetABCrossover(a, b, i);
+                Operator.GetBACrossover(a, b, i);
+            }
+        }
+
+
+        [TestMethod]
+        public void TestFigure2ABExample()
+        {
+            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
+            Alignment b = SAGAAssets.GetFigure2ParentAlignment2();
+
+            Alignment expected = SAGAAssets.GetFigure2ChildAlignment1();
+            Alignment actual = Operator.GetABCrossover(a, b, 4);
+
+            bool verdict = AlignmentEquality.AlignmentsMatch(expected, actual);
+            Assert.IsTrue(verdict);
+        }
+
+        [TestMethod]
+        public void TestFigure2BAExample()
+        {
+            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
+            Alignment b = SAGAAssets.GetFigure2ParentAlignment2();
+
+            Alignment expected = SAGAAssets.GetFigure2ChildAlignment2();
+            Alignment actual = Operator.GetBACrossover(a, b, 4);
+
+            bool verdict = AlignmentEquality.AlignmentsMatch(expected, actual);
+            Assert.IsTrue(verdict);
+        }
 
         [TestMethod]
         public void ProducesParent1VerticalSplitLeftCorrectly()
@@ -135,15 +192,11 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         public bool[] ExtractRow(bool[,] state, int i)
         {
             bool[] result = new bool[state.Length];
-
             for(int j=0; j<state.GetLength(1); j++)
             {
                 result[j] = state[i, j];
             }
-
             return result;
-
-
         }
     }
 }
