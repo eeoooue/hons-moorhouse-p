@@ -43,6 +43,12 @@ namespace LibBioInfo
             CharacterMatrixIsUpToDate = false;
         }
 
+        public void SetState(int i, int j, bool value)
+        {
+            State[i, j] = value;
+            CharacterMatrixIsUpToDate = false;
+        }
+
         public void UpdateCharacterMatrix()
         {
             CharacterMatrix = ConstructCharacterMatrix();
@@ -144,8 +150,12 @@ namespace LibBioInfo
 
         public char GetCharacterAt(int i, int j)
         {
-            string alignedPayload = GetAlignedPayload(i);
-            return alignedPayload[j];
+            if (!CharacterMatrixIsUpToDate)
+            {
+                UpdateCharacterMatrix();
+            }
+
+            return CharacterMatrix[i, j];
         }
 
         public string GetColumn(int j)
