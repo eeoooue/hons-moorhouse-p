@@ -25,6 +25,49 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
         SAGAOnePointCrossoverOperator Operator = new SAGAOnePointCrossoverOperator();
+        AlignmentPrinter AlignmentPrinter = new AlignmentPrinter();
+
+
+
+
+        #region testing edge cases 
+
+
+        [DataTestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(4)]
+        public void CanCrossoverGaplessAlignments(int position)
+        {
+            List<string> mapping = new List<string>()
+            {
+                "XXXXX",
+                "XXXXX",
+                "XXXXX",
+            };
+
+            BioSequence seq1 = new BioSequence("testA", "AAAAA");
+            BioSequence seq2 = new BioSequence("testB", "AACAA");
+            BioSequence seq3 = new BioSequence("testC", "AAGAA");
+            List<BioSequence> sequences = new List<BioSequence>() { seq1, seq2, seq3 };
+
+            Alignment a = new Alignment(sequences);
+            bool[,] state = AlignmentStateConverter.ConvertToAlignmentState(mapping);
+            a.State = state;
+
+            Alignment b = a.GetCopy();
+            Operator.CrossoverAtPosition(a, b, position);
+
+
+        }
+
+
+        #endregion
+
+
+
 
 
 
@@ -49,8 +92,14 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             randomizer.ModifyAlignment(a);
             randomizer.ModifyAlignment(b);
 
+            AlignmentPrinter.PrintAlignment(a);
+            AlignmentPrinter.PrintAlignment(b);
+
             List<Alignment> children = Operator.CreateAlignmentChildren(a, b);
             Alignment child = children[i];
+
+            AlignmentPrinter.PrintAlignment(child);
+
             AlignmentConservation.AssertAlignmentsAreConserved(a, child);
         }
 

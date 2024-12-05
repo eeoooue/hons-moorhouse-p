@@ -19,18 +19,37 @@ namespace LibBioInfo.ICrossoverOperators
 
             if (heads == 1)
             {
-                int i = Randomizer.Random.Next(1, a.Width);
+                int i = Randomizer.Random.Next(2, a.Width);
+                Console.WriteLine($"Performing A-B crossover @ position = {i}");
                 return CrossoverAtPosition(a, b, i);
             }
             else
             {
-                int i = Randomizer.Random.Next(1, b.Width);
+                int i = Randomizer.Random.Next(2, b.Width);
+                Console.WriteLine($"Performing B-A crossover @ position = {i}");
                 return CrossoverAtPosition(b, a, i);
             }
         }
 
         public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)
         {
+            bool canPerform = true;
+
+            if (position <= 0)
+            {
+                canPerform = false;
+            }
+
+            if (position >= a.Width || position >= b.Width)
+            {
+                canPerform = false;
+            }
+
+            if (!canPerform)
+            {
+                return new List<Alignment> { a, b, };
+            }
+
             Alignment child1 = GetABCrossover(a, b, position);
             Alignment child2 = GetBACrossover(a, b, position);
             
@@ -128,15 +147,25 @@ namespace LibBioInfo.ICrossoverOperators
 
         public void WriteLeftsUntilPosition(bool[,] source, bool[,] destination, int i, int n)
         {
-            for (int j = 0; j < n; j++)
-            {
-                destination[i, j] = source[i, j];
-            }
 
-            for (int j = n; j < destination.GetLength(1); j++)
+            int sourceLength = source.GetLength(1);
+
+            for (int j = 0; j < destination.GetLength(1); j++)
             {
                 destination[i, j] = true;
             }
+
+            for (int j = 0; j < n; j++)
+            {
+                if (j < sourceLength)
+                {
+                    destination[i, j] = source[i, j];
+                }
+
+
+            }
+
+            
         }
 
         public void WriteRightsUntilPosition(bool[,] source, bool[,] destination, int i, int leftMarker)
