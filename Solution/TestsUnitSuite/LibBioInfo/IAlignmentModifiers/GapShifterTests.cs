@@ -20,6 +20,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
     public class GapShifterTests
     {
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
+        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
@@ -72,25 +73,10 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 
         #endregion
 
-
-
-
-
-
-
-
         [TestMethod]
         public void AlignmentIsDifferentAfterShift()
         {
-            List<BioSequence> inputs = new List<BioSequence>
-            {
-                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
-            };
-
-            Alignment original = new Alignment(inputs);
+            Alignment original = ExampleAlignments.GetExampleA();
             Alignment copy = original.GetCopy();
             GapShifter.ModifyAlignment(copy);
 
@@ -103,53 +89,12 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         [TestMethod]
         public void AlignmentStateIsDifferentAfterShift()
         {
-            List<BioSequence> inputs = new List<BioSequence>
-            {
-                ExampleSequences.GetSequence(ExampleSequence.ExampleA),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleB),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleC),
-                ExampleSequences.GetSequence(ExampleSequence.ExampleD),
-            };
-
-            Alignment original = new Alignment(inputs);
-
+            Alignment original = ExampleAlignments.GetExampleA();
             Alignment copy = original.GetCopy();
             GapShifter.ModifyAlignment(copy);
 
-            bool alignmentsStatesMatch = AlignmentStatesMatch(original, copy);
+            bool alignmentsStatesMatch = AlignmentEquality.AlignmentsMatch(original, copy);
             Assert.IsFalse(alignmentsStatesMatch);
         }
-
-        public bool AlignmentStatesMatch(Alignment a, Alignment b)
-        {
-            int m = Math.Min(a.Height, b.Height);
-            int n = Math.Min(a.Width, b.Width);
-
-            if (a.Height != b.Height)
-            {
-                return true;
-            }
-
-            if (a.Width != b.Width)
-            {
-                return true;
-            }
-
-            for (int i=0; i<m; i++)
-            {
-                for (int j=0; j<n; j++)
-                {
-                    bool aValue = a.State[i, j];
-                    bool bValue = b.State[i, j];
-                    if (aValue != bValue)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
     }
 }
