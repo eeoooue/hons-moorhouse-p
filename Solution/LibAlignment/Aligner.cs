@@ -26,6 +26,15 @@ namespace LibAlignment
 
         public abstract void Iterate();
 
+        public void CheckNewBest(ScoredAlignment candidate)
+        {
+            if (candidate.Score > AlignmentScore)
+            {
+                CurrentAlignment = candidate.Alignment.GetCopy();
+                AlignmentScore = candidate.Score;
+            }
+        }
+
         public double ScoreAlignment(Alignment alignment)
         {
             return Objective.ScoreAlignment(alignment);
