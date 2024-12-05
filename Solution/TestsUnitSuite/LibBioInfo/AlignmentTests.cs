@@ -23,6 +23,8 @@ namespace TestsUnitSuite.LibBioInfo
         SequenceEquality SequenceEquality = Harness.SequenceEquality;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
+        StateEquality StateEquality = Harness.StateEquality;
+        AlignmentPrinter AlignmentPrinter = Harness.AlignmentPrinter;
 
         private FileHelper FileHelper = new FileHelper();
 
@@ -228,6 +230,47 @@ namespace TestsUnitSuite.LibBioInfo
             Assert.IsTrue(alignmentsMatch);
         }
 
+
+        #endregion
+
+
+        #region Testing Alignment State Simplification
+
+
+        [TestMethod]
+
+        public void RedundantColumnsAreAutomaticallyRemoved()
+        {
+            List<BioSequence> inputs = new List<BioSequence>
+            {
+                new BioSequence("a", "AAA"),
+                new BioSequence("a", "AAA"),
+                new BioSequence("a", "AAA"),
+            };
+
+            Alignment original = new Alignment(inputs);
+
+
+            bool[,] state = new bool[,]
+            {
+                { true, true, false, false, true, false},
+                { true, false, false, false, true, true},
+                { true, false, false, false, true, true},
+            };
+
+            original.SetState(state);
+            original.UpdateCharacterMatrixIfNeeded();
+
+            bool[,] expected = new bool[,]
+            {
+                { true, false, false, false},
+                { false, false, false, true},
+                { false, false, false, true},
+            };
+
+            bool verdict = StateEquality.StatesMatch(expected, original.State);
+            Assert.IsTrue(verdict);
+        }
 
         #endregion
     }
