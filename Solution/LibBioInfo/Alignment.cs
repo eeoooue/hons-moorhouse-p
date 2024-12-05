@@ -12,6 +12,8 @@ namespace LibBioInfo
 
         private static Bioinformatics Bioinformatics = new Bioinformatics();
 
+        public char[,] CharacterMatrix;
+
         public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
             Sequences = sequences;
@@ -26,6 +28,29 @@ namespace LibBioInfo
                 State = new bool[sequences.Count, width];
                 InitializeAlignmentState();
             }
+
+            CharacterMatrix = ConstructCharacterMatrix();
+        }
+
+        public void UpdateCharacterMatrix()
+        {
+            CharacterMatrix = ConstructCharacterMatrix();
+        }
+
+        public char[,] ConstructCharacterMatrix()
+        {
+            char[,] result = new char[Height, Width];
+
+            for(int i=0; i<Height; i++)
+            {
+                string payload = GetAlignedPayload(i);
+                for(int j=0; j<Width; j++)
+                {
+                    result[i, j] = payload[j];
+                }
+            }
+
+            return result;
         }
 
         public bool[,] ConstructStateBasedOnSequences(List<BioSequence> sequences)
