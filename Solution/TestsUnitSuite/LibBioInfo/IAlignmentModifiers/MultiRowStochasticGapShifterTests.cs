@@ -1,36 +1,30 @@
-﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
-using LibScoring.ObjectiveFunctions;
-using LibScoring.ScoringMatrices;
-using LibScoring;
+﻿using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LibFileIO;
-
-
-using TestsHarness;
 using TestsHarness.Tools;
+using TestsHarness;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {
     [TestClass]
-    public class GapShifterTests
+    public class MultiRowStochasticGapShifterTests
     {
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        GapShifter GapShifter = new GapShifter();
+        IAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
 
         [TestMethod]
         public void AlignmentIsDifferentAfterShift()
         {
             Alignment original = ExampleAlignments.GetExampleA();
             Alignment copy = original.GetCopy();
-            GapShifter.ModifyAlignment(copy);
+            MultiRowStochasticGapShifter.ModifyAlignment(copy);
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(original, copy);
             Assert.IsFalse(alignmentsMatch);
@@ -43,7 +37,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         {
             Alignment original = ExampleAlignments.GetExampleA();
             Alignment copy = original.GetCopy();
-            GapShifter.ModifyAlignment(copy);
+            MultiRowStochasticGapShifter.ModifyAlignment(copy);
 
             bool alignmentsStatesMatch = AlignmentEquality.AlignmentsMatch(original, copy);
             Assert.IsFalse(alignmentsStatesMatch);
