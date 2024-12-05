@@ -1,0 +1,21 @@
+﻿using LibBioInfo;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LibScoring
+{
+    public struct ScoredAlignment
+    {
+        public Alignment Alignment;
+        public double Score;
+
+        public ScoredAlignment(Alignment alignment, double score)
+        {
+            Alignment = alignment;
+            Score = score;
+        }
+    }
+}

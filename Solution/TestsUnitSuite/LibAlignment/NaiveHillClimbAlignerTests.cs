@@ -25,8 +25,6 @@ namespace TestsUnitSuite.LibAlignment
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        private FileHelper FileHelper = new FileHelper();
-
         public Aligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
