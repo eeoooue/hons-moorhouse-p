@@ -10,7 +10,7 @@ namespace LibAlignment
 {
     public abstract class MultiOutputParetoAligner
     {
-        public List<IObjectiveFunction> Objectives;
-        public Alignment CurrentAlignment;
+        public List<IObjectiveFunction> Objectives = new List<IObjectiveFunction>();
+        public Alignment? CurrentAlignment;
     }
 }
