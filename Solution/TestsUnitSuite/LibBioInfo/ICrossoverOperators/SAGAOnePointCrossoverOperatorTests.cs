@@ -25,10 +25,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
         SAGAOnePointCrossoverOperator Operator = new SAGAOnePointCrossoverOperator();
-        AlignmentPrinter AlignmentPrinter = new AlignmentPrinter();
-
-
-
 
         #region testing edge cases 
 
@@ -92,13 +88,8 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             randomizer.ModifyAlignment(a);
             randomizer.ModifyAlignment(b);
 
-            AlignmentPrinter.PrintAlignment(a);
-            AlignmentPrinter.PrintAlignment(b);
-
             List<Alignment> children = Operator.CreateAlignmentChildren(a, b);
             Alignment child = children[i];
-
-            AlignmentPrinter.PrintAlignment(child);
 
             AlignmentConservation.AssertAlignmentsAreConserved(a, child);
         }

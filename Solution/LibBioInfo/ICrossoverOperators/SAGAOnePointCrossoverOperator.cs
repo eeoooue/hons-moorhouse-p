@@ -20,13 +20,11 @@ namespace LibBioInfo.ICrossoverOperators
             if (heads == 1)
             {
                 int i = Randomizer.Random.Next(2, a.Width);
-                Console.WriteLine($"Performing A-B crossover @ position = {i}");
                 return CrossoverAtPosition(a, b, i);
             }
             else
             {
                 int i = Randomizer.Random.Next(2, b.Width);
-                Console.WriteLine($"Performing B-A crossover @ position = {i}");
                 return CrossoverAtPosition(b, a, i);
             }
         }
