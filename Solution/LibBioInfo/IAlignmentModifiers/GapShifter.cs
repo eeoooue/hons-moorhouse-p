@@ -8,8 +8,6 @@ namespace LibBioInfo.IAlignmentModifiers
 {
     public class GapShifter : IAlignmentModifier
     {
-        private int MaxAttempts = 10;
-
         public void ModifyAlignment(Alignment alignment)
         {
             while (true)
