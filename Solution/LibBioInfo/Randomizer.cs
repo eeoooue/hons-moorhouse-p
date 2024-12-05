@@ -15,6 +15,10 @@ namespace LibBioInfo
             Random = new Random(value);
         }
 
-       
+        public static bool CoinFlip()
+        {
+            int result = Random.Next(0, 2);
+            return result == 1;
+        }
     }
 }
