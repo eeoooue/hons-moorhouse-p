@@ -14,6 +14,7 @@ namespace LibAlignment.Aligners
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new OnePointCrossoverOperator();
+        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
 
         public int PopulationSize = 6;
         public int SelectionSize = 4;
@@ -50,10 +51,9 @@ namespace LibAlignment.Aligners
 
         public void MutateAlignments(List<Alignment> alignments)
         {
-            GapShifter shifter = new GapShifter();
             foreach(Alignment alignment in alignments)
             {
-                shifter.ModifyAlignment(alignment);
+                MutationOperator.ModifyAlignment(alignment);
             }
         }
 
