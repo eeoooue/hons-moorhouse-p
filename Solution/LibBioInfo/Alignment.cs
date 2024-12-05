@@ -8,11 +8,13 @@ namespace LibBioInfo
         public int Height { get { return State.GetLength(0); } }
         public int Width { get { return State.GetLength(1); } }
 
-        public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
+        public bool[,] State { get; private set; } // state[i,j] being true means a gap is placed at position (i,j)
 
         private static Bioinformatics Bioinformatics = new Bioinformatics();
 
         public char[,] CharacterMatrix;
+
+        public bool CharacterMatrixIsUpToDate = false;
 
         public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
@@ -30,11 +32,21 @@ namespace LibBioInfo
             }
 
             CharacterMatrix = ConstructCharacterMatrix();
+            CharacterMatrixIsUpToDate = true;
+        }
+
+        public Alignment(Alignment other) : this(other.GetAlignedSequences(), true) { }
+        
+        public void SetState(bool[,] state)
+        {
+            State = state;
+            CharacterMatrixIsUpToDate = false;
         }
 
         public void UpdateCharacterMatrix()
         {
             CharacterMatrix = ConstructCharacterMatrix();
+            CharacterMatrixIsUpToDate = true;
         }
 
         public char[,] ConstructCharacterMatrix()
@@ -82,19 +94,7 @@ namespace LibBioInfo
         }
 
 
-        public Alignment(Alignment other)
-        {
-            Sequences = other.GetAlignedSequences();
-            State = new bool[other.Height, other.Width];
-
-            for(int i=0; i<other.Height; i++)
-            {
-                for(int j=0; j<other.Width; j++)
-                {
-                    State[i, j] = other.State[i, j];
-                }
-            }
-        }
+        
 
         public List<BioSequence> GetAlignedSequences()
         {
