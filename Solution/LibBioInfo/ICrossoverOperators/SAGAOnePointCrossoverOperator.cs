@@ -45,7 +45,7 @@ namespace LibBioInfo.ICrossoverOperators
 
             if (!canPerform)
             {
-                return new List<Alignment> { a, b, };
+                return new List<Alignment> { a.GetCopy(), b.GetCopy(), };
             }
 
             Alignment child1 = GetABCrossover(a, b, position);
