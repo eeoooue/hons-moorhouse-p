@@ -55,17 +55,9 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Alignment b = a.GetCopy();
             Operator.CrossoverAtPosition(a, b, position);
-
-
         }
 
-
         #endregion
-
-
-
-
-
 
         [DataTestMethod]
         [DataRow(1, 0)]
@@ -93,8 +85,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             AlignmentConservation.AssertAlignmentsAreConserved(a, child);
         }
-
-
 
         [TestMethod]
         public void CanCreateAlignmentChildren()
@@ -147,7 +137,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
                 Operator.GetBACrossover(a, b, i);
             }
         }
-
 
         [TestMethod]
         public void TestFigure2ABExample()
@@ -216,16 +205,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             bool[,] actual = Operator.CollectRightsUntilPositions(a.State, positions);
             bool verdict = StateEquality.StatesMatch(expected, actual);
             Assert.IsTrue(verdict);
-        }
-
-        public bool[] ExtractRow(bool[,] state, int i)
-        {
-            bool[] result = new bool[state.Length];
-            for(int j=0; j<state.GetLength(1); j++)
-            {
-                result[j] = state[i, j];
-            }
-            return result;
         }
     }
 }
