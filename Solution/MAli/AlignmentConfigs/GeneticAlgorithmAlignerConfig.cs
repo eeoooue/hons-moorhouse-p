@@ -24,8 +24,8 @@ namespace MAli.AlignmentConfigs
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
             const int maxIterations = 100;
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations);
-            aligner.PopulationSize = 16;
-            aligner.SelectionSize = 8;
+            aligner.PopulationSize = 64;
+            aligner.SelectionSize = 16;
 
             return aligner;
         }
