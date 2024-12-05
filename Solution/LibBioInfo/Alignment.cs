@@ -63,8 +63,6 @@ namespace LibBioInfo
         {
             List<int> emptyColumns = CollectEmptyColumnIndexes();
 
-            Console.WriteLine($"found {emptyColumns.Count} empty columns.");
-
             if (emptyColumns.Count > 0)
             {
                 bool[,] newState = ConstructStateIgnoringColumns(State, emptyColumns);
@@ -75,7 +73,6 @@ namespace LibBioInfo
         public bool[,] ConstructStateIgnoringColumns(bool[,] state, List<int> blacklist)
         {
             List<int> whitelist = CollectColumnWhitelist(state, blacklist);
-            Console.WriteLine($"Column whitelist contains {whitelist.Count} columns");
             return ConstructStateOfOnlyColumns(state, whitelist);
         }
 
