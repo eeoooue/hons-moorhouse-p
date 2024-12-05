@@ -51,7 +51,7 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Alignment a = new Alignment(sequences);
             bool[,] state = AlignmentStateConverter.ConvertToAlignmentState(mapping);
-            a.State = state;
+            a.SetState(state);
 
             Alignment b = a.GetCopy();
             Operator.CrossoverAtPosition(a, b, position);

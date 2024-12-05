@@ -36,7 +36,7 @@ namespace TestsHarness.LiteratureAssets
 
             Alignment alignment = new Alignment(sequences);
             bool[,] state = Converter.ConvertToAlignmentState(mapping);
-            alignment.State = state;
+            alignment.SetState(state);
 
             return alignment;
         }
@@ -55,7 +55,7 @@ namespace TestsHarness.LiteratureAssets
 
             Alignment alignment = new Alignment(sequences);
             bool[,] state = Converter.ConvertToAlignmentState(mapping);
-            alignment.State = state;
+            alignment.SetState(state);
 
             return alignment;
         }
@@ -75,7 +75,7 @@ namespace TestsHarness.LiteratureAssets
 
             Alignment alignment = new Alignment(sequences);
             bool[,] state = Converter.ConvertToAlignmentState(mapping);
-            alignment.State = state;
+            alignment.SetState(state);
 
             return alignment;
         }
@@ -94,7 +94,7 @@ namespace TestsHarness.LiteratureAssets
 
             Alignment alignment = new Alignment(sequences);
             bool[,] state = Converter.ConvertToAlignmentState(mapping);
-            alignment.State = state;
+            alignment.SetState(state);
 
             return alignment;
         }

@@ -11,7 +11,7 @@ namespace LibBioInfo.IAlignmentModifiers
         public void ModifyAlignment(Alignment alignment)
         {
             bool[,] state = GetMatrixWithShuffledRows(alignment.State);
-            alignment.State = state;
+            alignment.SetState(state);
         }
 
         public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)
