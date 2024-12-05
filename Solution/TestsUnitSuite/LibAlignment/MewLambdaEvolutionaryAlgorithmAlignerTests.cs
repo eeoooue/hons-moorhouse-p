@@ -1,22 +1,21 @@
-﻿using LibAlignment;
-using LibAlignment.Aligners;
+﻿using LibAlignment.Aligners;
 using LibBioInfo;
-using LibFileIO;
-using LibScoring;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
+using LibScoring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsHarness;
 using TestsHarness.Tools;
+using TestsHarness;
+using LibFileIO;
 
 namespace TestsUnitSuite.LibAlignment
 {
     [TestClass]
-    public class GeneticAlgorithmAlignerTests
+    public class MewLambdaEvolutionaryAlgorithmAlignerTests
     {
         ExampleSequences ExampleSequences = Harness.ExampleSequences;
         SequenceConservation SequenceConservation = Harness.SequenceConservation;
@@ -35,11 +34,10 @@ namespace TestsUnitSuite.LibAlignment
                 ExampleSequences.GetSequence(ExampleSequence.ExampleD),
             };
 
-            GeneticAlgorithmAligner aligner = GetAligner();
-            aligner.PopulationSize = 6;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = GetAligner();
             aligner.Initialize(inputs);
 
-            Assert.IsTrue(aligner.Population.Count == 6);
+            Assert.IsTrue(aligner.Population.Count > 1);
         }
 
         [TestMethod]
@@ -53,11 +51,10 @@ namespace TestsUnitSuite.LibAlignment
                 ExampleSequences.GetSequence(ExampleSequence.ExampleD),
             };
 
-            GeneticAlgorithmAligner aligner = GetAligner();
-            aligner.PopulationSize = 2;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = GetAligner();
             aligner.Initialize(inputs);
 
-            Assert.IsTrue(aligner.Population.Count == 2);
+            Assert.IsTrue(aligner.Population.Count >= 2);
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(aligner.Population[0], aligner.Population[1]);
             Assert.IsFalse(alignmentsMatch);
@@ -79,7 +76,7 @@ namespace TestsUnitSuite.LibAlignment
                 ExampleSequences.GetSequence(ExampleSequence.ExampleD),
             };
 
-            GeneticAlgorithmAligner aligner = GetAligner();
+            MewLambdaEvolutionaryAlgorithmAligner aligner = GetAligner();
             aligner.Initialize(inputs);
             Alignment initial = aligner.Population[0].GetCopy();
             for (int i = 0; i < 3; i++)
@@ -95,13 +92,12 @@ namespace TestsUnitSuite.LibAlignment
             AlignmentConservation.AssertAlignmentsAreConserved(initial, result);
         }
 
-        public GeneticAlgorithmAligner GetAligner()
+        public MewLambdaEvolutionaryAlgorithmAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
-            GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, 10);
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, 10);
             return aligner;
         }
-
     }
 }
