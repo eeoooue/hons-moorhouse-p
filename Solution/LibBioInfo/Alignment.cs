@@ -49,10 +49,13 @@ namespace LibBioInfo
             CharacterMatrixIsUpToDate = false;
         }
 
-        public void UpdateCharacterMatrix()
+        public void UpdateCharacterMatrixIfNeeded()
         {
-            CharacterMatrix = ConstructCharacterMatrix();
-            CharacterMatrixIsUpToDate = true;
+            if (!CharacterMatrixIsUpToDate)
+            {
+                CharacterMatrix = ConstructCharacterMatrix();
+                CharacterMatrixIsUpToDate = true;
+            }
         }
 
         public char[,] ConstructCharacterMatrix()
@@ -99,9 +102,6 @@ namespace LibBioInfo
             return result;
         }
 
-
-        
-
         public List<BioSequence> GetAlignedSequences()
         {
             List<BioSequence> result = new List<BioSequence>();
@@ -120,6 +120,28 @@ namespace LibBioInfo
         public Alignment GetCopy()
         {
             return new Alignment(this);
+        }
+
+        
+
+        public char GetCharacterAt(int i, int j)
+        {
+            UpdateCharacterMatrixIfNeeded();
+            return CharacterMatrix[i, j];
+        }
+
+        public string GetColumn(int j)
+        {
+            UpdateCharacterMatrixIfNeeded();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Height; i++)
+            {
+                char c = CharacterMatrix[i, j];
+                sb.Append(c);
+            }
+
+            return sb.ToString();
         }
 
         public string GetAlignedPayload(int i)
@@ -143,31 +165,6 @@ namespace LibBioInfo
                     sb.Append(residues[residuesPlaced]);
                     residuesPlaced++;
                 }
-            }
-
-            return sb.ToString();
-        }
-
-        public char GetCharacterAt(int i, int j)
-        {
-            if (!CharacterMatrixIsUpToDate)
-            {
-                UpdateCharacterMatrix();
-            }
-
-            return CharacterMatrix[i, j];
-        }
-
-        public string GetColumn(int j)
-        {
-            // using an inefficient strategy temporarily
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < Height; i++)
-            {
-                char c = GetCharacterAt(i, j);
-                sb.Append(c);
             }
 
             return sb.ToString();
