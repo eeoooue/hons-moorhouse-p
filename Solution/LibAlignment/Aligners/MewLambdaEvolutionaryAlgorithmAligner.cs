@@ -7,21 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using LibScoring;
 using LibBioInfo.IAlignmentModifiers;
-using static System.Formats.Asn1.AsnWriter;
+using LibAlignment.Helpers;
 
 namespace LibAlignment.Aligners
 {
     public class MewLambdaEvolutionaryAlgorithmAligner : Aligner
     {
         public List<Alignment> Population = new List<Alignment>();
-
         public IAlignmentModifier MutationOperator = new GapShifter();
+        public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
 
         public int Mew = 5; // selection size
         public int Lambda = 20; // population size
 
         public MewLambdaEvolutionaryAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
+
         }
 
         public override Alignment AlignSequences(List<BioSequence> sequences)
@@ -52,17 +53,16 @@ namespace LibAlignment.Aligners
             }
         }
 
-        private void CheckNewBest(ScoredAlignment candidate)
-        {
-            if (candidate.Score > AlignmentScore)
-            {
-                CurrentAlignment = candidate.Alignment.GetCopy();
-                AlignmentScore = candidate.Score;
-            }
-        }
-
 
         public override void Iterate()
+        {
+            List<ScoredAlignment> candidates = ScorePopulation(Population);
+            List<Alignment> parents = SelectionHelper.SelectFittestParents(candidates, Mew);
+            Population.Clear();
+            Population = ProduceNewPopulation(parents);
+        }
+
+        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
         {
             List<ScoredAlignment> candidates = new List<ScoredAlignment>();
             foreach (Alignment alignment in Population)
@@ -73,11 +73,9 @@ namespace LibAlignment.Aligners
                 CheckNewBest(candidate);
             }
 
-            SortScoredAlignments(candidates);
-            List<Alignment> parents = SelectMewParents(candidates);
-            Population.Clear();
-            Population = ProduceNewPopulation(parents);
+            return candidates;
         }
+
 
         public Alignment GetMutationOfParent(Alignment parent)
         {
@@ -101,23 +99,6 @@ namespace LibAlignment.Aligners
             }
 
             return result;
-        }
-
-        public List<Alignment> SelectMewParents(List<ScoredAlignment> candidates)
-        {
-            List<Alignment> result = new List<Alignment>();
-
-            for(int i=0; i<Mew; i++)
-            {
-                result.Add(candidates[i].Alignment);
-            }
-
-            return result;
-        }
-
-        public void SortScoredAlignments(List<ScoredAlignment> alignments)
-        {
-            alignments.Sort((a, b) => b.Score.CompareTo(a.Score));
         }
     }
 }

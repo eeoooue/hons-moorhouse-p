@@ -1,4 +1,5 @@
-﻿using LibBioInfo;
+﻿using LibAlignment.Helpers;
+using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using LibScoring;
@@ -16,6 +17,8 @@ namespace LibAlignment.Aligners
         public ICrossoverOperator CrossoverOperator = new OnePointCrossoverOperator();
         public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
 
+        public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
+
         public int PopulationSize = 6;
         public int SelectionSize = 4;
 
@@ -27,41 +30,21 @@ namespace LibAlignment.Aligners
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
-            for(int i=0; i<IterationsLimit; i++)
+            CurrentAlignment = Population[0];
+            AlignmentScore = ScoreAlignment(CurrentAlignment);
+
+            for (int i=0; i<IterationsLimit; i++)
             {
                 Iterate();
             }
 
-            return SelectFittestMember(Population);
+            return CurrentAlignment;
         }
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            InitializePopulation(sequences);
-            CurrentAlignment = Population[0];
-        }
-
-        public override void Iterate()
-        {
-            List<Alignment> selectedParents = SelectFittestParents(Population, SelectionSize);
-            List<Alignment> children = BreedAlignments(selectedParents, PopulationSize);
-            MutateAlignments(children);
-            Population = children;
-        }
-
-        public void MutateAlignments(List<Alignment> alignments)
-        {
-            foreach(Alignment alignment in alignments)
-            {
-                MutationOperator.ModifyAlignment(alignment);
-            }
-        }
-
-        public void InitializePopulation(List<BioSequence> sequences)
-        {
             AlignmentRandomizer randomizer = new AlignmentRandomizer();
             Population.Clear();
-
             for (int i = 0; i < PopulationSize; i++)
             {
                 Alignment alignment = new Alignment(sequences);
@@ -70,34 +53,27 @@ namespace LibAlignment.Aligners
             }
         }
 
-        public List<double> ScoreAlignments(List<Alignment> alignments)
+        public override void Iterate()
         {
-            List<double> result = new List<double>();
-            foreach(Alignment alignment in alignments)
-            {
-                double score = ScoreAlignment(alignment);
-                result.Add(score);
-            }
-
-            return result;
+            List<ScoredAlignment> candidates = ScorePopulation(Population);
+            List<Alignment> parents = SelectionHelper.SelectFittestParents(candidates, SelectionSize);
+            List<Alignment> children = BreedAlignments(parents, PopulationSize);
+            MutateAlignments(children);
+            Population = children;
         }
 
-        public Alignment SelectFittestMember(List<Alignment> alignments)
+        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
         {
-            Alignment result = alignments[0];
-            double bestScore = ScoreAlignment(alignments[0]);
-
-            for(int i=1; i<alignments.Count; i++)
+            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
+            foreach (Alignment alignment in Population)
             {
-                double score = ScoreAlignment(alignments[i]);
-                if (score > bestScore)
-                {
-                    result = alignments[i];
-                    bestScore = score;
-                }
+                double score = ScoreAlignment(alignment);
+                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
+                candidates.Add(candidate);
+                CheckNewBest(candidate);
             }
 
-            return result;
+            return candidates;
         }
 
         public List<Alignment> BreedAlignments(List<Alignment> parents, int numberOfChildren)
@@ -111,43 +87,6 @@ namespace LibAlignment.Aligners
                 {
                     result.Add(child);
                 }
-            }
-
-            return result;
-        }
-
-        public List<Alignment> SelectFittestParents(List<Alignment> parents, int parentsToSelect)
-        {
-            List<Alignment> arr = parents.ToList();
-            List<double> scores = ScoreAlignments(parents);
-
-            int n = parents.Count;
-
-            for (int i = 0; i < n; i++)
-            {
-                int positionOfNextBest = i;
-
-                for (int j = i + 1; j < n; j++)
-                {
-                    if (scores[j] > scores[positionOfNextBest])
-                    {
-                        positionOfNextBest = j;
-                    }
-                }
-
-                if (positionOfNextBest != i)
-                {
-                    Alignment previous = arr[i];
-                    Alignment newBest = arr[positionOfNextBest];
-                    arr[i] = newBest;
-                    arr[positionOfNextBest] = previous;
-                }
-            }
-
-            List<Alignment> result = new List<Alignment>();
-            for(int i=0; i<parentsToSelect; i++)
-            {
-                result.Add(arr[i]);
             }
 
             return result;
@@ -168,6 +107,14 @@ namespace LibAlignment.Aligners
                     Alignment b = parents[j];
                     return CrossoverOperator.CreateAlignmentChildren(a, b);
                 }
+            }
+        }
+
+        public void MutateAlignments(List<Alignment> alignments)
+        {
+            foreach (Alignment alignment in alignments)
+            {
+                MutationOperator.ModifyAlignment(alignment);
             }
         }
     }
