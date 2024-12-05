@@ -65,7 +65,7 @@ namespace LibAlignment.Aligners
             foreach (bool[,] state in neighbouringStates)
             {
                 Alignment neighbour = alignment.GetCopy();
-                neighbour.State = state;
+                neighbour.SetState(state);
                 result.Add(neighbour);
             }
 

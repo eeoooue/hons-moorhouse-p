@@ -64,7 +64,7 @@ namespace LibBioInfo.ICrossoverOperators
             bool[,] childState = StateHelper.CombineAlignmentStates(aLeftState, bRightState);
 
             Alignment child = a.GetCopy();
-            child.State = childState;
+            child.SetState(childState);
 
             return child;
         }
@@ -79,7 +79,7 @@ namespace LibBioInfo.ICrossoverOperators
             bool[,] childState = StateHelper.CombineAlignmentStates(bLeftState, aRightState);
 
             Alignment child = a.GetCopy();
-            child.State = childState;
+            child.SetState(childState);
 
             return child;
         }

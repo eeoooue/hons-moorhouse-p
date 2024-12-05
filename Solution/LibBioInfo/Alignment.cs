@@ -8,9 +8,13 @@ namespace LibBioInfo
         public int Height { get { return State.GetLength(0); } }
         public int Width { get { return State.GetLength(1); } }
 
-        public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
+        public bool[,] State { get; private set; } // state[i,j] being true means a gap is placed at position (i,j)
 
         private static Bioinformatics Bioinformatics = new Bioinformatics();
+
+        public char[,] CharacterMatrix;
+
+        public bool CharacterMatrixIsUpToDate = false;
 
         public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
@@ -26,6 +30,48 @@ namespace LibBioInfo
                 State = new bool[sequences.Count, width];
                 InitializeAlignmentState();
             }
+
+            CharacterMatrix = ConstructCharacterMatrix();
+            CharacterMatrixIsUpToDate = true;
+        }
+
+        public Alignment(Alignment other) : this(other.GetAlignedSequences(), true) { }
+        
+        public void SetState(bool[,] state)
+        {
+            State = state;
+            CharacterMatrixIsUpToDate = false;
+        }
+
+        public void SetState(int i, int j, bool value)
+        {
+            State[i, j] = value;
+            CharacterMatrixIsUpToDate = false;
+        }
+
+        public void UpdateCharacterMatrixIfNeeded()
+        {
+            if (!CharacterMatrixIsUpToDate)
+            {
+                CharacterMatrix = ConstructCharacterMatrix();
+                CharacterMatrixIsUpToDate = true;
+            }
+        }
+
+        public char[,] ConstructCharacterMatrix()
+        {
+            char[,] result = new char[Height, Width];
+
+            for(int i=0; i<Height; i++)
+            {
+                string payload = GetAlignedPayload(i);
+                for(int j=0; j<Width; j++)
+                {
+                    result[i, j] = payload[j];
+                }
+            }
+
+            return result;
         }
 
         public bool[,] ConstructStateBasedOnSequences(List<BioSequence> sequences)
@@ -56,21 +102,6 @@ namespace LibBioInfo
             return result;
         }
 
-
-        public Alignment(Alignment other)
-        {
-            Sequences = other.GetAlignedSequences();
-            State = new bool[other.Height, other.Width];
-
-            for(int i=0; i<other.Height; i++)
-            {
-                for(int j=0; j<other.Width; j++)
-                {
-                    State[i, j] = other.State[i, j];
-                }
-            }
-        }
-
         public List<BioSequence> GetAlignedSequences()
         {
             List<BioSequence> result = new List<BioSequence>();
@@ -89,6 +120,28 @@ namespace LibBioInfo
         public Alignment GetCopy()
         {
             return new Alignment(this);
+        }
+
+        
+
+        public char GetCharacterAt(int i, int j)
+        {
+            UpdateCharacterMatrixIfNeeded();
+            return CharacterMatrix[i, j];
+        }
+
+        public string GetColumn(int j)
+        {
+            UpdateCharacterMatrixIfNeeded();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Height; i++)
+            {
+                char c = CharacterMatrix[i, j];
+                sb.Append(c);
+            }
+
+            return sb.ToString();
         }
 
         public string GetAlignedPayload(int i)
@@ -112,27 +165,6 @@ namespace LibBioInfo
                     sb.Append(residues[residuesPlaced]);
                     residuesPlaced++;
                 }
-            }
-
-            return sb.ToString();
-        }
-
-        public char GetCharacterAt(int i, int j)
-        {
-            string alignedPayload = GetAlignedPayload(i);
-            return alignedPayload[j];
-        }
-
-        public string GetColumn(int j)
-        {
-            // using an inefficient strategy temporarily
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < Height; i++)
-            {
-                char c = GetCharacterAt(i, j);
-                sb.Append(c);
             }
 
             return sb.ToString();
