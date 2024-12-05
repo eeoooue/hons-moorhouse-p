@@ -14,13 +14,6 @@ namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
     [TestClass]
     public class MultiRowStochasticGapShifterTests
     {
-        ExampleSequences ExampleSequences = Harness.ExampleSequences;
-        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
-        SequenceConservation SequenceConservation = Harness.SequenceConservation;
-        SequenceEquality SequenceEquality = Harness.SequenceEquality;
-        AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
-        AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
-
         IAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
         FileHelper FileHelper = new FileHelper();
 
