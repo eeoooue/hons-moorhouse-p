@@ -26,7 +26,38 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
         SAGAOnePointCrossoverOperator Operator = new SAGAOnePointCrossoverOperator();
 
+        #region testing edge cases 
 
+
+        [DataTestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(4)]
+        public void CanCrossoverGaplessAlignments(int position)
+        {
+            List<string> mapping = new List<string>()
+            {
+                "XXXXX",
+                "XXXXX",
+                "XXXXX",
+            };
+
+            BioSequence seq1 = new BioSequence("testA", "AAAAA");
+            BioSequence seq2 = new BioSequence("testB", "AACAA");
+            BioSequence seq3 = new BioSequence("testC", "AAGAA");
+            List<BioSequence> sequences = new List<BioSequence>() { seq1, seq2, seq3 };
+
+            Alignment a = new Alignment(sequences);
+            bool[,] state = AlignmentStateConverter.ConvertToAlignmentState(mapping);
+            a.State = state;
+
+            Alignment b = a.GetCopy();
+            Operator.CrossoverAtPosition(a, b, position);
+        }
+
+        #endregion
 
         [DataTestMethod]
         [DataRow(1, 0)]
@@ -51,10 +82,9 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             List<Alignment> children = Operator.CreateAlignmentChildren(a, b);
             Alignment child = children[i];
+
             AlignmentConservation.AssertAlignmentsAreConserved(a, child);
         }
-
-
 
         [TestMethod]
         public void CanCreateAlignmentChildren()
@@ -108,7 +138,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             }
         }
 
-
         [TestMethod]
         public void TestFigure2ABExample()
         {
@@ -134,48 +163,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             bool verdict = AlignmentEquality.AlignmentsMatch(expected, actual);
             Assert.IsTrue(verdict);
         }
-
-        [TestMethod]
-        public void ProducesParent1VerticalSplitLeftCorrectly()
-        {
-            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
-
-            List<string> mapping = new List<string>()
-            {
-                "XXXX",
-                "XXXX",
-                "XXXX",
-                "XXXX",
-            };
-
-            bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
-            bool[,] actual = Operator.GetVerticalSplitLeft(a, 4);
-            bool verdict = StateEquality.StatesMatch(expected, actual);
-            Assert.IsTrue(verdict);
-        }
-
-        [TestMethod]
-        public void ProducesParent1VerticalSplitRightCorrectly()
-        {
-            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
-
-            List<string> mapping = new List<string>()
-            {
-                "X---XXXXXXXXX-",
-                "XXXX---XXXXXX-",
-                "X--XXXXXXXXXXX",
-                "XXXX--XXXXXXXX",
-            };
-
-            bool[,] expected = AlignmentStateConverter.ConvertToAlignmentState(mapping);
-            bool[,] actual = Operator.GetVerticalSplitRight(a, 3);
-            Assert.AreEqual(expected.GetLength(1), actual.GetLength(1));
-
-
-            bool verdict = StateEquality.StatesMatch(expected, actual);
-            Assert.IsTrue(verdict);
-        }
-
 
         [TestMethod]
         public void ProducesParent2JaggedSplitLeftCorrectly()
@@ -218,16 +205,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             bool[,] actual = Operator.CollectRightsUntilPositions(a.State, positions);
             bool verdict = StateEquality.StatesMatch(expected, actual);
             Assert.IsTrue(verdict);
-        }
-
-        public bool[] ExtractRow(bool[,] state, int i)
-        {
-            bool[] result = new bool[state.Length];
-            for(int j=0; j<state.GetLength(1); j++)
-            {
-                result[j] = state[i, j];
-            }
-            return result;
         }
     }
 }

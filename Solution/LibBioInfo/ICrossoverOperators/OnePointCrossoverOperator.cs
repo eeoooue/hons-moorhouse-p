@@ -10,7 +10,7 @@ namespace LibBioInfo.ICrossoverOperators
     {
         private static Bioinformatics Bioinformatics = new Bioinformatics();
 
-        // based on One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
+        // similar to One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
 
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
