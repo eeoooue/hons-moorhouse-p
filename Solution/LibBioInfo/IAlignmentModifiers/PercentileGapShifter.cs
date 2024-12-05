@@ -21,16 +21,21 @@ namespace LibBioInfo.IAlignmentModifiers
         {
             for(int i=0; i<alignment.Height; i++)
             {
-                BioSequence sequence = alignment.Sequences[i];
-                int residues = sequence.Residues.Length;
-                int gaps = alignment.Width - residues;
-                int shifts = (int)Math.Ceiling(Percentage * gaps);
-
+                int shifts = DecideNumberOfShiftsToAttempt(alignment, i);
                 for(int j=0; j<shifts; j++)
                 {
                     GapShifter.TryShiftGapInRow(alignment, i);
                 }
             }
+        }
+
+        public int DecideNumberOfShiftsToAttempt(Alignment alignment, int i)
+        {
+            BioSequence sequence = alignment.Sequences[i];
+            int residues = sequence.Residues.Length;
+            int gaps = alignment.Width - residues;
+            int shifts = (int)Math.Ceiling(Percentage * gaps);
+            return shifts;
         }
     }
 }
