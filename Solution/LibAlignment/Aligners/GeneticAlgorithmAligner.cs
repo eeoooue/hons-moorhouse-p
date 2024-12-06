@@ -60,9 +60,23 @@ namespace LibAlignment.Aligners
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
             List<Alignment> parents = SelectionStrategy.SelectCandidates(SelectionSize);
 
-            List<Alignment> children = BreedAlignments(parents, PopulationSize);
-            MutateAlignments(children);
-            Population = children;
+            Population.Clear();
+            while (Population.Count < PopulationSize)
+            {
+                List<Alignment> children = BreedNewChildren();
+                foreach (Alignment child in children)
+                {
+                    MutationOperator.ModifyAlignment(child);
+                    Population.Add(child);
+                }
+            }
+        }
+
+        public List<Alignment> BreedNewChildren()
+        {
+            Alignment a = SelectionStrategy.SelectCandidate();
+            Alignment b = SelectionStrategy.SelectCandidate();
+            return CrossoverOperator.CreateAlignmentChildren(a, b);
         }
 
         public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
@@ -79,46 +93,5 @@ namespace LibAlignment.Aligners
             return candidates;
         }
 
-        public List<Alignment> BreedAlignments(List<Alignment> parents, int numberOfChildren)
-        {
-            List<Alignment> result = new List<Alignment>();
-
-            while (result.Count < numberOfChildren)
-            {
-                List<Alignment> children = BreedRandomParents(parents);
-                foreach(Alignment child in children)
-                {
-                    result.Add(child);
-                }
-            }
-
-            return result;
-        }
-
-        public List<Alignment> BreedRandomParents(List<Alignment> parents)
-        {
-            int n = parents.Count;
-
-            while (true)
-            {
-                int i = Randomizer.Random.Next(n);
-                int j = Randomizer.Random.Next(n);
-
-                if (i != j)
-                {
-                    Alignment a = parents[i];
-                    Alignment b = parents[j];
-                    return CrossoverOperator.CreateAlignmentChildren(a, b);
-                }
-            }
-        }
-
-        public void MutateAlignments(List<Alignment> alignments)
-        {
-            foreach (Alignment alignment in alignments)
-            {
-                MutationOperator.ModifyAlignment(alignment);
-            }
-        }
     }
 }
