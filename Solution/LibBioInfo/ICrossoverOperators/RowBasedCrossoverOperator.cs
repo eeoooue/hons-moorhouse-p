@@ -14,24 +14,39 @@ namespace LibBioInfo.ICrossoverOperators
 
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
+            if (Randomizer.CoinFlip())
+            {
+                int i = Randomizer.Random.Next(2, a.Width);
+                return CrossoverAtPosition(a, b, i);
+            }
+            else
+            {
+                int i = Randomizer.Random.Next(2, b.Width);
+                return CrossoverAtPosition(b, a, i);
+            }
+        }
+
+        public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)
+        {
             List<BioSequence> sequencesA = a.GetAlignedSequences();
             List<BioSequence> sequencesB = b.GetAlignedSequences();
 
             List<BioSequence> xParts = new List<BioSequence>();
             List<BioSequence> yParts = new List<BioSequence>();
 
-            for (int i=0; i<a.Height; i++)
+            for (int i = 0; i < a.Height; i++)
             {
-                List<BioSequence> pair = CrossoverSequences(sequencesA[i], sequencesB[i]);
+                List<BioSequence> pair = CrossoverSequencesAtPosition(sequencesA[i], sequencesB[i], position);
                 xParts.Add(pair[0]);
                 yParts.Add(pair[1]);
             }
 
-            Alignment x = new Alignment(xParts);
-            Alignment y = new Alignment(yParts);
+            Alignment x = new Alignment(xParts, true);
+            Alignment y = new Alignment(yParts, true);
 
             return new List<Alignment> { x, y };
         }
+
 
         public List<BioSequence> CrossoverSequences(BioSequence a, BioSequence b)
         {
