@@ -53,9 +53,94 @@ namespace LibBioInfo
         {
             if (!CharacterMatrixIsUpToDate)
             {
+                UpdateStateRepresentationIfNeeded();
                 CharacterMatrix = ConstructCharacterMatrix();
                 CharacterMatrixIsUpToDate = true;
             }
+        }
+
+        public void UpdateStateRepresentationIfNeeded()
+        {
+            List<int> emptyColumns = CollectEmptyColumnIndexes();
+
+            if (emptyColumns.Count > 0)
+            {
+                bool[,] newState = ConstructStateIgnoringColumns(State, emptyColumns);
+                SetState(newState);
+            }
+        }
+
+        public bool[,] ConstructStateIgnoringColumns(bool[,] state, List<int> blacklist)
+        {
+            List<int> whitelist = CollectColumnWhitelist(state, blacklist);
+            return ConstructStateOfOnlyColumns(state, whitelist);
+        }
+
+        public bool[,] ConstructStateOfOnlyColumns(bool[,] state, List<int> columns)
+        {
+            int m = state.GetLength(0);
+            int n = columns.Count;
+
+            bool[,] result = new bool[m, n];
+
+            for(int i = 0; i<m; i++)
+            {
+                for(int j=0; j<n; j++)
+                {
+                    int j2 = columns[j];
+                    result[i, j] = state[i, j2];
+                }
+            }
+
+            return result;
+        }
+
+        public List<int> CollectColumnWhitelist(bool[,] state, List<int> blacklist)
+        {
+            int n = state.GetLength(1);
+
+            HashSet<int> setToIgnore = new HashSet<int>(blacklist);
+
+            List<int> result = new List<int>();
+
+            for(int j=0; j<n; j++)
+            {
+                if (setToIgnore.Contains(j))
+                {
+                    continue;
+                }
+                result.Add(j);
+            }
+
+            return result;
+        }
+
+        public List<int> CollectEmptyColumnIndexes()
+        {
+            List<int> result = new List<int>();
+
+            for(int j = 0; j < Width; j++)
+            {
+                if (ColumnIsEmpty(j))
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
+        public bool ColumnIsEmpty(int j)
+        {
+            for(int i=0; i<Height; i++)
+            {
+                if (!State[i, j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public char[,] ConstructCharacterMatrix()
