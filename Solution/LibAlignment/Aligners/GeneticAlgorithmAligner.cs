@@ -16,7 +16,7 @@ namespace LibAlignment.Aligners
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
-        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.05);
+        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public int PopulationSize = 6;
