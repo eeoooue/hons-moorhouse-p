@@ -13,9 +13,8 @@ using TestsHarness;
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {
     [TestClass]
-    public class ColBasedCrossoverOperatorTests
+    public class RowBasedCrossoverOperatorTests
     {
-
         SAGAAssets SAGAAssets = Harness.LiteratureHelper.SAGAAssets;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentStateConverter AlignmentStateConverter = Harness.AlignmentStateConverter;
@@ -23,8 +22,7 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        ColBasedCrossoverOperator Operator = new ColBasedCrossoverOperator();
-
+        RowBasedCrossoverOperator Operator = new RowBasedCrossoverOperator();
 
         [DataTestMethod]
         [DataRow(1, 0)]
@@ -81,5 +79,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             bool bMatchesChild2 = AlignmentEquality.AlignmentsMatch(b, child2);
             Assert.IsFalse(bMatchesChild2);
         }
+
     }
 }
