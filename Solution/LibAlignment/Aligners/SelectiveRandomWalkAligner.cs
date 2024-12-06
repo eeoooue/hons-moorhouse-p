@@ -19,6 +19,7 @@ namespace LibAlignment.Aligners
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
+
             while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
