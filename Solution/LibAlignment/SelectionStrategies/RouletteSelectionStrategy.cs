@@ -50,20 +50,17 @@ namespace LibAlignment.SelectionStrategies
             double roll = Randomizer.Random.NextDouble();
             double scaledValue = roll * TotalValue;
 
-            Alignment previous = Candidates[0].Alignment;
             double total = 0;
-
             foreach(ScoredAlignment candidate in Candidates)
             {
                 total += candidate.Score;
                 if (total > scaledValue)
                 {
-                    return previous;
+                    return candidate.Alignment;
                 }
-                previous = candidate.Alignment;
             }
 
-            return previous;
+            return Candidates[Candidates.Count-1].Alignment;
         }
     }
 }
