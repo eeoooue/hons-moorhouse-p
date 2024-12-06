@@ -53,9 +53,18 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
             AlignmentConservation.AssertAlignmentsAreConserved(a, child);
         }
 
-        [TestMethod]
-        public void CrossoverModifiesAlignment()
+
+
+        [DataTestMethod]
+        [DataRow(1)]
+        [DataRow(12)]
+        [DataRow(123)]
+        [DataRow(1234)]
+        [DataRow(12345)]
+        public void CrossoverModifiesAlignment(int seed)
         {
+            Randomizer.SetSeed(seed);
+
             Alignment a = ExampleAlignments.GetExampleA();
             Alignment b = ExampleAlignments.GetExampleA();
             IAlignmentModifier randomizer = new AlignmentRandomizer();
