@@ -14,14 +14,14 @@ using LibFileIO;
 namespace TestsPerformance.LibBioInfo.ICrossoverOperators
 {
     [TestClass]
-    public class RowBasedCrossoverOperatorTests
+    public class ColBasedCrossoverOperatorTests
     {
         SAGAAssets SAGAAssets = Harness.LiteratureHelper.SAGAAssets;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        RowBasedCrossoverOperator Operator = new RowBasedCrossoverOperator();
+        ColBasedCrossoverOperator Operator = new ColBasedCrossoverOperator();
         private FileHelper FileHelper = new FileHelper();
 
         #region

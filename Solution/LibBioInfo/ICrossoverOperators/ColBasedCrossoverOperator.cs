@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.ICrossoverOperators
 {
-    public class RowBasedCrossoverOperator : ICrossoverOperator
+    public class ColBasedCrossoverOperator : ICrossoverOperator
     {
         BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
 
+        // similar to One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
 
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
