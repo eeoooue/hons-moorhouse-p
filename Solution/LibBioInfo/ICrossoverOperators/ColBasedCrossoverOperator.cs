@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.ICrossoverOperators
 {
-    public class RowBasedCrossoverOperator : ICrossoverOperator
+    public class ColBasedCrossoverOperator : ICrossoverOperator
     {
         BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
 

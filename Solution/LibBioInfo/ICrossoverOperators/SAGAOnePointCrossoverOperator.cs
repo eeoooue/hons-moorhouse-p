@@ -9,7 +9,7 @@ namespace LibBioInfo.ICrossoverOperators
 {
     public class SAGAOnePointCrossoverOperator : ICrossoverOperator
     {
-        public RowBasedCrossoverOperator RowBasedOperator = new RowBasedCrossoverOperator();
+        public ColBasedCrossoverOperator ColBasedOperator = new ColBasedCrossoverOperator();
 
         // an attempt to reproduce the One-Point Crossover operation described in SAGA (Notredame & Higgins, 1996)
 
@@ -20,18 +20,18 @@ namespace LibBioInfo.ICrossoverOperators
             if (Randomizer.CoinFlip())
             {
                 int i = Randomizer.Random.Next(2, a.Width);
-                return RowBasedOperator.CrossoverAtPosition(a, b, i);
+                return ColBasedOperator.CrossoverAtPosition(a, b, i);
             }
             else
             {
                 int i = Randomizer.Random.Next(2, b.Width);
-                return RowBasedOperator.CrossoverAtPosition(b, a, i);
+                return ColBasedOperator.CrossoverAtPosition(b, a, i);
             }
         }
 
         public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)
         {
-            return RowBasedOperator.CrossoverAtPosition(b, a, position);
+            return ColBasedOperator.CrossoverAtPosition(b, a, position);
         }
     }
 }
