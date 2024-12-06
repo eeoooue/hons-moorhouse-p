@@ -15,7 +15,19 @@ namespace MAli.AlignmentConfigs
     {
         public override Aligner CreateAligner()
         {
-            return GetVersion01();
+            return GetSagaInspired();
+        }
+
+        private Aligner GetSagaInspired()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
+            const int maxIterations = 100;
+            ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, maxIterations);
+            aligner.PopulationSize = 100;
+            aligner.SelectionSize = 50;
+
+            return aligner;
         }
 
         private Aligner GetVersion01()
