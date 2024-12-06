@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public class GeneticAlgorithmAligner : Aligner
+    public class ElitistGeneticAlgorithmAligner : Aligner
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
@@ -19,10 +19,10 @@ namespace LibAlignment.Aligners
 
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
 
-        public int PopulationSize = 6;
-        public int SelectionSize = 4;
+        public int PopulationSize = 18;
+        public int SelectionSize = 6;
 
-        public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public ElitistGeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
 
         }
@@ -33,7 +33,7 @@ namespace LibAlignment.Aligners
             CurrentAlignment = Population[0];
             AlignmentScore = ScoreAlignment(CurrentAlignment);
 
-            for (int i=0; i<IterationsLimit; i++)
+            for (int i = 0; i < IterationsLimit; i++)
             {
                 Iterate();
             }
@@ -57,9 +57,18 @@ namespace LibAlignment.Aligners
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
             List<Alignment> parents = SelectionHelper.SelectFittestParents(candidates, SelectionSize);
-            List<Alignment> children = BreedAlignments(parents, PopulationSize);
+            Population.Clear();
+            foreach (Alignment parent in parents)
+            {
+                Population.Add(parent);
+            }
+
+            List<Alignment> children = BreedAlignments(parents, PopulationSize - Population.Count);
             MutateAlignments(children);
-            Population = children;
+            foreach (Alignment child in children)
+            {
+                Population.Add(child);
+            }
         }
 
         public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
@@ -83,7 +92,7 @@ namespace LibAlignment.Aligners
             while (result.Count < numberOfChildren)
             {
                 List<Alignment> children = BreedRandomParents(parents);
-                foreach(Alignment child in children)
+                foreach (Alignment child in children)
                 {
                     result.Add(child);
                 }
