@@ -12,7 +12,11 @@ namespace LibBioInfo.Helpers
 
         public List<string> PartitionPayloadAtPosition(BioSequence a, int i)
         {
-            string payload = a.Payload;
+            return PartitionPayloadAtPosition(a.Payload, i);
+        }
+
+        public List<string> PartitionPayloadAtPosition(string payload, int i)
+        {
             string left = payload.Substring(0, i);
             string right = payload.Substring(i);
 
