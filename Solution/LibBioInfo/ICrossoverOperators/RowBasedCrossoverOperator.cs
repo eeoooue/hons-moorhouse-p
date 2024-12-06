@@ -17,8 +17,20 @@ namespace LibBioInfo.ICrossoverOperators
             List<BioSequence> sequencesA = a.GetAlignedSequences();
             List<BioSequence> sequencesB = b.GetAlignedSequences();
 
+            List<BioSequence> xParts = new List<BioSequence>();
+            List<BioSequence> yParts = new List<BioSequence>();
 
-            throw new NotImplementedException();
+            for (int i=0; i<a.Height; i++)
+            {
+                List<BioSequence> pair = CrossoverSequences(sequencesA[i], sequencesB[i]);
+                xParts.Add(pair[0]);
+                yParts.Add(pair[1]);
+            }
+
+            Alignment x = new Alignment(xParts);
+            Alignment y = new Alignment(yParts);
+
+            return new List<Alignment> { x, y };
         }
 
         public List<BioSequence> CrossoverSequences(BioSequence a, BioSequence b)
@@ -31,8 +43,19 @@ namespace LibBioInfo.ICrossoverOperators
         public List<BioSequence> CrossoverSequencesAtPosition(BioSequence a, BioSequence b, int i)
         {
             List<string> partsA = PayloadHelper.PartitionPayloadAtPosition(a, i);
+            string aLeft = partsA[0];
+            string aRight = partsA[1];
 
-            throw new NotImplementedException();
+            string bRight = ExtractRightComplement(aLeft, b);
+            string bLeft = ExtractLeftComplement(b, aRight);
+
+            string xPayload = $"{aLeft}{bRight}";
+            string yPayload = $"{bLeft}{aRight}";
+
+            BioSequence x = new BioSequence(a.Identifier, xPayload);
+            BioSequence y = new BioSequence(a.Identifier, yPayload);
+
+            return new List<BioSequence> { x, y };
         }
 
         public string ExtractLeftComplement(BioSequence sequence, string right)
