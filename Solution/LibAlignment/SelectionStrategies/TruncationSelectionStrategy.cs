@@ -37,6 +37,11 @@ namespace LibAlignment.SelectionStrategies
 
         public Alignment SelectCandidate()
         {
+            if (CurrentIndex >= Candidates.Count)
+            {
+                CurrentIndex = 0;
+            }
+
             ScoredAlignment choice = Candidates[CurrentIndex];
             CurrentIndex++;
             return choice.Alignment;
