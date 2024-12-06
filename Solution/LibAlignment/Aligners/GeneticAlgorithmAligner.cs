@@ -14,7 +14,7 @@ namespace LibAlignment.Aligners
     public class GeneticAlgorithmAligner : Aligner
     {
         public List<Alignment> Population = new List<Alignment>();
-        public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
+        public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.05);
 
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
