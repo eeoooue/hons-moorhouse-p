@@ -12,6 +12,8 @@ namespace LibAlignment
     {
         public void PreprocessCandidateAlignments(List<ScoredAlignment> candidates);
 
+        public List<Alignment> SelectCandidates(int n);
+
         public Alignment SelectCandidate();
     }
 }

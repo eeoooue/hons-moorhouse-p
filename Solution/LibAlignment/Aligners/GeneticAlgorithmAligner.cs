@@ -1,4 +1,5 @@
 ﻿using LibAlignment.Helpers;
+using LibAlignment.SelectionStrategies;
 using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
@@ -16,8 +17,7 @@ namespace LibAlignment.Aligners
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.05);
-
-        public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
+        public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int PopulationSize = 6;
         public int SelectionSize = 4;
@@ -56,7 +56,10 @@ namespace LibAlignment.Aligners
         public override void Iterate()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
-            List<Alignment> parents = SelectionHelper.SelectFittestParents(candidates, SelectionSize);
+
+            SelectionStrategy.PreprocessCandidateAlignments(candidates);
+            List<Alignment> parents = SelectionStrategy.SelectCandidates(SelectionSize);
+
             List<Alignment> children = BreedAlignments(parents, PopulationSize);
             MutateAlignments(children);
             Population = children;

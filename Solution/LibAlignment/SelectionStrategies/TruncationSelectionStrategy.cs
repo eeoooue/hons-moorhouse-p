@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.SelectionStrategies
 {
-    internal class TruncationSelectionStrategy : ISelectionStrategy
+    public class TruncationSelectionStrategy : ISelectionStrategy
     {
         AlignmentSelectionHelper Helper = new AlignmentSelectionHelper();
         List<ScoredAlignment> Candidates = new List<ScoredAlignment>();
@@ -20,6 +20,19 @@ namespace LibAlignment.SelectionStrategies
             Candidates = candidates;
             Helper.SortScoredAlignments(Candidates);
             CurrentIndex = 0;
+        }
+
+        public List<Alignment> SelectCandidates(int n)
+        {
+            List<Alignment> result = new List<Alignment>();
+
+            for(int i=0; i<n; i++)
+            {
+                Alignment candidate = SelectCandidate();
+                result.Add(candidate);
+            }
+
+            return result;
         }
 
         public Alignment SelectCandidate()
