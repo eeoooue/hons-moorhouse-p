@@ -19,8 +19,8 @@ namespace LibAlignment.Aligners
 
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
 
-        public int PopulationSize = 6;
-        public int SelectionSize = 4;
+        public int PopulationSize = 18;
+        public int SelectionSize = 6;
 
         public ElitistGeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
@@ -57,9 +57,18 @@ namespace LibAlignment.Aligners
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
             List<Alignment> parents = SelectionHelper.SelectFittestParents(candidates, SelectionSize);
-            List<Alignment> children = BreedAlignments(parents, PopulationSize);
+            Population.Clear();
+            foreach (Alignment parent in parents)
+            {
+                Population.Add(parent);
+            }
+
+            List<Alignment> children = BreedAlignments(parents, PopulationSize - Population.Count);
             MutateAlignments(children);
-            Population = children;
+            foreach (Alignment child in children)
+            {
+                Population.Add(child);
+            }
         }
 
         public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
