@@ -15,13 +15,22 @@ namespace MAli.AlignmentConfigs
     {
         public override Aligner CreateAligner()
         {
-            return GetVersion01();
+            return GetVersion02();
         }
 
         private Aligner GetVersion01()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
+            const int maxIterations = 1000;
+            SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
+            return aligner;
+        }
+
+        private Aligner GetVersion02()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
             const int maxIterations = 1000;
             SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
             return aligner;

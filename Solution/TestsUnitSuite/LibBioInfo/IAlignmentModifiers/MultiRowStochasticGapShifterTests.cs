@@ -32,9 +32,11 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             AlignmentConservation.AssertAlignmentsAreConserved(copy, original);
         }
 
-        [TestMethod]
-        public void AlignmentStateIsDifferentAfterShift()
+        [DataTestMethod]
+        [DataRow(525)]
+        public void AlignmentStateIsDifferentAfterShift(int seed)
         {
+            Randomizer.SetSeed(seed);
             Alignment original = ExampleAlignments.GetExampleA();
             Alignment copy = original.GetCopy();
             MultiRowStochasticGapShifter.ModifyAlignment(copy);

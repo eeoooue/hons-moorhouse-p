@@ -33,9 +33,10 @@ namespace LibAlignment.Aligners
             CurrentAlignment = Population[0];
             AlignmentScore = ScoreAlignment(CurrentAlignment);
 
-            for (int i=0; i<IterationsLimit; i++)
+            while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
+                IterationsCompleted++;
             }
 
             return CurrentAlignment;

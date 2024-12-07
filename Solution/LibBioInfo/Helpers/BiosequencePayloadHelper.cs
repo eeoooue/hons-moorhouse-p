@@ -10,6 +10,25 @@ namespace LibBioInfo.Helpers
     {
         public Bioinformatics Bioinformatics = new Bioinformatics();
 
+        public BioSequence GetSequenceWithGapInserted(BioSequence sequence, int gapWidth, int position)
+        {
+            string before = sequence.Payload.Substring(0, position);
+            string after = sequence.Payload.Substring(position);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(before);
+            for (int i=0; i<gapWidth; i++)
+            {
+                sb.Append('-');
+            }
+            sb.Append(after);
+
+            string payload = sb.ToString();
+
+            return new BioSequence(sequence.Identifier, payload);
+        }
+
+
         public List<string> PartitionPayloadAtPosition(BioSequence a, int i)
         {
             return PartitionPayloadAtPosition(a.Payload, i);

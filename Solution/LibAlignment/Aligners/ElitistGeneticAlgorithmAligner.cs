@@ -16,7 +16,7 @@ namespace LibAlignment.Aligners
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
-        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
+        public IAlignmentModifier MutationOperator = new GapShifter();
 
         public ISelectionStrategy TruncationSelection = new TruncationSelectionStrategy();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
@@ -37,9 +37,10 @@ namespace LibAlignment.Aligners
             CurrentAlignment = Population[0];
             AlignmentScore = ScoreAlignment(CurrentAlignment);
 
-            for (int i = 0; i < IterationsLimit; i++)
+            while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
+                IterationsCompleted++;
             }
 
             return CurrentAlignment;

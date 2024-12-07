@@ -10,6 +10,8 @@ namespace LibAlignment
 
         public int IterationsCompleted { get; protected set; } = 0;
 
+        public bool Debug = false;
+
         public int IterationsLimit { get; set; } = 0;
 
         public double AlignmentScore { get; protected set; } = 0;
@@ -32,6 +34,11 @@ namespace LibAlignment
             {
                 CurrentAlignment = candidate.Alignment.GetCopy();
                 AlignmentScore = candidate.Score;
+
+                if (Debug)
+                {
+                    Console.WriteLine($"iterations = {IterationsCompleted} | new best score = {AlignmentScore}");
+                }
             }
         }
 
