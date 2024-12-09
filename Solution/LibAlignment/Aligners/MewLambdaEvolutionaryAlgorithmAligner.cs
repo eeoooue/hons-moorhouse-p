@@ -16,7 +16,6 @@ namespace LibAlignment.Aligners
     {
         public List<Alignment> Population = new List<Alignment>();
         public IAlignmentModifier MutationOperator = new GapShifter();
-        public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
         public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int Mew = 5; // selection size
@@ -61,11 +60,11 @@ namespace LibAlignment.Aligners
             }
         }
 
-
         public override void Iterate()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
-            List<Alignment> parents = SelectionHelper.SelectFittestParents(candidates, Mew);
+            SelectionStrategy.PreprocessCandidateAlignments(candidates);
+            List<Alignment> parents = SelectionStrategy.SelectCandidates(Mew);
             Population.Clear();
             Population = ProduceNewPopulation(parents);
         }

@@ -41,7 +41,6 @@ namespace MAli.AlignmentConfigs
             const int maxIterations = 100;
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations);
             aligner.PopulationSize = 100;
-            aligner.SelectionSize = 50;
             aligner.MutationOperator = ConstructMutationOperator();
 
             return aligner;

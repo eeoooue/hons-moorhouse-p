@@ -20,7 +20,6 @@ namespace LibAlignment.Aligners
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public int PopulationSize = 6;
-        public int SelectionSize = 4;
 
         public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
@@ -30,7 +29,7 @@ namespace LibAlignment.Aligners
 
         public override string GetName()
         {
-            return $"GeneticAlgorithmAligner (population={PopulationSize}, selection={SelectionSize})";
+            return $"GeneticAlgorithmAligner (population={PopulationSize})";
         }
 
         public override Alignment AlignSequences(List<BioSequence> sequences)
@@ -57,7 +56,7 @@ namespace LibAlignment.Aligners
             for (int i = 0; i < PopulationSize; i++)
             {
                 Alignment alignment = new Alignment(sequences);
-
+                randomizer.ModifyAlignment(alignment);
                 Population.Add(alignment);
             }
         }
