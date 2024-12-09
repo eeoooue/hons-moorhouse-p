@@ -31,6 +31,12 @@ namespace LibAlignment.Aligners
 
         }
 
+        public override string GetName()
+        {
+            return $"ElitistGeneticAlgorithmAligner (population={PopulationSize}, selection={SelectionSize})";
+        }
+
+
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
@@ -105,5 +111,6 @@ namespace LibAlignment.Aligners
 
             return candidates;
         }
+
     }
 }

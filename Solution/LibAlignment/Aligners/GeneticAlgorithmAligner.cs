@@ -15,7 +15,7 @@ namespace LibAlignment.Aligners
     public class GeneticAlgorithmAligner : Aligner
     {
         public List<Alignment> Population = new List<Alignment>();
-        public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
+        public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
@@ -27,16 +27,24 @@ namespace LibAlignment.Aligners
 
         }
 
+
+        public override string GetName()
+        {
+            return $"GeneticAlgorithmAligner (population={PopulationSize}, selection={SelectionSize})";
+        }
+
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
             CurrentAlignment = Population[0];
             AlignmentScore = ScoreAlignment(CurrentAlignment);
+            CheckShowDebuggingInfo();
 
             while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
                 IterationsCompleted++;
+                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment;
@@ -59,7 +67,6 @@ namespace LibAlignment.Aligners
             List<ScoredAlignment> candidates = ScorePopulation(Population);
 
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
-            List<Alignment> parents = SelectionStrategy.SelectCandidates(SelectionSize);
 
             Population.Clear();
             while (Population.Count < PopulationSize)

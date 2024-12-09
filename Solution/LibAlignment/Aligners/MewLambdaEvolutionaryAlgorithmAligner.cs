@@ -25,6 +25,11 @@ namespace LibAlignment.Aligners
 
         }
 
+        public override string GetName()
+        {
+            return $"MewLambdaEvolutionaryAlgorithmAligner (selection={Mew}, population={Lambda})";
+        }
+
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
@@ -35,6 +40,7 @@ namespace LibAlignment.Aligners
             {
                 Iterate();
                 IterationsCompleted++;
+                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment;
