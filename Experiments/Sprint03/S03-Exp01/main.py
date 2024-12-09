@@ -7,12 +7,12 @@ from wrapped_scorer import WrappedScorer
 subset = WrappedSubset("PREFAB-J")
 
 aligners = []
-aligners.append(WrappedAligner("MAli Candidate A", "MAli", "MAli-candidate-A"))
-aligners.append(WrappedAligner("MAli Candidate B", "MAli", "MAli-candidate-B"))
 aligners.append(WrappedAligner("MAli Candidate C", "MAli", "MAli-candidate-C"))
+aligners.append(WrappedAligner("MAli Candidate B", "MAli", "MAli-candidate-B"))
+aligners.append(WrappedAligner("MAli Candidate A", "MAli", "MAli-candidate-A"))
 aligners.append(WrappedAligner("MAli v0.2", "MAli", "MAli-v0.2"))
 
-ITERATIONS = 2
+ITERATIONS = 100
 SEED_VALUE = 39
 
 for aligner in aligners:
