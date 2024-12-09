@@ -18,6 +18,14 @@ namespace LibScoring.ObjectiveFunctions
             AffineGapPenaltyOF = new AffineGapPenaltyObjectiveFunction(openingCost, nullCost);
         }
 
+
+        public string GetName()
+        {
+            string sumOfPairsName = SumOfPairsOF.GetName();
+            string penaltyName = AffineGapPenaltyOF.GetName();
+            return $"{sumOfPairsName} w/ {penaltyName}";
+        }
+
         public double ScoreAlignment(Alignment alignment)
         {
             double sumOfPairsScore = SumOfPairsOF.ScoreAlignment(alignment);

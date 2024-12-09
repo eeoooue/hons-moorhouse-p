@@ -28,6 +28,7 @@ namespace MAli
             SupportedCommands.Add("iterations");
             SupportedCommands.Add("timestamp");
             SupportedCommands.Add("tag");
+            SupportedCommands.Add("debug");
         }
 
         public void AddCommandDescriptions()
@@ -39,6 +40,7 @@ namespace MAli
             CommandDescriptions.Add("iterations", "Specify the number of iterations of refinement to be performed.");
             CommandDescriptions.Add("timestamp", "Includes a completion date-time timestamp in the output filename.");
             CommandDescriptions.Add("tag", "Specify a suffix to be included in the output filename.");
+            CommandDescriptions.Add("debug", "View debugging information throughout the alignment process.");
         }
 
         public void ListCurrentVersion()

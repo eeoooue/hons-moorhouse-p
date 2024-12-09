@@ -36,11 +36,13 @@ namespace LibAlignment.Aligners
             Initialize(sequences);
             CurrentAlignment = Population[0];
             AlignmentScore = ScoreAlignment(CurrentAlignment);
+            CheckShowDebuggingInfo();
 
             while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
                 IterationsCompleted++;
+                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment;

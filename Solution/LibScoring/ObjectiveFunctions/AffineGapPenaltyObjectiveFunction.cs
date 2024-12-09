@@ -20,6 +20,11 @@ namespace LibScoring.ObjectiveFunctions
             NullCost = nullCost;
         }
 
+        public string GetName()
+        {
+            return $"Affine Gap Penalties (open={OpeningCost}, null={NullCost})";
+        }
+
         public double ScoreAlignment(Alignment alignment)
         {
             double result = 0;
@@ -111,5 +116,6 @@ namespace LibScoring.ObjectiveFunctions
 
             return payload.Length;
         }
+
     }
 }

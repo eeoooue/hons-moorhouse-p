@@ -68,6 +68,11 @@ namespace LibScoring.ScoringMatrices
             ResidueIndexes['F'] = 19;
         }
 
+        public string GetName()
+        {
+            return "BLOSUM62 Matrix";
+        }
+
         public List<char> GetResidues()
         {
             return ResidueIndexes.Keys.ToList();

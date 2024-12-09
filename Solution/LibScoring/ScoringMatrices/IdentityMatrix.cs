@@ -11,6 +11,11 @@ namespace LibScoring.ScoringMatrices
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
+        public string GetName()
+        {
+            return "Identity Matrix";
+        }
+
         public List<char> GetResidues()
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

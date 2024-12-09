@@ -10,5 +10,7 @@ namespace LibScoring
     public interface IObjectiveFunction
     {
         public double ScoreAlignment(Alignment alignment);
+
+        public string GetName();
     }
 }
