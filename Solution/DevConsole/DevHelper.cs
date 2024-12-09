@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli
+namespace DevConsole
 {
     internal class DevHelper
     {
@@ -29,7 +29,7 @@ namespace MAli
         {
             Console.WriteLine($"Printing Alignment State:");
 
-            for(int i=0; i<alignment.Height; i++)
+            for (int i = 0; i < alignment.Height; i++)
             {
                 string alignedSequence = alignment.GetAlignedPayload(i);
                 Console.WriteLine($"    {alignedSequence}");
