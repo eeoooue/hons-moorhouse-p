@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibScoring;
+using System;
 using System.Text;
 
 namespace LibAlignment
@@ -33,14 +34,14 @@ namespace LibAlignment
         {
             if (Debug)
             {
-                List<string> lines = new List<string>();
-                CollectAlignmentProgress(lines);
+                List<string> lines = new List<string>() { "", "Debugging:", "" };
+                CollectAlignmentStrategy(lines);
                 CollectAlignmentStateInfo(lines);
 
                 string info = ConcatenateLines(lines);
                 Console.Clear();
                 Console.WriteLine(info);
-                Thread.Sleep(500);
+                // Thread.Sleep(500);
             }
         }
 
@@ -58,10 +59,11 @@ namespace LibAlignment
         }
 
 
-        public void CollectAlignmentProgress(List<string> lines)
+        public void CollectAlignmentStrategy(List<string> lines)
         {
             double percentIterationsComplete = Math.Round(100.0 * (double)IterationsCompleted/(double)IterationsLimit, 3);
-            lines.Add($"Aligning Sequences");
+
+            lines.Add(GetName());
             lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
             lines.Add("");
         }
@@ -112,6 +114,67 @@ namespace LibAlignment
         public double ScoreAlignment(Alignment alignment)
         {
             return Objective.ScoreAlignment(alignment);
+        }
+
+        public abstract string GetName();
+
+        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
+        {
+            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
+            foreach (Alignment alignment in population)
+            {
+                double score = ScoreAlignment(alignment);
+                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
+                candidates.Add(candidate);
+                CheckNewBest(candidate);
+            }
+
+            SetFitnesses(candidates);
+
+            return candidates;
+        }
+
+        public void SetFitnesses(List<ScoredAlignment> candidates)
+        {
+            double bestScore = GetBestScore(candidates);
+            double worstScore = GetWorstScore(candidates);
+            double range = bestScore - worstScore;
+
+            foreach(ScoredAlignment candidate in candidates)
+            {
+                SetFitness(candidate, worstScore, range);
+            }
+        }
+
+        public void SetFitness(ScoredAlignment candidate, in double worstScore, in double range)
+        {
+            double unscaledFitness = candidate.Score - worstScore;
+            double scaled = unscaledFitness / range;
+            candidate.Fitness = scaled;
+        }
+
+        public double GetBestScore(List<ScoredAlignment> candidates)
+        {
+            double bestScore = double.MinValue;
+            foreach (ScoredAlignment candidate in candidates)
+            {
+                double score = candidate.Score;
+                bestScore = Math.Max(score, bestScore);
+            }
+
+            return bestScore;
+        }
+
+        public double GetWorstScore(List<ScoredAlignment> candidates)
+        {
+            double worstScore = double.MaxValue;
+            foreach (ScoredAlignment candidate in candidates)
+            {
+                double score = candidate.Score;
+                worstScore = Math.Min(score, worstScore);
+            }
+
+            return worstScore;
         }
     }
 }

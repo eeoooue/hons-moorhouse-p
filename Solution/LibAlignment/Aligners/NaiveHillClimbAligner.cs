@@ -16,6 +16,11 @@ namespace LibAlignment.Aligners
         {
         }
 
+        public override string GetName()
+        {
+            return $"NaiveHillClimbAligner";
+        }
+
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
@@ -24,6 +29,7 @@ namespace LibAlignment.Aligners
             {
                 Iterate();
                 IterationsCompleted++;
+                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment!;

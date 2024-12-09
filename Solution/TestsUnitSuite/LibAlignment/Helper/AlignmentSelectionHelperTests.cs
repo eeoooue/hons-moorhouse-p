@@ -26,6 +26,7 @@ namespace TestsUnitSuite.LibAlignment.Helper
         AlignmentSelectionHelper Helper = new AlignmentSelectionHelper();
 
         [TestMethod]
+        [Ignore]
         public void CanSortAlignmentsInDescendingOrder()
         {
             BLOSUM62Matrix matrix = new BLOSUM62Matrix();

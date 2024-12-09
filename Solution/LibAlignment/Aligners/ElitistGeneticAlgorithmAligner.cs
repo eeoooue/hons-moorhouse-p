@@ -17,12 +17,11 @@ namespace LibAlignment.Aligners
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new GapShifter();
-
-        public ISelectionStrategy TruncationSelection = new TruncationSelectionStrategy();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
 
+        public double MutationRate = 0.50;
         public int PopulationSize = 18;
         public int SelectionSize = 6;
 
@@ -30,6 +29,12 @@ namespace LibAlignment.Aligners
         {
 
         }
+
+        public override string GetName()
+        {
+            return $"ElitistGeneticAlgorithmAligner (population={PopulationSize}, selection={SelectionSize})";
+        }
+
 
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
@@ -62,11 +67,13 @@ namespace LibAlignment.Aligners
 
         public override void Iterate()
         {
+            ISelectionStrategy truncationSelection = new TruncationSelectionStrategy();
+
             List<ScoredAlignment> candidates = ScorePopulation(Population);
-            TruncationSelection.PreprocessCandidateAlignments(candidates);
+            truncationSelection.PreprocessCandidateAlignments(candidates);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
 
-            List<Alignment> elites = TruncationSelection.SelectCandidates(SelectionSize);
+            List<Alignment> elites = truncationSelection.SelectCandidates(SelectionSize);
             Population.Clear();
             foreach (Alignment elite in elites)
             {
@@ -78,11 +85,14 @@ namespace LibAlignment.Aligners
                 List<Alignment> children = BreedNewChildren();
                 foreach(Alignment child in children)
                 {
-                    MutationOperator.ModifyAlignment(child);
+                    if (Randomizer.PercentageChanceEvent(MutationRate))
+                    {
+                        MutationOperator.ModifyAlignment(child);
+                    }
+
                     Population.Add(child);
                 }
             }
-
         }
 
         public List<Alignment> BreedNewChildren()
@@ -90,20 +100,6 @@ namespace LibAlignment.Aligners
             Alignment a = SelectionStrategy.SelectCandidate();
             Alignment b = SelectionStrategy.SelectCandidate();
             return CrossoverOperator.CreateAlignmentChildren(a, b);
-        }
-
-        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
-        {
-            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
-            foreach (Alignment alignment in Population)
-            {
-                double score = ScoreAlignment(alignment);
-                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
-                candidates.Add(candidate);
-                CheckNewBest(candidate);
-            }
-
-            return candidates;
         }
     }
 }

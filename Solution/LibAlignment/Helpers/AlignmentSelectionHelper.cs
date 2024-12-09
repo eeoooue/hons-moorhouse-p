@@ -25,7 +25,7 @@ namespace LibAlignment.Helpers
 
         public void SortScoredAlignments(List<ScoredAlignment> alignments)
         {
-            alignments.Sort((a, b) => b.Score.CompareTo(a.Score));
+            alignments.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
         }
     }
 }

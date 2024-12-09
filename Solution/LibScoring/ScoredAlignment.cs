@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace LibScoring
 {
-    public struct ScoredAlignment
+    public class ScoredAlignment
     {
         public Alignment Alignment;
         public double Score;
+        public double Fitness = 0.0;
 
         public ScoredAlignment(Alignment alignment, double score)
         {

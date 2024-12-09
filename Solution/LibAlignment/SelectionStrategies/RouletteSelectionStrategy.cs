@@ -26,7 +26,7 @@ namespace LibAlignment.SelectionStrategies
             double result = 0;
             foreach(ScoredAlignment candidate in candidates)
             {
-                result += candidate.Score;
+                result += candidate.Fitness;
             }
 
             return result;
@@ -53,7 +53,7 @@ namespace LibAlignment.SelectionStrategies
             double total = 0;
             foreach(ScoredAlignment candidate in Candidates)
             {
-                total += candidate.Score;
+                total += candidate.Fitness;
                 if (total > scaledValue)
                 {
                     return candidate.Alignment;
