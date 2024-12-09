@@ -21,6 +21,7 @@ namespace LibAlignment.Aligners
 
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
 
+        public double MutationRate = 0.50;
         public int PopulationSize = 18;
         public int SelectionSize = 6;
 
@@ -84,7 +85,7 @@ namespace LibAlignment.Aligners
                 List<Alignment> children = BreedNewChildren();
                 foreach(Alignment child in children)
                 {
-                    if (Randomizer.CoinFlip())
+                    if (Randomizer.PercentageChanceEvent(MutationRate))
                     {
                         MutationOperator.ModifyAlignment(child);
                     }

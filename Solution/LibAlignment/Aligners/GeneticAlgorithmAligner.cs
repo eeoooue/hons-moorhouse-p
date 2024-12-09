@@ -19,6 +19,8 @@ namespace LibAlignment.Aligners
         public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
+        public double MutationRate = 0.2;
+
         public int PopulationSize = 6;
 
         public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
@@ -72,7 +74,7 @@ namespace LibAlignment.Aligners
                 List<Alignment> children = BreedNewChildren();
                 foreach (Alignment child in children)
                 {
-                    if (Randomizer.CoinFlip())
+                    if (Randomizer.PercentageChanceEvent(MutationRate))
                     {
                         MutationOperator.ModifyAlignment(child);
                     }
