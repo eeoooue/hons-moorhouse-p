@@ -15,4 +15,16 @@
     <ProjectReference Include="..\MAli\MAli.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="BB11001">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BB11002">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BB11003">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
