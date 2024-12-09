@@ -33,14 +33,14 @@ namespace LibAlignment
         {
             if (Debug)
             {
-                List<string> lines = new List<string>();
-                CollectAlignmentProgress(lines);
+                List<string> lines = new List<string>() { "", "Debugging:", "" };
+                CollectAlignmentStrategy(lines);
                 CollectAlignmentStateInfo(lines);
 
                 string info = ConcatenateLines(lines);
                 Console.Clear();
                 Console.WriteLine(info);
-                Thread.Sleep(500);
+                // Thread.Sleep(500);
             }
         }
 
@@ -58,10 +58,11 @@ namespace LibAlignment
         }
 
 
-        public void CollectAlignmentProgress(List<string> lines)
+        public void CollectAlignmentStrategy(List<string> lines)
         {
             double percentIterationsComplete = Math.Round(100.0 * (double)IterationsCompleted/(double)IterationsLimit, 3);
-            lines.Add($"Aligning Sequences");
+
+            lines.Add(GetName());
             lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
             lines.Add("");
         }
@@ -113,5 +114,7 @@ namespace LibAlignment
         {
             return Objective.ScoreAlignment(alignment);
         }
+
+        public abstract string GetName();
     }
 }
