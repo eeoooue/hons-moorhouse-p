@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using LibScoring;
 using LibBioInfo.IAlignmentModifiers;
 using LibAlignment.Helpers;
+using LibAlignment.SelectionStrategies;
 
 namespace LibAlignment.Aligners
 {
@@ -16,6 +17,7 @@ namespace LibAlignment.Aligners
         public List<Alignment> Population = new List<Alignment>();
         public IAlignmentModifier MutationOperator = new GapShifter();
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
+        public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int Mew = 5; // selection size
         public int Lambda = 20; // population size
