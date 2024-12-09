@@ -88,20 +88,5 @@ namespace LibAlignment.Aligners
             Alignment b = SelectionStrategy.SelectCandidate();
             return CrossoverOperator.CreateAlignmentChildren(a, b);
         }
-
-        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
-        {
-            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
-            foreach (Alignment alignment in Population)
-            {
-                double score = ScoreAlignment(alignment);
-                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
-                candidates.Add(candidate);
-                CheckNewBest(candidate);
-            }
-
-            return candidates;
-        }
-
     }
 }

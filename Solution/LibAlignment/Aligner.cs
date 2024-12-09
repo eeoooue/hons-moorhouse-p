@@ -116,5 +116,19 @@ namespace LibAlignment
         }
 
         public abstract string GetName();
+
+        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
+        {
+            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
+            foreach (Alignment alignment in population)
+            {
+                double score = ScoreAlignment(alignment);
+                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
+                candidates.Add(candidate);
+                CheckNewBest(candidate);
+            }
+
+            return candidates;
+        }
     }
 }
