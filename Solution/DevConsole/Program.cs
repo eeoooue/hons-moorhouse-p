@@ -9,7 +9,23 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            RunMAli("-input BB11001 -output test -iterations 10");
+        }
+
+        static void RunMAli(string arguments)
+        {
+            string[] args = UnpackArguments(arguments);
+            Interface.ProcessArguments(args);
+        }
+
+        static string[] UnpackArguments(string arguments)
+        {
+            if (arguments.Length > 0)
+            {
+                return arguments.Split(' ');
+            }
+
+            return new string[] { };
         }
     }
 }
