@@ -26,8 +26,6 @@ namespace MAli.AlignmentConfigs
             {
                 new GapInserter(10),
                 new GapShifter(),
-                new AlignmentRandomizer(),
-                new NullModifier(),
                 new MultiRowStochasticGapShifter(),
                 new PercentileGapShifter(),
             };
