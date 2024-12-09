@@ -45,6 +45,8 @@ namespace MAli
                 if (alignment.SequencesCanBeAligned())
                 {
                     Aligner aligner = Config.CreateAligner();
+                    aligner.Debug = debugging;
+
                     int iterations = UnpackSpecifiedIterations(table);
                     if (iterations > 0)
                     {

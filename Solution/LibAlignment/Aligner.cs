@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibScoring;
+using System.Text;
 
 namespace LibAlignment
 {
@@ -32,53 +33,69 @@ namespace LibAlignment
         {
             if (Debug)
             {
+                List<string> lines = new List<string>();
+                CollectAlignmentProgress(lines);
+                CollectAlignmentStateInfo(lines);
+
+                string info = ConcatenateLines(lines);
                 Console.Clear();
-                PresentAlignmentProgress();
-                TryPresentAlignment();
+                Console.WriteLine(info);
+                Thread.Sleep(500);
             }
         }
 
-        public void PresentAlignmentProgress()
+        public string ConcatenateLines(List<string> lines)
         {
-            double percentIterationsComplete = Math.Round((double)IterationsCompleted/(double)IterationsLimit, 3);
+            StringBuilder sb = new StringBuilder();
 
-            Console.WriteLine($"Aligning Sequences");
-            Console.WriteLine($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
+            foreach(string line in lines)
+            {
+                sb.Append(line);
+                sb.Append("\n");
+            }
+
+            return sb.ToString();
         }
 
-        public void TryPresentAlignment()
+
+        public void CollectAlignmentProgress(List<string> lines)
         {
-            const int maxWidth = 100;
+            double percentIterationsComplete = Math.Round(100.0 * (double)IterationsCompleted/(double)IterationsLimit, 3);
+            lines.Add($"Aligning Sequences");
+            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
+            lines.Add("");
+        }
+
+        public void CollectAlignmentStateInfo(List<string> lines)
+        {
+            const int maxWidth = 200;
             const int maxHeight = 20;
             bool previewShown = false;
-
 
             if (CurrentAlignment is Alignment alignment)
             {
                 int m = alignment.Height;
                 int n = alignment.Width;
 
-                Console.WriteLine($"Current Alignment: ");
-                Console.WriteLine($" - dimensions: ({m} x {n})");
-                Console.WriteLine($" - score: {AlignmentScore}");
+                lines.Add($"Current Alignment: ");
+                lines.Add($" - dimensions: ({m} x {n})");
+                lines.Add($" - score: {AlignmentScore}");
 
                 if (m <= maxHeight && n <= maxWidth)
                 {
-                    PresentCurrentAlignmentState(alignment);
+                    List<BioSequence> sequences = alignment.GetAlignedSequences();
+                    foreach (BioSequence sequence in sequences)
+                    {
+                        lines.Add(sequence.Payload);
+                    }
                     previewShown = true;
                 }
             }
 
             if (!previewShown)
             {
-                Console.WriteLine("[ preview unavailable ]");
+                lines.Add("[ preview unavailable ]");
             }
-        }
-
-        public void PresentCurrentAlignmentState(Alignment alignment)
-        {
-
-
         }
 
         public void CheckNewBest(ScoredAlignment candidate)
@@ -88,10 +105,10 @@ namespace LibAlignment
                 CurrentAlignment = candidate.Alignment.GetCopy();
                 AlignmentScore = candidate.Score;
 
-                if (Debug)
-                {
-                    Console.WriteLine($"iterations = {IterationsCompleted} | new best score = {AlignmentScore}");
-                }
+                //if (Debug)
+                //{
+                //    Console.WriteLine($"iterations = {IterationsCompleted} | new best score = {AlignmentScore}");
+                //}
             }
         }
 

@@ -9,7 +9,7 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            RunMAli("-input BB11001 -output test -iterations 10 -debug");
+            RunMAli("-input BB11001 -output test -iterations 100 -debug");
         }
 
         static void RunMAli(string arguments)
