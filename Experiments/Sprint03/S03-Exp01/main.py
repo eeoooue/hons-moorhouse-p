@@ -22,4 +22,4 @@ for aligner in aligners:
     batch_scorer = BatchScorer(aligner, subset, scorer)
     aligner.specify_iterations(ITERATIONS)
     aligner.set_seed(SEED_VALUE)
-    batch_scorer.record_scores(f"{aligner.title}_seed_{SEED_VALUE}.csv")
+    batch_scorer.record_scores(f"{aligner.title}_seed_{SEED_VALUE}_iters_{ITERATIONS}.csv")
