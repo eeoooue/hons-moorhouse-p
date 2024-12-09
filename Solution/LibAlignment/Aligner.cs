@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibScoring;
+using System;
 using System.Text;
 
 namespace LibAlignment
@@ -128,7 +129,52 @@ namespace LibAlignment
                 CheckNewBest(candidate);
             }
 
+            SetFitnesses(candidates);
+
             return candidates;
+        }
+
+        public void SetFitnesses(List<ScoredAlignment> candidates)
+        {
+            double bestScore = GetBestScore(candidates);
+            double worstScore = GetWorstScore(candidates);
+            double range = bestScore - worstScore;
+
+            foreach(ScoredAlignment candidate in candidates)
+            {
+                SetFitness(candidate, worstScore, range);
+            }
+        }
+
+        public void SetFitness(ScoredAlignment candidate, in double worstScore, in double range)
+        {
+            double unscaledFitness = candidate.Score - worstScore;
+            double scaled = unscaledFitness / range;
+            candidate.Fitness = scaled;
+        }
+
+        public double GetBestScore(List<ScoredAlignment> candidates)
+        {
+            double bestScore = double.MinValue;
+            foreach (ScoredAlignment candidate in candidates)
+            {
+                double score = candidate.Score;
+                bestScore = Math.Max(score, bestScore);
+            }
+
+            return bestScore;
+        }
+
+        public double GetWorstScore(List<ScoredAlignment> candidates)
+        {
+            double worstScore = double.MaxValue;
+            foreach (ScoredAlignment candidate in candidates)
+            {
+                double score = candidate.Score;
+                worstScore = Math.Min(score, worstScore);
+            }
+
+            return worstScore;
         }
     }
 }
