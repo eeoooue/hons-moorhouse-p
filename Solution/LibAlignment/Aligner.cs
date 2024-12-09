@@ -79,6 +79,7 @@ namespace LibAlignment
 
                 lines.Add($"Current Alignment: ");
                 lines.Add($" - dimensions: ({m} x {n})");
+                lines.Add($" - objective function: {Objective.GetName()}");
                 lines.Add($" - score: {AlignmentScore}");
 
                 if (m <= maxHeight && n <= maxWidth)
