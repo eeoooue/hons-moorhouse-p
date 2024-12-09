@@ -69,21 +69,6 @@ namespace LibAlignment.Aligners
             Population = ProduceNewPopulation(parents);
         }
 
-        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
-        {
-            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
-            foreach (Alignment alignment in Population)
-            {
-                double score = ScoreAlignment(alignment);
-                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
-                candidates.Add(candidate);
-                CheckNewBest(candidate);
-            }
-
-            return candidates;
-        }
-
-
         public Alignment GetMutationOfParent(Alignment parent)
         {
             Alignment result = parent.GetCopy();
