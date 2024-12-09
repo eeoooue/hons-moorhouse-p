@@ -34,6 +34,7 @@ namespace MAli
 
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
+            bool debugging = CommandTableIncludesDebugFlag(table);
 
             try
             {
@@ -68,6 +69,20 @@ namespace MAli
                 ResponseBank.ExplainException(e);
             }
         }
+
+
+        public bool CommandTableIncludesDebugFlag(Dictionary<string, string?> table)
+        {
+            bool result = table.ContainsKey("debug");
+
+            if (result)
+            {
+                Console.WriteLine("Debugging mode active.");
+            }
+
+            return result;
+        }
+
 
         public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
         {

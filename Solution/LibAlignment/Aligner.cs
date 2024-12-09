@@ -28,6 +28,59 @@ namespace LibAlignment
 
         public abstract void Iterate();
 
+        public void CheckShowDebuggingInfo()
+        {
+            if (Debug)
+            {
+                Console.Clear();
+                PresentAlignmentProgress();
+                TryPresentAlignment();
+            }
+        }
+
+        public void PresentAlignmentProgress()
+        {
+            double percentIterationsComplete = Math.Round((double)IterationsCompleted/(double)IterationsLimit, 3);
+
+            Console.WriteLine($"Aligning Sequences");
+            Console.WriteLine($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
+        }
+
+        public void TryPresentAlignment()
+        {
+            const int maxWidth = 100;
+            const int maxHeight = 20;
+            bool previewShown = false;
+
+
+            if (CurrentAlignment is Alignment alignment)
+            {
+                int m = alignment.Height;
+                int n = alignment.Width;
+
+                Console.WriteLine($"Current Alignment: ");
+                Console.WriteLine($" - dimensions: ({m} x {n})");
+                Console.WriteLine($" - score: {AlignmentScore}");
+
+                if (m <= maxHeight && n <= maxWidth)
+                {
+                    PresentCurrentAlignmentState(alignment);
+                    previewShown = true;
+                }
+            }
+
+            if (!previewShown)
+            {
+                Console.WriteLine("[ preview unavailable ]");
+            }
+        }
+
+        public void PresentCurrentAlignmentState(Alignment alignment)
+        {
+
+
+        }
+
         public void CheckNewBest(ScoredAlignment candidate)
         {
             if (candidate.Score > AlignmentScore)
