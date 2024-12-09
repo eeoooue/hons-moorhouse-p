@@ -70,7 +70,6 @@ namespace LibAlignment
         {
             const int maxWidth = 200;
             const int maxHeight = 20;
-            bool previewShown = false;
 
             if (CurrentAlignment is Alignment alignment)
             {
@@ -89,13 +88,15 @@ namespace LibAlignment
                     {
                         lines.Add(sequence.Payload);
                     }
-                    previewShown = true;
+                }
+                else
+                {
+                    lines.Add("[ alignment too big for preview ]");
                 }
             }
-
-            if (!previewShown)
+            else
             {
-                lines.Add("[ preview unavailable ]");
+                lines.Add("[ alignment missing ]");
             }
         }
 
@@ -105,11 +106,6 @@ namespace LibAlignment
             {
                 CurrentAlignment = candidate.Alignment.GetCopy();
                 AlignmentScore = candidate.Score;
-
-                //if (Debug)
-                //{
-                //    Console.WriteLine($"iterations = {IterationsCompleted} | new best score = {AlignmentScore}");
-                //}
             }
         }
 
