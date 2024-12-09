@@ -42,7 +42,7 @@ namespace MAli.AlignmentConfigs
 
             ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, maxIterations);
             aligner.PopulationSize = 100;
-            aligner.SelectionSize = 15;
+            aligner.SelectionSize = 50;
             aligner.MutationOperator = ConstructMutationOperator();
 
             return aligner;
