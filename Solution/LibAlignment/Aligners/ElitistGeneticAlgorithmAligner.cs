@@ -15,7 +15,7 @@ namespace LibAlignment.Aligners
     public class ElitistGeneticAlgorithmAligner : Aligner
     {
         public List<Alignment> Population = new List<Alignment>();
-        public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
+        public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new GapShifter();
 
         public ISelectionStrategy TruncationSelection = new TruncationSelectionStrategy();

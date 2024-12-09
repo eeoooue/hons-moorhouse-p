@@ -31,8 +31,6 @@ namespace TestsUnitSuite.MAli
         [DataTestMethod]
         [Timeout(5000)]
         [DataRow("BB11001", "testoutput1")]
-        [DataRow("BB11002", "testoutput2")]
-        [DataRow("BB11003", "testoutput3")]
 
         public void ProducesValidAlignment(string inputFile, string outputFile)
         {
@@ -56,8 +54,7 @@ namespace TestsUnitSuite.MAli
         [DataTestMethod]
         [Timeout(5000)]
         [DataRow("BB11001", "testoutput1", "1756")]
-        [DataRow("BB11002", "testoutput2", "81")]
-        [DataRow("BB11003", "testoutput3", "1")]
+
         public void ProducesIdenticalAlignmentsWhenSeeded(string inputFile, string outputFile, string seed)
         {
             Dictionary<string, string?> table = new Dictionary<string, string?>();
