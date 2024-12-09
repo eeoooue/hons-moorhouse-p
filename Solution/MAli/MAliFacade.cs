@@ -17,7 +17,7 @@ namespace MAli
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        public AlignmentConfig Config = new GeneticAlgorithmAlignerConfig();
+        public AlignmentConfig Config = new ElitistGeneticAlgorithmAlignerConfig();
 
         public void SetSeed(string value)
         {
