@@ -57,7 +57,7 @@ namespace LibAlignment.Aligners
             for (int i = 0; i < PopulationSize; i++)
             {
                 Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
+
                 Population.Add(alignment);
             }
         }
@@ -65,7 +65,6 @@ namespace LibAlignment.Aligners
         public override void Iterate()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
-
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
 
             Population.Clear();
@@ -74,11 +73,15 @@ namespace LibAlignment.Aligners
                 List<Alignment> children = BreedNewChildren();
                 foreach (Alignment child in children)
                 {
-                    MutationOperator.ModifyAlignment(child);
+                    if (Randomizer.CoinFlip())
+                    {
+                        MutationOperator.ModifyAlignment(child);
+                    }
                     Population.Add(child);
                 }
             }
         }
+
 
         public List<Alignment> BreedNewChildren()
         {

@@ -17,8 +17,6 @@ namespace LibAlignment.Aligners
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new GapShifter();
-
-        public ISelectionStrategy TruncationSelection = new TruncationSelectionStrategy();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
@@ -68,11 +66,13 @@ namespace LibAlignment.Aligners
 
         public override void Iterate()
         {
+            ISelectionStrategy truncationSelection = new TruncationSelectionStrategy();
+
             List<ScoredAlignment> candidates = ScorePopulation(Population);
-            TruncationSelection.PreprocessCandidateAlignments(candidates);
+            truncationSelection.PreprocessCandidateAlignments(candidates);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
 
-            List<Alignment> elites = TruncationSelection.SelectCandidates(SelectionSize);
+            List<Alignment> elites = truncationSelection.SelectCandidates(SelectionSize);
             Population.Clear();
             foreach (Alignment elite in elites)
             {
@@ -84,11 +84,14 @@ namespace LibAlignment.Aligners
                 List<Alignment> children = BreedNewChildren();
                 foreach(Alignment child in children)
                 {
-                    MutationOperator.ModifyAlignment(child);
+                    if (Randomizer.CoinFlip())
+                    {
+                        MutationOperator.ModifyAlignment(child);
+                    }
+
                     Population.Add(child);
                 }
             }
-
         }
 
         public List<Alignment> BreedNewChildren()
