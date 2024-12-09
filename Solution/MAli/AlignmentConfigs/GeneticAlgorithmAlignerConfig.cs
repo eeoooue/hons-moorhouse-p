@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo;
 
 namespace MAli.AlignmentConfigs
 {
@@ -18,14 +20,29 @@ namespace MAli.AlignmentConfigs
             return GetVersion01();
         }
 
+        public MultiOperatorModifier ConstructMutationOperator()
+        {
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new GapInserter(10),
+                new GapShifter(),
+                new MultiRowStochasticGapShifter(),
+                new PercentileGapShifter(),
+            };
+
+            MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
+            return modifier;
+        }
+
         private Aligner GetVersion01()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
             const int maxIterations = 100;
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations);
-            aligner.PopulationSize = 64;
-            aligner.SelectionSize = 16;
+            aligner.PopulationSize = 100;
+            aligner.SelectionSize = 50;
+            aligner.MutationOperator = ConstructMutationOperator();
 
             return aligner;
         }
