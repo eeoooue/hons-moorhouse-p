@@ -5,32 +5,186 @@ namespace LibBioInfo
     public class Alignment
     {
         public List<BioSequence> Sequences;
-        public int Height { get { return Sequences.Count; } }
-        public int Width { get; private set; } = 0;
+        public int Height { get { return State.GetLength(0); } }
+        public int Width { get { return State.GetLength(1); } }
 
-        public bool[,] State; // state[i,j] being true means a gap is placed at position (i,j)
+        public bool[,] State { get; private set; } // state[i,j] being true means a gap is placed at position (i,j)
 
-        public Alignment(List<BioSequence> sequences)
+        private static Bioinformatics Bioinformatics = new Bioinformatics();
+
+        public char[,] CharacterMatrix;
+
+        public bool CharacterMatrixIsUpToDate = false;
+
+        public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
             Sequences = sequences;
-            Width = DecideWidth();
-            State = new bool[Height,Width];
-            InitializeAlignmentState();
+
+            if (conserveState)
+            {
+                State = ConstructStateBasedOnSequences(sequences);
+            }
+            else
+            {
+                int width = DecideWidth();
+                State = new bool[sequences.Count, width];
+                InitializeAlignmentState();
+            }
+
+            CharacterMatrix = ConstructCharacterMatrix();
+            CharacterMatrixIsUpToDate = true;
         }
 
-        public Alignment(Alignment other)
+        public Alignment(Alignment other) : this(other.GetAlignedSequences(), true) { }
+        
+        public void SetState(bool[,] state)
         {
-            Sequences = other.GetAlignedSequences();
-            Width = other.Width;
-            State = new bool[other.Height, other.Width];
+            State = state;
+            CharacterMatrixIsUpToDate = false;
+        }
 
-            for(int i=0; i<other.Height; i++)
+        public void SetState(int i, int j, bool value)
+        {
+            State[i, j] = value;
+            CharacterMatrixIsUpToDate = false;
+        }
+
+        public void UpdateCharacterMatrixIfNeeded()
+        {
+            if (!CharacterMatrixIsUpToDate)
             {
-                for(int j=0; j<other.Width; j++)
+                UpdateStateRepresentationIfNeeded();
+                CharacterMatrix = ConstructCharacterMatrix();
+                CharacterMatrixIsUpToDate = true;
+            }
+        }
+
+        public void UpdateStateRepresentationIfNeeded()
+        {
+            List<int> emptyColumns = CollectEmptyColumnIndexes();
+
+            if (emptyColumns.Count > 0)
+            {
+                bool[,] newState = ConstructStateIgnoringColumns(State, emptyColumns);
+                SetState(newState);
+            }
+        }
+
+        public bool[,] ConstructStateIgnoringColumns(bool[,] state, List<int> blacklist)
+        {
+            List<int> whitelist = CollectColumnWhitelist(state, blacklist);
+            return ConstructStateOfOnlyColumns(state, whitelist);
+        }
+
+        public bool[,] ConstructStateOfOnlyColumns(bool[,] state, List<int> columns)
+        {
+            int m = state.GetLength(0);
+            int n = columns.Count;
+
+            bool[,] result = new bool[m, n];
+
+            for(int i = 0; i<m; i++)
+            {
+                for(int j=0; j<n; j++)
                 {
-                    State[i, j] = other.State[i, j];
+                    int j2 = columns[j];
+                    result[i, j] = state[i, j2];
                 }
             }
+
+            return result;
+        }
+
+        public List<int> CollectColumnWhitelist(bool[,] state, List<int> blacklist)
+        {
+            int n = state.GetLength(1);
+
+            HashSet<int> setToIgnore = new HashSet<int>(blacklist);
+
+            List<int> result = new List<int>();
+
+            for(int j=0; j<n; j++)
+            {
+                if (setToIgnore.Contains(j))
+                {
+                    continue;
+                }
+                result.Add(j);
+            }
+
+            return result;
+        }
+
+        public List<int> CollectEmptyColumnIndexes()
+        {
+            List<int> result = new List<int>();
+
+            for(int j = 0; j < Width; j++)
+            {
+                if (ColumnIsEmpty(j))
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
+        public bool ColumnIsEmpty(int j)
+        {
+            for(int i=0; i<Height; i++)
+            {
+                if (!State[i, j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public char[,] ConstructCharacterMatrix()
+        {
+            char[,] result = new char[Height, Width];
+
+            for(int i=0; i<Height; i++)
+            {
+                string payload = GetAlignedPayload(i);
+                for(int j=0; j<Width; j++)
+                {
+                    result[i, j] = payload[j];
+                }
+            }
+
+            return result;
+        }
+
+        public bool[,] ConstructStateBasedOnSequences(List<BioSequence> sequences)
+        {
+            int width = 0;
+            foreach(BioSequence sequence in sequences)
+            {
+                width = Math.Max(width, sequence.Payload.Length);
+            }
+
+            bool[,] result = new bool[sequences.Count, width];
+
+            for(int i=0; i<sequences.Count; i++)
+            {
+                string payload = sequences[i].Payload;
+
+                for(int j=0; j<payload.Length; j++)
+                {
+                    result[i, j] = Bioinformatics.IsGapChar(payload[j]);
+                }
+
+                for(int j=payload.Length; j<width; j++)
+                {
+                    result[i, j] = true;
+                }
+            }
+
+            return result;
         }
 
         public List<BioSequence> GetAlignedSequences()
@@ -51,6 +205,28 @@ namespace LibBioInfo
         public Alignment GetCopy()
         {
             return new Alignment(this);
+        }
+
+        
+
+        public char GetCharacterAt(int i, int j)
+        {
+            UpdateCharacterMatrixIfNeeded();
+            return CharacterMatrix[i, j];
+        }
+
+        public string GetColumn(int j)
+        {
+            UpdateCharacterMatrixIfNeeded();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Height; i++)
+            {
+                char c = CharacterMatrix[i, j];
+                sb.Append(c);
+            }
+
+            return sb.ToString();
         }
 
         public string GetAlignedPayload(int i)
@@ -74,27 +250,6 @@ namespace LibBioInfo
                     sb.Append(residues[residuesPlaced]);
                     residuesPlaced++;
                 }
-            }
-
-            return sb.ToString();
-        }
-
-        public char GetCharacterAt(int i, int j)
-        {
-            string alignedPayload = GetAlignedPayload(i);
-            return alignedPayload[j];
-        }
-
-        public string GetColumn(int j)
-        {
-            // using an inefficient strategy temporarily
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < Height; i++)
-            {
-                char c = GetCharacterAt(i, j);
-                sb.Append(c);
             }
 
             return sb.ToString();

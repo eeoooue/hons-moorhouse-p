@@ -10,6 +10,8 @@ namespace LibScoring
     {
         public abstract int ScorePair(char a, char b);
 
+        public string GetName();
+
         public abstract List<char> GetResidues();
     }
 }

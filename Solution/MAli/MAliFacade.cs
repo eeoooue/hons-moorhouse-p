@@ -17,7 +17,7 @@ namespace MAli
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        public AlignmentConfig Config = new SelectiveRandomWalkAlignerConfig();
+        public AlignmentConfig Config = new MewLambdaEvolutionaryAlgorithmAlignerConfig();
 
         public void SetSeed(string value)
         {
@@ -32,8 +32,9 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, int iterations=0)
+        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
+            bool debugging = CommandTableIncludesDebugFlag(table);
 
             try
             {
@@ -44,16 +45,21 @@ namespace MAli
                 if (alignment.SequencesCanBeAligned())
                 {
                     Aligner aligner = Config.CreateAligner();
+                    aligner.Debug = debugging;
+
+                    int iterations = UnpackSpecifiedIterations(table);
                     if (iterations > 0)
                     {
                         aligner.IterationsLimit = iterations;
                     }
 
                     Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
-
                     alignment = aligner.AlignSequences(sequences);
-                    FileHelper.WriteAlignmentTo(alignment, outputPath);
-                    Console.WriteLine($"Alignment written to destination: '{outputPath}'");
+
+                    string outputFilename = BuildFullOutputFilename(outputPath, table);
+
+                    FileHelper.WriteAlignmentTo(alignment, outputFilename);
+                    Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
                 }
                 else
                 {
@@ -64,6 +70,69 @@ namespace MAli
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+
+        public bool CommandTableIncludesDebugFlag(Dictionary<string, string?> table)
+        {
+            bool result = table.ContainsKey("debug");
+
+            if (result)
+            {
+                Console.WriteLine("Debugging mode active.");
+            }
+
+            return result;
+        }
+
+
+        public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
+        {
+            if (table.ContainsKey("iterations"))
+            {
+                string? iterationsValue = table["iterations"];
+
+                if (iterationsValue is string iterations)
+                {
+                    int result = 0;
+                    if (int.TryParse(iterations, out result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+
+        public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
+        {
+            string result = outputName;
+
+            if (table.ContainsKey("timestamp"))
+            {
+                result += $"_{GetTimeStamp()}";
+            }
+
+            if (table.ContainsKey("tag"))
+            {
+                string? specifiedTag = table["tag"];
+                if (specifiedTag is string tag)
+                {
+                    result += $"_{tag}";
+                }
+            }
+
+            result += ".faa";
+
+            return result;
+        }
+
+        public string GetTimeStamp()
+        {
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            return timestamp;
         }
 
         public void ProvideHelp()

@@ -16,13 +16,20 @@ namespace LibAlignment.Aligners
 
         }
 
+        public override string GetName()
+        {
+            return $"SelectiveRandomWalkAligner";
+        }
+
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
+
             while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
                 IterationsCompleted++;
+                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment!;
@@ -49,7 +56,7 @@ namespace LibAlignment.Aligners
 
         public override void Iterate()
         {
-            IAlignmentModifier shifter = new GapShifter();
+            IAlignmentModifier shifter = new MultiRowStochasticGapShifter();
             Alignment candidate = CurrentAlignment!.GetCopy();
             shifter.ModifyAlignment(candidate);
             AcceptIfImprovement(candidate);

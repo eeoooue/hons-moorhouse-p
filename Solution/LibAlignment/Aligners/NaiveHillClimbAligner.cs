@@ -16,13 +16,20 @@ namespace LibAlignment.Aligners
         {
         }
 
+        public override string GetName()
+        {
+            return $"NaiveHillClimbAligner";
+        }
+
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
+
             while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
                 IterationsCompleted++;
+                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment!;
@@ -65,7 +72,7 @@ namespace LibAlignment.Aligners
             foreach (bool[,] state in neighbouringStates)
             {
                 Alignment neighbour = alignment.GetCopy();
-                neighbour.State = state;
+                neighbour.SetState(state);
                 result.Add(neighbour);
             }
 

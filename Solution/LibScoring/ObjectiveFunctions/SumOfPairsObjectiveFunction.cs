@@ -17,6 +17,11 @@ namespace LibScoring.ObjectiveFunctions
             Matrix = matrix;
         }
 
+        public string GetName()
+        {
+            return $"Sum of Pairs ({Matrix.GetName()})";
+        }
+
         public double ScoreAlignment(Alignment alignment)
         {
             double result = 0;

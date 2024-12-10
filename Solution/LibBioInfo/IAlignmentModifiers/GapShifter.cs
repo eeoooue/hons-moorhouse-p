@@ -8,8 +8,6 @@ namespace LibBioInfo.IAlignmentModifiers
 {
     public class GapShifter : IAlignmentModifier
     {
-        private int MaxAttempts = 10;
-
         public void ModifyAlignment(Alignment alignment)
         {
             while (true)
@@ -35,9 +33,8 @@ namespace LibBioInfo.IAlignmentModifiers
 
             int newGapPos = GetRandomChoiceFromList(residuePositions);
             int newResiduePos = GetRandomChoiceFromList(gapPositions);
-
-            alignment.State[i, newResiduePos] = false;
-            alignment.State[i, newGapPos] = true;
+            alignment.SetState(i, newResiduePos, false);
+            alignment.SetState(i, newGapPos, true);
 
             return true;
         }
