@@ -23,3 +23,4 @@ for aligner in aligners:
     aligner.specify_iterations(ITERATIONS)
     aligner.set_seed(SEED_VALUE)
     batch_scorer.record_scores(f"{aligner.title}_seed_{SEED_VALUE}_iters_{ITERATIONS}.csv")
+
