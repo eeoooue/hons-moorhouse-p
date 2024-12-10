@@ -8,9 +8,8 @@ subset = WrappedSubset("PREFAB-C")
 
 aligners = []
 aligners.append(WrappedAligner("MAli v1.0", "MAli", "MAli-v1.0"))
-aligners.append(WrappedAligner("MAli v0.2", "MAli", "MAli-v0.2"))
 
-ITERATIONS = 100
+ITERATIONS = 10
 SEED_VALUE = 39
 
 for aligner in aligners:
