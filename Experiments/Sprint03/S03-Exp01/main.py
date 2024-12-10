@@ -17,6 +17,8 @@ SEED_VALUE = 39
 
 for aligner in aligners:
 
+    print(f"Now testing: {aligner.title}")
+
     aligner: WrappedAligner
     scorer = WrappedScorer("qscore")
     batch_scorer = BatchScorer(aligner, subset, scorer)
