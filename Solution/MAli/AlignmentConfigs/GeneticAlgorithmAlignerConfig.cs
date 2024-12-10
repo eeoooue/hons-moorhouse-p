@@ -24,7 +24,7 @@ namespace MAli.AlignmentConfigs
         {
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                new GapInserter(10),
+                new GapInserter(8),
                 new GapShifter(),
                 new MultiRowStochasticGapShifter(),
                 new PercentileGapShifter(),
