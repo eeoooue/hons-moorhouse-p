@@ -14,6 +14,8 @@ namespace LibAlignment
 
         public bool Debug = false;
 
+        public int DebugCursorStart = -1;
+
         public int IterationsLimit { get; set; } = 0;
 
         public double AlignmentScore { get; protected set; } = 0;
@@ -34,14 +36,19 @@ namespace LibAlignment
         {
             if (Debug)
             {
-                List<string> lines = new List<string>() { "", "Debugging:", "" };
+                if (DebugCursorStart == -1)
+                {
+                    int cursorPos = Console.GetCursorPosition().Top;
+                    DebugCursorStart = cursorPos + 1;
+                }
+
+                List<string> lines = new List<string>() { "Debugging:", "" };
                 CollectAlignmentStrategy(lines);
                 CollectAlignmentStateInfo(lines);
 
                 string info = ConcatenateLines(lines);
-                Console.Clear();
+                Console.SetCursorPosition(0, DebugCursorStart);
                 Console.WriteLine(info);
-                // Thread.Sleep(500);
             }
         }
 
@@ -62,9 +69,10 @@ namespace LibAlignment
         public void CollectAlignmentStrategy(List<string> lines)
         {
             double percentIterationsComplete = Math.Round(100.0 * (double)IterationsCompleted/(double)IterationsLimit, 3);
+            string percentValue = percentIterationsComplete.ToString("0.0");
 
             lines.Add(GetName());
-            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
+            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
             lines.Add("");
         }
 
