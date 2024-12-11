@@ -17,7 +17,7 @@ namespace LibBioInfo
 
         public ConsoleColor GetBackgroundColour(char x)
         {
-            if (Bioinformatics.IsGapChar(x))
+            if (Bioinformatics.IsGapChar(x) || x == ' ')
             {
                 return ConsoleColor.Black;
             }
