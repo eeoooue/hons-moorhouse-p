@@ -11,24 +11,61 @@ namespace LibAlignment.Helpers
     {
         public Bioinformatics Bioinformatics = new Bioinformatics();
 
-        public ResiduePalette Palette = new ResiduePalette();
+        public ResiduePalette ResiduePalette = new ResiduePalette();
+        public NucleotidePalette NucleotidePalette = new NucleotidePalette();
+
+
+
+        public void PaintAlignment(Alignment alignment)
+        {
+            foreach(BioSequence sequence in alignment.GetAlignedSequences())
+            {
+                PaintSequence(sequence);
+            }
+        }
 
 
         public void PaintSequence(BioSequence sequence)
         {
             Console.ResetColor();
-            foreach (char x in sequence.Payload)
+
+            if (sequence.IsNucleic())
             {
-                PaintResidue(x);
+                foreach (char x in sequence.Payload)
+                {
+                    PaintNucleotide(x);
+                }
             }
+            else
+            {
+                foreach (char x in sequence.Payload)
+                {
+                    PaintResidue(x);
+                }
+            }
+
             Console.ResetColor();
             Console.WriteLine();
         }
 
+
+
         public void SetThemeToMatchResidue(char residue)
         {
-            Console.BackgroundColor = Palette.GetBackgroundColour(residue);
-            Console.ForegroundColor = Palette.GetForegroundColour(residue);
+            Console.BackgroundColor = ResiduePalette.GetBackgroundColour(residue);
+            Console.ForegroundColor = ResiduePalette.GetForegroundColour(residue);
+        }
+
+        public void SetThemeToMatchNucleotide(char residue)
+        {
+            Console.BackgroundColor = NucleotidePalette.GetBackgroundColour(residue);
+            Console.ForegroundColor = NucleotidePalette.GetForegroundColour(residue);
+        }
+
+        public void PaintNucleotide(char unit)
+        {
+            SetThemeToMatchNucleotide(unit);
+            Console.Write(unit);
         }
 
         public void PaintResidue(char residue)

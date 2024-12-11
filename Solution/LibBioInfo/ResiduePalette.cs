@@ -10,7 +10,6 @@ namespace LibBioInfo
     {
         public Bioinformatics Bioinformatics = new Bioinformatics();
 
-
         public ConsoleColor GetForegroundColour(char x)
         {
             return ConsoleColor.White;
@@ -23,7 +22,37 @@ namespace LibBioInfo
                 return ConsoleColor.Black;
             }
 
-            return ConsoleColor.Red;
+            if ("C".Contains(x))
+            {
+                return ConsoleColor.DarkBlue;
+            }
+
+            if ("STAGP".Contains(x))
+            {
+                return ConsoleColor.DarkCyan;
+            }
+
+            if ("DEQN".Contains(x))
+            {
+                return ConsoleColor.DarkGreen;
+            }
+
+            if ("HRK".Contains(x))
+            {
+                return ConsoleColor.DarkYellow;
+            }
+
+            if ("MILV".Contains(x))
+            {
+                return ConsoleColor.DarkMagenta;
+            }
+
+            if ("WYF".Contains(x))
+            {
+                return ConsoleColor.DarkRed;
+            }
+
+            return ConsoleColor.DarkGray;
         }
     }
 }
