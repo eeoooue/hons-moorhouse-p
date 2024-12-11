@@ -25,6 +25,21 @@
     <None Update="BB11003">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="real_marine_life">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="synth_cropped_segments">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="synth_polarizer_one">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="synth_polarizer_two">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="synth_polarizing_checkerboard">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
