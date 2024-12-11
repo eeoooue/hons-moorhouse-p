@@ -1,4 +1,6 @@
-﻿using MAli;
+﻿using LibAlignment.Helpers;
+using LibBioInfo;
+using MAli;
 
 namespace DevConsole
 {
@@ -6,10 +8,13 @@ namespace DevConsole
     {
         private static DevHelper Helper = new DevHelper();
         private static MAliInterface Interface = new MAliInterface();
+        private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
 
         static void Main(string[] args)
         {
-            RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+            BioSequence sequence = new BioSequence("asdanjsd", "ACGT-ACGTA-CG--T-A--CGT-A-C");
+            Painter.PaintSequence(sequence);
         }
 
         static void RunMAli(string arguments)
