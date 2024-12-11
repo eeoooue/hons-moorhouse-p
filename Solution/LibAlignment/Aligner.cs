@@ -1,4 +1,5 @@
-﻿using LibBioInfo;
+﻿using LibAlignment.Helpers;
+using LibBioInfo;
 using LibScoring;
 using System;
 using System.Text;
@@ -9,6 +10,7 @@ namespace LibAlignment
     {
         private IObjectiveFunction Objective;
         public Alignment? CurrentAlignment = null;
+        private AlignmentDebugHelper DebugHelper = new AlignmentDebugHelper();
 
         public int IterationsCompleted { get; protected set; } = 0;
 
@@ -45,10 +47,13 @@ namespace LibAlignment
                 List<string> lines = new List<string>() { "Debugging:", "" };
                 CollectAlignmentStrategy(lines);
                 CollectAlignmentStateInfo(lines);
-
-                string info = ConcatenateLines(lines);
+                List<string> output = DebugHelper.PadInfoLines(lines);
+                string info = ConcatenateLines(output);
                 Console.SetCursorPosition(0, DebugCursorStart);
+
                 Console.WriteLine(info);
+                TryDisplayAlignment(CurrentAlignment);
+                Console.WriteLine();
             }
         }
 
@@ -78,9 +83,6 @@ namespace LibAlignment
 
         public void CollectAlignmentStateInfo(List<string> lines)
         {
-            const int maxWidth = 200;
-            const int maxHeight = 20;
-
             if (CurrentAlignment is Alignment alignment)
             {
                 int m = alignment.Height;
@@ -90,23 +92,14 @@ namespace LibAlignment
                 lines.Add($" - dimensions: ({m} x {n})");
                 lines.Add($" - objective function: {Objective.GetName()}");
                 lines.Add($" - score: {AlignmentScore}");
-
-                if (m <= maxHeight && n <= maxWidth)
-                {
-                    List<BioSequence> sequences = alignment.GetAlignedSequences();
-                    foreach (BioSequence sequence in sequences)
-                    {
-                        lines.Add(sequence.Payload);
-                    }
-                }
-                else
-                {
-                    lines.Add("[ alignment too big for preview ]");
-                }
             }
-            else
+        }
+
+        public void TryDisplayAlignment(Alignment? alignment)
+        {
+            if (alignment is Alignment current)
             {
-                lines.Add("[ alignment missing ]");
+                DebugHelper.PaintAlignment(alignment);
             }
         }
 
