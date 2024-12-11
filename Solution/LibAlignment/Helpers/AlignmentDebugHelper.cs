@@ -14,7 +14,58 @@ namespace LibAlignment.Helpers
         public ResiduePalette ResiduePalette = new ResiduePalette();
         public NucleotidePalette NucleotidePalette = new NucleotidePalette();
 
+        public int WidthLimit = 100;
+        public string GapFiller = "";
+        public int InfoWidthLimit = 110;
 
+
+        public AlignmentDebugHelper()
+        {
+            GapFiller = BuildGapFiller(WidthLimit + 3);
+        }
+
+        public List<string> PadInfoLines(List<string> lines)
+        {
+            List<string> result = new List<string>();
+            foreach(string line in lines)
+            {
+                string padded = PadInfoLine(line);
+                result.Add(padded);
+            }
+
+            return result;
+        }
+
+        public string PadInfoLine(string line)
+        {
+            if (line.Length > InfoWidthLimit)
+            {
+                return line.Substring(0, InfoWidthLimit - 3) + "...";
+            }
+
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(line);
+
+            while (sb.Length < InfoWidthLimit)
+            {
+                sb.Append(' ');
+            }
+
+            return sb.ToString();
+        }
+
+        public string BuildGapFiller(int length)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(' ');
+            }
+
+            return sb.ToString();
+        }
 
         public void PaintAlignment(Alignment alignment)
         {
@@ -29,16 +80,31 @@ namespace LibAlignment.Helpers
         {
             Console.ResetColor();
 
+            Console.Write("   ");
+
+            bool cropNeeded = sequence.Payload.Length > WidthLimit;
+
+            string payload = sequence.Payload;
+            if (cropNeeded)
+            {
+                payload = payload.Substring(0, WidthLimit) + "...";
+            }
+            else
+            {
+                int gapSize = GapFiller.Length - payload.Length;
+                payload += GapFiller.Substring(0, gapSize);
+            }
+
             if (sequence.IsNucleic())
             {
-                foreach (char x in sequence.Payload)
+                foreach (char x in payload)
                 {
                     PaintNucleotide(x);
                 }
             }
             else
             {
-                foreach (char x in sequence.Payload)
+                foreach (char x in payload)
                 {
                     PaintResidue(x);
                 }
