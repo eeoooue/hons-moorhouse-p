@@ -19,7 +19,7 @@ namespace DevConsole
             // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
-            // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
+            RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
 
         }
 
