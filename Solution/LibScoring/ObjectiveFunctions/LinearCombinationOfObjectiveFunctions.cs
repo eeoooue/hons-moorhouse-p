@@ -11,6 +11,7 @@ namespace LibScoring.ObjectiveFunctions
     {
         public List<IObjectiveFunction> Objectives;
         public List<double> Weights;
+        public string Title = "Linear Combination of Weights";
 
         public LinearCombinationOfObjectiveFunctions(List<IObjectiveFunction> objectives, List<double> weights)
         {
@@ -20,7 +21,7 @@ namespace LibScoring.ObjectiveFunctions
 
         public string GetName()
         {
-            return "Linear Combination of Weights";
+            return Title;
         }
 
         public double ScoreAlignment(Alignment alignment)
