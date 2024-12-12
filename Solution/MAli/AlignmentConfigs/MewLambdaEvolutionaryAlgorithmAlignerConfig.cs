@@ -17,7 +17,7 @@ namespace MAli.AlignmentConfigs
     {
         public override MewLambdaEvolutionaryAlgorithmAligner CreateAligner()
         {
-            return GetVersion01();
+            return GetVersion02();
         }
 
         public MultiOperatorModifier ConstructMutationOperator()
@@ -32,8 +32,38 @@ namespace MAli.AlignmentConfigs
             return modifier;
         }
 
+        public IObjectiveFunction ConstructCombinationObjective()
+        {
+            IScoringMatrix blosum62 = new BLOSUM62Matrix();
+
+            IObjectiveFunction sumOfPairs = new SumOfPairsObjectiveFunction(blosum62);
+            IObjectiveFunction percentageTCCs = new TotallyConservedColumnsObjectiveFunction();
+
+            List<IObjectiveFunction> objectives = new List<IObjectiveFunction>() { sumOfPairs, percentageTCCs };
+            List<double> weights = new List<double>() { 0.1, 100.0 };
+
+            IObjectiveFunction objective = new LinearCombinationOfObjectiveFunctions(objectives, weights);
+
+            return objective;
+        }
+
+        private MewLambdaEvolutionaryAlgorithmAligner GetVersion02()
+        {
+            IObjectiveFunction objective = ConstructCombinationObjective();
+            const int maxIterations = 100;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
+            aligner.Mew = 10;
+            aligner.Lambda = aligner.Mew * 7;
+            aligner.MutationOperator = ConstructMutationOperator();
+
+            return aligner;
+        }
+
+
         private MewLambdaEvolutionaryAlgorithmAligner GetVersion01()
         {
+            // this was used in the MAli v1.0 release
+
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
             const int maxIterations = 100;
