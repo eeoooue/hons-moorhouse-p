@@ -76,12 +76,6 @@ namespace MAli
         public bool CommandTableIncludesDebugFlag(Dictionary<string, string?> table)
         {
             bool result = table.ContainsKey("debug");
-
-            if (result)
-            {
-                Console.WriteLine("Debugging mode active.");
-            }
-
             return result;
         }
 
