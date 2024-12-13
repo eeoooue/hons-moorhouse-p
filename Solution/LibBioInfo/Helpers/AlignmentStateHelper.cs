@@ -8,6 +8,78 @@ namespace LibBioInfo.Helpers
 {
     public class AlignmentStateHelper
     {
+        public bool[,] RemoveEmptyColumns(bool[,] state)
+        {
+            List<int> targets = CollectNonEmptyColumnIndices(state);
+
+            int m = state.GetLength(0);
+            int n = targets.Count;
+
+            bool[,] result = new bool[m, n];
+
+            for(int j=0; j<n; j++)
+            {
+                CopyColumnToDestinationFromSource(state, targets[j], result, j);
+            }
+
+            return result;
+        }
+
+        public void CopyColumnToDestinationFromSource(bool[,] source, int jOrigin, bool[,] destination, int jDest)
+        {
+            int m = source.GetLength(0);
+
+            for(int i=0; i<m; i++)
+            {
+                destination[i, jDest] = source[i, jOrigin];
+            }
+        }
+
+        public List<int> CollectNonEmptyColumnIndices(bool[,] state)
+        {
+            List<int> result = new List<int>();
+
+            int n = state.GetLength(1);
+            for (int j=0; j<n; j++)
+            {
+                if (!ColumnIsEmpty(state, j))
+                {
+                    result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
+        public bool ContainsEmptyColumns(bool[,] state)
+        {
+            int n = state.GetLength(1);
+
+            for (int j = 0; j < n; j++)
+            {
+                if (ColumnIsEmpty(state, j))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool ColumnIsEmpty(bool[,] state, int j)
+        {
+            int m = state.GetLength(0);
+
+            for (int i = 0; i < m; i++)
+            {
+                if (!state[i, j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public bool[,] CombineAlignmentStates(bool[,] leftState, bool[,] rightState)
         {
             int m = leftState.GetLength(0);
