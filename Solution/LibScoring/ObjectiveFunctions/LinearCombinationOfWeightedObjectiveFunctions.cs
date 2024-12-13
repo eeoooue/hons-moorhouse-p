@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LibScoring.ObjectiveFunctions
 {
-    public class LinearCombinationOfObjectiveFunctions : IObjectiveFunction
+    public class LinearCombinationOfWeightedObjectiveFunctions : IObjectiveFunction
     {
         public List<IObjectiveFunction> Objectives;
         public List<double> Weights;
         public string Title = "Linear Combination of Weights";
 
-        public LinearCombinationOfObjectiveFunctions(List<IObjectiveFunction> objectives, List<double> weights)
+        public LinearCombinationOfWeightedObjectiveFunctions(List<IObjectiveFunction> objectives, List<double> weights)
         {
             Objectives = objectives;
             Weights = weights;

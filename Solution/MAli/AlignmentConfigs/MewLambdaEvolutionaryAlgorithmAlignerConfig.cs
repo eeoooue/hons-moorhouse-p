@@ -42,7 +42,7 @@ namespace MAli.AlignmentConfigs
             List<IObjectiveFunction> objectives = new List<IObjectiveFunction>() { sumOfPairs, percentageTCCs };
             List<double> weights = new List<double>() { 0.1, 100.0 };
 
-            IObjectiveFunction objective = new LinearCombinationOfObjectiveFunctions(objectives, weights);
+            IObjectiveFunction objective = new LinearCombinationOfWeightedObjectiveFunctions(objectives, weights);
 
             return objective;
         }
