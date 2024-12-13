@@ -26,6 +26,7 @@ namespace LibBioInfo.IAlignmentModifiers
                     GapShifter.TryShiftGapInRow(alignment, i);
                 }
             }
+            alignment.CheckResolveEmptyColumns();
         }
 
         public int DecideNumberOfShiftsToAttempt(Alignment alignment, int i)

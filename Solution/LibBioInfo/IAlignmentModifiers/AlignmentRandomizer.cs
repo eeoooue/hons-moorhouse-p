@@ -12,6 +12,7 @@ namespace LibBioInfo.IAlignmentModifiers
         {
             bool[,] state = GetMatrixWithShuffledRows(alignment.State);
             alignment.SetState(state);
+            alignment.CheckResolveEmptyColumns();
         }
 
         public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)
