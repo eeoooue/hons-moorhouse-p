@@ -12,8 +12,11 @@ namespace LibBioInfo.ICrossoverOperators
         {
             bool[] mapping1 = ConstructColumnMapping(a.Height);
             Alignment child1 = ProduceChildUsingMapping(a, b, mapping1);
+            child1.CheckResolveEmptyColumns();
+
             bool[] mapping2 = InvertMapping(mapping1);
             Alignment child2 = ProduceChildUsingMapping(a, b, mapping2);
+            child2.CheckResolveEmptyColumns();
 
             return new List<Alignment> { child1, child2 };
         }

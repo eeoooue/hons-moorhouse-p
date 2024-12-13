@@ -15,16 +15,25 @@ namespace LibBioInfo.ICrossoverOperators
 
         public List<Alignment> CreateAlignmentChildren(Alignment a, Alignment b)
         {
+            List<Alignment> result = new List<Alignment>();
+
             if (Randomizer.CoinFlip())
             {
                 int i = Randomizer.Random.Next(2, a.Width);
-                return CrossoverAtPosition(a, b, i);
+                result = CrossoverAtPosition(a, b, i);
             }
             else
             {
                 int i = Randomizer.Random.Next(2, b.Width);
-                return CrossoverAtPosition(b, a, i);
+                result = CrossoverAtPosition(b, a, i);
             }
+
+            foreach(Alignment child in result)
+            {
+                child.CheckResolveEmptyColumns();
+            }
+
+            return result;
         }
 
         public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)

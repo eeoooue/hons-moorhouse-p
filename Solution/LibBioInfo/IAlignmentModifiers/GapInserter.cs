@@ -23,6 +23,7 @@ namespace LibBioInfo.IAlignmentModifiers
         {
             int gapWidth = PickGapWidth();
             InsertGapOfWidth(alignment, gapWidth);
+            alignment.CheckResolveEmptyColumns();
         }
 
         public void InsertGapOfWidth(Alignment alignment, int gapWidth)

@@ -45,7 +45,7 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
                 expected += contribution;
             }
 
-            LinearCombinationOfObjectiveFunctions combo = new LinearCombinationOfObjectiveFunctions(objectives, weights);
+            LinearCombinationOfWeightedObjectiveFunctions combo = new LinearCombinationOfWeightedObjectiveFunctions(objectives, weights);
             double actual = combo.ScoreAlignment(alignment);
 
             Assert.AreEqual(expected, actual, 0.001);

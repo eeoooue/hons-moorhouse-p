@@ -16,6 +16,7 @@ namespace LibBioInfo.IAlignmentModifiers
                 bool success = TryShiftGapInRow(alignment, row);
                 if (success)
                 {
+                    alignment.CheckResolveEmptyColumns();
                     return;
                 }
             }
