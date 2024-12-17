@@ -17,22 +17,36 @@ namespace MAli.AlignmentConfigs
     {
         public override MewLambdaEvolutionaryAlgorithmAligner CreateAligner()
         {
-            return GetVersion02();
+            return GetDebugVersion();
         }
 
-        public MultiOperatorModifier ConstructMutationOperator()
+        private MewLambdaEvolutionaryAlgorithmAligner GetDebugVersion()
         {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
+
+            const int maxIterations = 100;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
+            aligner.Mew = 10;
+            aligner.Lambda = aligner.Mew * 7;
+
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                new GapInserter(1),
-                new GapShifter(),
+                new SwapOperator(),
+                new GapInserter(),
             };
 
             MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
-            return modifier;
+
+            aligner.MutationOperator = modifier;
+
+
+            return aligner;
         }
 
-        public IObjectiveFunction ConstructCombinationObjective()
+
+
+        private MewLambdaEvolutionaryAlgorithmAligner GetVersion02()
         {
             IScoringMatrix blosum62 = new BLOSUM62Matrix();
 
@@ -44,17 +58,22 @@ namespace MAli.AlignmentConfigs
 
             IObjectiveFunction objective = new LinearCombinationOfWeightedObjectiveFunctions(objectives, weights);
 
-            return objective;
-        }
-
-        private MewLambdaEvolutionaryAlgorithmAligner GetVersion02()
-        {
-            IObjectiveFunction objective = ConstructCombinationObjective();
             const int maxIterations = 100;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
             aligner.Mew = 10;
             aligner.Lambda = aligner.Mew * 7;
-            aligner.MutationOperator = ConstructMutationOperator();
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new GapInserter(1),
+                new GapShifter(),
+                new BlockShuffler(),
+            };
+
+            MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
+
+            aligner.MutationOperator = modifier;
+
 
             return aligner;
         }
@@ -70,7 +89,17 @@ namespace MAli.AlignmentConfigs
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
             aligner.Mew = 10;
             aligner.Lambda = aligner.Mew * 7;
-            aligner.MutationOperator = ConstructMutationOperator();
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new GapInserter(1),
+                new GapShifter(),
+                new BlockShuffler(),
+            };
+
+            MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
+
+            aligner.MutationOperator = modifier;
 
             return aligner;
         }
