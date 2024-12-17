@@ -12,6 +12,7 @@ namespace LibBioInfo.IAlignmentModifiers
         {
             int i = Randomizer.Random.Next(alignment.Height);
             PerformBlockShuffleInRow(alignment, i);
+            alignment.CharacterMatrixIsUpToDate = false;
             alignment.CheckResolveEmptyColumns();
         }
 
