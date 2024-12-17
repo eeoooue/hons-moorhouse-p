@@ -24,24 +24,26 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         {
             // Reproducing Fig 1. example from Kim et. al. (1994)
             // https://doi.org/10.1093/bioinformatics/10.4.419
+            // this implementation assumes the "swap (2,4,3, right)" in the original caption is a typo of "swap (2,3,4, right)"
 
-            BioSequence sequence1 = new BioSequence("seq1", "MKQIGGA—MGSLA");
-            BioSequence sequence2 = new BioSequence("seq2", "MKK—IGGATGALG");
+            BioSequence sequence1 = new BioSequence("seq1", "MKQIGGA--MGSLA-");
+            BioSequence sequence2 = new BioSequence("seq2", "MKK---IGGATGALG");
             List<BioSequence> sequences1and2 = new List<BioSequence>() { sequence1, sequence2 };
-            Alignment original = new Alignment(sequences1and2);
+            Alignment original = new Alignment(sequences1and2, true);
 
-            BioSequence sequence1after = new BioSequence("seq1", "MKQIGGA—MGSLA");
-            BioSequence sequence2after = new BioSequence("seq2", "MKK—IGGATGALG");
+            BioSequence sequence1after = new BioSequence("seq1", "MKQIGGA--MGSLA-");
+            BioSequence sequence2after = new BioSequence("seq2", "MKKIGGA---TGALG");
             List<BioSequence> sequences1and2after = new List<BioSequence>() { sequence1after, sequence2after };
-            Alignment expected = new Alignment(sequences1and2after);
+            Alignment expected = new Alignment(sequences1and2after, true);
             
-            SwapOperator.Swap(original, 2, 3, 4, SwapDirection.Right);
+            // my swap call uses 1 instead of 2 due to the figure sequences being 1-indexed while I use 0-indexing
+            SwapOperator.Swap(original, 1, 3, 4, SwapDirection.Right);
+
+            Harness.AlignmentPrinter.PrintAlignment(original);
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(expected, original);
             Assert.IsTrue(alignmentsMatch);
         }
-
-
 
         [TestMethod]
         public void AlignmentIsDifferentAfterModification()
