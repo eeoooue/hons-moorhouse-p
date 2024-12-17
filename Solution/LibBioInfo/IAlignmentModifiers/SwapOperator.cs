@@ -50,7 +50,30 @@ namespace LibBioInfo.IAlignmentModifiers
 
         public void SwapLeft(Alignment alignment, int i, int j, int k)
         {
+            bool[,] mirrored = GetHorizontallyMirroredState(alignment.State);
+            alignment.SetState(mirrored);
+            SwapRight(alignment, i, j, k);
+            bool[,] newState = GetHorizontallyMirroredState(alignment.State);
+            alignment.SetState(newState);
+        }
 
+        public bool[,] GetHorizontallyMirroredState(bool[,] state)
+        {
+            int m = state.GetLength(0);
+            int n = state.GetLength(1);
+
+            bool[,] result = new bool[m, n];
+
+            for(int i=0; i<m; i++)
+            {
+                for(int j=0; j<n; j++)
+                {
+                    int j2 = -1 + n - j;
+                    result[i, j] = state[i, j2];
+                }
+            }
+
+            return result;
         }
 
         public void SwapRight(Alignment alignment, int i, int j, int k)
