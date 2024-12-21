@@ -70,7 +70,7 @@ namespace LibScoring.ScoringMatrices
 
         public string GetName()
         {
-            return "PAM250 Matrix (INCOMPLETE)";
+            return "PAM250 Matrix";
         }
 
         public List<char> GetResidues()
