@@ -75,12 +75,21 @@ namespace LibScoring.ScoringMatrices
 
         public List<char> GetResidues()
         {
-            throw new NotImplementedException();
+            return ResidueIndexes.Keys.ToList();
         }
 
         public int ScorePair(char a, char b)
         {
-            throw new NotImplementedException();
+            if (ResidueIndexes.ContainsKey(a) && ResidueIndexes.ContainsKey(b))
+            {
+                int val1 = ResidueIndexes[a];
+                int val2 = ResidueIndexes[b];
+                int i = Math.Max(val1, val2);
+                int j = Math.Min(val1, val2);
+                return ScoreValues[i, j];
+            }
+
+            return 0;
         }
     }
 }
