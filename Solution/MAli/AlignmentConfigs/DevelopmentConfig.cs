@@ -15,7 +15,7 @@ namespace MAli.AlignmentConfigs
     {
         public override Aligner CreateAligner()
         {
-            return GetHCRandomRestarts();
+            return GetILSAligner();
         }
 
         public Aligner GetRandomSearchAligner()
@@ -27,13 +27,13 @@ namespace MAli.AlignmentConfigs
             return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
         }
 
-        public Aligner GetHCRandomRestarts()
+        public Aligner GetILSAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
             IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);
-            int iterations = 1000;
+            int iterations = 10000;
 
-            return new HillClimbWithRandomRestartsAligner(sumOfPairsWithAffine, iterations);
+            return new IteratedLocalSearchAligner(sumOfPairsWithAffine, iterations);
         }
     }
 }
