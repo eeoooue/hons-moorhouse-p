@@ -11,20 +11,11 @@ using System.Threading.Tasks;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class DevelopmentConfig : AlignmentConfig
+    internal class IteratedLocalSearchConfig : AlignmentConfig
     {
         public override Aligner CreateAligner()
         {
             return GetILSAligner();
-        }
-
-        public Aligner GetRandomSearchAligner()
-        {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);
-            int iterations = 1000;
-
-            return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
         }
 
         public Aligner GetILSAligner()

@@ -18,5 +18,11 @@ namespace LibScoring
             Alignment = alignment;
             Score = score;
         }
+
+        public ScoredAlignment GetCopy()
+        {
+            Alignment alignment = Alignment.GetCopy();
+            return new ScoredAlignment(alignment, Score);
+        }
     }
 }
