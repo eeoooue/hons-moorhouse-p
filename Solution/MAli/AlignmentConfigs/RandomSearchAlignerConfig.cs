@@ -13,7 +13,7 @@ namespace MAli.AlignmentConfigs
 {
     public class RandomSearchAlignerConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
             IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);

@@ -13,12 +13,12 @@ namespace MAli.AlignmentConfigs
 {
     public class SelectiveRandomWalkAlignerConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetVersion02();
         }
 
-        private Aligner GetVersion01()
+        private IterativeAligner GetVersion01()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
@@ -27,7 +27,7 @@ namespace MAli.AlignmentConfigs
             return aligner;
         }
 
-        private Aligner GetVersion02()
+        private IterativeAligner GetVersion02()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);

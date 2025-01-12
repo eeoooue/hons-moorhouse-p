@@ -15,7 +15,7 @@ namespace MAli.AlignmentConfigs
 {
     public class ElitistGeneticAlgorithmAlignerConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetSagaInspired();
         }
@@ -34,7 +34,7 @@ namespace MAli.AlignmentConfigs
             return modifier;
         }
 
-        private Aligner GetSagaInspired()
+        private IterativeAligner GetSagaInspired()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
@@ -48,7 +48,7 @@ namespace MAli.AlignmentConfigs
             return aligner;
         }
 
-        private Aligner GetVersion01()
+        private IterativeAligner GetVersion01()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);

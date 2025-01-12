@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public sealed class SelectiveRandomWalkAligner : Aligner
+    public sealed class SelectiveRandomWalkAligner : IterativeAligner
     {
         public SelectiveRandomWalkAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {

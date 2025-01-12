@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public class RandomSearchAligner : Aligner
+    public class RandomSearchAligner : IterativeAligner
     {
         IAlignmentModifier Modifier = new AlignmentRandomizer(); // this should change width too?
 

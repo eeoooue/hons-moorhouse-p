@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public class NaiveHillClimbAligner : Aligner
+    public class NaiveHillClimbAligner : IterativeAligner
     {
         public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {

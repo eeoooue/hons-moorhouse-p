@@ -15,7 +15,7 @@ namespace MAli.AlignmentConfigs
 {
     public class GeneticAlgorithmAlignerConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetVersion01();
         }
@@ -34,7 +34,7 @@ namespace MAli.AlignmentConfigs
             return modifier;
         }
 
-        private Aligner GetVersion01()
+        private IterativeAligner GetVersion01()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);

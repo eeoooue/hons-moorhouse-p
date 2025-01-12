@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public class HillClimbWithRandomRestartsAligner : Aligner
+    public class HillClimbWithRandomRestartsAligner : IterativeAligner
     {
         IAlignmentModifier Modifier = new SwapOperator();
         List<BioSequence> Sequences = new List<BioSequence>();

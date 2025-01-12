@@ -15,12 +15,12 @@ namespace MAli.AlignmentConfigs
 {
     internal class DebuggingConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetCurrentAligner();
         }
 
-        private Aligner GetCurrentAligner()
+        private IterativeAligner GetCurrentAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);

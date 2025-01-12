@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LibAlignment
 {
-    public abstract class Aligner
+    public abstract class IterativeAligner
     {
         private IObjectiveFunction Objective;
         public Alignment? CurrentAlignment = null;
@@ -22,7 +22,7 @@ namespace LibAlignment
 
         public double AlignmentScore { get; protected set; } = 0;
 
-        public Aligner(IObjectiveFunction objective, int iterations)
+        public IterativeAligner(IObjectiveFunction objective, int iterations)
         {
             Objective = objective;
             IterationsLimit = iterations;

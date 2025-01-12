@@ -13,12 +13,12 @@ namespace MAli.AlignmentConfigs
 {
     internal class NaiveHillClimbAlignerConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetVersion01();
         }
 
-        private Aligner GetVersion01()
+        private IterativeAligner GetVersion01()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);

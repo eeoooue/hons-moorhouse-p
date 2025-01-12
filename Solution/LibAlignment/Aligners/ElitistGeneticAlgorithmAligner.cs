@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    public class ElitistGeneticAlgorithmAligner : Aligner
+    public class ElitistGeneticAlgorithmAligner : IterativeAligner
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();

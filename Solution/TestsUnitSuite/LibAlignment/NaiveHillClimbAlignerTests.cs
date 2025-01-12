@@ -25,7 +25,7 @@ namespace TestsUnitSuite.LibAlignment
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        public Aligner GetAligner()
+        public IterativeAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
@@ -47,7 +47,7 @@ namespace TestsUnitSuite.LibAlignment
                 ExampleSequences.GetSequence(ExampleSequence.ExampleD),
             };
 
-            Aligner climber = GetAligner();
+            IterativeAligner climber = GetAligner();
             climber.Initialize(inputs);
             Alignment initial = climber.CurrentAlignment!.GetCopy();
 

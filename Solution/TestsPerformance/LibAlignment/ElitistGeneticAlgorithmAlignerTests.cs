@@ -36,7 +36,7 @@ namespace TestsPerformance.LibAlignment
         [Timeout(5000)]
         public void CanAlignBBSEfficiently(string filename, int iterations)
         {
-            Aligner aligner = GetAligner();
+            IterativeAligner aligner = GetAligner();
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
             aligner.IterationsLimit = iterations;
             Alignment result = aligner.AlignSequences(sequences);
@@ -49,7 +49,7 @@ namespace TestsPerformance.LibAlignment
         [Timeout(5000)]
         public void CanAlignPREFABEfficiently(string filename, int iterations)
         {
-            Aligner aligner = GetAligner();
+            IterativeAligner aligner = GetAligner();
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
             aligner.IterationsLimit = iterations;
             Alignment result = aligner.AlignSequences(sequences);
