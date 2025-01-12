@@ -13,6 +13,7 @@ using LibFileIO;
 
 using TestsHarness;
 using TestsHarness.Tools;
+using LibAlignment.Aligners.SingleState;
 
 namespace TestsUnitSuite.LibAlignment
 {

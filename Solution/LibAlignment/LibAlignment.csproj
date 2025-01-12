@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Aligners\PopulationBased\" />
     <Folder Include="MOPAligners\" />
   </ItemGroup>
 

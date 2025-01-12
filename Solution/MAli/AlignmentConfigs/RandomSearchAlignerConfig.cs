@@ -1,5 +1,6 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
+using LibAlignment.Aligners.SingleState;
 using LibScoring;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.SingleState
 {
     public class RandomSearchAligner : IterativeAligner
     {

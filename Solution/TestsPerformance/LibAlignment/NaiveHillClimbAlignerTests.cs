@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibFileIO;
+using LibAlignment.Aligners.SingleState;
 
 namespace TestsPerformance.LibAlignment
 {

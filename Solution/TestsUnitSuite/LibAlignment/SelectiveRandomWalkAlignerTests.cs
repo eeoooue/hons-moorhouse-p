@@ -1,5 +1,4 @@
 ﻿using LibAlignment;
-using LibAlignment.Aligners;
 using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
 using LibScoring.ObjectiveFunctions;
@@ -15,6 +14,7 @@ using LibFileIO;
 
 using TestsHarness;
 using TestsHarness.Tools;
+using LibAlignment.Aligners.SingleState;
 
 
 namespace TestsUnitSuite.LibAlignment

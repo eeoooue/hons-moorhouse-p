@@ -1,5 +1,4 @@
 ﻿using LibAlignment;
-using LibAlignment.Aligners;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibAlignment.Aligners.SingleState;
 
 namespace MAli.AlignmentConfigs
 {
