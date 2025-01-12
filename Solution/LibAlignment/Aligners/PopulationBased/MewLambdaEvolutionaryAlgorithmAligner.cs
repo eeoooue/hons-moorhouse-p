@@ -14,7 +14,6 @@ namespace LibAlignment.Aligners.PopulationBased
 {
     public class MewLambdaEvolutionaryAlgorithmAligner : PopulationBasedAligner
     {
-        public List<Alignment> Population = new List<Alignment>();
         public IAlignmentModifier MutationOperator = new GapShifter();
         public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
