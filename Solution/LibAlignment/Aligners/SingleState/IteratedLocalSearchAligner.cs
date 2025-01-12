@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners.SingleState
 {
-    public class IteratedLocalSearchAligner : IterativeAligner
+    public class IteratedLocalSearchAligner : SingleStateAligner
     {
         IAlignmentModifier PerturbModifier = new MultiRowStochasticGapShifter();
         IAlignmentModifier TweakModifier = new SwapOperator();

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibBioInfo;
+using LibScoring;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace LibAlignment.Aligners
 {
-    internal class SingleStateAligner
+    public abstract class SingleStateAligner : IterativeAligner
     {
+        protected SingleStateAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        {
+
+        }
     }
 }

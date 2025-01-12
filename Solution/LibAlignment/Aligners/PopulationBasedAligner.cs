@@ -11,6 +11,7 @@ namespace LibAlignment.Aligners
     {
         protected PopulationBasedAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
+
         }
     }
 }
