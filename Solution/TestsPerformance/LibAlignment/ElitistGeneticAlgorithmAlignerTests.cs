@@ -1,5 +1,4 @@
-﻿using LibAlignment.Aligners;
-using LibAlignment;
+﻿using LibAlignment;
 using LibBioInfo;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibFileIO;
+using LibAlignment.Aligners.PopulationBased;
 
 namespace TestsPerformance.LibAlignment
 {

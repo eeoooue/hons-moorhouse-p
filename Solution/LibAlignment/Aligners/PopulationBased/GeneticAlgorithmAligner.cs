@@ -10,31 +10,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.PopulationBased
 {
-    public class ElitistGeneticAlgorithmAligner : IterativeAligner
+    public class GeneticAlgorithmAligner : IterativeAligner
     {
         public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
-        public IAlignmentModifier MutationOperator = new GapShifter();
+        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
-        public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
+        public double MutationRate = 0.2;
 
-        public double MutationRate = 0.50;
-        public int PopulationSize = 18;
-        public int SelectionSize = 6;
+        public int PopulationSize = 6;
 
-        public ElitistGeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
 
         }
+
 
         public override string GetName()
         {
-            return $"ElitistGeneticAlgorithmAligner (population={PopulationSize}, selection={SelectionSize})";
+            return $"GeneticAlgorithmAligner (population={PopulationSize})";
         }
-
 
         public override Alignment AlignSequences(List<BioSequence> sequences)
         {
@@ -67,33 +65,24 @@ namespace LibAlignment.Aligners
 
         public override void Iterate()
         {
-            ISelectionStrategy truncationSelection = new TruncationSelectionStrategy();
-
             List<ScoredAlignment> candidates = ScorePopulation(Population);
-            truncationSelection.PreprocessCandidateAlignments(candidates);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
 
-            List<Alignment> elites = truncationSelection.SelectCandidates(SelectionSize);
             Population.Clear();
-            foreach (Alignment elite in elites)
-            {
-                Population.Add(elite);
-            }
-
             while (Population.Count < PopulationSize)
             {
                 List<Alignment> children = BreedNewChildren();
-                foreach(Alignment child in children)
+                foreach (Alignment child in children)
                 {
                     if (Randomizer.PercentageChanceEvent(MutationRate))
                     {
                         MutationOperator.ModifyAlignment(child);
                     }
-
                     Population.Add(child);
                 }
             }
         }
+
 
         public List<Alignment> BreedNewChildren()
         {

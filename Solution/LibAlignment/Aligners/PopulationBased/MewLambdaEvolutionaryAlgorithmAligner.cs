@@ -10,7 +10,7 @@ using LibBioInfo.IAlignmentModifiers;
 using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.PopulationBased
 {
     public class MewLambdaEvolutionaryAlgorithmAligner : IterativeAligner
     {
@@ -52,7 +52,7 @@ namespace LibAlignment.Aligners
             IAlignmentModifier randomizer = new AlignmentRandomizer();
 
             Population.Clear();
-            for(int i=0; i<Lambda; i++)
+            for (int i = 0; i < Lambda; i++)
             {
                 Alignment alignment = new Alignment(sequences);
                 randomizer.ModifyAlignment(alignment);
@@ -81,9 +81,9 @@ namespace LibAlignment.Aligners
             List<Alignment> result = new List<Alignment>();
 
             int repetitions = Lambda / Mew;
-            foreach(Alignment parent in parents)
+            foreach (Alignment parent in parents)
             {
-                for(int i=0; i<repetitions; i++)
+                for (int i = 0; i < repetitions; i++)
                 {
                     Alignment child = GetMutationOfParent(parent);
                     result.Add(child);

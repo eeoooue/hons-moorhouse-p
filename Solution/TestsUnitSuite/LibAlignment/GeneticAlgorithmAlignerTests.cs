@@ -1,5 +1,5 @@
 ﻿using LibAlignment;
-using LibAlignment.Aligners;
+using LibAlignment.Aligners.PopulationBased;
 using LibBioInfo;
 using LibFileIO;
 using LibScoring;

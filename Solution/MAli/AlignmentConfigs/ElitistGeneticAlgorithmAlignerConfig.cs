@@ -1,5 +1,4 @@
-﻿using LibAlignment.Aligners;
-using LibAlignment;
+﻿using LibAlignment;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo;
+using LibAlignment.Aligners.PopulationBased;
 
 namespace MAli.AlignmentConfigs
 {
