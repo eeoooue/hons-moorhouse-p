@@ -12,7 +12,7 @@ using LibAlignment.SelectionStrategies;
 
 namespace LibAlignment.Aligners.PopulationBased
 {
-    public class MewLambdaEvolutionaryAlgorithmAligner : IterativeAligner
+    public class MewLambdaEvolutionaryAlgorithmAligner : PopulationBasedAligner
     {
         public List<Alignment> Population = new List<Alignment>();
         public IAlignmentModifier MutationOperator = new GapShifter();
