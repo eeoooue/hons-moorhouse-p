@@ -1,5 +1,6 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
+using LibAlignment.Aligners.SingleState;
 using LibScoring;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
@@ -13,7 +14,7 @@ namespace MAli.AlignmentConfigs
 {
     public class RandomSearchAlignerConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
             IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);

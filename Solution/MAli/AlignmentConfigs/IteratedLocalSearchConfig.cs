@@ -8,17 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibAlignment.Aligners.SingleState;
 
 namespace MAli.AlignmentConfigs
 {
     internal class IteratedLocalSearchConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetILSAligner();
         }
 
-        public Aligner GetILSAligner()
+        public IterativeAligner GetILSAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
             IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);

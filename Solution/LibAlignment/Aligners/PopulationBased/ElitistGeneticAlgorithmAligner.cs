@@ -10,16 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.PopulationBased
 {
-    public class ElitistGeneticAlgorithmAligner : Aligner
+    public class ElitistGeneticAlgorithmAligner : PopulationBasedAligner
     {
-        public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new GapShifter();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
-
-        public AlignmentSelectionHelper SelectionHelper = new AlignmentSelectionHelper();
 
         public double MutationRate = 0.50;
         public int PopulationSize = 18;
@@ -83,7 +80,7 @@ namespace LibAlignment.Aligners
             while (Population.Count < PopulationSize)
             {
                 List<Alignment> children = BreedNewChildren();
-                foreach(Alignment child in children)
+                foreach (Alignment child in children)
                 {
                     if (Randomizer.PercentageChanceEvent(MutationRate))
                     {

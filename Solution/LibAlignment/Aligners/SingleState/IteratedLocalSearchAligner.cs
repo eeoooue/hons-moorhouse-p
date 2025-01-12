@@ -7,18 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.SingleState
 {
-    public class HillClimbWithRandomRestartsAligner : Aligner
+    public class IteratedLocalSearchAligner : SingleStateAligner
     {
-        IAlignmentModifier Modifier = new SwapOperator();
+        IAlignmentModifier PerturbModifier = new MultiRowStochasticGapShifter();
+        IAlignmentModifier TweakModifier = new SwapOperator();
         List<BioSequence> Sequences = new List<BioSequence>();
 
         public int ResetPoint = 0;
 
         public ScoredAlignment S = null!;
 
-        public HillClimbWithRandomRestartsAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public ScoredAlignment HomeBase = null!;
+
+        public IteratedLocalSearchAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
         }
 
@@ -37,21 +40,24 @@ namespace LibAlignment.Aligners
 
         public override string GetName()
         {
-            return $"Hill Climb w/ Random Restarts : (next restart @ {ResetPoint})";
+            return $"Iterated Local Search : (next restart @ {ResetPoint}, home base score = {HomeBase.Score})";
         }
 
         public override void Initialize(List<BioSequence> sequences)
         {
             Sequences = sequences;
-            S = GetRandomScoredAlignment();
+            Alignment initialAlignment = GetRandomAlignment();
+            S = GetScoredAlignment(initialAlignment);
+            HomeBase = S.GetCopy();
             CurrentAlignment = S.Alignment;
             AlignmentScore = S.Score;
         }
 
-        public ScoredAlignment GetRandomScoredAlignment()
+        public ScoredAlignment GetPerturbationOfH()
         {
-            Alignment alignment = GetRandomAlignment();
-            return GetScoredAlignment(alignment);
+            Alignment homeCopy = HomeBase.Alignment.GetCopy();
+            PerturbModifier.ModifyAlignment(homeCopy);
+            return GetScoredAlignment(homeCopy);
         }
 
         public Alignment GetRandomAlignment()
@@ -69,8 +75,8 @@ namespace LibAlignment.Aligners
 
         public void MarkUpcomingResetPoint()
         {
-            int range = IterationsLimit / 5;
-            int roll = Randomizer.Random.Next(1, range+1);
+            int range = IterationsLimit / 10;
+            int roll = Randomizer.Random.Next(1, range + 1);
             ResetPoint = IterationsCompleted + roll;
         }
 
@@ -78,15 +84,24 @@ namespace LibAlignment.Aligners
         {
             if (IterationsCompleted == ResetPoint)
             {
-                S = GetRandomScoredAlignment();
+                ContestHomeBase(S);
+                S = GetPerturbationOfH();
                 MarkUpcomingResetPoint();
             }
 
             Alignment r = S.Alignment.GetCopy();
-            Modifier.ModifyAlignment(r);
+            TweakModifier.ModifyAlignment(r);
 
             ScoredAlignment candidate = GetScoredAlignment(r);
             ContestS(candidate);
+        }
+
+        public void ContestHomeBase(ScoredAlignment candidate)
+        {
+            if (candidate.Score > HomeBase.Score)
+            {
+                HomeBase = candidate;
+            }
         }
 
         public void ContestS(ScoredAlignment candidate)
@@ -96,7 +111,6 @@ namespace LibAlignment.Aligners
                 S = candidate;
                 CheckNewBest(S);
             }
-
         }
     }
 }

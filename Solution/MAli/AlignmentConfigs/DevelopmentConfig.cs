@@ -8,17 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibAlignment.Aligners.SingleState;
 
 namespace MAli.AlignmentConfigs
 {
     internal class DevelopmentConfig : AlignmentConfig
     {
-        public override Aligner CreateAligner()
+        public override IterativeAligner CreateAligner()
         {
             return GetILSAligner();
         }
 
-        public Aligner GetRandomSearchAligner()
+        public IterativeAligner GetRandomSearchAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
             IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);
@@ -27,7 +28,7 @@ namespace MAli.AlignmentConfigs
             return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
         }
 
-        public Aligner GetILSAligner()
+        public IterativeAligner GetILSAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
             IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);

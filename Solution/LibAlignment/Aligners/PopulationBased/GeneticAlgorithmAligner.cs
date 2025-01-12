@@ -10,11 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.PopulationBased
 {
-    public class GeneticAlgorithmAligner : Aligner
+    public class GeneticAlgorithmAligner : PopulationBasedAligner
     {
-        public List<Alignment> Population = new List<Alignment>();
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
