@@ -24,24 +24,48 @@ namespace LibScoring.ObjectiveFunctions
 
         public double ScoreAlignment(Alignment alignment)
         {
+            alignment.UpdateCharacterMatrixIfNeeded();
+            char[,] matrix = alignment.ConstructCharacterMatrix();
+
             double result = 0;
-            for(int j=0; j<alignment.Width; j++)
+            for (int j = 0; j < alignment.Width; j++)
             {
-                result += ScoreColumn(alignment, j);
+                result += ScoreColumn(matrix, j);
             }
 
             return result;
         }
 
-        public double ScoreColumn(Alignment alignment, int j)
+        public double ScoreColumn(char[,] matrix, int j)
         {
-            string column = alignment.GetColumn(j);
-
-            Dictionary<char, int> table = ConstructCounterHashTable(column);
+            Dictionary<char, int> table = ConstructCounterTableForColumn(matrix, j);
             double result = ScorePairwiseCombinations(table);
 
             return result;
         }
+
+
+        public Dictionary<char, int> ConstructCounterTableForColumn(char[,] matrix, int j)
+        {
+            Dictionary<char, int> result = new Dictionary<char, int>();
+            foreach (char residue in Matrix.GetResidues())
+            {
+                result[residue] = 0;
+            }
+
+            int m = matrix.GetLength(0);
+            for (int i = 0; i < m; i++)
+            {
+                char x = matrix[i, j];
+                if (result.ContainsKey(x))
+                {
+                    result[x] += 1;
+                }
+            }
+
+            return result;
+        }
+
 
         public double ScorePairwiseCombinations(Dictionary<char, int> table)
         {
@@ -79,24 +103,5 @@ namespace LibScoring.ObjectiveFunctions
         }
 
 
-
-        public Dictionary<char, int> ConstructCounterHashTable(string column)
-        {
-            Dictionary<char, int> result = new Dictionary<char, int>();
-            foreach (char residue in Matrix.GetResidues())
-            {
-                result[residue] = 0;
-            }
-
-            foreach (char x in column)
-            {
-                if (result.ContainsKey(x))
-                {
-                    result[x] += 1;
-                }
-            }
-
-            return result;
-        }
     }
 }
