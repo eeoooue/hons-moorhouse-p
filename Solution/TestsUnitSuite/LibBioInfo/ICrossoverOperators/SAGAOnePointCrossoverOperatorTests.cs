@@ -98,35 +98,5 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Operator.CreateAlignmentChildren(a, b);
         }
-
-        [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(1)]
-        [Ignore]
-        public void TestFigure2Example(int childIndex)
-        {
-            Alignment a = SAGAAssets.GetFigure2ParentAlignment1();
-            Alignment b = SAGAAssets.GetFigure2ParentAlignment2();
-
-            List<Alignment> expectedChildren = new List<Alignment>()
-            {
-                SAGAAssets.GetFigure2ChildAlignment1(),
-                SAGAAssets.GetFigure2ChildAlignment2(),
-            };
-
-            List<Alignment> actualChildren = Operator.CrossoverAtPosition(a, b, 4);
-
-            Alignment expected = expectedChildren[childIndex];
-            Alignment actual = actualChildren[childIndex];
-
-            Console.WriteLine("expected:");
-            AlignmentPrinter.PrintAlignment(expected);
-            Console.WriteLine("actual:");
-            AlignmentPrinter.PrintAlignment(actual);
-
-            bool verdict = AlignmentEquality.AlignmentsMatch(expected, actual);
-            Assert.IsTrue(verdict);
-        }
-
     }
 }
