@@ -47,10 +47,13 @@ namespace TestsUnitSuite.LibScoring.ObjectiveFunctions
         [TestMethod]
         public void CanScoreAlignmentColumn()
         {
+            IScoringMatrix scoringMatrix = new IdentityMatrix();
+            SumOfPairsObjectiveFunction function = new SumOfPairsObjectiveFunction(scoringMatrix);
+
             Alignment alignment = ExampleAlignments.GetAlignment(ExampleAlignment.ExampleA);
-            IScoringMatrix matrix = new IdentityMatrix();
-            SumOfPairsObjectiveFunction function = new SumOfPairsObjectiveFunction(matrix);
-            double score = function.ScoreColumn(alignment, 0);
+            char[,] matrix = alignment.GetCharacterMatrix();
+
+            double score = function.ScoreColumn(matrix, 0);
         }
     }
 }

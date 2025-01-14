@@ -1,9 +1,12 @@
-﻿using System.Text;
+﻿using LibBioInfo.Helpers;
+using System.Text;
 
 namespace LibBioInfo
 {
     public class Alignment
     {
+        public static AlignmentStateHelper StateHelper = new AlignmentStateHelper();
+
         public List<BioSequence> Sequences;
         public int Height { get { return State.GetLength(0); } }
         public int Width { get { return State.GetLength(1); } }
@@ -41,6 +44,23 @@ namespace LibBioInfo
         {
             State = state;
             CharacterMatrixIsUpToDate = false;
+        }
+
+        public void CheckResolveEmptyColumns()
+        {
+            bool verdict = StateHelper.ContainsEmptyColumns(State);
+
+            if (verdict)
+            {
+                bool[,] simplifiedState = StateHelper.RemoveEmptyColumns(State);
+                SetState(simplifiedState);
+            }
+        }
+
+        public char[,] GetCharacterMatrix()
+        {
+            UpdateCharacterMatrixIfNeeded();
+            return CharacterMatrix;
         }
 
         public void SetState(int i, int j, bool value)

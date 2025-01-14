@@ -44,7 +44,7 @@ namespace MAli
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    Aligner aligner = Config.CreateAligner();
+                    IterativeAligner aligner = Config.CreateAligner();
                     aligner.Debug = debugging;
 
                     int iterations = UnpackSpecifiedIterations(table);
@@ -76,12 +76,6 @@ namespace MAli
         public bool CommandTableIncludesDebugFlag(Dictionary<string, string?> table)
         {
             bool result = table.ContainsKey("debug");
-
-            if (result)
-            {
-                Console.WriteLine("Debugging mode active.");
-            }
-
             return result;
         }
 

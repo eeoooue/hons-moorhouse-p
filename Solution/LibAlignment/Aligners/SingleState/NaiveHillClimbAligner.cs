@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.INeighbourhoodFinders;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -7,18 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Aligners
+namespace LibAlignment.Aligners.SingleState
 {
-    public sealed class SelectiveRandomWalkAligner : Aligner
+    public class NaiveHillClimbAligner : SingleStateAligner
     {
-        public SelectiveRandomWalkAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
-
         }
 
         public override string GetName()
         {
-            return $"SelectiveRandomWalkAligner";
+            return $"NaiveHillClimbAligner";
         }
 
         public override Alignment AlignSequences(List<BioSequence> sequences)
@@ -56,10 +56,27 @@ namespace LibAlignment.Aligners
 
         public override void Iterate()
         {
-            IAlignmentModifier shifter = new MultiRowStochasticGapShifter();
-            Alignment candidate = CurrentAlignment!.GetCopy();
-            shifter.ModifyAlignment(candidate);
-            AcceptIfImprovement(candidate);
+            foreach (Alignment candidate in GetNeighbouringAlignments(CurrentAlignment!))
+            {
+                AcceptIfImprovement(candidate);
+            }
+        }
+
+        public List<Alignment> GetNeighbouringAlignments(Alignment alignment)
+        {
+            List<Alignment> result = new List<Alignment>();
+            INeighbourhoodFinder finder = new SwapBasedNeighbourhoodFinder();
+
+            List<bool[,]> neighbouringStates = finder.FindNeighbours(alignment.State);
+
+            foreach (bool[,] state in neighbouringStates)
+            {
+                Alignment neighbour = alignment.GetCopy();
+                neighbour.SetState(state);
+                result.Add(neighbour);
+            }
+
+            return result;
         }
     }
 }

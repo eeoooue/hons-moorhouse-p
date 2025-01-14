@@ -9,6 +9,6 @@ namespace MAli
 {
     public abstract class AlignmentConfig
     {
-        public abstract Aligner CreateAligner();
+        public abstract IterativeAligner CreateAligner();
     }
 }

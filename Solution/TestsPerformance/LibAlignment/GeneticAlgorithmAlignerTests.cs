@@ -1,5 +1,4 @@
-﻿using LibAlignment.Aligners;
-using LibAlignment;
+﻿using LibAlignment;
 using LibBioInfo;
 using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibFileIO;
+using LibAlignment.Aligners.PopulationBased;
 
 namespace TestsPerformance.LibAlignment
 {
@@ -35,7 +35,7 @@ namespace TestsPerformance.LibAlignment
         [Timeout(5000)]
         public void CanAlignBBSEfficiently(string filename, int iterations)
         {
-            Aligner aligner = GetAligner();
+            IterativeAligner aligner = GetAligner();
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
             aligner.IterationsLimit = iterations;
             Alignment result = aligner.AlignSequences(sequences);
@@ -48,7 +48,7 @@ namespace TestsPerformance.LibAlignment
         [Timeout(5000)]
         public void CanAlignPREFABEfficiently(string filename, int iterations)
         {
-            Aligner aligner = GetAligner();
+            IterativeAligner aligner = GetAligner();
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);
             aligner.IterationsLimit = iterations;
             Alignment result = aligner.AlignSequences(sequences);

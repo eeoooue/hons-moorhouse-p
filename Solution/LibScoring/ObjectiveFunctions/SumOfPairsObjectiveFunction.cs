@@ -24,30 +24,60 @@ namespace LibScoring.ObjectiveFunctions
 
         public double ScoreAlignment(Alignment alignment)
         {
+            alignment.UpdateCharacterMatrixIfNeeded();
+            char[,] matrix = alignment.ConstructCharacterMatrix();
+
             double result = 0;
-            for(int j=0; j<alignment.Width; j++)
+            for (int j = 0; j < alignment.Width; j++)
             {
-                result += ScoreColumn(alignment, j);
+                result += ScoreColumn(matrix, j);
             }
 
             return result;
         }
 
-        public double ScoreColumn(Alignment alignment, int j)
+        public double ScoreColumn(char[,] matrix, int j)
         {
-            string column = alignment.GetColumn(j);
+            Dictionary<char, int> table = ConstructCounterTableForColumn(matrix, j);
+            double result = ScorePairwiseCombinations(table);
 
-            Dictionary<char, int> table = ConstructCounterHashTable(column);
+            return result;
+        }
 
+
+        public Dictionary<char, int> ConstructCounterTableForColumn(char[,] matrix, int j)
+        {
+            Dictionary<char, int> result = new Dictionary<char, int>();
+            foreach (char residue in Matrix.GetResidues())
+            {
+                result[residue] = 0;
+            }
+
+            int m = matrix.GetLength(0);
+            for (int i = 0; i < m; i++)
+            {
+                char x = matrix[i, j];
+                if (result.ContainsKey(x))
+                {
+                    result[x] += 1;
+                }
+            }
+
+            return result;
+        }
+
+
+        public double ScorePairwiseCombinations(Dictionary<char, int> table)
+        {
             List<char> residues = Matrix.GetResidues();
             double result = 0;
 
-            for (int i1=0; i1 < residues.Count; i1++)
+            for (int i1 = 0; i1 < residues.Count; i1++)
             {
                 char a = residues[i1];
                 int a_count = table[a];
 
-                for(int i2=i1; i2 < residues.Count; i2++)
+                for (int i2 = i1; i2 < residues.Count; i2++)
                 {
                     char b = residues[i2];
                     int b_count = table[b];
@@ -56,7 +86,7 @@ namespace LibScoring.ObjectiveFunctions
 
                     if (a != b)
                     {
-                        combinations = (a_count * b_count)/2;
+                        combinations = (a_count * b_count) / 2;
                     }
                     else
                     {
@@ -72,23 +102,6 @@ namespace LibScoring.ObjectiveFunctions
             return result;
         }
 
-        public Dictionary<char, int> ConstructCounterHashTable(string column)
-        {
-            Dictionary<char, int> result = new Dictionary<char, int>();
-            foreach (char residue in Matrix.GetResidues())
-            {
-                result[residue] = 0;
-            }
 
-            foreach (char x in column)
-            {
-                if (result.ContainsKey(x))
-                {
-                    result[x] += 1;
-                }
-            }
-
-            return result;
-        }
     }
 }

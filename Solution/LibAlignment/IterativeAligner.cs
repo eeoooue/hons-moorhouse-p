@@ -1,24 +1,28 @@
-﻿using LibBioInfo;
+﻿using LibAlignment.Helpers;
+using LibBioInfo;
 using LibScoring;
 using System;
 using System.Text;
 
 namespace LibAlignment
 {
-    public abstract class Aligner
+    public abstract class IterativeAligner
     {
         private IObjectiveFunction Objective;
         public Alignment? CurrentAlignment = null;
+        private AlignmentDebugHelper DebugHelper = new AlignmentDebugHelper();
 
         public int IterationsCompleted { get; protected set; } = 0;
 
         public bool Debug = false;
 
+        public int DebugCursorStart = -1;
+
         public int IterationsLimit { get; set; } = 0;
 
         public double AlignmentScore { get; protected set; } = 0;
 
-        public Aligner(IObjectiveFunction objective, int iterations)
+        public IterativeAligner(IObjectiveFunction objective, int iterations)
         {
             Objective = objective;
             IterationsLimit = iterations;
@@ -34,14 +38,22 @@ namespace LibAlignment
         {
             if (Debug)
             {
-                List<string> lines = new List<string>() { "", "Debugging:", "" };
+                if (DebugCursorStart == -1)
+                {
+                    int cursorPos = Console.GetCursorPosition().Top;
+                    DebugCursorStart = cursorPos + 1;
+                }
+
+                List<string> lines = new List<string>() { "Debugging:", "" };
                 CollectAlignmentStrategy(lines);
                 CollectAlignmentStateInfo(lines);
+                List<string> output = DebugHelper.PadInfoLines(lines);
+                string info = ConcatenateLines(output);
+                Console.SetCursorPosition(0, DebugCursorStart);
 
-                string info = ConcatenateLines(lines);
-                Console.Clear();
                 Console.WriteLine(info);
-                // Thread.Sleep(500);
+                TryDisplayAlignment(CurrentAlignment);
+                Console.WriteLine();
             }
         }
 
@@ -62,17 +74,15 @@ namespace LibAlignment
         public void CollectAlignmentStrategy(List<string> lines)
         {
             double percentIterationsComplete = Math.Round(100.0 * (double)IterationsCompleted/(double)IterationsLimit, 3);
+            string percentValue = percentIterationsComplete.ToString("0.0");
 
             lines.Add(GetName());
-            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentIterationsComplete}%)");
+            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
             lines.Add("");
         }
 
         public void CollectAlignmentStateInfo(List<string> lines)
         {
-            const int maxWidth = 200;
-            const int maxHeight = 20;
-
             if (CurrentAlignment is Alignment alignment)
             {
                 int m = alignment.Height;
@@ -82,23 +92,14 @@ namespace LibAlignment
                 lines.Add($" - dimensions: ({m} x {n})");
                 lines.Add($" - objective function: {Objective.GetName()}");
                 lines.Add($" - score: {AlignmentScore}");
-
-                if (m <= maxHeight && n <= maxWidth)
-                {
-                    List<BioSequence> sequences = alignment.GetAlignedSequences();
-                    foreach (BioSequence sequence in sequences)
-                    {
-                        lines.Add(sequence.Payload);
-                    }
-                }
-                else
-                {
-                    lines.Add("[ alignment too big for preview ]");
-                }
             }
-            else
+        }
+
+        public void TryDisplayAlignment(Alignment? alignment)
+        {
+            if (alignment is Alignment current)
             {
-                lines.Add("[ alignment missing ]");
+                DebugHelper.PaintAlignment(alignment);
             }
         }
 

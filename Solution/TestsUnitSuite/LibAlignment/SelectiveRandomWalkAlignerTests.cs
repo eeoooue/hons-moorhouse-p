@@ -1,5 +1,4 @@
 ﻿using LibAlignment;
-using LibAlignment.Aligners;
 using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
 using LibScoring.ObjectiveFunctions;
@@ -15,6 +14,7 @@ using LibFileIO;
 
 using TestsHarness;
 using TestsHarness.Tools;
+using LibAlignment.Aligners.SingleState;
 
 
 namespace TestsUnitSuite.LibAlignment
@@ -30,7 +30,7 @@ namespace TestsUnitSuite.LibAlignment
 
         private FileHelper FileHelper = new FileHelper();
 
-        public Aligner GetAligner()
+        public IterativeAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
@@ -50,7 +50,7 @@ namespace TestsUnitSuite.LibAlignment
                 ExampleSequences.GetSequence(ExampleSequence.ExampleD),
             };
 
-            Aligner climber = GetAligner();
+            IterativeAligner climber = GetAligner();
             climber.Initialize(inputs);
             Alignment initial = climber.CurrentAlignment!.GetCopy();
             

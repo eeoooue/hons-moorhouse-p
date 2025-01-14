@@ -19,6 +19,8 @@ namespace LibBioInfo.IAlignmentModifiers
                     GapShifter.TryShiftGapInRow(alignment, i);
                 }
             }
+
+            alignment.CheckResolveEmptyColumns();
         }
     }
 }
