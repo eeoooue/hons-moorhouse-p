@@ -38,16 +38,22 @@ namespace LibScoring.ObjectiveFunctions
             string column = alignment.GetColumn(j);
 
             Dictionary<char, int> table = ConstructCounterHashTable(column);
+            double result = ScorePairwiseCombinations(table);
 
+            return result;
+        }
+
+        public double ScorePairwiseCombinations(Dictionary<char, int> table)
+        {
             List<char> residues = Matrix.GetResidues();
             double result = 0;
 
-            for (int i1=0; i1 < residues.Count; i1++)
+            for (int i1 = 0; i1 < residues.Count; i1++)
             {
                 char a = residues[i1];
                 int a_count = table[a];
 
-                for(int i2=i1; i2 < residues.Count; i2++)
+                for (int i2 = i1; i2 < residues.Count; i2++)
                 {
                     char b = residues[i2];
                     int b_count = table[b];
@@ -56,7 +62,7 @@ namespace LibScoring.ObjectiveFunctions
 
                     if (a != b)
                     {
-                        combinations = (a_count * b_count)/2;
+                        combinations = (a_count * b_count) / 2;
                     }
                     else
                     {
@@ -71,6 +77,8 @@ namespace LibScoring.ObjectiveFunctions
 
             return result;
         }
+
+
 
         public Dictionary<char, int> ConstructCounterHashTable(string column)
         {
