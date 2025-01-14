@@ -17,9 +17,14 @@ namespace LibBioInfo.IAlignmentModifiers
         public void ModifyAlignment(Alignment alignment)
         {
             int i = Randomizer.Random.Next(alignment.Height);
+            PerformSwapWithinRow(alignment, i);
+        }
+
+        public void PerformSwapWithinRow(Alignment alignment, int i)
+        {
             int j = Randomizer.Random.Next(alignment.Width);
             int k = Randomizer.Random.Next(1, alignment.Width / 2);
-            
+
             if (Randomizer.CoinFlip())
             {
                 Swap(alignment, i, j, k, SwapDirection.Left);

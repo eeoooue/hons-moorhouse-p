@@ -10,6 +10,7 @@ namespace LibScoring.ScoringMatrices
     {
         public int[,] ScoreValues;
         public Dictionary<char, int> ResidueIndexes = new Dictionary<char, int>();
+        public List<char> Residues = new List<char>();
 
         public BLOSUM62Matrix()
         {
@@ -66,6 +67,8 @@ namespace LibScoring.ScoringMatrices
             ResidueIndexes['W'] = 17;
             ResidueIndexes['Y'] = 18;
             ResidueIndexes['F'] = 19;
+
+            Residues = ResidueIndexes.Keys.ToList();
         }
 
         public string GetName()
@@ -75,7 +78,7 @@ namespace LibScoring.ScoringMatrices
 
         public List<char> GetResidues()
         {
-            return ResidueIndexes.Keys.ToList();
+            return Residues;
         }
 
         public int ScorePair(char a, char b)

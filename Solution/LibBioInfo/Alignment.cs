@@ -57,8 +57,11 @@ namespace LibBioInfo
             }
         }
 
-        
-
+        public char[,] GetCharacterMatrix()
+        {
+            UpdateCharacterMatrixIfNeeded();
+            return CharacterMatrix;
+        }
 
         public void SetState(int i, int j, bool value)
         {

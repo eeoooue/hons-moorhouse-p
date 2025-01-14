@@ -11,8 +11,8 @@ namespace LibAlignment.Aligners.SingleState
 {
     public class IteratedLocalSearchAligner : SingleStateAligner
     {
-        IAlignmentModifier PerturbModifier = new MultiRowStochasticGapShifter();
-        IAlignmentModifier TweakModifier = new SwapOperator();
+        public IAlignmentModifier PerturbModifier = new MultiRowStochasticSwapOperator();
+        public IAlignmentModifier TweakModifier = new MultiRowStochasticSwapOperator();
         List<BioSequence> Sequences = new List<BioSequence>();
 
         public int ResetPoint = 0;
