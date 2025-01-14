@@ -24,7 +24,7 @@ namespace MAli.AlignmentConfigs
 
         public override IterativeAligner CreateAligner()
         {
-            return CreatePopulationBasedAligner();
+            return CreateSingleStateAligner();
         }
 
         public IAlignmentModifier GetOperator()
