@@ -17,10 +17,10 @@ namespace MAli.AlignmentConfigs
     {
         public override MewLambdaEvolutionaryAlgorithmAligner CreateAligner()
         {
-            return GetDebugVersion();
+            return GetSprint04Version();
         }
 
-        private MewLambdaEvolutionaryAlgorithmAligner GetDebugVersion()
+        private MewLambdaEvolutionaryAlgorithmAligner GetSprint04Version()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
@@ -32,14 +32,13 @@ namespace MAli.AlignmentConfigs
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
+                new MultiRowStochasticSwapOperator(),
                 new SwapOperator(),
                 new GapInserter(),
             };
 
             MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
-
             aligner.MutationOperator = modifier;
-
 
             return aligner;
         }
