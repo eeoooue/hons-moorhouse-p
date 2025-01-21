@@ -53,12 +53,12 @@ namespace MAli
                         aligner.IterationsLimit = iterations;
                     }
 
-                    Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
-                    alignment = aligner.AlignSequences(sequences);
+                    bool emitFrames = CommandTableIncludesFramesFlag(table);
+                    AlignIteratively(aligner, emitFrames);
 
                     string outputFilename = BuildFullOutputFilename(outputPath, table);
 
-                    FileHelper.WriteAlignmentTo(alignment, outputFilename);
+                    FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
                     Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
                 }
                 else
@@ -70,6 +70,32 @@ namespace MAli
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+        public bool CommandTableIncludesFramesFlag(Dictionary<string, string?> table)
+        {
+            bool result = table.ContainsKey("frames");
+            return result;
+        }
+
+
+        public void AlignIteratively(IterativeAligner aligner, bool emitFrames)
+        {
+            Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
+
+            while(aligner.IterationsCompleted < aligner.IterationsLimit)
+            {
+                aligner.Iterate();
+                if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
+                {
+                    SaveCurrentFrame(alignment);
+                }
+            }
+        }
+
+        public void SaveCurrentFrame(Alignment alignment)
+        {
+
         }
 
 
