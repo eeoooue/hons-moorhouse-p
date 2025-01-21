@@ -11,8 +11,4 @@
     <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MOPAligners\" />
-  </ItemGroup>
-
 </Project>
