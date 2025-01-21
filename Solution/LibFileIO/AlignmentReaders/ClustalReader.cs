@@ -9,8 +9,13 @@ namespace LibFileIO.AlignmentReaders
 {
     public class ClustalReader : IAlignmentReader
     {
-        private const int HEADER_SIZE = 3;
         public string Directory = "";
+
+        public Alignment ReadAlignmentFrom(string filename)
+        {
+            List<BioSequence> sequences = ReadSequencesFrom(filename);
+            return new Alignment(sequences, true);
+        }
 
         public List<BioSequence> ReadSequencesFrom(string filename)
         {
@@ -111,5 +116,6 @@ namespace LibFileIO.AlignmentReaders
 
             return result;
         }
+
     }
 }

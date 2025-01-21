@@ -10,5 +10,7 @@ namespace LibFileIO
     public interface IAlignmentReader
     {
         public List<BioSequence> ReadSequencesFrom(string filename);
+
+        public Alignment ReadAlignmentFrom(string filename);
     }
 }

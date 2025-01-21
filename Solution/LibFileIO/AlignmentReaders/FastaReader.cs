@@ -11,6 +11,12 @@ namespace LibFileIO.AlignmentReaders
     {
         public string Directory = "";
 
+        public Alignment ReadAlignmentFrom(string filename)
+        {
+            List<BioSequence> sequences = ReadSequencesFrom(filename);
+            return new Alignment(sequences, true);
+        }
+
         public List<BioSequence> ReadSequencesFrom(string filename)
         {
             List<string> contents = File.ReadAllLines(filename).ToList();
