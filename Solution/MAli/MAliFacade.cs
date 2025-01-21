@@ -53,12 +53,14 @@ namespace MAli
                         aligner.IterationsLimit = iterations;
                     }
 
-                    Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
-                    alignment = aligner.AlignSequences(sequences);
+                    aligner.Initialize(sequences);
+
+                    bool emitFrames = CommandTableIncludesFramesFlag(table);
+                    AlignIteratively(aligner, emitFrames);
 
                     string outputFilename = BuildFullOutputFilename(outputPath, table);
 
-                    FileHelper.WriteAlignmentTo(alignment, outputFilename);
+                    FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
                     Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
                 }
                 else
@@ -70,6 +72,58 @@ namespace MAli
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+        public bool CommandTableIncludesFramesFlag(Dictionary<string, string?> table)
+        {
+            bool result = table.ContainsKey("frames");
+            return result;
+        }
+
+
+        public void AlignIteratively(IterativeAligner aligner, bool emitFrames)
+        {
+            Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
+
+            if (emitFrames)
+            {
+                CheckCreateFramesFolder();
+            }
+
+            while(aligner.IterationsCompleted < aligner.IterationsLimit)
+            {
+                aligner.Iterate();
+                aligner.CheckShowDebuggingInfo();
+                if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
+                {
+                    SaveCurrentFrame(alignment, aligner.IterationsCompleted);
+                }
+            }
+        }
+
+        public void SaveCurrentFrame(Alignment alignment, int iterations)
+        {
+            string suffix = Frontload(iterations);
+            FileHelper.WriteAlignmentTo(alignment, $"frames\\frame_{suffix}");
+        }
+
+        public string Frontload(int number)
+        {
+            string s = number.ToString();
+
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<5-s.Length; i++)
+            {
+                sb.Append('0');
+            }
+            sb.Append(s);
+
+            return sb.ToString();
+        }
+
+        public void CheckCreateFramesFolder()
+        {
+            Directory.CreateDirectory("frames");
         }
 
 

@@ -11,7 +11,7 @@ namespace MAli
     {
         public HashSet<string> SupportedCommands = new HashSet<string>();
         public Dictionary<string, string> CommandDescriptions = new Dictionary<string, string>();
-        public string Version = "v1.1";
+        public string Version = "v1.2";
 
         public MAliSpecification()
         {
@@ -23,24 +23,28 @@ namespace MAli
         {
             SupportedCommands.Add("input");
             SupportedCommands.Add("output");
-            SupportedCommands.Add("help");
             SupportedCommands.Add("seed");
             SupportedCommands.Add("iterations");
-            SupportedCommands.Add("timestamp");
             SupportedCommands.Add("tag");
+
+            SupportedCommands.Add("timestamp");
             SupportedCommands.Add("debug");
+            SupportedCommands.Add("frames");
+            SupportedCommands.Add("help");
         }
 
         public void AddCommandDescriptions()
         {
             CommandDescriptions.Add("input", "Specify the input file of sequences to be aligned.");
             CommandDescriptions.Add("output", "Specify the output file path for the alignment of sequences.");
-            CommandDescriptions.Add("help", "Display the list of supported commands.");
             CommandDescriptions.Add("seed", "Specify a seed value for reproducible results.");
             CommandDescriptions.Add("iterations", "Specify the number of iterations of refinement to be performed.");
-            CommandDescriptions.Add("timestamp", "Includes a completion date-time timestamp in the output filename.");
             CommandDescriptions.Add("tag", "Specify a suffix to be included in the output filename.");
-            CommandDescriptions.Add("debug", "View debugging information throughout the alignment process.");
+
+            CommandDescriptions.Add("timestamp", "(flag) Includes a completion date-time timestamp in the output filename.");
+            CommandDescriptions.Add("debug", "(flag) View debugging information throughout the alignment process.");
+            CommandDescriptions.Add("frames", "(flag) Saves the alignment state to a 'frames' subfolder after each iteration.");
+            CommandDescriptions.Add("help", "Display the list of supported commands.");
         }
 
         public void ListCurrentVersion()
