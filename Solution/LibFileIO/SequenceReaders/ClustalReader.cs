@@ -22,7 +22,7 @@ namespace LibFileIO.SequenceReaders
 
         public List<BioSequence> UnpackAlignment(List<string> contents)
         {
-            List<string> sequenceContents = contents.GetRange(HEADER_SIZE, contents.Count - HEADER_SIZE);
+            List<string> sequenceContents = RemoveClustalHeader(contents);
             List<string> identifiers = CollectUniqueIdentifiers(sequenceContents);
 
             Dictionary<string, StringBuilder> builders = InitializeStringBuilders(identifiers);
@@ -32,6 +32,11 @@ namespace LibFileIO.SequenceReaders
             }
 
             return ConstructSequences(builders, identifiers);
+        }
+
+        public List<string> RemoveClustalHeader(List<string> contents)
+        {
+            return contents.GetRange(1, contents.Count - 1);
         }
 
         public List<string> CollectUniqueIdentifiers(List<string> sequenceContents)
