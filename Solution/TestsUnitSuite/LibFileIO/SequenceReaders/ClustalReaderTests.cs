@@ -14,7 +14,6 @@ namespace TestsUnitSuite.LibFileIO.SequenceReaders
     public class ClustalReaderTests
     {
         private ClustalReader ClustalReader = new ClustalReader();
-        private ExampleSequences ExampleSequences = Harness.ExampleSequences;
         private SequenceEquality SequenceEquality = Harness.SequenceEquality;
 
         #region Testing identifiers can be collected
@@ -36,7 +35,7 @@ namespace TestsUnitSuite.LibFileIO.SequenceReaders
                 "1j46_A          PFFQEAQKLQAMHREKYPNYKYRP---RRKAKMLPK",
                 "2lef_A          KYYELARKERQLHMQLYPGWSARDNYGKKKKRKREK",
                 "1k99_A          KYIQDFQREKQEFERNLARFREDH---PDLIQNAKK",
-                "1aab_           KFEDMAKADKARYEREMKTYIPPK---GE------ -",
+                "1aab_           KFEDMAKADKARYEREMKTYIPPK---GE-------",
                 "                 : :  :  :  . .    :       ",
                 "",
             };
@@ -55,5 +54,50 @@ namespace TestsUnitSuite.LibFileIO.SequenceReaders
 
         #endregion
 
+
+        #region Testing multiple sequences can be read from lines of a FASTA file
+
+        [TestMethod]
+        public void CanReadAlignmentState()
+        {
+            List<string> contents = new List<string>()
+            {
+                "CLUSTAL 2.1 multiple sequence alignment",
+                "",
+                "",
+                "1j46_A          ------MQDRVKRPMNAFIVWSRDQRRKMALENPRMRN--SEISKQLGYQWKMLTEAEKW",
+                "2lef_A          --------MHIKKPLNAFMLYMKEMRANVVAESTLKES--AAINQILGRRWHALSREEQA",
+                "1k99_A          MKKLKKHPDFPKKPLTPYFRFFMEKRAKYAKLHPEMSN--LDLTKILSKKYKELPEKKKM",
+                "1aab_           ---GKGDPKKPRGKMSSYAFFVQTSREEHKKKHPDASVNFSEFSKKCSERWKTMSAKEKG",
+                "                           :  :..:  :    * :     .        :.:  . ::: :.  ::",
+                "",
+                "1j46_A          PFFQEAQKLQAMHREKYPNYKYRP---RRKAKMLPK",
+                "2lef_A          KYYELARKERQLHMQLYPGWSARDNYGKKKKRKREK",
+                "1k99_A          KYIQDFQREKQEFERNLARFREDH---PDLIQNAKK",
+                "1aab_           KFEDMAKADKARYEREMKTYIPPK---GE-------",
+                "                 : :  :  :  . .    :       ",
+                "",
+            };
+
+            List<BioSequence> expected = new List<BioSequence>()
+            {
+                new BioSequence("1j46_A", "------MQDRVKRPMNAFIVWSRDQRRKMALENPRMRN--SEISKQLGYQWKMLTEAEKWPFFQEAQKLQAMHREKYPNYKYRP---RRKAKMLPK"),
+                new BioSequence("2lef_A", "--------MHIKKPLNAFMLYMKEMRANVVAESTLKES--AAINQILGRRWHALSREEQAKYYELARKERQLHMQLYPGWSARDNYGKKKKRKREK"),
+                new BioSequence("1k99_A", "MKKLKKHPDFPKKPLTPYFRFFMEKRAKYAKLHPEMSN--LDLTKILSKKYKELPEKKKMKYIQDFQREKQEFERNLARFREDH---PDLIQNAKK"),
+                new BioSequence("1aab_", "---GKGDPKKPRGKMSSYAFFVQTSREEHKKKHPDASVNFSEFSKKCSERWKTMSAKEKGKFEDMAKADKARYEREMKTYIPPK---GE-------"),
+            };
+
+            List<BioSequence> actual = ClustalReader.UnpackAlignment(contents);
+
+            Assert.AreEqual(expected.Count, actual.Count);
+
+            for(int i=0; i<expected.Count; i++)
+            {
+                SequenceEquality.AssertSequencesMatch(expected[i], actual[i]);
+            }
+        }
+
+
+        #endregion
     }
 }
