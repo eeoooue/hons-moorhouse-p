@@ -68,7 +68,7 @@ namespace MAli
                         aligner.Initialize(alignment.Sequences);
                     }
 
-                    AlignIteratively(aligner, emitFrames);
+                    AlignIteratively(aligner, emitFrames, refineOnly);
 
                     string outputFilename = BuildFullOutputFilename(outputPath, table);
 
@@ -92,9 +92,15 @@ namespace MAli
             return result;
         }
 
-        public void AlignIteratively(IIterativeAligner aligner, bool emitFrames)
+        public void AlignIteratively(IIterativeAligner aligner, bool emitFrames, bool refineOnly)
         {
-            Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
+            string context = $"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.";
+            if (refineOnly)
+            {
+                context += " (iterative refinement)";
+            }
+
+            Console.WriteLine(context);
 
             if (emitFrames)
             {
