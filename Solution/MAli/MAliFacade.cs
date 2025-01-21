@@ -34,13 +34,15 @@ namespace MAli
 
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            bool debugging = CommandTableIncludesDebugFlag(table);
+            bool debugging = CommandsIncludeFlag(table, "debug");
+            bool emitFrames = CommandsIncludeFlag(table, "frames");
+            bool refineOnly = CommandsIncludeFlag(table, "refine");
 
             try
             {
                 Console.WriteLine($"Reading sequences from source: '{inputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
-                Alignment alignment = new Alignment(sequences);
+                Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
                 {
@@ -57,9 +59,15 @@ namespace MAli
                         aligner.IterationsLimit = iterations;
                     }
 
-                    aligner.Initialize(sequences);
+                    if (refineOnly)
+                    {
+                        aligner.InitializeForRefinement(alignment);
+                    }
+                    else
+                    {
+                        aligner.Initialize(alignment.Sequences);
+                    }
 
-                    bool emitFrames = CommandTableIncludesFramesFlag(table);
                     AlignIteratively(aligner, emitFrames);
 
                     string outputFilename = BuildFullOutputFilename(outputPath, table);
@@ -78,12 +86,11 @@ namespace MAli
             }
         }
 
-        public bool CommandTableIncludesFramesFlag(Dictionary<string, string?> table)
+        public bool CommandsIncludeFlag(Dictionary<string, string?> table, string flag)
         {
-            bool result = table.ContainsKey("frames");
+            bool result = table.ContainsKey(flag);
             return result;
         }
-
 
         public void AlignIteratively(IIterativeAligner aligner, bool emitFrames)
         {
@@ -129,14 +136,6 @@ namespace MAli
             Directory.CreateDirectory("frames");
         }
 
-
-        public bool CommandTableIncludesDebugFlag(Dictionary<string, string?> table)
-        {
-            bool result = table.ContainsKey("debug");
-            return result;
-        }
-
-
         public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
         {
             if (table.ContainsKey("iterations"))
@@ -161,12 +160,12 @@ namespace MAli
         {
             string result = outputName;
 
-            if (table.ContainsKey("timestamp"))
+            if (CommandsIncludeFlag(table, "timestamp"))
             {
                 result += $"_{GetTimeStamp()}";
             }
 
-            if (table.ContainsKey("tag"))
+            if (CommandsIncludeFlag(table, "tag"))
             {
                 string? specifiedTag = table["tag"];
                 if (specifiedTag is string tag)
