@@ -11,13 +11,10 @@ namespace LibAlignment.Aligners
 {
     public abstract class SingleStateAligner : IterativeAligner
     {
-
         protected SingleStateAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
 
         }
-
-        
 
         public override void Initialize(List<BioSequence> sequences)
         {
@@ -39,7 +36,5 @@ namespace LibAlignment.Aligners
         }
 
         public virtual void AdditionalSetup() { }
-
-        
     }
 }
