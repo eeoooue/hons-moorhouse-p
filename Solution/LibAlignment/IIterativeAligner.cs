@@ -24,6 +24,8 @@ namespace LibAlignment
 
         public void Initialize(List<BioSequence> sequences);
 
+        public void InitializeForRefinement(Alignment alignment);
+
         public void Iterate();
     }
 }
