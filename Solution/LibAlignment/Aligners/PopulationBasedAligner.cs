@@ -17,6 +17,14 @@ namespace LibAlignment.Aligners
 
         }
 
+
+
+        public override void InitializeForRefinement(Alignment alignment)
+        {
+            Initialize(alignment.Sequences);
+            throw new NotImplementedException();
+        }
+
         public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
         {
             List<ScoredAlignment> candidates = new List<ScoredAlignment>();
