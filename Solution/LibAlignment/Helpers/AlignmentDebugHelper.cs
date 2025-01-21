@@ -10,14 +10,12 @@ namespace LibAlignment.Helpers
     public class AlignmentDebugHelper
     {
         public Bioinformatics Bioinformatics = new Bioinformatics();
-
         public ResiduePalette ResiduePalette = new ResiduePalette();
         public NucleotidePalette NucleotidePalette = new NucleotidePalette();
 
         public int WidthLimit = 100;
         public string GapFiller = "";
         public int InfoWidthLimit = 110;
-
 
         public AlignmentDebugHelper()
         {
@@ -43,22 +41,18 @@ namespace LibAlignment.Helpers
                 return line.Substring(0, InfoWidthLimit - 3) + "...";
             }
 
-
             StringBuilder sb = new StringBuilder();
             sb.Append(line);
-
             while (sb.Length < InfoWidthLimit)
             {
                 sb.Append(' ');
             }
-
             return sb.ToString();
         }
 
         public string BuildGapFiller(int length)
         {
             StringBuilder sb = new StringBuilder();
-
             for (int i = 0; i < length; i++)
             {
                 sb.Append(' ');
@@ -74,7 +68,6 @@ namespace LibAlignment.Helpers
                 PaintSequence(sequence);
             }
         }
-
 
         public void PaintSequence(BioSequence sequence)
         {
@@ -113,8 +106,6 @@ namespace LibAlignment.Helpers
             Console.ResetColor();
             Console.WriteLine();
         }
-
-
 
         public void SetThemeToMatchResidue(char residue)
         {

@@ -26,9 +26,9 @@ namespace MAli.AlignmentConfigs
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
 
             const int maxIterations = 100;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
-            aligner.Mew = 10;
-            aligner.Lambda = aligner.Mew * 7;
+            const int mew = 10;
+            const int lambda = 10 * 7;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
@@ -58,9 +58,10 @@ namespace MAli.AlignmentConfigs
             IObjectiveFunction objective = new LinearCombinationOfWeightedObjectiveFunctions(objectives, weights);
 
             const int maxIterations = 100;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
-            aligner.Mew = 10;
-            aligner.Lambda = aligner.Mew * 7;
+            const int mew = 10;
+            const int lambda = mew * 7;
+
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
@@ -85,10 +86,11 @@ namespace MAli.AlignmentConfigs
             IScoringMatrix matrix = new BLOSUM62Matrix();
             IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
             const int maxIterations = 100;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
-            aligner.Mew = 10;
-            aligner.Lambda = aligner.Mew * 7;
+            const int mew = 10;
+            const int lambda = 10 * 7;
 
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
+            
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new GapInserter(1),

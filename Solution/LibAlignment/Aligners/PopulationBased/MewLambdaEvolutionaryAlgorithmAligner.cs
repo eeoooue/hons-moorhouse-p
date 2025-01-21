@@ -18,32 +18,16 @@ namespace LibAlignment.Aligners.PopulationBased
         public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int Mew = 5; // selection size
-        public int Lambda = 20; // population size
+        public int Lambda { get { return PopulationSize; } } // population size
 
-        public MewLambdaEvolutionaryAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public MewLambdaEvolutionaryAlgorithmAligner(IObjectiveFunction objective, int iterations, int mew = 10, int lambda = 70) : base(objective, iterations, lambda)
         {
-
+            Mew = mew;
         }
 
         public override string GetName()
         {
             return $"MewLambdaEvolutionaryAlgorithmAligner (selection={Mew}, population={Lambda})";
-        }
-
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-
-            Population.Clear();
-            for (int i = 0; i < Lambda; i++)
-            {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
-                Population.Add(alignment);
-            }
-
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
         public override void PerformIteration()

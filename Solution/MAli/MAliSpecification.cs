@@ -27,6 +27,7 @@ namespace MAli
             SupportedCommands.Add("iterations");
             SupportedCommands.Add("tag");
 
+            SupportedCommands.Add("refine");
             SupportedCommands.Add("timestamp");
             SupportedCommands.Add("debug");
             SupportedCommands.Add("frames");
@@ -41,6 +42,7 @@ namespace MAli
             CommandDescriptions.Add("iterations", "Specify the number of iterations of refinement to be performed.");
             CommandDescriptions.Add("tag", "Specify a suffix to be included in the output filename.");
 
+            CommandDescriptions.Add("refine", "(flag) Refine the alignment provided rather than starting from a randomized state.");
             CommandDescriptions.Add("timestamp", "(flag) Includes a completion date-time timestamp in the output filename.");
             CommandDescriptions.Add("debug", "(flag) View debugging information throughout the alignment process.");
             CommandDescriptions.Add("frames", "(flag) Saves the alignment state to a 'frames' subfolder after each iteration.");

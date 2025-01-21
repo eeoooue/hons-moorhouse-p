@@ -12,6 +12,8 @@ namespace LibAlignment.Aligners.SingleState
 {
     public class NaiveHillClimbAligner : SingleStateAligner
     {
+        public INeighbourhoodFinder NeighbourhoodFinder = new SwapBasedNeighbourhoodFinder();
+
         public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
         }
@@ -21,39 +23,20 @@ namespace LibAlignment.Aligners.SingleState
             return $"NaiveHillClimbAligner";
         }
 
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            CurrentAlignment = new Alignment(sequences);
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            randomizer.ModifyAlignment(CurrentAlignment);
-            IterationsCompleted = 0;
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
-        }
-
-        public void AcceptIfImprovement(Alignment candidate)
-        {
-            double score = ScoreAlignment(candidate);
-            if (score > AlignmentScore)
-            {
-                CurrentAlignment = candidate;
-                AlignmentScore = score;
-            }
-        }
-
         public override void PerformIteration()
         {
             foreach (Alignment candidate in GetNeighbouringAlignments(CurrentAlignment!))
             {
-                AcceptIfImprovement(candidate);
+                ScoredAlignment scored = GetScoredAlignment(candidate);
+                CheckNewBest(scored);
             }
         }
 
         public List<Alignment> GetNeighbouringAlignments(Alignment alignment)
         {
             List<Alignment> result = new List<Alignment>();
-            INeighbourhoodFinder finder = new SwapBasedNeighbourhoodFinder();
 
-            List<bool[,]> neighbouringStates = finder.FindNeighbours(alignment.State);
+            List<bool[,]> neighbouringStates = NeighbourhoodFinder.FindNeighbours(alignment.State);
 
             foreach (bool[,] state in neighbouringStates)
             {
