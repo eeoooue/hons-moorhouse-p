@@ -26,7 +26,7 @@ namespace LibAlignment.Aligners.SingleState
             foreach (Alignment candidate in GetNeighbouringAlignments(CurrentAlignment!))
             {
                 ScoredAlignment scored = GetScoredAlignment(candidate);
-                ContestS(scored);
+                CheckNewBest(scored);
             }
         }
 

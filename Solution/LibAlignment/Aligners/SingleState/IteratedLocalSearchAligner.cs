@@ -16,6 +16,7 @@ namespace LibAlignment.Aligners.SingleState
 
         public int ResetPoint = 0;
         public ScoredAlignment HomeBase = null!;
+        protected ScoredAlignment S = null!;
 
         public IteratedLocalSearchAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
@@ -29,8 +30,18 @@ namespace LibAlignment.Aligners.SingleState
 
         public override void AdditionalSetup()
         {
+            S = CurrentBest.GetCopy();
             HomeBase = S.GetCopy();
             MarkUpcomingResetPoint();
+        }
+
+        public void ContestS(ScoredAlignment candidate)
+        {
+            if (candidate.Score > S.Score)
+            {
+                S = candidate;
+                CheckNewBest(S);
+            }
         }
 
         public ScoredAlignment GetPerturbationOfH()

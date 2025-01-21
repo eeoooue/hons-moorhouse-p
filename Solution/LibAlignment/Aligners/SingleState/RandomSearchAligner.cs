@@ -23,9 +23,9 @@ namespace LibAlignment.Aligners.SingleState
 
         public override void PerformIteration()
         {
-            Alignment alignment = GetRandomAlignment(S.Alignment.Sequences);
+            Alignment alignment = GetRandomAlignment(CurrentAlignment.Sequences);
             ScoredAlignment candidate = GetScoredAlignment(alignment);
-            ContestS(candidate);
+            CheckNewBest(candidate);
         }
     }
 }

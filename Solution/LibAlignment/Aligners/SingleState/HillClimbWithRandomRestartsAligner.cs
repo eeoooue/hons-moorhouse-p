@@ -14,6 +14,8 @@ namespace LibAlignment.Aligners.SingleState
         IAlignmentModifier Modifier = new SwapOperator();
 
         public int ResetPoint = 0;
+        protected ScoredAlignment S = null!;
+
 
         public HillClimbWithRandomRestartsAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
@@ -27,7 +29,17 @@ namespace LibAlignment.Aligners.SingleState
 
         public override void AdditionalSetup()
         {
+            S = CurrentBest.GetCopy();
             MarkUpcomingResetPoint();
+        }
+
+        public void ContestS(ScoredAlignment candidate)
+        {
+            if (candidate.Score > S.Score)
+            {
+                S = candidate;
+                CheckNewBest(S);
+            }
         }
 
         public void MarkUpcomingResetPoint()

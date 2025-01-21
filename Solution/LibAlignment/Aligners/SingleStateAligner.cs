@@ -11,32 +11,24 @@ namespace LibAlignment.Aligners
 {
     public abstract class SingleStateAligner : IterativeAligner
     {
-        protected ScoredAlignment S = null!;
 
         protected SingleStateAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
 
         }
 
-        public void ContestS(ScoredAlignment candidate)
-        {
-            if (candidate.Score > S.Score)
-            {
-                S = candidate;
-                CheckNewBest(S);
-            }
-        }
+        
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            S = GetRandomScoredAlignment(sequences);
-            InitialiseAroundState(S);
+            ScoredAlignment scoredAlignment = GetRandomScoredAlignment(sequences);
+            InitialiseAroundState(scoredAlignment);
         }
 
         public override void InitializeForRefinement(Alignment alignment)
         {
-            S = GetScoredAlignment(alignment);
-            InitialiseAroundState(S);
+            ScoredAlignment scoredAlignment = GetScoredAlignment(alignment);
+            InitialiseAroundState(scoredAlignment);
         }
 
         public void InitialiseAroundState(ScoredAlignment alignment)
