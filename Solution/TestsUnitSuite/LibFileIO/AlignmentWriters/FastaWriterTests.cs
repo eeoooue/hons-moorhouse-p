@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using TestsHarness;
 using TestsHarness.Tools;
 
-namespace TestsUnitSuite.LibFileIO
+namespace TestsUnitSuite.LibFileIO.AlignmentWriters
 {
     [TestClass]
     public class FastaWriterTests
@@ -34,8 +34,8 @@ namespace TestsUnitSuite.LibFileIO
 
             BioSequence sequence = ExampleSequences.GetSequence(ExampleSequence.ExampleA);
             List<string> actual = FastaWriter.CreateSequenceLines(sequence);
-            
-            for(int i=0; i<expected.Count; i++)
+
+            for (int i = 0; i < expected.Count; i++)
             {
                 Assert.AreEqual(expected[i], actual[i]);
             }
