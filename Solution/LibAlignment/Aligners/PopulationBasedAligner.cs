@@ -12,6 +12,8 @@ namespace LibAlignment.Aligners
     public abstract class PopulationBasedAligner : IterativeAligner
     {
         public List<Alignment> Population = new List<Alignment>();
+        public IAlignmentModifier RefinementPerturbOperator = new MultiRowStochasticSwapOperator();
+
         public int PopulationSize;
 
         protected PopulationBasedAligner(IObjectiveFunction objective, int iterations, int populationSize) : base(objective, iterations)
@@ -21,15 +23,24 @@ namespace LibAlignment.Aligners
 
         public override void InitializeForRefinement(Alignment alignment)
         {
-            Initialize(alignment.Sequences);
-            throw new NotImplementedException();
+            Population.Clear();
+            Population.Add(alignment);
+
+            while (Population.Count < PopulationSize)
+            {
+                Alignment member = alignment.GetCopy();
+                RefinementPerturbOperator.ModifyAlignment(member);
+                Population.Add(member);
+            }
+
+            CurrentBest = GetScoredAlignment(Population[0]);
         }
 
         public override void Initialize(List<BioSequence> sequences)
         {
             AlignmentRandomizer randomizer = new AlignmentRandomizer();
             Population.Clear();
-            for (int i = 0; i < PopulationSize; i++)
+            while (Population.Count < PopulationSize)
             {
                 Alignment alignment = new Alignment(sequences);
                 randomizer.ModifyAlignment(alignment);

@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibAlignment.Aligners.SingleState;
+using LibAlignment.Aligners.PopulationBased;
+using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo;
 
 namespace MAli.AlignmentConfigs
 {
@@ -16,8 +19,32 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetILSAligner();
+            return GetSprint04Version();
         }
+
+        private MewLambdaEvolutionaryAlgorithmAligner GetSprint04Version()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
+
+            const int maxIterations = 100;
+            const int mew = 10;
+            const int lambda = 10 * 7;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new MultiRowStochasticSwapOperator(),
+                new SwapOperator(),
+                new GapInserter(),
+            };
+
+            MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
+            aligner.MutationOperator = modifier;
+
+            return aligner;
+        }
+
 
         public IterativeAligner GetRandomSearchAligner()
         {
