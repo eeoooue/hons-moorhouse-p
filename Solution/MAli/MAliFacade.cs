@@ -85,20 +85,45 @@ namespace MAli
         {
             Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
 
+            if (emitFrames)
+            {
+                CheckCreateFramesFolder();
+            }
+
             while(aligner.IterationsCompleted < aligner.IterationsLimit)
             {
                 aligner.Iterate();
                 aligner.CheckShowDebuggingInfo();
                 if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
                 {
-                    SaveCurrentFrame(alignment);
+                    SaveCurrentFrame(alignment, aligner.IterationsCompleted);
                 }
             }
         }
 
-        public void SaveCurrentFrame(Alignment alignment)
+        public void SaveCurrentFrame(Alignment alignment, int iterations)
         {
+            string suffix = Frontload(iterations);
+            FileHelper.WriteAlignmentTo(alignment, $"frame_{suffix}");
+        }
 
+        public string Frontload(int number)
+        {
+            string s = number.ToString();
+
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<5-s.Length; i++)
+            {
+                sb.Append('0');
+            }
+            sb.Append(s);
+
+            return sb.ToString();
+        }
+
+        public void CheckCreateFramesFolder()
+        {
+            Directory.CreateDirectory("frames");
         }
 
 
