@@ -53,7 +53,7 @@ namespace LibFileIO.AlignmentReaders
                 }
             }
 
-            throw new InvalidOperationException("The file format could not be read");
+            throw new InvalidOperationException("The input file could not be read.");
         }
     }
 }
