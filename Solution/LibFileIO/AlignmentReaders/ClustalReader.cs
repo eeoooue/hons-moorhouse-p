@@ -5,12 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibFileIO.SequenceReaders
+namespace LibFileIO.AlignmentReaders
 {
-    public class ClustalReader : ISequenceReader
+    public class ClustalReader : IAlignmentReader
     {
-        private const int HEADER_SIZE = 3;
         public string Directory = "";
+
+        public bool FileAppearsReadable(string filename)
+        {
+            List<string> contents = File.ReadAllLines(filename).ToList();
+            string line = contents[0].ToUpper().Trim();
+            return line.StartsWith("CLUSTAL");
+        }
+
+        public Alignment ReadAlignmentFrom(string filename)
+        {
+            List<BioSequence> sequences = ReadSequencesFrom(filename);
+            return new Alignment(sequences, true);
+        }
 
         public List<BioSequence> ReadSequencesFrom(string filename)
         {
@@ -111,5 +123,6 @@ namespace LibFileIO.SequenceReaders
 
             return result;
         }
+
     }
 }

@@ -5,11 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibFileIO.SequenceReaders
+namespace LibFileIO.AlignmentReaders
 {
-    public class FastaReader : ISequenceReader
+    public class FastaReader : IAlignmentReader
     {
         public string Directory = "";
+
+        public bool FileAppearsReadable(string filename)
+        {
+            List<string> contents = File.ReadAllLines(filename).ToList();
+            string line = contents[0].Trim();
+            return line.StartsWith('>');
+        }
+
+        public Alignment ReadAlignmentFrom(string filename)
+        {
+            List<BioSequence> sequences = ReadSequencesFrom(filename);
+            return new Alignment(sequences, true);
+        }
 
         public List<BioSequence> ReadSequencesFrom(string filename)
         {
@@ -40,7 +53,7 @@ namespace LibFileIO.SequenceReaders
         {
             List<int> result = new List<int>();
 
-            for(int i=0; i< contents.Count; i++)
+            for (int i = 0; i < contents.Count; i++)
             {
                 if (contents[i].StartsWith(">"))
                 {
@@ -56,14 +69,16 @@ namespace LibFileIO.SequenceReaders
             string identifier = contents[0].Substring(1);
 
             StringBuilder sb = new StringBuilder();
-            for(int i=1; i< contents.Count; i++)
+            for (int i = 1; i < contents.Count; i++)
             {
-               sb.Append(contents[i]);
+                sb.Append(contents[i]);
             }
 
             string payload = sb.ToString();
 
             return new BioSequence(identifier, payload);
         }
+
+        
     }
 }

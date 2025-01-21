@@ -1,7 +1,7 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
-using LibFileIO.SequenceReaders;
+using LibFileIO.AlignmentReaders;
 using MAli;
 
 namespace DevConsole

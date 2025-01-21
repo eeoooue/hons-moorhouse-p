@@ -1,9 +1,4 @@
-﻿using LibBioInfo;
-using LibFileIO;
-using LibFileIO.AlignmentWriters;
-using LibFileIO.SequenceReaders;
-
-namespace MAli
+﻿namespace MAli
 {
     internal class Program
     {

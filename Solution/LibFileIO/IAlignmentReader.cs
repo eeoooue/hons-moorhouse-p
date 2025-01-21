@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace LibFileIO
 {
-    public interface ISequenceReader
+    public interface IAlignmentReader
     {
         public List<BioSequence> ReadSequencesFrom(string filename);
+
+        public Alignment ReadAlignmentFrom(string filename);
+
+        public bool FileAppearsReadable(string filename);
     }
 }
