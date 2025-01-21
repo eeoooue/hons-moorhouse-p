@@ -21,30 +21,12 @@ namespace LibAlignment.Aligners.SingleState
             return $"NaiveHillClimbAligner";
         }
 
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            CurrentAlignment = new Alignment(sequences);
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            randomizer.ModifyAlignment(CurrentAlignment);
-            IterationsCompleted = 0;
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
-        }
-
-        public void AcceptIfImprovement(Alignment candidate)
-        {
-            double score = ScoreAlignment(candidate);
-            if (score > AlignmentScore)
-            {
-                CurrentAlignment = candidate;
-                AlignmentScore = score;
-            }
-        }
-
         public override void PerformIteration()
         {
             foreach (Alignment candidate in GetNeighbouringAlignments(CurrentAlignment!))
             {
-                AcceptIfImprovement(candidate);
+                ScoredAlignment scored = GetScoredAlignment(candidate);
+                ContestS(scored);
             }
         }
 

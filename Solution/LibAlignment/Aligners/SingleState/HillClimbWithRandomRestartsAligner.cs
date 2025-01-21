@@ -12,47 +12,22 @@ namespace LibAlignment.Aligners.SingleState
     public class HillClimbWithRandomRestartsAligner : SingleStateAligner
     {
         IAlignmentModifier Modifier = new SwapOperator();
-        List<BioSequence> Sequences = new List<BioSequence>();
 
         public int ResetPoint = 0;
 
-        public ScoredAlignment S = null!;
-
         public HillClimbWithRandomRestartsAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
-        }
 
+        }
 
         public override string GetName()
         {
             return $"Hill Climb w/ Random Restarts : (next restart @ {ResetPoint})";
         }
 
-        public override void Initialize(List<BioSequence> sequences)
+        public override void AdditionalSetup()
         {
-            Sequences = sequences;
-            S = GetRandomScoredAlignment();
-            CurrentAlignment = S.Alignment;
-            AlignmentScore = S.Score;
-        }
-
-        public ScoredAlignment GetRandomScoredAlignment()
-        {
-            Alignment alignment = GetRandomAlignment();
-            return GetScoredAlignment(alignment);
-        }
-
-        public Alignment GetRandomAlignment()
-        {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            Alignment alignment = new Alignment(Sequences);
-            randomizer.ModifyAlignment(alignment);
-            return alignment;
-        }
-        public ScoredAlignment GetScoredAlignment(Alignment alignment)
-        {
-            double score = ScoreAlignment(alignment);
-            return new ScoredAlignment(alignment, score);
+            MarkUpcomingResetPoint();
         }
 
         public void MarkUpcomingResetPoint()
@@ -66,7 +41,7 @@ namespace LibAlignment.Aligners.SingleState
         {
             if (IterationsCompleted == ResetPoint)
             {
-                S = GetRandomScoredAlignment();
+                S = GetRandomScoredAlignment(S.Alignment.Sequences);
                 MarkUpcomingResetPoint();
             }
 
@@ -75,16 +50,6 @@ namespace LibAlignment.Aligners.SingleState
 
             ScoredAlignment candidate = GetScoredAlignment(r);
             ContestS(candidate);
-        }
-
-        public void ContestS(ScoredAlignment candidate)
-        {
-            if (candidate.Score > S.Score)
-            {
-                S = candidate;
-                CheckNewBest(S);
-            }
-
         }
     }
 }

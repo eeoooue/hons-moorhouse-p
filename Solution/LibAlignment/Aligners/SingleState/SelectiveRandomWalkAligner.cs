@@ -30,6 +30,13 @@ namespace LibAlignment.Aligners.SingleState
             AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
+        public override void InitializeForRefinement(Alignment alignment)
+        {
+            CurrentAlignment = alignment;
+            IterationsCompleted = 0;
+            AlignmentScore = ScoreAlignment(CurrentAlignment);
+        }
+
         public void AcceptIfImprovement(Alignment candidate)
         {
             double score = ScoreAlignment(candidate);
