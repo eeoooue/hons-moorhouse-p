@@ -46,6 +46,7 @@ namespace LibAlignment.Aligners.SingleState
             Alignment candidate = CurrentAlignment!.GetCopy();
             shifter.ModifyAlignment(candidate);
             AcceptIfImprovement(candidate);
+            MarkIterationComplete();
         }
     }
 }

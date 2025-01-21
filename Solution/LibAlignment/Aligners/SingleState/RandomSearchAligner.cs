@@ -52,6 +52,7 @@ namespace LibAlignment.Aligners.SingleState
             Alignment alignment = GetRandomAlignment();
             ScoredAlignment candidate = GetScoredAlignment(alignment);
             CheckNewBest(candidate);
+            MarkIterationComplete();
         }
     }
 }

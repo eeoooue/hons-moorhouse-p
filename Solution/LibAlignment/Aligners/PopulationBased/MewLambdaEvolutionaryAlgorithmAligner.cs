@@ -53,6 +53,7 @@ namespace LibAlignment.Aligners.PopulationBased
             List<Alignment> parents = SelectionStrategy.SelectCandidates(Mew);
             Population.Clear();
             Population = ProduceNewPopulation(parents);
+            MarkIterationComplete();
         }
 
         public Alignment GetMutationOfParent(Alignment parent)

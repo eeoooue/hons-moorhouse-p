@@ -53,6 +53,8 @@ namespace MAli
                         aligner.IterationsLimit = iterations;
                     }
 
+                    aligner.Initialize(sequences);
+
                     bool emitFrames = CommandTableIncludesFramesFlag(table);
                     AlignIteratively(aligner, emitFrames);
 
@@ -86,6 +88,7 @@ namespace MAli
             while(aligner.IterationsCompleted < aligner.IterationsLimit)
             {
                 aligner.Iterate();
+                aligner.CheckShowDebuggingInfo();
                 if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
                 {
                     SaveCurrentFrame(alignment);

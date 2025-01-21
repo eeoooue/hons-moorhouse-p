@@ -65,6 +65,8 @@ namespace LibAlignment.Aligners.PopulationBased
                     Population.Add(child);
                 }
             }
+
+            MarkIterationComplete();
         }
 
 

@@ -74,6 +74,7 @@ namespace LibAlignment.Aligners.PopulationBased
                     Population.Add(child);
                 }
             }
+            MarkIterationComplete();
         }
 
         public List<Alignment> BreedNewChildren()

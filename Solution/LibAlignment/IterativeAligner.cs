@@ -35,8 +35,6 @@ namespace LibAlignment
             while (IterationsCompleted < IterationsLimit)
             {
                 Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
             }
 
             return CurrentAlignment!;
@@ -45,6 +43,12 @@ namespace LibAlignment
         public abstract void Initialize(List<BioSequence> sequences);
 
         public abstract void Iterate();
+
+        public void MarkIterationComplete()
+        {
+            IterationsCompleted++;
+            CheckShowDebuggingInfo();
+        }
 
         public void CheckShowDebuggingInfo()
         {

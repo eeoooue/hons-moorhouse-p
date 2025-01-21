@@ -75,6 +75,7 @@ namespace LibAlignment.Aligners.SingleState
 
             ScoredAlignment candidate = GetScoredAlignment(r);
             ContestS(candidate);
+            MarkIterationComplete();
         }
 
         public void ContestS(ScoredAlignment candidate)

@@ -14,7 +14,7 @@ namespace DevConsole
         static void Main(string[] args)
         {
 
-            RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+            RunMAli("-input BB11001 -output test -iterations 10 -debug");
             // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
             // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug");

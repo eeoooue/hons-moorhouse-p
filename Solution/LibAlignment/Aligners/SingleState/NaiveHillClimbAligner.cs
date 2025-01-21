@@ -46,6 +46,7 @@ namespace LibAlignment.Aligners.SingleState
             {
                 AcceptIfImprovement(candidate);
             }
+            MarkIterationComplete();
         }
 
         public List<Alignment> GetNeighbouringAlignments(Alignment alignment)
