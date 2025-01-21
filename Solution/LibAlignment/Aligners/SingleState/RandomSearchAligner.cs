@@ -20,18 +20,6 @@ namespace LibAlignment.Aligners.SingleState
 
         }
 
-        public override Alignment AlignSequences(List<BioSequence> sequences)
-        {
-            Initialize(sequences);
-            while (IterationsCompleted < IterationsLimit)
-            {
-                Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
-            }
-
-            return CurrentAlignment!;
-        }
 
         public override string GetName()
         {

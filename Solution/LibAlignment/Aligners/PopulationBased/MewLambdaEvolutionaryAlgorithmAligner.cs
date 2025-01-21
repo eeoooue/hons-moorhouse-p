@@ -30,22 +30,6 @@ namespace LibAlignment.Aligners.PopulationBased
             return $"MewLambdaEvolutionaryAlgorithmAligner (selection={Mew}, population={Lambda})";
         }
 
-        public override Alignment AlignSequences(List<BioSequence> sequences)
-        {
-            Initialize(sequences);
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
-
-            while (IterationsCompleted < IterationsLimit)
-            {
-                Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
-            }
-
-            return CurrentAlignment;
-        }
-
         public override void Initialize(List<BioSequence> sequences)
         {
             IAlignmentModifier randomizer = new AlignmentRandomizer();
@@ -57,6 +41,9 @@ namespace LibAlignment.Aligners.PopulationBased
                 randomizer.ModifyAlignment(alignment);
                 Population.Add(alignment);
             }
+
+            CurrentAlignment = Population[0];
+            AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
         public override void Iterate()

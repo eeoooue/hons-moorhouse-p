@@ -21,20 +21,6 @@ namespace LibAlignment.Aligners.SingleState
             return $"NaiveHillClimbAligner";
         }
 
-        public override Alignment AlignSequences(List<BioSequence> sequences)
-        {
-            Initialize(sequences);
-
-            while (IterationsCompleted < IterationsLimit)
-            {
-                Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
-            }
-
-            return CurrentAlignment!;
-        }
-
         public override void Initialize(List<BioSequence> sequences)
         {
             CurrentAlignment = new Alignment(sequences);

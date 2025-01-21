@@ -33,23 +33,6 @@ namespace LibAlignment.Aligners.PopulationBased
             return $"GeneticAlgorithmAligner (population={PopulationSize})";
         }
 
-        public override Alignment AlignSequences(List<BioSequence> sequences)
-        {
-            Initialize(sequences);
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
-            CheckShowDebuggingInfo();
-
-            while (IterationsCompleted < IterationsLimit)
-            {
-                Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
-            }
-
-            return CurrentAlignment;
-        }
-
         public override void Initialize(List<BioSequence> sequences)
         {
             AlignmentRandomizer randomizer = new AlignmentRandomizer();
@@ -60,6 +43,8 @@ namespace LibAlignment.Aligners.PopulationBased
                 randomizer.ModifyAlignment(alignment);
                 Population.Add(alignment);
             }
+            CurrentAlignment = Population[0];
+            AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
         public override void Iterate()

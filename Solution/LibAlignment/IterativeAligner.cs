@@ -28,7 +28,19 @@ namespace LibAlignment
             IterationsLimit = iterations;
         }
 
-        public abstract Alignment AlignSequences(List<BioSequence> sequences);
+        public Alignment AlignSequences(List<BioSequence> sequences)
+        {
+            Initialize(sequences);
+
+            while (IterationsCompleted < IterationsLimit)
+            {
+                Iterate();
+                IterationsCompleted++;
+                CheckShowDebuggingInfo();
+            }
+
+            return CurrentAlignment!;
+        }
 
         public abstract void Initialize(List<BioSequence> sequences);
 
