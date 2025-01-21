@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibFileIO.SequenceReaders
+namespace LibFileIO.AlignmentReaders
 {
-    public class FastaReader : ISequenceReader
+    public class FastaReader : IAlignmentReader
     {
         public string Directory = "";
 
@@ -40,7 +40,7 @@ namespace LibFileIO.SequenceReaders
         {
             List<int> result = new List<int>();
 
-            for(int i=0; i< contents.Count; i++)
+            for (int i = 0; i < contents.Count; i++)
             {
                 if (contents[i].StartsWith(">"))
                 {
@@ -56,9 +56,9 @@ namespace LibFileIO.SequenceReaders
             string identifier = contents[0].Substring(1);
 
             StringBuilder sb = new StringBuilder();
-            for(int i=1; i< contents.Count; i++)
+            for (int i = 1; i < contents.Count; i++)
             {
-               sb.Append(contents[i]);
+                sb.Append(contents[i]);
             }
 
             string payload = sb.ToString();

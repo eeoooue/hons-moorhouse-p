@@ -1,6 +1,6 @@
 ﻿using LibBioInfo;
 using LibFileIO.AlignmentWriters;
-using LibFileIO.SequenceReaders;
+using LibFileIO.AlignmentReaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;

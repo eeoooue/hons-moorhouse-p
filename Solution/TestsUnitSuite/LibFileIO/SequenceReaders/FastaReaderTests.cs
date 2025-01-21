@@ -1,6 +1,5 @@
 using LibBioInfo;
-using LibFileIO.SequenceReaders;
-
+using LibFileIO.AlignmentReaders;
 using TestsHarness;
 using TestsHarness.Tools;
 

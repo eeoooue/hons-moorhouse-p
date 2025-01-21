@@ -1,5 +1,4 @@
-﻿using LibFileIO.SequenceReaders;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibBioInfo;
+using LibFileIO.AlignmentReaders;
 
 namespace TestsUnitSuite.LibFileIO.SequenceReaders
 {

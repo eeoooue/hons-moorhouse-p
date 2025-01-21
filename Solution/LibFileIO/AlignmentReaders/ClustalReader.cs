@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibFileIO.SequenceReaders
+namespace LibFileIO.AlignmentReaders
 {
-    public class ClustalReader : ISequenceReader
+    public class ClustalReader : IAlignmentReader
     {
         private const int HEADER_SIZE = 3;
         public string Directory = "";

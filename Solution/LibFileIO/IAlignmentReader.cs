@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibFileIO
 {
-    public interface ISequenceReader
+    public interface IAlignmentReader
     {
         public List<BioSequence> ReadSequencesFrom(string filename);
     }
