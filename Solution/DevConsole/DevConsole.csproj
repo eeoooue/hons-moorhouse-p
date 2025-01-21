@@ -25,6 +25,9 @@
     <None Update="BB11003">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="clustalformat_BB11001.aln">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="real_marine_life">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
