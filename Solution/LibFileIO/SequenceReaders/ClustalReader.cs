@@ -9,6 +9,7 @@ namespace LibFileIO.SequenceReaders
 {
     public class ClustalReader : ISequenceReader
     {
+        private const int HEADER_SIZE = 3;
         public string Directory = "";
 
         public List<BioSequence> ReadSequencesFrom(string filename)
@@ -21,7 +22,7 @@ namespace LibFileIO.SequenceReaders
 
         public List<BioSequence> UnpackAlignment(List<string> contents)
         {
-            List<string> sequenceContents = RemoveFirstNLines(contents, 3);
+            List<string> sequenceContents = contents.GetRange(HEADER_SIZE, contents.Count - HEADER_SIZE);
             List<string> identifiers = CollectUniqueIdentifiers(sequenceContents);
 
             Dictionary<string, StringBuilder> builders = InitializeStringBuilders(identifiers);
@@ -33,16 +34,42 @@ namespace LibFileIO.SequenceReaders
             return ConstructSequences(builders, identifiers);
         }
 
-        public List<BioSequence> ConstructSequences(Dictionary<string, StringBuilder> builders, List<string> identifiers)
+        public List<string> CollectUniqueIdentifiers(List<string> sequenceContents)
         {
-            List<BioSequence> result = new List<BioSequence>();
+            HashSet<string> identifiers = new HashSet<string>();
 
-            foreach(string identifier in identifiers)
+            foreach (string line in sequenceContents)
             {
-                StringBuilder sb = builders[identifier];
-                string payload = sb.ToString();
-                BioSequence sequence = new BioSequence(identifier, payload);
-                result.Add(sequence);
+                string identifier = ExtractIdentifier(line);
+                if (identifier.Length > 0)
+                {
+                    identifiers.Add(identifier);
+                }
+            }
+
+            return identifiers.ToList();
+        }
+
+        public string ExtractIdentifier(string line)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in line)
+            {
+                if (c == ' ')
+                {
+                    break;
+                }
+                sb.Append(c);
+            }
+            return sb.ToString();
+        }
+
+        public Dictionary<string, StringBuilder> InitializeStringBuilders(List<string> identifiers)
+        {
+            Dictionary<string, StringBuilder> result = new Dictionary<string, StringBuilder>();
+            foreach (string identifier in identifiers)
+            {
+                result[identifier] = new StringBuilder();
             }
 
             return result;
@@ -65,51 +92,19 @@ namespace LibFileIO.SequenceReaders
             return line.Substring(identifier.Length).Trim();
         }
 
-        public Dictionary<string, StringBuilder> InitializeStringBuilders(List<string> identifiers)
+        public List<BioSequence> ConstructSequences(Dictionary<string, StringBuilder> builders, List<string> identifiers)
         {
-            Dictionary<string, StringBuilder> result = new Dictionary<string, StringBuilder>();
+            List<BioSequence> result = new List<BioSequence>();
+
             foreach (string identifier in identifiers)
             {
-                result[identifier] = new StringBuilder();
+                StringBuilder sb = builders[identifier];
+                string payload = sb.ToString();
+                BioSequence sequence = new BioSequence(identifier, payload);
+                result.Add(sequence);
             }
 
             return result;
-        }
-
-        public List<string> CollectUniqueIdentifiers(List<string> sequenceContents)
-        {
-            HashSet<string> identifiers = new HashSet<string>();
-
-            foreach(string line in sequenceContents)
-            {
-                string identifier = ExtractIdentifier(line);
-                if (identifier.Length > 0)
-                {
-                    identifiers.Add(identifier);
-                }
-            }
-
-            return identifiers.ToList();
-        }
-
-        public string ExtractIdentifier(string line)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach(char c in line)
-            {
-                if (c == ' ')
-                {
-                    break;
-                }
-                sb.Append(c);
-            }
-            return sb.ToString();
-        }
-
-        public List<string> RemoveFirstNLines(List<string> lines, int numberToSkip)
-        {
-            int n = lines.Count;
-            return lines.GetRange(numberToSkip, n - numberToSkip);
         }
     }
 }
