@@ -62,7 +62,7 @@ namespace LibAlignment.Aligners.SingleState
             ResetPoint = IterationsCompleted + roll;
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             if (IterationsCompleted == ResetPoint)
             {
@@ -75,7 +75,6 @@ namespace LibAlignment.Aligners.SingleState
 
             ScoredAlignment candidate = GetScoredAlignment(r);
             ContestS(candidate);
-            MarkIterationComplete();
         }
 
         public void ContestS(ScoredAlignment candidate)

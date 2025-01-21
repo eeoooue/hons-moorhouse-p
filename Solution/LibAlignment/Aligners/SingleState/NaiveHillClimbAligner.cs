@@ -40,13 +40,12 @@ namespace LibAlignment.Aligners.SingleState
             }
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             foreach (Alignment candidate in GetNeighbouringAlignments(CurrentAlignment!))
             {
                 AcceptIfImprovement(candidate);
             }
-            MarkIterationComplete();
         }
 
         public List<Alignment> GetNeighbouringAlignments(Alignment alignment)

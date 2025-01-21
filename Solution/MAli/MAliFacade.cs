@@ -44,8 +44,12 @@ namespace MAli
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IterativeAligner aligner = Config.CreateAligner();
-                    aligner.Debug = debugging;
+                    IIterativeAligner aligner = Config.CreateAligner();
+
+                    if (debugging && aligner is IterativeAligner instance)
+                    {
+                        aligner = new DebuggingWrapper(instance);
+                    }
 
                     int iterations = UnpackSpecifiedIterations(table);
                     if (iterations > 0)
@@ -81,7 +85,7 @@ namespace MAli
         }
 
 
-        public void AlignIteratively(IterativeAligner aligner, bool emitFrames)
+        public void AlignIteratively(IIterativeAligner aligner, bool emitFrames)
         {
             Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
 
@@ -93,7 +97,6 @@ namespace MAli
             while(aligner.IterationsCompleted < aligner.IterationsLimit)
             {
                 aligner.Iterate();
-                aligner.CheckShowDebuggingInfo();
                 if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
                 {
                     SaveCurrentFrame(alignment, aligner.IterationsCompleted);

@@ -14,22 +14,12 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestClustalReader();
-
-            // RunMAli("-input BB11001 -output test -iterations 10 -debug");
+            RunMAli("-input BB11001 -output test -iterations 10 -debug");
             // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
             // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
             // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
-
-        }
-
-        static void TestClustalReader()
-        {
-            ClustalReader reader = new ClustalReader();
-            reader.ReadSequencesFrom("clustalformat_BB11001.aln");
-
 
         }
 
