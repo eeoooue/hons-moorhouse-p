@@ -5,7 +5,7 @@ using TestsHarness;
 using TestsHarness.Tools;
 
 
-namespace TestsUnitSuite.LibFileIO
+namespace TestsUnitSuite.LibFileIO.SequenceReaders
 {
     [TestClass]
     public class FastaReaderTests
