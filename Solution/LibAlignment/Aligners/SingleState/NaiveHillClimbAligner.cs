@@ -12,6 +12,8 @@ namespace LibAlignment.Aligners.SingleState
 {
     public class NaiveHillClimbAligner : SingleStateAligner
     {
+        public INeighbourhoodFinder NeighbourhoodFinder = new SwapBasedNeighbourhoodFinder();
+
         public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
         {
         }
@@ -33,9 +35,8 @@ namespace LibAlignment.Aligners.SingleState
         public List<Alignment> GetNeighbouringAlignments(Alignment alignment)
         {
             List<Alignment> result = new List<Alignment>();
-            INeighbourhoodFinder finder = new SwapBasedNeighbourhoodFinder();
 
-            List<bool[,]> neighbouringStates = finder.FindNeighbours(alignment.State);
+            List<bool[,]> neighbouringStates = NeighbourhoodFinder.FindNeighbours(alignment.State);
 
             foreach (bool[,] state in neighbouringStates)
             {
