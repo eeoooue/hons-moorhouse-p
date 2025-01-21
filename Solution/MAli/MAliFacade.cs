@@ -104,7 +104,7 @@ namespace MAli
         public void SaveCurrentFrame(Alignment alignment, int iterations)
         {
             string suffix = Frontload(iterations);
-            FileHelper.WriteAlignmentTo(alignment, $"frame_{suffix}");
+            FileHelper.WriteAlignmentTo(alignment, $"frames\\frame_{suffix}");
         }
 
         public string Frontload(int number)
