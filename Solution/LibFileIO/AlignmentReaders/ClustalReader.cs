@@ -11,6 +11,13 @@ namespace LibFileIO.AlignmentReaders
     {
         public string Directory = "";
 
+        public bool FileAppearsReadable(string filename)
+        {
+            List<string> contents = File.ReadAllLines(filename).ToList();
+            string line = contents[0].ToUpper().Trim();
+            return line.StartsWith("CLUSTAL");
+        }
+
         public Alignment ReadAlignmentFrom(string filename)
         {
             List<BioSequence> sequences = ReadSequencesFrom(filename);

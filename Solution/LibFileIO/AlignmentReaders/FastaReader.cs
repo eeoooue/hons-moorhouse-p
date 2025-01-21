@@ -11,6 +11,13 @@ namespace LibFileIO.AlignmentReaders
     {
         public string Directory = "";
 
+        public bool FileAppearsReadable(string filename)
+        {
+            List<string> contents = File.ReadAllLines(filename).ToList();
+            string line = contents[0].Trim();
+            return line.StartsWith('>');
+        }
+
         public Alignment ReadAlignmentFrom(string filename)
         {
             List<BioSequence> sequences = ReadSequencesFrom(filename);
@@ -71,5 +78,7 @@ namespace LibFileIO.AlignmentReaders
 
             return new BioSequence(identifier, payload);
         }
+
+        
     }
 }

@@ -12,5 +12,7 @@ namespace LibFileIO
         public List<BioSequence> ReadSequencesFrom(string filename);
 
         public Alignment ReadAlignmentFrom(string filename);
+
+        public bool FileAppearsReadable(string filename);
     }
 }
