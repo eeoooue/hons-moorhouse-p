@@ -42,31 +42,12 @@ namespace LibAlignment.Aligners
         public void InitialiseAroundState(ScoredAlignment alignment)
         {
             IterationsCompleted = 0;
-            CurrentAlignment = alignment.Alignment;
-            AlignmentScore = alignment.Score;
+            CurrentBest = alignment;
             AdditionalSetup();
         }
 
         public virtual void AdditionalSetup() { }
 
-        public ScoredAlignment GetRandomScoredAlignment(List<BioSequence> sequences)
-        {
-            Alignment alignment = GetRandomAlignment(sequences);
-            return GetScoredAlignment(alignment);
-        }
-
-        public Alignment GetRandomAlignment(List<BioSequence> sequences)
-        {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            Alignment alignment = new Alignment(sequences);
-            randomizer.ModifyAlignment(alignment);
-            return alignment;
-        }
-
-        public ScoredAlignment GetScoredAlignment(Alignment alignment)
-        {
-            double score = ScoreAlignment(alignment);
-            return new ScoredAlignment(alignment, score);
-        }
+        
     }
 }

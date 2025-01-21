@@ -42,8 +42,7 @@ namespace LibAlignment.Aligners.PopulationBased
                 Population.Add(alignment);
             }
 
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
+            CurrentBest = GetScoredAlignment(Population[0]);
         }
 
         public override void PerformIteration()

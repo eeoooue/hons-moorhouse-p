@@ -1,5 +1,6 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
+using LibBioInfo.IAlignmentModifiers;
 using LibScoring;
 using System;
 using System.Text;
@@ -10,13 +11,15 @@ namespace LibAlignment
     {
         public IObjectiveFunction Objective { get; protected set; }
 
-        public Alignment? CurrentAlignment { get; protected set; }
+        public Alignment CurrentAlignment { get { return CurrentBest.Alignment; } }
 
         public int IterationsCompleted { get; protected set; } = 0;
 
         public int IterationsLimit { get; set; } = 0;
 
-        public double AlignmentScore { get; protected set; } = 0;
+        public double AlignmentScore { get { return CurrentBest.Score; } }
+
+        protected ScoredAlignment CurrentBest = null!;
 
         public IterativeAligner(IObjectiveFunction objective, int iterations)
         {
@@ -38,7 +41,6 @@ namespace LibAlignment
 
         public abstract void InitializeForRefinement(Alignment alignment);
 
-
         public abstract void PerformIteration();
 
         public void Iterate()
@@ -49,10 +51,9 @@ namespace LibAlignment
 
         public void CheckNewBest(ScoredAlignment candidate)
         {
-            if (candidate.Score > AlignmentScore)
+            if (candidate.Score > CurrentBest.Score)
             {
-                CurrentAlignment = candidate.Alignment.GetCopy();
-                AlignmentScore = candidate.Score;
+                CurrentBest = candidate.GetCopy();
             }
         }
 
@@ -62,5 +63,25 @@ namespace LibAlignment
         }
 
         public abstract string GetName();
+
+        public ScoredAlignment GetRandomScoredAlignment(List<BioSequence> sequences)
+        {
+            Alignment alignment = GetRandomAlignment(sequences);
+            return GetScoredAlignment(alignment);
+        }
+
+        public Alignment GetRandomAlignment(List<BioSequence> sequences)
+        {
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            Alignment alignment = new Alignment(sequences);
+            randomizer.ModifyAlignment(alignment);
+            return alignment;
+        }
+
+        public ScoredAlignment GetScoredAlignment(Alignment alignment)
+        {
+            double score = ScoreAlignment(alignment);
+            return new ScoredAlignment(alignment, score);
+        }
     }
 }

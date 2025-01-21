@@ -42,8 +42,8 @@ namespace LibAlignment.Aligners.PopulationBased
                 randomizer.ModifyAlignment(alignment);
                 Population.Add(alignment);
             }
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
+
+            CurrentBest = GetScoredAlignment(Population[0]);
         }
 
         public override void PerformIteration()

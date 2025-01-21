@@ -17,7 +17,7 @@ namespace MAli
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        public AlignmentConfig Config = new MewLambdaEvolutionaryAlgorithmAlignerConfig();
+        public AlignmentConfig Config = new DevelopmentConfig();
 
         public void SetSeed(string value)
         {
