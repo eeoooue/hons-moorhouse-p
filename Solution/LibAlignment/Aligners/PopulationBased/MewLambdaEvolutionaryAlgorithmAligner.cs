@@ -46,14 +46,13 @@ namespace LibAlignment.Aligners.PopulationBased
             AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
             List<Alignment> parents = SelectionStrategy.SelectCandidates(Mew);
             Population.Clear();
             Population = ProduceNewPopulation(parents);
-            MarkIterationComplete();
         }
 
         public Alignment GetMutationOfParent(Alignment parent)

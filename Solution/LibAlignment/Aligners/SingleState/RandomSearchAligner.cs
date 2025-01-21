@@ -47,12 +47,11 @@ namespace LibAlignment.Aligners.SingleState
             return new ScoredAlignment(alignment, score);
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             Alignment alignment = GetRandomAlignment();
             ScoredAlignment candidate = GetScoredAlignment(alignment);
             CheckNewBest(candidate);
-            MarkIterationComplete();
         }
     }
 }

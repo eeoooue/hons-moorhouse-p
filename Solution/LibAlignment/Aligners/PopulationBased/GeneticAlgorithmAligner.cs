@@ -47,7 +47,7 @@ namespace LibAlignment.Aligners.PopulationBased
             AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
@@ -65,8 +65,6 @@ namespace LibAlignment.Aligners.PopulationBased
                     Population.Add(child);
                 }
             }
-
-            MarkIterationComplete();
         }
 
 

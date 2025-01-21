@@ -40,13 +40,12 @@ namespace LibAlignment.Aligners.SingleState
             }
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             IAlignmentModifier shifter = new MultiRowStochasticGapShifter();
             Alignment candidate = CurrentAlignment!.GetCopy();
             shifter.ModifyAlignment(candidate);
             AcceptIfImprovement(candidate);
-            MarkIterationComplete();
         }
     }
 }

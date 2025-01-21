@@ -46,7 +46,7 @@ namespace LibAlignment.Aligners.PopulationBased
             AlignmentScore = ScoreAlignment(CurrentAlignment);
         }
 
-        public override void Iterate()
+        public override void PerformIteration()
         {
             ISelectionStrategy truncationSelection = new TruncationSelectionStrategy();
 
@@ -74,7 +74,6 @@ namespace LibAlignment.Aligners.PopulationBased
                     Population.Add(child);
                 }
             }
-            MarkIterationComplete();
         }
 
         public List<Alignment> BreedNewChildren()
