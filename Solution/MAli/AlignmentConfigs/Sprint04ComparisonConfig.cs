@@ -48,7 +48,10 @@ namespace MAli.AlignmentConfigs
 
         public PopulationBasedAligner CreatePopulationBasedAligner()
         {
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(Objective, Iterations);
+            const int mew = 10;
+            const int lambda = mew * 7;
+
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(Objective, Iterations, mew, lambda);
             aligner.MutationOperator = Modifier;
 
             return aligner;

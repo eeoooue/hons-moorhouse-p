@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibBioInfo.IAlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,31 @@ namespace LibAlignment.Aligners
     public abstract class PopulationBasedAligner : IterativeAligner
     {
         public List<Alignment> Population = new List<Alignment>();
+        public int PopulationSize;
 
-        protected PopulationBasedAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        protected PopulationBasedAligner(IObjectiveFunction objective, int iterations, int populationSize) : base(objective, iterations)
         {
-
+            PopulationSize = populationSize;
         }
-
-
 
         public override void InitializeForRefinement(Alignment alignment)
         {
             Initialize(alignment.Sequences);
             throw new NotImplementedException();
+        }
+
+        public override void Initialize(List<BioSequence> sequences)
+        {
+            AlignmentRandomizer randomizer = new AlignmentRandomizer();
+            Population.Clear();
+            for (int i = 0; i < PopulationSize; i++)
+            {
+                Alignment alignment = new Alignment(sequences);
+                randomizer.ModifyAlignment(alignment);
+                Population.Add(alignment);
+            }
+
+            CurrentBest = GetScoredAlignment(Population[0]);
         }
 
         public List<ScoredAlignment> ScorePopulation(List<Alignment> population)

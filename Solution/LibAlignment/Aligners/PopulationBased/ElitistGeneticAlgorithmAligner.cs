@@ -19,10 +19,9 @@ namespace LibAlignment.Aligners.PopulationBased
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public double MutationRate = 0.50;
-        public int PopulationSize = 18;
         public int SelectionSize = 6;
 
-        public ElitistGeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public ElitistGeneticAlgorithmAligner(IObjectiveFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
         {
 
         }
@@ -30,20 +29,6 @@ namespace LibAlignment.Aligners.PopulationBased
         public override string GetName()
         {
             return $"ElitistGeneticAlgorithmAligner (population={PopulationSize}, selection={SelectionSize})";
-        }
-
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            AlignmentRandomizer randomizer = new AlignmentRandomizer();
-            Population.Clear();
-            for (int i = 0; i < PopulationSize; i++)
-            {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
-                Population.Add(alignment);
-            }
-
-            CurrentBest = GetScoredAlignment(Population[0]);
         }
 
         public override void PerformIteration()

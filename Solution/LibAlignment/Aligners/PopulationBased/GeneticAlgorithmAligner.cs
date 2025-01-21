@@ -20,31 +20,14 @@ namespace LibAlignment.Aligners.PopulationBased
 
         public double MutationRate = 0.2;
 
-        public int PopulationSize = 6;
-
-        public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
         {
 
         }
-
 
         public override string GetName()
         {
             return $"GeneticAlgorithmAligner (population={PopulationSize})";
-        }
-
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            AlignmentRandomizer randomizer = new AlignmentRandomizer();
-            Population.Clear();
-            for (int i = 0; i < PopulationSize; i++)
-            {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
-                Population.Add(alignment);
-            }
-
-            CurrentBest = GetScoredAlignment(Population[0]);
         }
 
         public override void PerformIteration()
@@ -66,7 +49,6 @@ namespace LibAlignment.Aligners.PopulationBased
                 }
             }
         }
-
 
         public List<Alignment> BreedNewChildren()
         {
