@@ -43,6 +43,11 @@ namespace LibAlignment
             Aligner.Initialize(sequences);
         }
 
+        public void InitializeForRefinement(Alignment alignment)
+        {
+            Aligner.InitializeForRefinement(alignment);
+        }
+
         public Alignment AlignSequences(List<BioSequence> sequences)
         {
             Initialize(sequences);
@@ -118,5 +123,7 @@ namespace LibAlignment
                 DebugHelper.PaintAlignment(alignment);
             }
         }
+
+        
     }
 }
