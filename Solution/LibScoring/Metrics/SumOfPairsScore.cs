@@ -8,7 +8,7 @@ namespace LibScoring.Metrics
 {
     public class SumOfPairsScore
     {
-        IScoringMatrix Matrix;
+        public IScoringMatrix Matrix;
 
         public SumOfPairsScore(IScoringMatrix matrix)
         {
