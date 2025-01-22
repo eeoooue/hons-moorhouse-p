@@ -35,6 +35,17 @@ namespace TestsUnitSuite.LibScoring.FitnessFunctions
         }
 
         [TestMethod]
+        public void RawScoreIsBetweenExtremes()
+        {
+            Alignment alignment = ExampleAlignments.GetExampleA();
+            double score = FitnessFunction.ScoreAlignment(alignment.GetCharacterMatrix());
+            double best = FitnessFunction.GetBestPossibleScore(alignment.GetCharacterMatrix());
+            double worst = FitnessFunction.GetWorstPossibleScore(alignment.GetCharacterMatrix());
+            Assert.IsTrue(worst <= score && score <= best);
+        }
+
+
+        [TestMethod]
         public void HomogenousAlignmentScores100Percent()
         {
             List<BioSequence> sequences = new List<BioSequence>()
