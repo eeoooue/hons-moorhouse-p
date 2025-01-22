@@ -25,23 +25,38 @@ namespace LibScoring.FitnessFunctions
             throw new NotImplementedException();
         }
 
-        public int GetNumberOfPossiblePairs()
+        public int GetNumberOfPossiblePairs(char[,] alignment)
         {
-            throw new NotImplementedException();
+            int m = alignment.GetLength(0);
+            int n = alignment.GetLength(1);
+            int pairsPerColumn = GetPossiblePairsInColumnOfHeight(m);
+            return pairsPerColumn * n;
+        }
+
+        public int GetPossiblePairsInColumnOfHeight(int n)
+        {
+            if (n < 2)
+            {
+                return 0;
+            }
+
+            int permutations = n * (n - 1);
+            int combinations = permutations / 2;
+            return combinations;
         }
 
         public override double GetBestPossibleScore(char[,] alignment)
         {
-            Matrix.GetBestPairwiseScorePossible();
-
-            throw new NotImplementedException();
+            double bestScore = Matrix.GetBestPairwiseScorePossible();
+            int possiblePairs = GetNumberOfPossiblePairs(alignment);
+            return possiblePairs * bestScore;
         }
 
         public override double GetWorstPossibleScore(char[,] alignment)
         {
-            Matrix.GetWorstPairwiseScorePossible();
-
-            throw new NotImplementedException();
+            double worstScore = Matrix.GetWorstPairwiseScorePossible();
+            int possiblePairs = GetNumberOfPossiblePairs(alignment);
+            return possiblePairs * worstScore;
         }
     }
 }
