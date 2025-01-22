@@ -11,6 +11,11 @@ namespace LibScoring.ScoringMatrices
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
+        public double GetBestPairwiseScorePossible()
+        {
+            return 1;
+        }
+
         public string GetName()
         {
             return "Identity Matrix";
@@ -20,6 +25,11 @@ namespace LibScoring.ScoringMatrices
         {
             string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return alphabet.ToList();
+        }
+
+        public double GetWorstPairwiseScorePossible()
+        {
+            return 0;
         }
 
         public int ScorePair(char a, char b)
