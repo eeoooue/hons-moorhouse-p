@@ -68,6 +68,7 @@ namespace LibScoring.ScoringMatrices
             ResidueIndexes['W'] = 19;
         }
 
+
         public string GetName()
         {
             return "PAM250 Matrix";
@@ -76,6 +77,16 @@ namespace LibScoring.ScoringMatrices
         public List<char> GetResidues()
         {
             return ResidueIndexes.Keys.ToList();
+        }
+
+        public double GetBestPairwiseScorePossible()
+        {
+            return 17;
+        }
+
+        public double GetWorstPairwiseScorePossible()
+        {
+            return -8;
         }
 
         public int ScorePair(char a, char b)

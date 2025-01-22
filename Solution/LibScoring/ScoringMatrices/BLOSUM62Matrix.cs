@@ -71,6 +71,8 @@ namespace LibScoring.ScoringMatrices
             Residues = ResidueIndexes.Keys.ToList();
         }
 
+        
+
         public string GetName()
         {
             return "BLOSUM62 Matrix";
@@ -79,6 +81,16 @@ namespace LibScoring.ScoringMatrices
         public List<char> GetResidues()
         {
             return Residues;
+        }
+
+        public double GetBestPairwiseScorePossible()
+        {
+            return 11;
+        }
+
+        public double GetWorstPairwiseScorePossible()
+        {
+            return -4;
         }
 
         public int ScorePair(char a, char b)
