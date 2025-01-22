@@ -17,7 +17,7 @@ namespace LibAlignment.Aligners.SingleState
         protected ScoredAlignment S = null!;
 
 
-        public HillClimbWithRandomRestartsAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public HillClimbWithRandomRestartsAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
 
         }

@@ -11,7 +11,7 @@ namespace LibAlignment.Aligners
 {
     public abstract class SingleStateAligner : IterativeAligner
     {
-        protected SingleStateAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        protected SingleStateAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
 
         }

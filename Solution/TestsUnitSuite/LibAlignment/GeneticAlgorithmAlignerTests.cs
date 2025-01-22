@@ -3,7 +3,7 @@ using LibAlignment.Aligners.PopulationBased;
 using LibBioInfo;
 using LibFileIO;
 using LibScoring;
-using LibScoring.ObjectiveFunctions;
+using LibScoring.FitnessFunctions;
 using LibScoring.ScoringMatrices;
 using System;
 using System.Collections.Generic;
@@ -98,7 +98,7 @@ namespace TestsUnitSuite.LibAlignment
         public GeneticAlgorithmAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
+            IFitnessFunction objective = new SumOfPairsFitnessFunction(matrix);
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, 10);
             return aligner;
         }

@@ -20,7 +20,7 @@ namespace LibAlignment.Aligners.PopulationBased
 
         public double MutationRate = 0.2;
 
-        public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
+        public GeneticAlgorithmAligner(IFitnessFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
         {
 
         }

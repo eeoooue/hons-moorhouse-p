@@ -21,7 +21,7 @@ namespace LibAlignment.Aligners.PopulationBased
         public double MutationRate = 0.50;
         public int SelectionSize = 6;
 
-        public ElitistGeneticAlgorithmAligner(IObjectiveFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
+        public ElitistGeneticAlgorithmAligner(IFitnessFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
         {
 
         }

@@ -1,6 +1,5 @@
 ﻿using LibBioInfo;
 using LibBioInfo.IAlignmentModifiers;
-using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
 using System;

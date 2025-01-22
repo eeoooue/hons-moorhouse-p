@@ -10,7 +10,7 @@ namespace LibAlignment
 {
     public interface IIterativeAligner
     {
-        public IObjectiveFunction Objective { get; }
+        public IFitnessFunction Objective { get; }
 
         public Alignment? CurrentAlignment { get; }
 

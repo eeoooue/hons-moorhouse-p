@@ -11,7 +11,7 @@ namespace LibAlignment.Aligners.SingleState
 {
     public class RandomSearchAligner : SingleStateAligner
     {
-        public RandomSearchAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public RandomSearchAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
 
         }
