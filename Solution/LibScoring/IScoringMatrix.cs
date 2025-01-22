@@ -13,5 +13,9 @@ namespace LibScoring
         public string GetName();
 
         public abstract List<char> GetResidues();
+
+        public double GetBestPairwiseScorePossible();
+
+        public double GetWorstPairwiseScorePossible();
     }
 }
