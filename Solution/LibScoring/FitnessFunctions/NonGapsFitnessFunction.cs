@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibScoring.FitnessFunctions
 {
-    internal class NonGapsFitnessFunction : NormalisedFitnessFunction
+    public class NonGapsFitnessFunction : NormalisedFitnessFunction
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
