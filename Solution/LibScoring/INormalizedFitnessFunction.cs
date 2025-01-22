@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LibScoring
 {
-    internal interface INormalizedFitnessFunction
+    public interface INormalizedFitnessFunction
     {
-        public double GetBestPossibleFitness(Alignment alignment);
+        public double GetBestPossibleFitness(char[,] alignment);
 
-        public double GetWorstPossibleFitness(Alignment alignment);
+        public double GetWorstPossibleFitness(char[,] alignment);
 
-        public double GetFitness(Alignment alignment);
+        public double GetFitness(char[,] alignment);
 
         public string GetName();
     }
