@@ -12,7 +12,7 @@ namespace LibAlignment.Aligners
     public abstract class PopulationBasedAligner : IterativeAligner
     {
         public List<Alignment> Population = new List<Alignment>();
-        public ILegacyAlignmentModifier RefinementPerturbOperator = new MultiRowStochasticSwapOperator();
+        public ILegacyAlignmentModifier RefinementPerturbOperator = new GapShifter();
 
         public int PopulationSize;
 
