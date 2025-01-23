@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.AlignmentModifiers
 {
-    internal class NewGapInserter : ILegacyAlignmentModifier
+    internal class NewGapInserter : ILegacyAlignmentModifier, IAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
 
@@ -20,11 +20,11 @@ namespace LibBioInfo.AlignmentModifiers
 
         public void ModifyAlignment(Alignment alignment)
         {
-            char[,] result = GetNextAlignmentState(alignment.GetCopy());
+            char[,] result = GetModifiedAlignmentState(alignment.GetCopy());
             alignment.CharacterMatrix = result;
         }
 
-        public char[,] GetNextAlignmentState(Alignment alignment)
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth();
             InsertGapOfWidth(alignment, gapWidth);
