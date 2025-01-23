@@ -10,7 +10,7 @@ namespace LibBioInfo.Helpers
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
-        public string GetCharRowAsString(char[,] matrix, int i)
+        public string GetCharRowAsString(in char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
 
@@ -23,7 +23,7 @@ namespace LibBioInfo.Helpers
             return sb.ToString();
         }
 
-        public char[,] RemoveEmptyColumns(char[,] matrix)
+        public char[,] RemoveEmptyColumns(in char[,] matrix)
         {
             int n = matrix.GetLength(1);
             List<int> whitelist = new List<int>();
@@ -36,10 +36,10 @@ namespace LibBioInfo.Helpers
                 }
             }
 
-            return GetMatrixOfOnlyWhitelistedColumns(matrix, whitelist);
+            return GetMatrixOfOnlyWhitelistedColumns(in matrix, whitelist);
         }
 
-        private char[,] GetMatrixOfOnlyWhitelistedColumns(char[,] matrix, List<int> whitelist)
+        private char[,] GetMatrixOfOnlyWhitelistedColumns(in char[,] matrix, List<int> whitelist)
         {
             int m = matrix.GetLength(0);
             int n = whitelist.Count;
@@ -63,7 +63,7 @@ namespace LibBioInfo.Helpers
             return result;
         }
 
-        public bool ColumnIsEmpty(char[,] matrix, int j)
+        public bool ColumnIsEmpty(in char[,] matrix, int j)
         {
             int m = matrix.GetLength(0);
 
@@ -79,7 +79,7 @@ namespace LibBioInfo.Helpers
         }
 
 
-        public char[,] WriteStringOverMatrixRow(char[,] matrix, int i, string s)
+        public char[,] WriteStringOverMatrixRow(ref char[,] matrix, int i, string s)
         {
             for (int j = 0; j < s.Length; j++)
             {
@@ -89,8 +89,7 @@ namespace LibBioInfo.Helpers
             return matrix;
         }
 
-
-        public bool RowContainsGap(char[,] matrix, int i)
+        public bool RowContainsGap(in char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
 
@@ -106,8 +105,7 @@ namespace LibBioInfo.Helpers
             return false;
         }
 
-
-        public List<int> GetGapPositionsInRow(char[,] matrix, int i)
+        public List<int> GetGapPositionsInRow(in char[,] matrix, int i)
         {
             List<int> result = new List<int>();
 
@@ -125,7 +123,7 @@ namespace LibBioInfo.Helpers
             return result;
         }
 
-        public List<int> GetResiduePositionsInRow(char[,] matrix, int i)
+        public List<int> GetResiduePositionsInRow(in char[,] matrix, int i)
         {
             List<int> result = new List<int>();
 

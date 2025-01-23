@@ -30,7 +30,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
                 if (possible)
                 {
                     char[,] modified = GetMatrixWithGapShiftInRow(matrix, i);
-                    return CharMatrixHelper.RemoveEmptyColumns(modified);
+                    return CharMatrixHelper.RemoveEmptyColumns(ref modified);
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             List<int> residuePositions = CharMatrixHelper.GetResiduePositionsInRow(matrix, i);
             List<int> gapPositions = CharMatrixHelper.GetGapPositionsInRow(matrix, i);
 
-            string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
+            string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
 
             int chosenGapPosition = GetRandomChoiceFromList(gapPositions);
             string payloadWithGapRemoved = PayloadHelper.GetPayloadWithGapRemovedAt(payload, chosenGapPosition);
@@ -48,7 +48,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             int newGapPos = GetRandomChoiceFromList(residuePositions);
             string payloadWithGapInserted = PayloadHelper.GetPayloadWithGapInsertedAt(payloadWithGapRemoved, newGapPos);
 
-            char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(matrix, i, payloadWithGapInserted);
+            char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(ref matrix, i, payloadWithGapInserted);
 
             return result;
         }

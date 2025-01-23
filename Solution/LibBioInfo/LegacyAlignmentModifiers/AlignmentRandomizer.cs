@@ -23,7 +23,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             bool[,] originalState = StateHelper.ConvertMatrixFromCharToBool(alignment.CharacterMatrix);
             bool[,] state = GetMatrixWithShuffledRows(originalState);
             char[,] modifiedMat = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, state);
-            return CharMatrixHelper.RemoveEmptyColumns(modifiedMat);
+            return CharMatrixHelper.RemoveEmptyColumns(ref modifiedMat);
         }
 
         public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)

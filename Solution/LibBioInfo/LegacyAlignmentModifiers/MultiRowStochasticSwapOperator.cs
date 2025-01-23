@@ -26,11 +26,11 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             {
                 if (Randomizer.CoinFlip())
                 {
-                    matrix = SwapOperator.PerformSwapWithinRow(matrix, i);
+                    SwapOperator.PerformSwapWithinRow(ref matrix, i);
                 }
             }
 
-            return CharMatrixHelper.RemoveEmptyColumns(matrix);
+            return CharMatrixHelper.RemoveEmptyColumns(ref matrix);
         }
     }
 }

@@ -28,11 +28,12 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int i = Randomizer.Random.Next(alignment.Height);
-            char[,] modified = PerformSwapWithinRow(alignment.CharacterMatrix, i);
-            return CharMatrixHelper.RemoveEmptyColumns(modified);
+            char[,] matrix = alignment.CharacterMatrix;
+            PerformSwapWithinRow(ref matrix, i);
+            return CharMatrixHelper.RemoveEmptyColumns(ref matrix);
         }
 
-        public char[,] PerformSwapWithinRow(char[,] matrix, int i)
+        public void PerformSwapWithinRow(ref char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
             int j = n;
@@ -45,20 +46,20 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
             if (Randomizer.CoinFlip())
             {
-                return Swap(matrix, i, j, k, SwapDirection.Left);
+                Swap(ref matrix, i, j, k, SwapDirection.Left);
             }
             else
             {
-                return Swap(matrix, i, j, k, SwapDirection.Right);
+                Swap(ref matrix, i, j, k, SwapDirection.Right);
             }
         }
 
-        public char[,] Swap(char[,] matrix, int i, int j, int k, SwapDirection direction)
+        public void Swap(ref char[,] matrix, int i, int j, int k, SwapDirection direction)
         {
             // affects ith sequence only
             // from column j, 
 
-            string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
+            string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
             string modified;
 
             if (direction == SwapDirection.Left)
@@ -70,9 +71,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
                 modified = SwapRight(payload, i, j, k);
             }
 
-            char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(matrix, i, modified);
-
-            return result;
+            CharMatrixHelper.WriteStringOverMatrixRow(ref matrix, i, modified);
         }
 
         public string SwapRight(string payload, int i, int j, int k)
