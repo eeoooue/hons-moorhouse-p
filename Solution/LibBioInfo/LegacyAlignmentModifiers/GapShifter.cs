@@ -29,7 +29,8 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
                 if (possible)
                 {
-                    return GetMatrixWithGapShiftInRow(matrix, i);
+                    char[,] modified = GetMatrixWithGapShiftInRow(matrix, i);
+                    return CharMatrixHelper.RemoveEmptyColumns(modified);
                 }
             }
         }

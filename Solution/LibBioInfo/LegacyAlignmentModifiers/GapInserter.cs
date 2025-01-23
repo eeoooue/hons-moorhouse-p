@@ -30,7 +30,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         {
             int gapWidth = PickGapWidth();
             char[,] modified = InsertGapOfWidth(alignment.CharacterMatrix, gapWidth);
-            return modified;
+            return CharMatrixHelper.RemoveEmptyColumns(modified);
         }
 
         public char[,] InsertGapOfWidth(char[,] matrix, int gapWidth)
