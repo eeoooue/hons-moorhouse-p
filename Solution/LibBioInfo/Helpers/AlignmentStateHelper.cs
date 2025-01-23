@@ -57,10 +57,6 @@ namespace LibBioInfo.Helpers
             return result;
         }
 
-
-
-
-
         public bool[] ExtractRow(in bool[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
@@ -73,6 +69,5 @@ namespace LibBioInfo.Helpers
 
             return result;
         }
-
     }
 }
