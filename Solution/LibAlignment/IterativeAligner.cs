@@ -1,9 +1,10 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
-using LibBioInfo.AlignmentModifiers;
 using LibScoring;
 using System;
 using System.Text;
+using LibModification.AlignmentModifiers;
+using LibModification;
 
 namespace LibAlignment
 {

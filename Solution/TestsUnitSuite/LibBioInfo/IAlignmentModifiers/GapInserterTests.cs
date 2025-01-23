@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {

@@ -1,5 +1,4 @@
-﻿using LibBioInfo.ICrossoverOperators;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibModification.ICrossoverOperators;
 
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {
     [TestClass]
     public class ColBasedCrossoverOperatorTests
     {
-
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentStateConverter AlignmentStateConverter = Harness.AlignmentStateConverter;
         StateEquality StateEquality = Harness.StateEquality;
@@ -22,7 +22,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
         ColBasedCrossoverOperator Operator = new ColBasedCrossoverOperator();
-
 
         [DataTestMethod]
         [DataRow(1, 0)]

@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using LibFileIO;
 
-
 using TestsHarness;
 using TestsHarness.Tools;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {

@@ -1,13 +1,10 @@
-﻿using LibBioInfo.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace LibBioInfo
 {
     public class Alignment
     {
-        public static AlignmentStateHelper StateHelper = new AlignmentStateHelper();
-
         public List<BioSequence> Sequences;
         public int Height { get { return CharacterMatrix.GetLength(0); } }
         public int Width { get { return CharacterMatrix.GetLength(1); } }

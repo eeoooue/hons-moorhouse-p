@@ -1,4 +1,5 @@
-﻿using LibBioInfo.Helpers;
+﻿using LibBioInfo;
+using LibModification.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.AlignmentModifiers
+namespace LibModification.AlignmentModifiers
 {
     public class GapInserter : AlignmentModifier, IAlignmentModifier
     {
