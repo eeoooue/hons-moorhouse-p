@@ -19,7 +19,24 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetSprint04Version();
+            return GetMinimalAligner();
+        }
+
+        private IterativeAligner GetMinimalAligner()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+
+            IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
+
+
+            const int maxIterations = 100;
+            const int mew = 10;
+            const int lambda = 10 * 7;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
+
+            aligner.MutationOperator = new MultiRowStochasticGapShifter();
+            return aligner;
         }
 
         private MewLambdaEvolutionaryAlgorithmAligner GetSprint04Version()
