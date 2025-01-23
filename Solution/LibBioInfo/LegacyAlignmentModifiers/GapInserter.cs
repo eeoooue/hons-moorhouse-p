@@ -29,11 +29,11 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth();
-            char[,] modified = InsertGapOfWidth(alignment.CharacterMatrix, gapWidth);
-            return CharMatrixHelper.RemoveEmptyColumns(ref modified);
+            char[,] modified = InsertGapOfWidth(in alignment.CharacterMatrix, gapWidth);
+            return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
 
-        public char[,] InsertGapOfWidth(char[,] matrix, int gapWidth)
+        public char[,] InsertGapOfWidth(in char[,] matrix, int gapWidth)
         {
             int m = matrix.GetLength(0);
             int n = matrix.GetLength(1) + gapWidth;
@@ -46,7 +46,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
             for (int i = 0; i < m; i++)
             {
-                string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
+                string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
 
                 if (mapping[i])
                 {
@@ -62,7 +62,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
             return result;
         }
-
 
         public int SuggestGapPosition(int gapWidth, int stateWidth)
         {
@@ -86,7 +85,5 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             int gapWidth = Randomizer.Random.Next(1, GapWidthLimit + 1);
             return gapWidth;
         }
-
-        
     }
 }
