@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class GapInserter : ILegacyAlignmentModifier
+    public class GapInserter : ILegacyAlignmentModifier, IAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
+        public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
         public int GapWidthLimit;
 
@@ -21,47 +22,47 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
         public void ModifyAlignment(Alignment alignment)
         {
-            int gapWidth = PickGapWidth();
-            InsertGapOfWidth(alignment, gapWidth);
+            char[,] modified = GetModifiedAlignmentState(alignment);
+            alignment.CharacterMatrix = modified;
         }
 
-        public void InsertGapOfWidth(Alignment alignment, int gapWidth)
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            bool[] mapping = GetRowMapping(alignment.Height);
+            int gapWidth = PickGapWidth();
+            char[,] modified = InsertGapOfWidth(alignment.CharacterMatrix, gapWidth);
+            return modified;
+        }
 
-            int m = alignment.Height;
-            int n = alignment.Width + gapWidth;
+        public char[,] InsertGapOfWidth(char[,] matrix, int gapWidth)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1) + gapWidth;
             int position1 = SuggestGapPosition(gapWidth, n);
             int position2 = SuggestGapPosition(gapWidth, n);
 
-            List<BioSequence> originals = alignment.GetAlignedSequences();
-            List<BioSequence> modified = new List<BioSequence>();
+            bool[] mapping = GetRowMapping(m);
+
+            char[,] result = new char[m, n];
 
             for (int i = 0; i < m; i++)
             {
-                BioSequence sequence;
+                string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
+
                 if (mapping[i])
                 {
-                    sequence = GetSequenceWithGapInserted(originals[i], gapWidth, position1);
+                    payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapWidth, position1);
                 }
                 else
                 {
-                    sequence = GetSequenceWithGapInserted(originals[i], gapWidth, position2);
+                    payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapWidth, position2);
                 }
-                modified.Add(sequence);
+
+                CharMatrixHelper.WriteStringOverMatrixRow(result, i, payload);
             }
 
-            Alignment temp = new Alignment(modified, true);
-            //alignment.SetState(temp.State);
-
-            throw new NotImplementedException();
+            return result;
         }
 
-
-        public BioSequence GetSequenceWithGapInserted(BioSequence sequence, int width, int i)
-        {
-            return PayloadHelper.GetSequenceWithGapInserted(sequence, width, i);
-        }
 
         public int SuggestGapPosition(int gapWidth, int stateWidth)
         {
@@ -85,5 +86,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             int gapWidth = Randomizer.Random.Next(1, GapWidthLimit + 1);
             return gapWidth;
         }
+
+        
     }
 }

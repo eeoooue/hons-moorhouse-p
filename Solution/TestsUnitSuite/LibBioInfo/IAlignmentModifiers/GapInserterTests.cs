@@ -26,7 +26,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         public void CanInsertGapsOfWidth(int width)
         {
             Alignment alignment = ExampleAlignments.GetExampleA();
-            GapInserter.InsertGapOfWidth(alignment, width);
+            GapInserter.InsertGapOfWidth(alignment.CharacterMatrix, width);
 
             List<BioSequence> sequences = alignment.GetAlignedSequences();
             foreach (BioSequence sequence in sequences)
