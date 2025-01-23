@@ -20,38 +20,27 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
         public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            bool[,] originalState = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
-            bool[,] state = GetMatrixWithShuffledRows(originalState);
-            char[,] modifiedMat = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, state);
-            return CharMatrixHelper.RemoveEmptyColumns(in modifiedMat);
+            bool[,] bitmask = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
+            ShuffleMatrixRows(ref bitmask);
+            char[,] modified = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, in bitmask);
+            return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
 
-        public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)
+        public void ShuffleMatrixRows(ref bool[,] matrix)
         {
             int m = matrix.GetLength(0);
             int n = matrix.GetLength(1);
-
-            bool[,] result = new bool[m, n];
-
             for (int i = 0; i < m; i++)
             {
-                bool[] shuffledRow = GetShuffledRow(matrix, i);
-                for (int j = 0; j < n; j++)
-                {
-                    result[i, j] = shuffledRow[j];
-                }
+                ShuffleRow(ref matrix, i);
             }
-
-            return result;
         }
 
-        public bool[] GetShuffledRow(bool[,] matrix, int i)
+        public void ShuffleRow(ref bool[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
-            bool[] result = new bool[n];
 
             List<Tuple<int, bool>> pairs = new List<Tuple<int, bool>>();
-
             for (int j = 0; j < n; j++)
             {
                 int randomValue = Randomizer.Random.Next(0, int.MaxValue);
@@ -62,10 +51,8 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
             for (int j = 0; j < n; j++)
             {
-                result[j] = pairs[j].Item2;
+                matrix[i, j] = pairs[j].Item2;
             }
-
-            return result;
         }
     }
 }
