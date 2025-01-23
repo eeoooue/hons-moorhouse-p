@@ -10,12 +10,6 @@ namespace LibBioInfo.Helpers
     {
         public Bioinformatics Bioinformatics = new Bioinformatics();
 
-        public BioSequence GetSequenceWithGapInserted(BioSequence sequence, int gapWidth, int position)
-        {
-            string payload = GetPayloadWithGapInserted(sequence.Payload, gapWidth, position);
-            return new BioSequence(sequence.Identifier, payload);
-        }
-
         public string GetPayloadWithGapInserted(string payload, int gapWidth, int position)
         {
             string before = payload.Substring(0, position);
