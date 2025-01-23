@@ -1,5 +1,4 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibFileIO;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using TestsUnitSuite;
 
 using TestsHarness;
 using TestsHarness.Tools;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo
 {

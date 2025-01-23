@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.IAlignmentModifiers
+namespace LibBioInfo.LegacyAlignmentModifiers
 {
     public class GapInserter : ILegacyAlignmentModifier
     {
@@ -71,7 +71,7 @@ namespace LibBioInfo.IAlignmentModifiers
         public bool[] GetRowMapping(int n)
         {
             bool[] result = new bool[n];
-            for(int i=0; i<n; i++)
+            for (int i = 0; i < n; i++)
             {
                 result[i] = Randomizer.CoinFlip();
             }

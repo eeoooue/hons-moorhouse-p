@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.IAlignmentModifiers
+namespace LibBioInfo.LegacyAlignmentModifiers
 {
     public class BlockShuffler : ILegacyAlignmentModifier
     {
@@ -68,7 +68,7 @@ namespace LibBioInfo.IAlignmentModifiers
         public void CollectValidBackShifts(Alignment alignment, int i, int startPos, int endPos, List<int> options)
         {
             int offset = 0;
-            for (int j=startPos-1; j>=0; j--)
+            for (int j = startPos - 1; j >= 0; j--)
             {
                 offset++;
                 if (alignment.State[i, j])
@@ -84,7 +84,7 @@ namespace LibBioInfo.IAlignmentModifiers
 
         public void ClearResiduesAt(Alignment alignment, int i, int startPos, int endPos)
         {
-            for(int j=startPos; j<=endPos; j++)
+            for (int j = startPos; j <= endPos; j++)
             {
                 alignment.State[i, j] = true;
             }
@@ -98,11 +98,11 @@ namespace LibBioInfo.IAlignmentModifiers
             }
         }
 
-        
+
 
         public int DetermineBlockEnd(Alignment alignment, int i, int startPos)
         {
-            for(int j=startPos; j<alignment.Width; j++)
+            for (int j = startPos; j < alignment.Width; j++)
             {
                 if (alignment.State[i, j])
                 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.IAlignmentModifiers
+namespace LibBioInfo.LegacyAlignmentModifiers
 {
     public class MultiRowStochasticGapShifter : ILegacyAlignmentModifier
     {
@@ -12,7 +12,7 @@ namespace LibBioInfo.IAlignmentModifiers
 
         public void ModifyAlignment(Alignment alignment)
         {
-            for(int i=0; i<alignment.Height; i++)
+            for (int i = 0; i < alignment.Height; i++)
             {
                 if (Randomizer.CoinFlip())
                 {

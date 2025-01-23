@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.IAlignmentModifiers
+namespace LibBioInfo.LegacyAlignmentModifiers
 {
     public enum SwapDirection
     {
         Left,
         Right
     }
-    
+
     public class SwapOperator : ILegacyAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment)
@@ -69,9 +69,9 @@ namespace LibBioInfo.IAlignmentModifiers
 
             bool[,] result = new bool[m, n];
 
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j=0; j<n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     int j2 = -1 + n - j;
                     result[i, j] = state[i, j2];
@@ -90,7 +90,7 @@ namespace LibBioInfo.IAlignmentModifiers
 
         public void PrintAlignmentStateRow(Alignment alignment, int i)
         {
-            for(int j=0; j<alignment.Width; j++)
+            for (int j = 0; j < alignment.Width; j++)
             {
                 char x = alignment.State[i, j] ? '-' : 'X';
                 Console.Write($"{x}");
@@ -106,7 +106,7 @@ namespace LibBioInfo.IAlignmentModifiers
                 return;
             }
 
-            for(int j=startPos; j<alignment.Width; j++)
+            for (int j = startPos; j < alignment.Width; j++)
             {
                 if (alignment.State[i, j])
                 {
@@ -127,7 +127,7 @@ namespace LibBioInfo.IAlignmentModifiers
             int counter = 0;
             // Console.WriteLine($"starting at {startPos} for alignment of width = {alignment.Width}, with goal of {k}");
 
-            for(int j=startPos; j<alignment.Width; j++)
+            for (int j = startPos; j < alignment.Width; j++)
             {
                 if (alignment.State[i, j] == false)
                 {
@@ -146,6 +146,6 @@ namespace LibBioInfo.IAlignmentModifiers
             return counter;
         }
 
-        
+
     }
 }

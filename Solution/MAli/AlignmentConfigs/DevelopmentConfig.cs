@@ -12,6 +12,7 @@ using LibAlignment.Aligners.PopulationBased;
 using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo;
 using LibScoring.FitnessFunctions;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace MAli.AlignmentConfigs
 {
