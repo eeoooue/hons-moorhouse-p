@@ -19,7 +19,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetSprint04Version();
+            return GetBottleneckedAligner();
         }
 
         private IterativeAligner GetBottleneckedAligner()
