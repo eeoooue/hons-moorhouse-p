@@ -11,7 +11,7 @@ namespace LibAlignment.Aligners.SingleState
 {
     public class HillClimbWithRandomRestartsAligner : SingleStateAligner
     {
-        IAlignmentModifier Modifier = new SwapOperator();
+        ILegacyAlignmentModifier Modifier = new SwapOperator();
 
         public int ResetPoint = 0;
         protected ScoredAlignment S = null!;

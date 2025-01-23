@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.IAlignmentModifiers
 {
-    public class BlockShuffler : IAlignmentModifier
+    public class BlockShuffler : ILegacyAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment)
         {

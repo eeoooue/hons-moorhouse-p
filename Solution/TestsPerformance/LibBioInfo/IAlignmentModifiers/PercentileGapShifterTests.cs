@@ -12,7 +12,7 @@ namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
     [TestClass]
     public class PercentileGapShifterTests
     {
-        IAlignmentModifier PercentileGapShifter = new PercentileGapShifter(0.05);
+        ILegacyAlignmentModifier PercentileGapShifter = new PercentileGapShifter(0.05);
         FileHelper FileHelper = new FileHelper();
 
         #region Is Time Efficient

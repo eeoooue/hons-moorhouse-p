@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.IAlignmentModifiers
 {
-    public class PercentileGapShifter : IAlignmentModifier
+    public class PercentileGapShifter : ILegacyAlignmentModifier
     {
         private GapShifter GapShifter = new GapShifter();
         public double Percentage;

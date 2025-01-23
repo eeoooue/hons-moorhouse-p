@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.IAlignmentModifiers
 {
-    public class GapShifter : IAlignmentModifier
+    public class GapShifter : ILegacyAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment)
         {

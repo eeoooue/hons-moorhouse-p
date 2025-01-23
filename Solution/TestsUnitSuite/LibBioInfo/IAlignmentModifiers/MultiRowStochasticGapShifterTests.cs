@@ -17,7 +17,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        IAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
+        ILegacyAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
 
         [TestMethod]
         public void AlignmentIsDifferentAfterShift()

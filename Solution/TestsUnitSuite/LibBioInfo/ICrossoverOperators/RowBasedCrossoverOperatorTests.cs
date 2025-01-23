@@ -41,7 +41,7 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Alignment a = ExampleAlignments.GetExampleA();
             Alignment b = ExampleAlignments.GetExampleA();
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(a);
             randomizer.ModifyAlignment(b);
 
@@ -63,7 +63,7 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Alignment a = ExampleAlignments.GetExampleA();
             Alignment b = ExampleAlignments.GetExampleA();
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(a);
             randomizer.ModifyAlignment(b);
 

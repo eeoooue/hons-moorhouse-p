@@ -32,7 +32,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
             {
                 new MultiRowStochasticSwapOperator(),
                 new SwapOperator(),

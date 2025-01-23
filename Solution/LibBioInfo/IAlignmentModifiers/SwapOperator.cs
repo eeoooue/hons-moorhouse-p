@@ -12,7 +12,7 @@ namespace LibBioInfo.IAlignmentModifiers
         Right
     }
     
-    public class SwapOperator : IAlignmentModifier
+    public class SwapOperator : ILegacyAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment)
         {

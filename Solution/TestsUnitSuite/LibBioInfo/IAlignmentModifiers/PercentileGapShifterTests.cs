@@ -17,7 +17,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        IAlignmentModifier PercentileGapShifter = new PercentileGapShifter(0.05);
+        ILegacyAlignmentModifier PercentileGapShifter = new PercentileGapShifter(0.05);
 
         [TestMethod]
         public void AlignmentIsDifferentAfterShift()

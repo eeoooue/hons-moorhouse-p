@@ -72,7 +72,7 @@ namespace LibAlignment
 
         public Alignment GetRandomAlignment(List<BioSequence> sequences)
         {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             Alignment alignment = new Alignment(sequences);
             randomizer.ModifyAlignment(alignment);
             return alignment;

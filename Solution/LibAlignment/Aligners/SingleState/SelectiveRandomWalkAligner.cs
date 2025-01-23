@@ -11,7 +11,7 @@ namespace LibAlignment.Aligners.SingleState
 {
     public sealed class SelectiveRandomWalkAligner : SingleStateAligner
     {
-        public IAlignmentModifier Modifier = new MultiRowStochasticGapShifter();
+        public ILegacyAlignmentModifier Modifier = new MultiRowStochasticGapShifter();
 
         public SelectiveRandomWalkAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
