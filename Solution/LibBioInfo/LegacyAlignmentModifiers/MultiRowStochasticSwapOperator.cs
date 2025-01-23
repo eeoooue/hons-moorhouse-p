@@ -30,7 +30,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
                 }
             }
 
-            return CharMatrixHelper.RemoveEmptyColumns(ref matrix);
+            return CharMatrixHelper.RemoveEmptyColumns(in matrix);
         }
     }
 }
