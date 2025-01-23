@@ -10,6 +10,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
     public class GapShifter : ILegacyAlignmentModifier
     {
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+        public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
 
         public void ModifyAlignment(Alignment alignment)
         {
@@ -41,29 +42,16 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
 
             int chosenGapPosition = GetRandomChoiceFromList(gapPositions);
-            string payloadWithGapRemoved = GetStringWithRemovedGapAt(payload, chosenGapPosition);
+            string payloadWithGapRemoved = PayloadHelper.GetPayloadWithGapRemovedAt(payload, chosenGapPosition);
 
             int newGapPos = GetRandomChoiceFromList(residuePositions);
-            string payloadWithGapInserted = GetStringWithGapInsertedAt(payloadWithGapRemoved, newGapPos);
+            string payloadWithGapInserted = PayloadHelper.GetPayloadWithGapInsertedAt(payloadWithGapRemoved, newGapPos);
 
             char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(matrix, i, payloadWithGapInserted);
 
             return result;
         }
 
-        public string GetStringWithRemovedGapAt(string payload, int gapPosition)
-        {
-            string front = payload.Substring(0, gapPosition);
-            string back = payload.Substring(gapPosition + 1);
-            return $"{front}{back}";
-        }
-
-        public string GetStringWithGapInsertedAt(string payload, int gapPosition)
-        {
-            string front = payload.Substring(0, gapPosition);
-            string back = payload.Substring(gapPosition);
-            return $"{front}-{back}";
-        }
         private int GetRandomChoiceFromList(List<int> options)
         {
             int i = Randomizer.Random.Next(options.Count);
