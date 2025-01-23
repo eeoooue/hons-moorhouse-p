@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibBioInfo.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,23 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class AlignmentRandomizer : ILegacyAlignmentModifier
+    public class AlignmentRandomizer : ILegacyAlignmentModifier, IAlignmentModifier
     {
+        AlignmentStateHelper StateHelper = new AlignmentStateHelper();
+        CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+
         public void ModifyAlignment(Alignment alignment)
         {
-            //bool[,] state = GetMatrixWithShuffledRows(alignment.State);
-            //alignment.SetState(state);
-            //alignment.CheckResolveEmptyColumns();
+            char[,] modifiedMat = GetModifiedAlignmentState(alignment);
+            alignment.CharacterMatrix = modifiedMat;
+        }
 
-            throw new NotImplementedException();
-
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        {
+            bool[,] originalState = StateHelper.ConvertMatrixFromCharToBool(alignment.CharacterMatrix);
+            bool[,] state = GetMatrixWithShuffledRows(originalState);
+            char[,] modifiedMat = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, state);
+            return CharMatrixHelper.RemoveEmptyColumns(modifiedMat);
         }
 
         public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)
