@@ -23,7 +23,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             int i = Randomizer.Random.Next(alignment.Height);
             char[,] matrix = alignment.CharacterMatrix;
             PerformSwapWithinRow(ref matrix, i);
-            return CharMatrixHelper.RemoveEmptyColumns(ref matrix);
+            return CharMatrixHelper.RemoveEmptyColumns(in matrix);
         }
 
         public void PerformSwapWithinRow(ref char[,] matrix, int i)
@@ -52,7 +52,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             // affects ith sequence only
             // from column j, 
 
-            string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
+            string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
             string modified;
 
             if (direction == SwapDirection.Left)
