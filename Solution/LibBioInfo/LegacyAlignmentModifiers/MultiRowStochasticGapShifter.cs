@@ -24,7 +24,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             {
                 if (Randomizer.CoinFlip())
                 {
-                    matrix = GapShifter.GetMatrixWithGapShiftInRow(matrix, i);
+                    GapShifter.PerformGapShiftInRow(ref matrix, i);
                 }
             }
 

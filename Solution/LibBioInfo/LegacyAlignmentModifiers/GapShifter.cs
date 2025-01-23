@@ -29,18 +29,18 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
                 if (possible)
                 {
-                    char[,] modified = GetMatrixWithGapShiftInRow(matrix, i);
-                    return CharMatrixHelper.RemoveEmptyColumns(ref modified);
+                    PerformGapShiftInRow(ref matrix, i);
+                    return CharMatrixHelper.RemoveEmptyColumns(in matrix);
                 }
             }
         }
 
-        public char[,] GetMatrixWithGapShiftInRow(char[,] matrix, int i)
+        public void PerformGapShiftInRow(ref char[,] matrix, int i)
         {
             List<int> residuePositions = CharMatrixHelper.GetResiduePositionsInRow(matrix, i);
             List<int> gapPositions = CharMatrixHelper.GetGapPositionsInRow(matrix, i);
 
-            string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
+            string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
 
             int chosenGapPosition = GetRandomChoiceFromList(gapPositions);
             string payloadWithGapRemoved = PayloadHelper.GetPayloadWithGapRemovedAt(payload, chosenGapPosition);
@@ -48,9 +48,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             int newGapPos = GetRandomChoiceFromList(residuePositions);
             string payloadWithGapInserted = PayloadHelper.GetPayloadWithGapInsertedAt(payloadWithGapRemoved, newGapPos);
 
-            char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(ref matrix, i, payloadWithGapInserted);
-
-            return result;
+            CharMatrixHelper.WriteStringOverMatrixRow(ref matrix, i, payloadWithGapInserted);
         }
 
         private int GetRandomChoiceFromList(List<int> options)

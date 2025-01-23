@@ -78,15 +78,12 @@ namespace LibBioInfo.Helpers
             return true;
         }
 
-
-        public char[,] WriteStringOverMatrixRow(ref char[,] matrix, int i, string s)
+        public void WriteStringOverMatrixRow(ref char[,] matrix, int i, string s)
         {
             for (int j = 0; j < s.Length; j++)
             {
                 matrix[i, j] = s[j];
             }
-
-            return matrix;
         }
 
         public bool RowContainsGap(in char[,] matrix, int i)
