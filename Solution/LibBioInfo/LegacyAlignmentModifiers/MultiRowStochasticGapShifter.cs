@@ -12,13 +12,17 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
         public void ModifyAlignment(Alignment alignment)
         {
+            char[,] matrix = alignment.CharacterMatrix;
+
             for (int i = 0; i < alignment.Height; i++)
             {
                 if (Randomizer.CoinFlip())
                 {
-                    GapShifter.TryShiftGapInRow(alignment, i);
+                    matrix = GapShifter.GetMatrixWithGapShiftInRow(matrix, i);
                 }
             }
+
+            alignment.CharacterMatrix = matrix;
         }
     }
 }
