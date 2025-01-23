@@ -9,7 +9,5 @@ namespace LibBioInfo
     public interface IAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment);
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment);
     }
 }

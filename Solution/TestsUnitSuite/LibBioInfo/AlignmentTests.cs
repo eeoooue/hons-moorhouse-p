@@ -9,7 +9,7 @@ using TestsUnitSuite;
 
 using TestsHarness;
 using TestsHarness.Tools;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo
 {
@@ -200,7 +200,7 @@ namespace TestsUnitSuite.LibBioInfo
             Alignment original = new Alignment(inputs);
             Alignment copy = original.GetCopy();
 
-            ILegacyAlignmentModifier modifier = new AlignmentRandomizer();
+            IAlignmentModifier modifier = new AlignmentRandomizer();
             modifier.ModifyAlignment(copy);
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(original, copy);
@@ -221,7 +221,7 @@ namespace TestsUnitSuite.LibBioInfo
             };
 
             Alignment original = new Alignment(inputs);
-            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(original);
 
             Alignment copy = original.GetCopy();

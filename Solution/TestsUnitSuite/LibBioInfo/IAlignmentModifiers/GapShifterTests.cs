@@ -11,7 +11,7 @@ using LibFileIO;
 
 using TestsHarness;
 using TestsHarness.Tools;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {

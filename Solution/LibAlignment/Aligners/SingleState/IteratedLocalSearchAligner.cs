@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace LibAlignment.Aligners.SingleState
 {
     public class IteratedLocalSearchAligner : SingleStateAligner
     {
-        public ILegacyAlignmentModifier PerturbModifier = new MultiRowStochasticSwapOperator();
-        public ILegacyAlignmentModifier TweakModifier = new MultiRowStochasticSwapOperator();
+        public IAlignmentModifier PerturbModifier = new MultiRowStochasticSwapOperator();
+        public IAlignmentModifier TweakModifier = new MultiRowStochasticSwapOperator();
 
         public int ResetPoint = 0;
         public ScoredAlignment HomeBase = null!;

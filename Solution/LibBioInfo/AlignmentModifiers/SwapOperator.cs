@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
     public enum SwapDirection
     {
@@ -13,24 +13,18 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         Right
     }
 
-    public class SwapOperator : ILegacyAlignmentModifier, IAlignmentModifier
+    public class SwapOperator : AlignmentModifier, IAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public Bioinformatics Bioinformatics = new Bioinformatics();
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] modified = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = modified;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int i = Randomizer.Random.Next(alignment.Height);
             char[,] matrix = alignment.CharacterMatrix;
             PerformSwapWithinRow(ref matrix, i);
-            return CharMatrixHelper.RemoveEmptyColumns(ref matrix);
+            return CharMatrixHelper.RemoveEmptyColumns(in matrix);
         }
 
         public void PerformSwapWithinRow(ref char[,] matrix, int i)
@@ -59,7 +53,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             // affects ith sequence only
             // from column j, 
 
-            string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
+            string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
             string modified;
 
             if (direction == SwapDirection.Left)
@@ -110,13 +104,13 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             }
 
             char[] result = payload.ToCharArray();
-            foreach(int i in residuePositions)
+            foreach (int i in residuePositions)
             {
                 result[i] = '-';
             }
 
             int residuesPlaced = 0;
-            for(int i=startPos; i<result.Length; i++)
+            for (int i = startPos; i < result.Length; i++)
             {
                 if (Bioinformatics.IsGapChar(result[i]))
                 {
@@ -146,7 +140,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         public string GetReversedString(string original)
         {
             StringBuilder sb = new StringBuilder();
-            for(int i=original.Length-1; i>=0; i--)
+            for (int i = original.Length - 1; i >= 0; i--)
             {
                 sb.Append(original[i]);
             }

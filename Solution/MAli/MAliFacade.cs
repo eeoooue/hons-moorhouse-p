@@ -1,7 +1,6 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
 using LibBioInfo;
-using LibBioInfo.LegacyAlignmentModifiers;
 using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;

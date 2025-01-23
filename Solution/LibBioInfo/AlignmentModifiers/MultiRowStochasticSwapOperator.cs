@@ -5,20 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
-    public class MultiRowStochasticSwapOperator : ILegacyAlignmentModifier, IAlignmentModifier
+    public class MultiRowStochasticSwapOperator : AlignmentModifier, IAlignmentModifier
     {
         private SwapOperator SwapOperator = new SwapOperator();
         private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] modified = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = modified;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             char[,] matrix = alignment.CharacterMatrix;
 
@@ -30,7 +24,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
                 }
             }
 
-            return CharMatrixHelper.RemoveEmptyColumns(ref matrix);
+            return CharMatrixHelper.RemoveEmptyColumns(in matrix);
         }
     }
 }

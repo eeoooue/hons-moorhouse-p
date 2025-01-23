@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using LibScoring;
 using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace LibAlignment.Aligners.PopulationBased
 {
     public class MewLambdaEvolutionaryAlgorithmAligner : PopulationBasedAligner
     {
-        public ILegacyAlignmentModifier MutationOperator = new GapShifter();
+        public IAlignmentModifier MutationOperator = new GapShifter();
         public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int Mew = 5; // selection size

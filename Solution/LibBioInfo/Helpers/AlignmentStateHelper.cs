@@ -10,7 +10,7 @@ namespace LibBioInfo.Helpers
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
-        public bool[,] ConvertMatrixFromCharToBool(char[,] state)
+        public bool[,] ConvertMatrixFromCharToBool(in char[,] state)
         {
             int m = state.GetLength(0);
             int n = state.GetLength(1);
@@ -32,7 +32,7 @@ namespace LibBioInfo.Helpers
             return result;
         }
 
-        public char[,] ConvertMatrixFromBoolToChar(List<BioSequence> sequences, bool[,] state)
+        public char[,] ConvertMatrixFromBoolToChar(List<BioSequence> sequences, in bool[,] state)
         {
             int m = state.GetLength(0);
             int n = state.GetLength(1);
@@ -57,122 +57,33 @@ namespace LibBioInfo.Helpers
             return result;
         }
 
-        public bool[,] RemoveEmptyColumns(bool[,] state)
-        {
-            List<int> targets = CollectNonEmptyColumnIndices(state);
-
-            int m = state.GetLength(0);
-            int n = targets.Count;
-
-            bool[,] result = new bool[m, n];
-
-            for(int j=0; j<n; j++)
-            {
-                CopyColumnToDestinationFromSource(state, targets[j], result, j);
-            }
-
-            return result;
-        }
-
-        public void CopyColumnToDestinationFromSource(bool[,] source, int jOrigin, bool[,] destination, int jDest)
-        {
-            int m = source.GetLength(0);
-
-            for(int i=0; i<m; i++)
-            {
-                destination[i, jDest] = source[i, jOrigin];
-            }
-        }
-
-        public List<int> CollectNonEmptyColumnIndices(bool[,] state)
-        {
-            List<int> result = new List<int>();
-
-            int n = state.GetLength(1);
-            for (int j=0; j<n; j++)
-            {
-                if (!ColumnIsEmpty(state, j))
-                {
-                    result.Add(j);
-                }
-            }
-
-            return result;
-        }
-
-        public bool ContainsEmptyColumns(bool[,] state)
-        {
-            int n = state.GetLength(1);
-
-            for (int j = 0; j < n; j++)
-            {
-                if (ColumnIsEmpty(state, j))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public bool ColumnIsEmpty(bool[,] state, int j)
+        public char[,] ConvertMatrixFromBoolToChar(List<string> residueChains, in bool[,] state)
         {
             int m = state.GetLength(0);
+            int n = state.GetLength(1);
+
+            char[,] result = new char[m, n];
 
             for (int i = 0; i < m; i++)
             {
-                if (!state[i, j])
+                string residues = residueChains[i];
+                int p = 0;
+                for (int j = 0; j < n; j++)
                 {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public bool[,] CombineAlignmentStates(bool[,] leftState, bool[,] rightState)
-        {
-            int m = leftState.GetLength(0);
-            int leftN = leftState.GetLength(1);
-            int rightN = rightState.GetLength(1);
-
-            bool[,] result = new bool[m, leftN + rightN];
-
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = 0; j < leftN; j++)
-                {
-                    result[i, j] = leftState[i, j];
-                }
-
-                for (int j = 0; j < rightN; j++)
-                {
-                    result[i, j + leftN] = rightState[i, j];
+                    result[i, j] = '-';
+                    if (!state[i, j])
+                    {
+                        char x = residues[p++];
+                        result[i, j] = x;
+                    }
                 }
             }
 
             return result;
         }
 
-        public int GetPositionOfNthResidue(bool[,] state, int i, int n)
-        {
-            int counter = 0;
-            for (int j = 0; j < state.GetLength(1); j++)
-            {
-                if (state[i, j] == false)
-                {
-                    counter++;
-                }
 
-                if (counter == n)
-                {
-                    return j;
-                }
-            }
-
-            return state.GetLength(1);
-        }
-
-        public bool[] ExtractRow(bool[,] matrix, int i)
+        public bool[] ExtractRow(in bool[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
             bool[] result = new bool[n];
@@ -184,20 +95,5 @@ namespace LibBioInfo.Helpers
 
             return result;
         }
-
-        public int GetNumberOfResiduesInRow(bool[,] state, int i)
-        {
-            int result = 0;
-            for (int j = 0; j < state.GetLength(1); j++)
-            {
-                if (state[i, j] == false)
-                {
-                    result++;
-                }
-            }
-
-            return result;
-        }
-
     }
 }

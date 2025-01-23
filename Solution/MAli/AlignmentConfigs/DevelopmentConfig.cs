@@ -11,7 +11,7 @@ using LibAlignment.Aligners.SingleState;
 using LibAlignment.Aligners.PopulationBased;
 using LibBioInfo;
 using LibScoring.FitnessFunctions;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace MAli.AlignmentConfigs
 {
@@ -35,7 +35,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = mew * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new MultiRowStochasticSwapOperator(),
             };
@@ -43,6 +43,29 @@ namespace MAli.AlignmentConfigs
             aligner.MutationOperator = new MultiOperatorModifier(modifiers);
             return aligner;
         }
+
+        //private IterativeAligner GetRandomSearchAligner()
+        //{
+        //    IScoringMatrix matrix = new BLOSUM62Matrix();
+        //    // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+
+        //    IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
+
+        //    const int maxIterations = 100;
+        //    RandomSearchAligner aligner = new RandomSearchAligner(objective, maxIterations);
+
+        //    return aligner;
+        //}
+
+        public IterativeAligner GetRandomSearchAligner()
+        {
+            IScoringMatrix blosum = new BLOSUM62Matrix();
+            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
+            int iterations = 1000;
+
+            return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
+        }
+
 
         private IterativeAligner GetMinimalAligner()
         {
@@ -57,7 +80,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new MultiRowStochasticGapShifter(),
                 new GapInserter(),
@@ -77,7 +100,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new MultiRowStochasticSwapOperator(),
                 new SwapOperator(),
@@ -91,14 +114,7 @@ namespace MAli.AlignmentConfigs
         }
 
 
-        public IterativeAligner GetRandomSearchAligner()
-        {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
-            int iterations = 1000;
-
-            return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
-        }
+        
 
         public IterativeAligner GetILSAligner()
         {

@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace LibAlignment.Aligners.SingleState
 {
     public sealed class SelectiveRandomWalkAligner : SingleStateAligner
     {
-        public ILegacyAlignmentModifier Modifier = new MultiRowStochasticGapShifter();
+        public IAlignmentModifier Modifier = new MultiRowStochasticGapShifter();
 
         public SelectiveRandomWalkAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {

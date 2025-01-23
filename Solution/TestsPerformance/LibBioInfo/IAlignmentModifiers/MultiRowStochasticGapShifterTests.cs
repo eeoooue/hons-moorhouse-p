@@ -1,5 +1,4 @@
-﻿using LibBioInfo.LegacyAlignmentModifiers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +7,14 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibFileIO;
+using LibBioInfo.AlignmentModifiers;
 
 namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
 {
     [TestClass]
     public class MultiRowStochasticGapShifterTests
     {
-        ILegacyAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
+        IAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
         FileHelper FileHelper = new FileHelper();
 
         #region Is Time Efficient

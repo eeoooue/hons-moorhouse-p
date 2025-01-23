@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
-    public class MultiOperatorModifier : ILegacyAlignmentModifier
+    public class MultiOperatorModifier : IAlignmentModifier
     {
-        List<ILegacyAlignmentModifier> Modifiers;
+        List<IAlignmentModifier> Modifiers;
 
-        public MultiOperatorModifier(List<ILegacyAlignmentModifier> modifiers)
+        public MultiOperatorModifier(List<IAlignmentModifier> modifiers)
         {
             Modifiers = modifiers;
         }
 
         public void ModifyAlignment(Alignment alignment)
         {
-            ILegacyAlignmentModifier modifier = PickRandomModifier();
+            IAlignmentModifier modifier = PickRandomModifier();
             modifier.ModifyAlignment(alignment);
         }
 
-        public ILegacyAlignmentModifier PickRandomModifier()
+        public IAlignmentModifier PickRandomModifier()
         {
             int n = Modifiers.Count;
             int i = Randomizer.Random.Next(0, n);

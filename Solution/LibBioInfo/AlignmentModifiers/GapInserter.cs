@@ -6,9 +6,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
-    public class GapInserter : ILegacyAlignmentModifier, IAlignmentModifier
+    public class GapInserter : AlignmentModifier, IAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
@@ -20,20 +20,14 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             GapWidthLimit = gapSizeLimit;
         }
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] modified = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = modified;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth();
-            char[,] modified = InsertGapOfWidth(alignment.CharacterMatrix, gapWidth);
-            return CharMatrixHelper.RemoveEmptyColumns(ref modified);
+            char[,] modified = InsertGapOfWidth(in alignment.CharacterMatrix, gapWidth);
+            return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
 
-        public char[,] InsertGapOfWidth(char[,] matrix, int gapWidth)
+        public char[,] InsertGapOfWidth(in char[,] matrix, int gapWidth)
         {
             int m = matrix.GetLength(0);
             int n = matrix.GetLength(1) + gapWidth;
@@ -46,7 +40,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
             for (int i = 0; i < m; i++)
             {
-                string payload = CharMatrixHelper.GetCharRowAsString(ref matrix, i);
+                string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
 
                 if (mapping[i])
                 {
@@ -62,7 +56,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
             return result;
         }
-
 
         public int SuggestGapPosition(int gapWidth, int stateWidth)
         {
@@ -87,6 +80,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             return gapWidth;
         }
 
-        
+
     }
 }
