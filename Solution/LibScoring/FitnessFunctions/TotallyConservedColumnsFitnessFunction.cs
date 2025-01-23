@@ -16,7 +16,7 @@ namespace LibScoring.FitnessFunctions
             return "Percentage of Totally Conserved Columns";
         }
 
-        public override double ScoreAlignment(char[,] alignment)
+        public override double ScoreAlignment(in char[,] alignment)
         {
             double total = 0;
             int n = alignment.GetLength(1);
@@ -35,7 +35,7 @@ namespace LibScoring.FitnessFunctions
             return value;
         }
 
-        public bool IsTotallyConservedColumn(char[,] alignment, int j)
+        public bool IsTotallyConservedColumn(in char[,] alignment, int j)
         {
             int m = alignment.GetLength(0);
             char target = alignment[0, j];
@@ -56,12 +56,12 @@ namespace LibScoring.FitnessFunctions
             return true;
         }
 
-        public override double GetBestPossibleScore(char[,] alignment)
+        public override double GetBestPossibleScore(in char[,] alignment)
         {
             return 1.0;
         }
 
-        public override double GetWorstPossibleScore(char[,] alignment)
+        public override double GetWorstPossibleScore(in char[,] alignment)
         {
             return 0.0;
         }

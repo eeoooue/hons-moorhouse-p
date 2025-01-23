@@ -1,7 +1,7 @@
 ﻿using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using LibScoring;
 using System;
@@ -15,7 +15,7 @@ namespace LibAlignment.Aligners.PopulationBased
     public class GeneticAlgorithmAligner : PopulationBasedAligner
     {
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
-        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
+        public ILegacyAlignmentModifier MutationOperator = new SwapOperator();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public double MutationRate = 0.2;

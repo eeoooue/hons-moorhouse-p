@@ -16,7 +16,7 @@ namespace LibScoring.FitnessFunctions
             return "Percentage Non-Gaps";
         }
 
-        public override double ScoreAlignment(char[,] alignment)
+        public override double ScoreAlignment(in char[,] alignment)
         {
             double result = 0.0;
             int m = alignment.GetLength(0);
@@ -38,12 +38,12 @@ namespace LibScoring.FitnessFunctions
             return result / totalPositions;
         }
 
-        public override double GetBestPossibleScore(char[,] alignment)
+        public override double GetBestPossibleScore(in char[,] alignment)
         {
             return 1.0;
         }
 
-        public override double GetWorstPossibleScore(char[,] alignment)
+        public override double GetWorstPossibleScore(in char[,] alignment)
         {
             return 0.0;
         }

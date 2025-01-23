@@ -1,8 +1,8 @@
 ﻿using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
+using LibBioInfo.LegacyAlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace LibAlignment.Aligners.PopulationBased
     public class ElitistGeneticAlgorithmAligner : PopulationBasedAligner
     {
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
-        public IAlignmentModifier MutationOperator = new GapShifter();
+        public ILegacyAlignmentModifier MutationOperator = new GapShifter();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public double MutationRate = 0.50;

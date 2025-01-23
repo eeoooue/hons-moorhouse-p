@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo
 {
-    public interface IAlignmentModifier
+    public interface ILegacyAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment);
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment);
     }
 }

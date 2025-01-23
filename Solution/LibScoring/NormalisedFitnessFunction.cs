@@ -8,13 +8,13 @@ namespace LibScoring
 {
     public abstract class NormalisedFitnessFunction : IFitnessFunction
     {
-        public double GetFitness(char[,] alignment)
+        public double GetFitness(in char[,] alignment)
         {
-            double bestPossibleScore = GetBestPossibleScore(alignment);
-            double worstPossibleScore = GetWorstPossibleScore(alignment);
+            double bestPossibleScore = GetBestPossibleScore(in alignment);
+            double worstPossibleScore = GetWorstPossibleScore(in alignment);
             double fitnessRange = bestPossibleScore - worstPossibleScore;
 
-            double score = ScoreAlignment(alignment);
+            double score = ScoreAlignment(in alignment);
             double effectiveScore = score - worstPossibleScore;
 
             return effectiveScore / fitnessRange;
@@ -22,10 +22,10 @@ namespace LibScoring
 
         public abstract string GetName();
 
-        public abstract double ScoreAlignment(char[,] alignment);
+        public abstract double ScoreAlignment(in char[,] alignment);
 
-        public abstract double GetBestPossibleScore(char[,] alignment);
+        public abstract double GetBestPossibleScore(in char[,] alignment);
 
-        public abstract double GetWorstPossibleScore(char[,] alignment);
+        public abstract double GetWorstPossibleScore(in char[,] alignment);
     }
 }

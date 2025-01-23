@@ -1,5 +1,4 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibFileIO;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using TestsUnitSuite;
 
 using TestsHarness;
 using TestsHarness.Tools;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo
 {
@@ -200,7 +200,7 @@ namespace TestsUnitSuite.LibBioInfo
             Alignment original = new Alignment(inputs);
             Alignment copy = original.GetCopy();
 
-            IAlignmentModifier modifier = new AlignmentRandomizer();
+            ILegacyAlignmentModifier modifier = new AlignmentRandomizer();
             modifier.ModifyAlignment(copy);
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(original, copy);
@@ -221,7 +221,7 @@ namespace TestsUnitSuite.LibBioInfo
             };
 
             Alignment original = new Alignment(inputs);
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(original);
 
             Alignment copy = original.GetCopy();
@@ -233,45 +233,5 @@ namespace TestsUnitSuite.LibBioInfo
 
         #endregion
 
-
-        #region Testing Alignment State Simplification
-
-
-        [TestMethod]
-
-        public void RedundantColumnsAreAutomaticallyRemoved()
-        {
-            List<BioSequence> inputs = new List<BioSequence>
-            {
-                new BioSequence("a", "AAA"),
-                new BioSequence("a", "AAA"),
-                new BioSequence("a", "AAA"),
-            };
-
-            Alignment original = new Alignment(inputs);
-
-
-            bool[,] state = new bool[,]
-            {
-                { true, true, false, false, true, false},
-                { true, false, false, false, true, true},
-                { true, false, false, false, true, true},
-            };
-
-            original.SetState(state);
-            original.UpdateCharacterMatrixIfNeeded();
-
-            bool[,] expected = new bool[,]
-            {
-                { true, false, false, false},
-                { false, false, false, true},
-                { false, false, false, true},
-            };
-
-            bool verdict = StateEquality.StatesMatch(expected, original.State);
-            Assert.IsTrue(verdict);
-        }
-
-        #endregion
     }
 }

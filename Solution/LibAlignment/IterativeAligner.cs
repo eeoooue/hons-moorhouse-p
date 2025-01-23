@@ -1,6 +1,6 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using LibScoring;
 using System;
 using System.Text;
@@ -59,7 +59,7 @@ namespace LibAlignment
 
         public double ScoreAlignment(Alignment alignment)
         {
-            return Objective.GetFitness(alignment.GetCharacterMatrix());
+            return Objective.GetFitness(alignment.CharacterMatrix);
         }
 
         public abstract string GetName();
@@ -72,7 +72,7 @@ namespace LibAlignment
 
         public Alignment GetRandomAlignment(List<BioSequence> sequences)
         {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             Alignment alignment = new Alignment(sequences);
             randomizer.ModifyAlignment(alignment);
             return alignment;

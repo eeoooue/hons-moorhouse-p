@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +14,14 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         [TestMethod]
         public void CanSelectRandomOperator()
         {
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
             {
                 new GapShifter(),
                 new GapInserter(),
             };
 
             MultiOperatorModifier multi = new MultiOperatorModifier(modifiers);
-            IAlignmentModifier selection = multi.PickRandomModifier();
+            ILegacyAlignmentModifier selection = multi.PickRandomModifier();
         }
     }
 }

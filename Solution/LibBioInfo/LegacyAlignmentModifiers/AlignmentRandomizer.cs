@@ -1,18 +1,29 @@
-﻿using System;
+﻿using LibBioInfo.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.IAlignmentModifiers
+namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class AlignmentRandomizer : IAlignmentModifier
+    public class AlignmentRandomizer : ILegacyAlignmentModifier, IAlignmentModifier
     {
+        AlignmentStateHelper StateHelper = new AlignmentStateHelper();
+        CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+
         public void ModifyAlignment(Alignment alignment)
         {
-            bool[,] state = GetMatrixWithShuffledRows(alignment.State);
-            alignment.SetState(state);
-            alignment.CheckResolveEmptyColumns();
+            char[,] modifiedMat = GetModifiedAlignmentState(alignment);
+            alignment.CharacterMatrix = modifiedMat;
+        }
+
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        {
+            bool[,] originalState = StateHelper.ConvertMatrixFromCharToBool(alignment.CharacterMatrix);
+            bool[,] state = GetMatrixWithShuffledRows(originalState);
+            char[,] modifiedMat = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, state);
+            return CharMatrixHelper.RemoveEmptyColumns(ref modifiedMat);
         }
 
         public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)
@@ -22,10 +33,10 @@ namespace LibBioInfo.IAlignmentModifiers
 
             bool[,] result = new bool[m, n];
 
-            for (int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
                 bool[] shuffledRow = GetShuffledRow(matrix, i);
-                for(int j = 0; j < n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     result[i, j] = shuffledRow[j];
                 }
@@ -49,7 +60,7 @@ namespace LibBioInfo.IAlignmentModifiers
 
             pairs = pairs.OrderBy(x => x.Item1).ToList();
 
-            for(int j = 0; j < n; j++)
+            for (int j = 0; j < n; j++)
             {
                 result[j] = pairs[j].Item2;
             }

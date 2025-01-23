@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace LibAlignment.Aligners
     public abstract class PopulationBasedAligner : IterativeAligner
     {
         public List<Alignment> Population = new List<Alignment>();
-        public IAlignmentModifier RefinementPerturbOperator = new MultiRowStochasticSwapOperator();
+        public ILegacyAlignmentModifier RefinementPerturbOperator = new GapShifter();
 
         public int PopulationSize;
 

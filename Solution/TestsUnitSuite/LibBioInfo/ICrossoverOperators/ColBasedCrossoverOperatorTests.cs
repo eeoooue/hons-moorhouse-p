@@ -1,4 +1,4 @@
-﻿using LibBioInfo.IAlignmentModifiers;
+﻿using LibBioInfo.LegacyAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using LibBioInfo;
 using System;
@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsHarness.LiteratureAssets;
 using TestsHarness.Tools;
 using TestsHarness;
 
@@ -16,7 +15,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
     public class ColBasedCrossoverOperatorTests
     {
 
-        SAGAAssets SAGAAssets = Harness.LiteratureHelper.SAGAAssets;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentStateConverter AlignmentStateConverter = Harness.AlignmentStateConverter;
         StateEquality StateEquality = Harness.StateEquality;
@@ -43,7 +41,7 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Alignment a = ExampleAlignments.GetExampleA();
             Alignment b = ExampleAlignments.GetExampleA();
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(a);
             randomizer.ModifyAlignment(b);
 
@@ -67,7 +65,7 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 
             Alignment a = ExampleAlignments.GetExampleA();
             Alignment b = ExampleAlignments.GetExampleA();
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            ILegacyAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(a);
             randomizer.ModifyAlignment(b);
 

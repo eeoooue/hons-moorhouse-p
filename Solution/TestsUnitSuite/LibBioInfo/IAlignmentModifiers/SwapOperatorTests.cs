@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             Alignment expected = new Alignment(sequences1and2after, true);
             
             // my swap call uses 1 instead of 2 due to the figure sequences being 1-indexed while I use 0-indexing
-            SwapOperator.Swap(original, 1, 3, 4, SwapDirection.Right);
+            SwapOperator.Swap(ref original.CharacterMatrix, 1, 3, 4, SwapDirection.Right);
 
             Harness.AlignmentPrinter.PrintAlignment(original);
 

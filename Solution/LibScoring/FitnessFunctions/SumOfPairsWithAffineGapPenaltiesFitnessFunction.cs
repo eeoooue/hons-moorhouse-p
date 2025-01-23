@@ -22,21 +22,21 @@ namespace LibScoring.FitnessFunctions
             return $"Sum of Pairs ({SumOfPairsScore.Matrix.GetName()}) Affine Gap Penalties (open={AffineGapPenalties.OpeningCost}, null={AffineGapPenalties.NullCost})";
         }
 
-        public override double GetBestPossibleScore(char[,] alignment)
+        public override double GetBestPossibleScore(in char[,] alignment)
         {
             double maxScore = SumOfPairsScore.GetBestPossibleScore(alignment);
             double minPenalty = AffineGapPenalties.GetMinimumPossiblePenalty();
             return maxScore - minPenalty;
         }
 
-        public override double GetWorstPossibleScore(char[,] alignment)
+        public override double GetWorstPossibleScore(in char[,] alignment)
         {
             double minScore = SumOfPairsScore.GetWorstPossibleScore(alignment);
             double maxPenalty = AffineGapPenalties.GetMaximumPossiblePenalty(alignment);
             return minScore - maxPenalty;
         }
 
-        public override double ScoreAlignment(char[,] alignment)
+        public override double ScoreAlignment(in char[,] alignment)
         {
             double score = SumOfPairsScore.ScoreAlignment(alignment);
             double penalty = AffineGapPenalties.GetPenaltyForAlignmentMatrix(alignment);

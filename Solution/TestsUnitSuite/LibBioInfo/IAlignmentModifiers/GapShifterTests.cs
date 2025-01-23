@@ -1,5 +1,4 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibScoring.ScoringMatrices;
 using LibScoring;
 using System;
@@ -12,6 +11,7 @@ using LibFileIO;
 
 using TestsHarness;
 using TestsHarness.Tools;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {

@@ -22,17 +22,17 @@ namespace LibScoring.FitnessFunctions
             return $"Affine Gap Penalties (open={Penalties.OpeningCost}, null={Penalties.NullCost})";
         }
 
-        public override double ScoreAlignment(char[,] alignment)
+        public override double ScoreAlignment(in char[,] alignment)
         {
             return -1 * Penalties.GetPenaltyForAlignmentMatrix(alignment);
         }
 
-        public override double GetBestPossibleScore(char[,] alignment)
+        public override double GetBestPossibleScore(in char[,] alignment)
         {
             return -1 * Penalties.GetMinimumPossiblePenalty();
         }
 
-        public override double GetWorstPossibleScore(char[,] alignment)
+        public override double GetWorstPossibleScore(in char[,] alignment)
         {
             return -1 * Penalties.GetMaximumPossiblePenalty(alignment);
         }

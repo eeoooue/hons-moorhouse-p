@@ -12,22 +12,39 @@ namespace LibBioInfo.Helpers
 
         public BioSequence GetSequenceWithGapInserted(BioSequence sequence, int gapWidth, int position)
         {
-            string before = sequence.Payload.Substring(0, position);
-            string after = sequence.Payload.Substring(position);
+            string payload = GetPayloadWithGapInserted(sequence.Payload, gapWidth, position);
+            return new BioSequence(sequence.Identifier, payload);
+        }
+
+        public string GetPayloadWithGapInserted(string payload, int gapWidth, int position)
+        {
+            string before = payload.Substring(0, position);
+            string after = payload.Substring(position);
 
             StringBuilder sb = new StringBuilder();
             sb.Append(before);
-            for (int i=0; i<gapWidth; i++)
+            for (int i = 0; i < gapWidth; i++)
             {
                 sb.Append('-');
             }
             sb.Append(after);
 
-            string payload = sb.ToString();
-
-            return new BioSequence(sequence.Identifier, payload);
+            return sb.ToString();
         }
 
+        public string GetPayloadWithGapRemovedAt(string payload, int gapPosition)
+        {
+            string front = payload.Substring(0, gapPosition);
+            string back = payload.Substring(gapPosition + 1);
+            return $"{front}{back}";
+        }
+
+        public string GetPayloadWithGapInsertedAt(string payload, int gapPosition)
+        {
+            string front = payload.Substring(0, gapPosition);
+            string back = payload.Substring(gapPosition);
+            return $"{front}-{back}";
+        }
 
         public List<string> PartitionPayloadAtPosition(BioSequence a, int i)
         {

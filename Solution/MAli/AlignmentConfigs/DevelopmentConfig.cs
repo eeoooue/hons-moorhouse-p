@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAlignment.Aligners.SingleState;
 using LibAlignment.Aligners.PopulationBased;
-using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo;
 using LibScoring.FitnessFunctions;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace MAli.AlignmentConfigs
 {
@@ -20,6 +20,51 @@ namespace MAli.AlignmentConfigs
         public override IterativeAligner CreateAligner()
         {
             return GetSprint04Version();
+        }
+
+        private IterativeAligner GetBottleneckedAligner()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+
+            IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
+
+
+            const int maxIterations = 100;
+            const int mew = 1000;
+            const int lambda = mew * 7;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
+
+            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            {
+                new MultiRowStochasticSwapOperator(),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+            return aligner;
+        }
+
+        private IterativeAligner GetMinimalAligner()
+        {
+            IScoringMatrix matrix = new BLOSUM62Matrix();
+            // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+
+            IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
+
+
+            const int maxIterations = 100;
+            const int mew = 10;
+            const int lambda = 10 * 7;
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
+
+            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            {
+                new MultiRowStochasticGapShifter(),
+                new GapInserter(),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+            return aligner;
         }
 
         private MewLambdaEvolutionaryAlgorithmAligner GetSprint04Version()
@@ -32,7 +77,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
             {
                 new MultiRowStochasticSwapOperator(),
                 new SwapOperator(),

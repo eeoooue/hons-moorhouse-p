@@ -1,5 +1,4 @@
-﻿using LibBioInfo.IAlignmentModifiers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {
@@ -17,7 +17,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
-        IAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
+        ILegacyAlignmentModifier MultiRowStochasticGapShifter = new MultiRowStochasticGapShifter();
 
         [TestMethod]
         public void AlignmentIsDifferentAfterShift()

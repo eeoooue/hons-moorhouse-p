@@ -28,11 +28,6 @@ namespace LibBioInfo.ICrossoverOperators
                 result = CrossoverAtPosition(b, a, i);
             }
 
-            foreach(Alignment child in result)
-            {
-                child.CheckResolveEmptyColumns();
-            }
-
             return result;
         }
 
