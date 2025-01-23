@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class MultiRowStochasticGapShifter : ILegacyAlignmentModifier, IAlignmentModifier
+    public class MultiRowStochasticGapShifter : AlignmentModifier, ILegacyAlignmentModifier
     {
         private GapShifter GapShifter = new GapShifter();
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] matrix = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = matrix;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             char[,] matrix = alignment.CharacterMatrix;
 

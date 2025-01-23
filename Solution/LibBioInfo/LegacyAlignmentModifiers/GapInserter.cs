@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class GapInserter : ILegacyAlignmentModifier, IAlignmentModifier
+    public class GapInserter : AlignmentModifier, ILegacyAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
@@ -20,13 +20,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             GapWidthLimit = gapSizeLimit;
         }
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] modified = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = modified;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth();
             char[,] modified = InsertGapOfWidth(in alignment.CharacterMatrix, gapWidth);
@@ -85,5 +79,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             int gapWidth = Randomizer.Random.Next(1, GapWidthLimit + 1);
             return gapWidth;
         }
+
+        
     }
 }

@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class GapShifter : ILegacyAlignmentModifier, IAlignmentModifier
+    public class GapShifter : AlignmentModifier, ILegacyAlignmentModifier
     {
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] state = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = state;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             char[,] matrix = alignment.CharacterMatrix;
 

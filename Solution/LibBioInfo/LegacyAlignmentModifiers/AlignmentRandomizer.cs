@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class AlignmentRandomizer : ILegacyAlignmentModifier, IAlignmentModifier
+    public class AlignmentRandomizer : AlignmentModifier, ILegacyAlignmentModifier
     {
         AlignmentStateHelper StateHelper = new AlignmentStateHelper();
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] modifiedMat = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = modifiedMat;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             bool[,] bitmask = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
             ShuffleMatrixRows(ref bitmask);

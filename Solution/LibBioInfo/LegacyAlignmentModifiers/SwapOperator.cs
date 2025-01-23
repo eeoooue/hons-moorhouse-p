@@ -13,19 +13,12 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         Right
     }
 
-    public class SwapOperator : ILegacyAlignmentModifier, IAlignmentModifier
+    public class SwapOperator : AlignmentModifier, ILegacyAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public Bioinformatics Bioinformatics = new Bioinformatics();
-
-        public void ModifyAlignment(Alignment alignment)
-        {
-            char[,] modified = GetModifiedAlignmentState(alignment);
-            alignment.CharacterMatrix = modified;
-        }
-
-        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int i = Randomizer.Random.Next(alignment.Height);
             char[,] matrix = alignment.CharacterMatrix;
