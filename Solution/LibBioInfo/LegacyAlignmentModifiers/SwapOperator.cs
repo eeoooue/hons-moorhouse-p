@@ -59,25 +59,27 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             // affects ith sequence only
             // from column j, 
 
+            string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
+            string modified;
+
             if (direction == SwapDirection.Left)
             {
-                return SwapLeft(matrix, i, j, k);
+                modified = SwapLeft(payload, i, j, k);
             }
             else
             {
-                return SwapRight(matrix, i, j, k);
+                modified = SwapRight(payload, i, j, k);
             }
-        }
-
-        public char[,] SwapRight(char[,] matrix, int i, int j, int k)
-        {
-            string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
-
-            List<int> residuesToMove = CollectResiduesToMove(payload, j, k);
-            string modified = PerformSwap(payload, j, residuesToMove);
 
             char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(matrix, i, modified);
+
             return result;
+        }
+
+        public string SwapRight(string payload, int i, int j, int k)
+        {
+            List<int> residuesToMove = CollectResiduesToMove(payload, j, k);
+            return PerformSwap(payload, j, residuesToMove);
         }
 
         public List<int> CollectResiduesToMove(string sequence, int startPos, int k)
@@ -104,6 +106,11 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
         public string PerformSwap(string payload, int startPos, List<int> residuePositions)
         {
+            if (residuePositions.Count == 0)
+            {
+                return payload;
+            }
+
             char[] result = payload.ToCharArray();
             foreach(int i in residuePositions)
             {
@@ -129,31 +136,24 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         }
 
         #region Leftwards swap via mirroring
-        public char[,] SwapLeft(char[,] matrix, int i, int j, int k)
+
+        public string SwapLeft(string payload, int i, int j, int k)
         {
-            char[,] mirrored = GetHorizontallyMirroredState(matrix);
-            char[,] modified = SwapRight(mirrored, i, j, k);
-            char[,] newState = GetHorizontallyMirroredState(modified);
-            return newState;
+            string mirrored = GetReversedString(payload);
+            string modifiedInReverse = SwapRight(mirrored, i, j, k);
+            string modified = GetReversedString(modifiedInReverse);
+            return modified;
         }
 
-        public char[,] GetHorizontallyMirroredState(char[,] state)
+        public string GetReversedString(string original)
         {
-            int m = state.GetLength(0);
-            int n = state.GetLength(1);
-
-            char[,] result = new char[m, n];
-
-            for (int i = 0; i < m; i++)
+            StringBuilder sb = new StringBuilder();
+            for(int i=original.Length-1; i>=0; i--)
             {
-                for (int j = 0; j < n; j++)
-                {
-                    int j2 = -1 + n - j;
-                    result[i, j] = state[i, j2];
-                }
+                sb.Append(original[i]);
             }
 
-            return result;
+            return sb.ToString();
         }
 
         #endregion
