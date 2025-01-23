@@ -1,5 +1,4 @@
-﻿using LibBioInfo.LegacyAlignmentModifiers;
-using LibBioInfo.ICrossoverOperators;
+﻿using LibBioInfo.ICrossoverOperators;
 using LibBioInfo;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
+using LibBioInfo.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {

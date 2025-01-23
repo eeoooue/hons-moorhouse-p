@@ -9,7 +9,7 @@ using TestsUnitSuite;
 
 using TestsHarness;
 using TestsHarness.Tools;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo
 {

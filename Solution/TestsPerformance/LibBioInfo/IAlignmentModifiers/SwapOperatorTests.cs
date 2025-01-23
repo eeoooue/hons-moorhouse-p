@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibFileIO;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
 {

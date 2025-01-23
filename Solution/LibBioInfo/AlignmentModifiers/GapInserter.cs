@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
     public class GapInserter : AlignmentModifier, ILegacyAlignmentModifier
     {
@@ -80,6 +80,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             return gapWidth;
         }
 
-        
+
     }
 }

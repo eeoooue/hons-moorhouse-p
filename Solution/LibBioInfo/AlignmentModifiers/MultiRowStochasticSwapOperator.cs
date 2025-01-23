@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
     public class MultiRowStochasticSwapOperator : AlignmentModifier, ILegacyAlignmentModifier
     {

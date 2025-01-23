@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using LibScoring;
 using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 
 namespace LibAlignment.Aligners.PopulationBased
 {

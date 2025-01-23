@@ -1,8 +1,8 @@
 ﻿using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 using LibBioInfo;
+using LibBioInfo.AlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
-using LibBioInfo.LegacyAlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;

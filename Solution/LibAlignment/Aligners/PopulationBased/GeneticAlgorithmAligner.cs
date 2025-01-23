@@ -1,7 +1,7 @@
 ﻿using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 using LibBioInfo;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using LibScoring;
 using System;

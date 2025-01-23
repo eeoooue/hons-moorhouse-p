@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

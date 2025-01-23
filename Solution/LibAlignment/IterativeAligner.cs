@@ -1,6 +1,6 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
-using LibBioInfo.LegacyAlignmentModifiers;
+using LibBioInfo.AlignmentModifiers;
 using LibScoring;
 using System;
 using System.Text;

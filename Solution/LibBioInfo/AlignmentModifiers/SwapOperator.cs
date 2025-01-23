@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.LegacyAlignmentModifiers
+namespace LibBioInfo.AlignmentModifiers
 {
     public enum SwapDirection
     {
@@ -18,6 +18,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public Bioinformatics Bioinformatics = new Bioinformatics();
+
         protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int i = Randomizer.Random.Next(alignment.Height);
@@ -103,13 +104,13 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             }
 
             char[] result = payload.ToCharArray();
-            foreach(int i in residuePositions)
+            foreach (int i in residuePositions)
             {
                 result[i] = '-';
             }
 
             int residuesPlaced = 0;
-            for(int i=startPos; i<result.Length; i++)
+            for (int i = startPos; i < result.Length; i++)
             {
                 if (Bioinformatics.IsGapChar(result[i]))
                 {
@@ -139,7 +140,7 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         public string GetReversedString(string original)
         {
             StringBuilder sb = new StringBuilder();
-            for(int i=original.Length-1; i>=0; i--)
+            for (int i = original.Length - 1; i >= 0; i--)
             {
                 sb.Append(original[i]);
             }
