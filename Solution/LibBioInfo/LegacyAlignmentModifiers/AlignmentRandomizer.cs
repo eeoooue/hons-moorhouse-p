@@ -10,9 +10,12 @@ namespace LibBioInfo.LegacyAlignmentModifiers
     {
         public void ModifyAlignment(Alignment alignment)
         {
-            bool[,] state = GetMatrixWithShuffledRows(alignment.State);
-            alignment.SetState(state);
-            alignment.CheckResolveEmptyColumns();
+            //bool[,] state = GetMatrixWithShuffledRows(alignment.State);
+            //alignment.SetState(state);
+            //alignment.CheckResolveEmptyColumns();
+
+            throw new NotImplementedException();
+
         }
 
         public bool[,] GetMatrixWithShuffledRows(bool[,] matrix)

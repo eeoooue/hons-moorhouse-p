@@ -33,18 +33,20 @@ namespace LibAlignment.Aligners.SingleState
 
         public List<Alignment> GetNeighbouringAlignments(Alignment alignment)
         {
-            List<Alignment> result = new List<Alignment>();
+            throw new NotImplementedException();
 
-            List<bool[,]> neighbouringStates = NeighbourhoodFinder.FindNeighbours(alignment.State);
+            //List<Alignment> result = new List<Alignment>();
 
-            foreach (bool[,] state in neighbouringStates)
-            {
-                Alignment neighbour = alignment.GetCopy();
-                neighbour.SetState(state);
-                result.Add(neighbour);
-            }
+            //List<bool[,]> neighbouringStates = NeighbourhoodFinder.FindNeighbours(alignment.State);
 
-            return result;
+            //foreach (bool[,] state in neighbouringStates)
+            //{
+            //    Alignment neighbour = alignment.GetCopy();
+            //    neighbour.SetState(state);
+            //    result.Add(neighbour);
+            //}
+
+            //return result;
         }
     }
 }

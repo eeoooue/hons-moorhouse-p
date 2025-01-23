@@ -23,7 +23,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         {
             int gapWidth = PickGapWidth();
             InsertGapOfWidth(alignment, gapWidth);
-            alignment.CheckResolveEmptyColumns();
         }
 
         public void InsertGapOfWidth(Alignment alignment, int gapWidth)
@@ -53,7 +52,9 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             }
 
             Alignment temp = new Alignment(modified, true);
-            alignment.SetState(temp.State);
+            //alignment.SetState(temp.State);
+
+            throw new NotImplementedException();
         }
 
 

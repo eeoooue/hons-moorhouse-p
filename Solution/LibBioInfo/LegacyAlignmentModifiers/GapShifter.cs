@@ -10,34 +10,43 @@ namespace LibBioInfo.LegacyAlignmentModifiers
     {
         public void ModifyAlignment(Alignment alignment)
         {
+            char[,] state = GetModifiedAlignmentState(alignment.GetCopy());
+            alignment.CharacterMatrix = state;
+        }
+
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        {
             while (true)
             {
                 int row = Randomizer.Random.Next(alignment.Height);
                 bool success = TryShiftGapInRow(alignment, row);
                 if (success)
                 {
-                    alignment.CheckResolveEmptyColumns();
-                    return;
+                    break;
                 }
             }
+
+            return alignment.CharacterMatrix;
         }
 
         public bool TryShiftGapInRow(Alignment alignment, int i)
         {
-            List<int> residuePositions = alignment.GetResiduePositionsInRow(alignment, i);
-            List<int> gapPositions = alignment.GetGapPositionsInRow(alignment, i);
+            throw new NotImplementedException();
 
-            if (residuePositions.Count == 0 || gapPositions.Count == 0)
-            {
-                return false;
-            }
+            //List<int> residuePositions = alignment.GetResiduePositionsInRow(alignment, i);
+            //List<int> gapPositions = alignment.GetGapPositionsInRow(alignment, i);
 
-            int newGapPos = GetRandomChoiceFromList(residuePositions);
-            int newResiduePos = GetRandomChoiceFromList(gapPositions);
-            alignment.SetState(i, newResiduePos, false);
-            alignment.SetState(i, newGapPos, true);
+            //if (residuePositions.Count == 0 || gapPositions.Count == 0)
+            //{
+            //    return false;
+            //}
 
-            return true;
+            //int newGapPos = GetRandomChoiceFromList(residuePositions);
+            //int newResiduePos = GetRandomChoiceFromList(gapPositions);
+            //alignment.SetState(i, newResiduePos, false);
+            //alignment.SetState(i, newGapPos, true);
+
+            //return true;
         }
 
         private int GetRandomChoiceFromList(List<int> options)

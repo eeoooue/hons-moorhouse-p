@@ -59,7 +59,7 @@ namespace LibAlignment
 
         public double ScoreAlignment(Alignment alignment)
         {
-            return Objective.GetFitness(alignment.GetCharacterMatrix());
+            return Objective.GetFitness(alignment.CharacterMatrix);
         }
 
         public abstract string GetName();

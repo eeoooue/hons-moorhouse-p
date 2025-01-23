@@ -33,9 +33,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             {
                 Swap(alignment, i, j, k, SwapDirection.Right);
             }
-
-            alignment.CharacterMatrixIsUpToDate = false;
-            alignment.CheckResolveEmptyColumns();
         }
 
         public void Swap(Alignment alignment, int i, int j, int k, SwapDirection direction)
@@ -55,11 +52,14 @@ namespace LibBioInfo.LegacyAlignmentModifiers
 
         public void SwapLeft(Alignment alignment, int i, int j, int k)
         {
-            bool[,] mirrored = GetHorizontallyMirroredState(alignment.State);
-            alignment.SetState(mirrored);
-            SwapRight(alignment, i, j, k);
-            bool[,] newState = GetHorizontallyMirroredState(alignment.State);
-            alignment.SetState(newState);
+            //bool[,] mirrored = GetHorizontallyMirroredState(alignment.State);
+            //alignment.SetState(mirrored);
+            //SwapRight(alignment, i, j, k);
+            //bool[,] newState = GetHorizontallyMirroredState(alignment.State);
+            //alignment.SetState(newState);
+
+            throw new NotImplementedException();
+
         }
 
         public bool[,] GetHorizontallyMirroredState(bool[,] state)
@@ -85,17 +85,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         {
             int residuesRemoved = DeleteUpToNResiduesRightwards(alignment, i, j, k);
             PlaceNResiduesRightwards(alignment, i, j, residuesRemoved);
-            alignment.CharacterMatrixIsUpToDate = false;
-        }
-
-        public void PrintAlignmentStateRow(Alignment alignment, int i)
-        {
-            for (int j = 0; j < alignment.Width; j++)
-            {
-                char x = alignment.State[i, j] ? '-' : 'X';
-                Console.Write($"{x}");
-            }
-            Console.WriteLine();
         }
 
         public void PlaceNResiduesRightwards(Alignment alignment, int i, int startPos, int count)
@@ -106,44 +95,48 @@ namespace LibBioInfo.LegacyAlignmentModifiers
                 return;
             }
 
-            for (int j = startPos; j < alignment.Width; j++)
-            {
-                if (alignment.State[i, j])
-                {
-                    alignment.State[i, j] = false;
-                    count--;
-                    // Console.WriteLine($"Placed residue @ {j} ; {count} residues remain ");
+            throw new NotImplementedException();
 
-                    if (count == 0)
-                    {
-                        return;
-                    }
-                }
-            }
+            //for (int j = startPos; j < alignment.Width; j++)
+            //{
+            //    if (alignment.State[i, j])
+            //    {
+            //        alignment.State[i, j] = false;
+            //        count--;
+            //        // Console.WriteLine($"Placed residue @ {j} ; {count} residues remain ");
+
+            //        if (count == 0)
+            //        {
+            //            return;
+            //        }
+            //    }
+            //}
         }
 
         public int DeleteUpToNResiduesRightwards(Alignment alignment, int i, int startPos, int k)
         {
-            int counter = 0;
-            // Console.WriteLine($"starting at {startPos} for alignment of width = {alignment.Width}, with goal of {k}");
+            //int counter = 0;
+            //// Console.WriteLine($"starting at {startPos} for alignment of width = {alignment.Width}, with goal of {k}");
 
-            for (int j = startPos; j < alignment.Width; j++)
-            {
-                if (alignment.State[i, j] == false)
-                {
-                    alignment.State[i, j] = true;
-                    counter++;
+            //for (int j = startPos; j < alignment.Width; j++)
+            //{
+            //    if (alignment.State[i, j] == false)
+            //    {
+            //        alignment.State[i, j] = true;
+            //        counter++;
 
-                    // Console.WriteLine($"deleted {counter}th residue.");
+            //        // Console.WriteLine($"deleted {counter}th residue.");
 
-                    if (counter == k)
-                    {
-                        return counter;
-                    }
-                }
-            }
+            //        if (counter == k)
+            //        {
+            //            return counter;
+            //        }
+            //    }
+            //}
 
-            return counter;
+            //return counter;
+
+            throw new NotImplementedException();
         }
 
 
