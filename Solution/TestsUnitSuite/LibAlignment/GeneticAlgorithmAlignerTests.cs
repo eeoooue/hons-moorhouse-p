@@ -4,7 +4,8 @@ using LibBioInfo;
 using LibFileIO;
 using LibScoring;
 using LibScoring.FitnessFunctions;
-using LibScoring.ScoringMatrices;
+using LibBioInfo.ScoringMatrices;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,5 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
-using LibScoring.ScoringMatrices;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,9 @@ using LibAlignment.Aligners.SingleState;
 using LibAlignment.Aligners.PopulationBased;
 using LibBioInfo;
 using LibScoring.FitnessFunctions;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibBioInfo.ScoringMatrices;
 
 namespace MAli.AlignmentConfigs
 {

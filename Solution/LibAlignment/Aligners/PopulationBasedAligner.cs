@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;

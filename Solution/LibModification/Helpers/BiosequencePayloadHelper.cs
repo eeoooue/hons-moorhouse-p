@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.Helpers
+namespace LibModification.Helpers
 {
     public class BiosequencePayloadHelper
     {
@@ -79,7 +80,7 @@ namespace LibBioInfo.Helpers
         public int CountResiduesInPayload(string payload)
         {
             int total = 0;
-            foreach(char x in payload)
+            foreach (char x in payload)
             {
                 if (!Bioinformatics.IsGapChar(x))
                 {

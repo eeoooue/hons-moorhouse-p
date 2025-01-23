@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibFileIO;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
 
 namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
 {

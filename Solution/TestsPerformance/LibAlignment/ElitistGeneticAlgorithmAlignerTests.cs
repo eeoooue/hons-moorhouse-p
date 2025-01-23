@@ -1,6 +1,7 @@
 ﻿using LibAlignment;
 using LibBioInfo;
-using LibScoring.ScoringMatrices;
+using LibBioInfo.ScoringMatrices;
+
 using LibScoring;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibScoring.ScoringMatrices
+namespace LibBioInfo.ScoringMatrices
 {
     public class IdentityMatrix : IScoringMatrix
     {

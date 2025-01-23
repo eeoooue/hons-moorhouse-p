@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibScoring.Metrics
+namespace LibBioInfo.Metrics
 {
     public class SumOfPairsScore
     {
@@ -76,11 +76,11 @@ namespace LibScoring.Metrics
 
                     if (a != b)
                     {
-                        combinations = (a_count * b_count) / 2;
+                        combinations = a_count * b_count / 2;
                     }
                     else
                     {
-                        combinations = (a_count * (a_count - 1)) / 2;
+                        combinations = a_count * (a_count - 1) / 2;
                     }
 
                     int score = Matrix.ScorePair(a, b);

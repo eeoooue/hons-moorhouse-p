@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.ICrossoverOperators
+namespace LibModification.CrossoverOperators
 {
     public class RowBasedCrossoverOperator : ICrossoverOperator
     {
@@ -25,7 +26,7 @@ namespace LibBioInfo.ICrossoverOperators
             List<BioSequence> sequencesB = b.GetAlignedSequences();
 
             List<BioSequence> sequences = new List<BioSequence>();
-            for(int i=0; i<a.Height; i++)
+            for (int i = 0; i < a.Height; i++)
             {
                 if (mapping[i])
                 {
@@ -43,7 +44,7 @@ namespace LibBioInfo.ICrossoverOperators
         public bool[] ConstructColumnMapping(int n)
         {
             bool[] result = new bool[n];
-            for(int i=0; i<n; i++)
+            for (int i = 0; i < n; i++)
             {
                 result[i] = Randomizer.CoinFlip();
             }

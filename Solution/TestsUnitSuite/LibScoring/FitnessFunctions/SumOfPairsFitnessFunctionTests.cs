@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibScoring;
-using LibScoring.ScoringMatrices;
+using LibBioInfo.ScoringMatrices;
+
 
 namespace TestsUnitSuite.LibScoring.FitnessFunctions
 {

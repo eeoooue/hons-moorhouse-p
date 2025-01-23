@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.Helpers
+namespace LibModification.Helpers
 {
     public class CharMatrixHelper
     {
@@ -15,7 +16,7 @@ namespace LibBioInfo.Helpers
             int m = matrix.GetLength(0);
 
             List<string> result = new List<string>();
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
                 string chain = CollectResidueChain(in matrix, i);
             }
@@ -29,7 +30,7 @@ namespace LibBioInfo.Helpers
 
             StringBuilder sb = new StringBuilder();
 
-            for(int j=0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
                 char x = matrix[i, j];
                 if (Bioinformatics.IsGapChar(x) == false)
@@ -46,7 +47,7 @@ namespace LibBioInfo.Helpers
             int n = matrix.GetLength(1);
 
             StringBuilder sb = new StringBuilder();
-            for(int j=0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
                 sb.Append(matrix[i, j]);
             }
@@ -82,9 +83,9 @@ namespace LibBioInfo.Helpers
 
             char[,] result = new char[m, n];
 
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j1=0; j1<n; j1++)
+                for (int j1 = 0; j1 < n; j1++)
                 {
                     int j2 = whitelist[j1];
                     result[i, j1] = matrix[i, j2];
@@ -98,7 +99,7 @@ namespace LibBioInfo.Helpers
         {
             int m = matrix.GetLength(0);
 
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
                 char x = matrix[i, j];
                 if (!Bioinformatics.IsGapChar(x))
@@ -121,7 +122,7 @@ namespace LibBioInfo.Helpers
         {
             int n = matrix.GetLength(1);
 
-            for(int j=0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
                 char x = matrix[i, j];
                 if (Bioinformatics.IsGapChar(x))
@@ -139,7 +140,7 @@ namespace LibBioInfo.Helpers
 
             int n = matrix.GetLength(1);
 
-            for(int j=0; j<n; j++)
+            for (int j = 0; j < n; j++)
             {
                 char x = matrix[i, j];
                 if (Bioinformatics.IsGapChar(x))

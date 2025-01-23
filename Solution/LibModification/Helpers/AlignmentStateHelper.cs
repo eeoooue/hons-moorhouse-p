@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.Helpers
+namespace LibModification.Helpers
 {
     public class AlignmentStateHelper
     {
@@ -17,9 +18,9 @@ namespace LibBioInfo.Helpers
 
             bool[,] result = new bool[m, n];
 
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
-                for(int j=0; j<n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     result[i, j] = false;
                     if (Bioinformatics.IsGapChar(state[i, j]))
@@ -39,11 +40,11 @@ namespace LibBioInfo.Helpers
 
             char[,] result = new char[m, n];
 
-            for(int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
                 string residues = sequences[i].Residues;
                 int p = 0;
-                for(int j=0; j<n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     result[i, j] = '-';
                     if (!state[i, j])

@@ -1,11 +1,12 @@
-﻿using LibBioInfo.Helpers;
+﻿using LibBioInfo;
+using LibModification.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo.ICrossoverOperators
+namespace LibModification.CrossoverOperators
 {
     public class ColBasedCrossoverOperator : ICrossoverOperator
     {

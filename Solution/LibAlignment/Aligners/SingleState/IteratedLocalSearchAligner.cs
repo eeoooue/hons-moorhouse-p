@@ -1,11 +1,13 @@
 ﻿using LibBioInfo;
-using LibBioInfo.AlignmentModifiers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibModification.CrossoverOperators;
 
 namespace LibAlignment.Aligners.SingleState
 {

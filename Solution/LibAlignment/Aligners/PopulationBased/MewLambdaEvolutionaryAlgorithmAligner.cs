@@ -1,5 +1,4 @@
-﻿using LibBioInfo.ICrossoverOperators;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,8 @@ using System.Threading.Tasks;
 using LibScoring;
 using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
-using LibBioInfo.AlignmentModifiers;
+using LibModification;
+using LibModification.AlignmentModifiers;
 
 namespace LibAlignment.Aligners.PopulationBased
 {

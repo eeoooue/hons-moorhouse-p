@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibScoring.ScoringMatrices
+namespace LibBioInfo.ScoringMatrices
 {
     public class PAM250Matrix : IScoringMatrix
     {

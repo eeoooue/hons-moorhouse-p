@@ -1,5 +1,6 @@
-﻿using LibScoring;
-using LibScoring.ScoringMatrices;
+﻿using LibBioInfo;
+using LibBioInfo.ScoringMatrices;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
