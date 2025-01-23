@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibBioInfo.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,62 +13,136 @@ namespace LibBioInfo.LegacyAlignmentModifiers
         Right
     }
 
-    public class SwapOperator : ILegacyAlignmentModifier
+    public class SwapOperator : ILegacyAlignmentModifier, IAlignmentModifier
     {
+        public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
+        public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+        public Bioinformatics Bioinformatics = new Bioinformatics();
+
         public void ModifyAlignment(Alignment alignment)
         {
-            int i = Randomizer.Random.Next(alignment.Height);
-            PerformSwapWithinRow(alignment, i);
+            char[,] modified = GetModifiedAlignmentState(alignment);
+            alignment.CharacterMatrix = modified;
         }
 
-        public void PerformSwapWithinRow(Alignment alignment, int i)
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            int j = Randomizer.Random.Next(alignment.Width);
-            int k = Randomizer.Random.Next(1, alignment.Width / 2);
+            int i = Randomizer.Random.Next(alignment.Height);
+            char[,] modified = PerformSwapWithinRow(alignment.CharacterMatrix, i);
+            return CharMatrixHelper.RemoveEmptyColumns(modified);
+        }
+
+
+        public char[,] PerformSwapWithinRow(char[,] matrix, int i)
+        {
+            int n = matrix.GetLength(1);
+            int j = n;
+            int k = n;
+            while (j + k >= n)
+            {
+                j = Randomizer.Random.Next(n);
+                k = Randomizer.Random.Next(1, n / 2);
+            }
 
             if (Randomizer.CoinFlip())
             {
-                Swap(alignment, i, j, k, SwapDirection.Left);
+                return Swap(matrix, i, j, k, SwapDirection.Left);
             }
             else
             {
-                Swap(alignment, i, j, k, SwapDirection.Right);
+                return Swap(matrix, i, j, k, SwapDirection.Right);
             }
         }
 
-        public void Swap(Alignment alignment, int i, int j, int k, SwapDirection direction)
+        public char[,] Swap(char[,] matrix, int i, int j, int k, SwapDirection direction)
         {
             // affects ith sequence only
             // from column j, 
 
             if (direction == SwapDirection.Left)
             {
-                SwapLeft(alignment, i, j, k);
+                return SwapLeft(matrix, i, j, k);
             }
             else
             {
-                SwapRight(alignment, i, j, k);
+                return SwapRight(matrix, i, j, k);
             }
         }
 
-        public void SwapLeft(Alignment alignment, int i, int j, int k)
+        public char[,] SwapRight(char[,] matrix, int i, int j, int k)
         {
-            //bool[,] mirrored = GetHorizontallyMirroredState(alignment.State);
-            //alignment.SetState(mirrored);
-            //SwapRight(alignment, i, j, k);
-            //bool[,] newState = GetHorizontallyMirroredState(alignment.State);
-            //alignment.SetState(newState);
+            string payload = CharMatrixHelper.GetCharRowAsString(matrix, i);
 
-            throw new NotImplementedException();
+            List<int> residuesToMove = CollectResiduesToMove(payload, j, k);
+            string modified = PerformSwap(payload, j, residuesToMove);
 
+            char[,] result = CharMatrixHelper.WriteStringOverMatrixRow(matrix, i, modified);
+            return result;
         }
 
-        public bool[,] GetHorizontallyMirroredState(bool[,] state)
+        public List<int> CollectResiduesToMove(string sequence, int startPos, int k)
+        {
+            List<int> result = new List<int>();
+
+            for (int j = startPos; j < sequence.Length; j++)
+            {
+                bool isResidue = !Bioinformatics.IsGapChar(sequence[j]);
+
+                if (isResidue)
+                {
+                    result.Add(j);
+
+                    if (result.Count == k)
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public string PerformSwap(string payload, int startPos, List<int> residuePositions)
+        {
+            char[] result = payload.ToCharArray();
+            foreach(int i in residuePositions)
+            {
+                result[i] = '-';
+            }
+
+            int residuesPlaced = 0;
+            for(int i=startPos; i<result.Length; i++)
+            {
+                if (Bioinformatics.IsGapChar(result[i]))
+                {
+                    int p = residuePositions[residuesPlaced++];
+                    result[i] = payload[p];
+                }
+
+                if (residuesPlaced == residuePositions.Count)
+                {
+                    return new string(result);
+                }
+            }
+
+            return new string(result);
+        }
+
+        #region Leftwards swap via mirroring
+        public char[,] SwapLeft(char[,] matrix, int i, int j, int k)
+        {
+            char[,] mirrored = GetHorizontallyMirroredState(matrix);
+            char[,] modified = SwapRight(mirrored, i, j, k);
+            char[,] newState = GetHorizontallyMirroredState(modified);
+            return newState;
+        }
+
+        public char[,] GetHorizontallyMirroredState(char[,] state)
         {
             int m = state.GetLength(0);
             int n = state.GetLength(1);
 
-            bool[,] result = new bool[m, n];
+            char[,] result = new char[m, n];
 
             for (int i = 0; i < m; i++)
             {
@@ -81,64 +156,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             return result;
         }
 
-        public void SwapRight(Alignment alignment, int i, int j, int k)
-        {
-            int residuesRemoved = DeleteUpToNResiduesRightwards(alignment, i, j, k);
-            PlaceNResiduesRightwards(alignment, i, j, residuesRemoved);
-        }
-
-        public void PlaceNResiduesRightwards(Alignment alignment, int i, int startPos, int count)
-        {
-            // Console.WriteLine($"Placing {count} residues, starting at {startPos} ");
-            if (count == 0)
-            {
-                return;
-            }
-
-            throw new NotImplementedException();
-
-            //for (int j = startPos; j < alignment.Width; j++)
-            //{
-            //    if (alignment.State[i, j])
-            //    {
-            //        alignment.State[i, j] = false;
-            //        count--;
-            //        // Console.WriteLine($"Placed residue @ {j} ; {count} residues remain ");
-
-            //        if (count == 0)
-            //        {
-            //            return;
-            //        }
-            //    }
-            //}
-        }
-
-        public int DeleteUpToNResiduesRightwards(Alignment alignment, int i, int startPos, int k)
-        {
-            //int counter = 0;
-            //// Console.WriteLine($"starting at {startPos} for alignment of width = {alignment.Width}, with goal of {k}");
-
-            //for (int j = startPos; j < alignment.Width; j++)
-            //{
-            //    if (alignment.State[i, j] == false)
-            //    {
-            //        alignment.State[i, j] = true;
-            //        counter++;
-
-            //        // Console.WriteLine($"deleted {counter}th residue.");
-
-            //        if (counter == k)
-            //        {
-            //            return counter;
-            //        }
-            //    }
-            //}
-
-            //return counter;
-
-            throw new NotImplementedException();
-        }
-
-
+        #endregion
     }
 }
