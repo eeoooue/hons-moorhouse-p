@@ -23,6 +23,62 @@ namespace LibBioInfo.Helpers
             return sb.ToString();
         }
 
+        public char[,] RemoveEmptyColumns(char[,] matrix)
+        {
+            int n = matrix.GetLength(1);
+            List<int> whitelist = new List<int>();
+
+            for (int j = 0; j < n; j++)
+            {
+                if (!ColumnIsEmpty(matrix, j))
+                {
+                    whitelist.Add(j);
+                }
+            }
+
+            return GetMatrixOfOnlyWhitelistedColumns(matrix, whitelist);
+        }
+
+        private char[,] GetMatrixOfOnlyWhitelistedColumns(char[,] matrix, List<int> whitelist)
+        {
+            int m = matrix.GetLength(0);
+            int n = whitelist.Count;
+
+            if (n == matrix.GetLength(1))
+            {
+                return matrix;
+            }
+
+            char[,] result = new char[m, n];
+
+            for(int i=0; i<m; i++)
+            {
+                for(int j1=0; j1<n; j1++)
+                {
+                    int j2 = whitelist[j1];
+                    result[i, j1] = matrix[i, j2];
+                }
+            }
+
+            return result;
+        }
+
+        public bool ColumnIsEmpty(char[,] matrix, int j)
+        {
+            int m = matrix.GetLength(0);
+
+            for(int i=0; i<m; i++)
+            {
+                char x = matrix[i, j];
+                if (!Bioinformatics.IsGapChar(x))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         public char[,] WriteStringOverMatrixRow(char[,] matrix, int i, string s)
         {
             for (int j = 0; j < s.Length; j++)
