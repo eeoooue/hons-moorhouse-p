@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class GapShifter : ILegacyAlignmentModifier
+    public class GapShifter : ILegacyAlignmentModifier, IAlignmentModifier
     {
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
