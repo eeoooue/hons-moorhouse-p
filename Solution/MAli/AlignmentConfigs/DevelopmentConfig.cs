@@ -19,7 +19,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetMinimalAligner();
+            return GetSprint04Version();
         }
 
         private IterativeAligner GetMinimalAligner()
@@ -35,7 +35,13 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            aligner.MutationOperator = new MultiRowStochasticGapShifter();
+            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            {
+                new MultiRowStochasticGapShifter(),
+                new GapInserter(),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
             return aligner;
         }
 
