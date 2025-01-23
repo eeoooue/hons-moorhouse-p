@@ -15,7 +15,7 @@ namespace LibScoring.Metrics
             Matrix = matrix;
         }
 
-        public double ScoreAlignment(char[,] alignment)
+        public double ScoreAlignment(in char[,] alignment)
         {
             int n = alignment.GetLength(1);
 
@@ -28,7 +28,7 @@ namespace LibScoring.Metrics
             return result;
         }
 
-        public double ScoreColumn(char[,] alignment, int j)
+        public double ScoreColumn(in char[,] alignment, int j)
         {
             Dictionary<char, int> table = ConstructCounterTableForColumn(alignment, j);
             double result = ScorePairwiseCombinations(table);
@@ -36,7 +36,7 @@ namespace LibScoring.Metrics
             return result;
         }
 
-        public Dictionary<char, int> ConstructCounterTableForColumn(char[,] matrix, int j)
+        public Dictionary<char, int> ConstructCounterTableForColumn(in char[,] matrix, int j)
         {
             Dictionary<char, int> result = new Dictionary<char, int>();
             foreach (char residue in Matrix.GetResidues())
@@ -92,7 +92,7 @@ namespace LibScoring.Metrics
             return result;
         }
 
-        public int GetNumberOfPossiblePairs(char[,] alignment)
+        public int GetNumberOfPossiblePairs(in char[,] alignment)
         {
             int m = alignment.GetLength(0);
             int n = alignment.GetLength(1);
@@ -112,14 +112,14 @@ namespace LibScoring.Metrics
             return combinations;
         }
 
-        public double GetBestPossibleScore(char[,] alignment)
+        public double GetBestPossibleScore(in char[,] alignment)
         {
             double bestScore = Matrix.GetBestPairwiseScorePossible();
             int possiblePairs = GetNumberOfPossiblePairs(alignment);
             return possiblePairs * bestScore;
         }
 
-        public double GetWorstPossibleScore(char[,] alignment)
+        public double GetWorstPossibleScore(in char[,] alignment)
         {
             double worstScore = Matrix.GetWorstPairwiseScorePossible();
             int possiblePairs = GetNumberOfPossiblePairs(alignment);

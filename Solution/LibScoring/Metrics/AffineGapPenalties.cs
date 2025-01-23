@@ -20,7 +20,7 @@ namespace LibScoring.Metrics
             NullCost = nullCost;
         }
 
-        public double GetMaximumPossiblePenalty(char[,] alignment)
+        public double GetMaximumPossiblePenalty(in char[,] alignment)
         {
             int m = alignment.GetLength(0);
             int n = alignment.GetLength(1);
@@ -42,7 +42,7 @@ namespace LibScoring.Metrics
         }
 
 
-        public double GetPenaltyForAlignmentMatrix(char[,] alignment)
+        public double GetPenaltyForAlignmentMatrix(in char[,] alignment)
         {
             double result = 0;
             foreach(string payload in ExtractPayloads(alignment))
@@ -53,7 +53,7 @@ namespace LibScoring.Metrics
             return result;
         }
         
-        public List<string> ExtractPayloads(char[,] alignment)
+        public List<string> ExtractPayloads(in char[,] alignment)
         {
             List<string> result = new List<string>();
             for(int i=0; i<alignment.GetLength(0); i++)
@@ -65,7 +65,7 @@ namespace LibScoring.Metrics
             return result;
         }
 
-        public string ExtractPayload(char[,] alignment, int i)
+        public string ExtractPayload(in char[,] alignment, int i)
         {
             StringBuilder sb = new StringBuilder();
             for(int j=0; j < alignment.GetLength(1); j++)
