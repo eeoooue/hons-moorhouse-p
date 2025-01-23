@@ -19,7 +19,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetBottleneckedAligner();
+            return GetSprint04Version();
         }
 
         private IterativeAligner GetBottleneckedAligner()
@@ -43,6 +43,29 @@ namespace MAli.AlignmentConfigs
             aligner.MutationOperator = new MultiOperatorModifier(modifiers);
             return aligner;
         }
+
+        //private IterativeAligner GetRandomSearchAligner()
+        //{
+        //    IScoringMatrix matrix = new BLOSUM62Matrix();
+        //    // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+
+        //    IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
+
+        //    const int maxIterations = 100;
+        //    RandomSearchAligner aligner = new RandomSearchAligner(objective, maxIterations);
+
+        //    return aligner;
+        //}
+
+        public IterativeAligner GetRandomSearchAligner()
+        {
+            IScoringMatrix blosum = new BLOSUM62Matrix();
+            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
+            int iterations = 1000;
+
+            return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
+        }
+
 
         private IterativeAligner GetMinimalAligner()
         {
@@ -91,14 +114,7 @@ namespace MAli.AlignmentConfigs
         }
 
 
-        public IterativeAligner GetRandomSearchAligner()
-        {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
-            int iterations = 1000;
-
-            return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
-        }
+        
 
         public IterativeAligner GetILSAligner()
         {
