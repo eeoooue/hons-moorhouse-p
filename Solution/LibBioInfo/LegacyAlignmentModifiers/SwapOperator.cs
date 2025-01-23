@@ -32,7 +32,6 @@ namespace LibBioInfo.LegacyAlignmentModifiers
             return CharMatrixHelper.RemoveEmptyColumns(modified);
         }
 
-
         public char[,] PerformSwapWithinRow(char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
