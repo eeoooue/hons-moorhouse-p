@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.AlignmentModifiers
 {
-    public class NullModifier : AlignmentModifier, ILegacyAlignmentModifier
+    public class NullModifier : AlignmentModifier, IAlignmentModifier
     {
         protected override char[,] GetModifiedAlignmentState(Alignment alignment)
         {

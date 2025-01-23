@@ -35,7 +35,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = mew * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new MultiRowStochasticSwapOperator(),
             };
@@ -80,7 +80,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new MultiRowStochasticGapShifter(),
                 new GapInserter(),
@@ -100,7 +100,7 @@ namespace MAli.AlignmentConfigs
             const int lambda = 10 * 7;
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
 
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new MultiRowStochasticSwapOperator(),
                 new SwapOperator(),

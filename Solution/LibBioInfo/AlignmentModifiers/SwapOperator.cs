@@ -13,7 +13,7 @@ namespace LibBioInfo.AlignmentModifiers
         Right
     }
 
-    public class SwapOperator : AlignmentModifier, ILegacyAlignmentModifier
+    public class SwapOperator : AlignmentModifier, IAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();

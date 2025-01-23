@@ -14,14 +14,14 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         [TestMethod]
         public void CanSelectRandomOperator()
         {
-            List<ILegacyAlignmentModifier> modifiers = new List<ILegacyAlignmentModifier>()
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new GapShifter(),
                 new GapInserter(),
             };
 
             MultiOperatorModifier multi = new MultiOperatorModifier(modifiers);
-            ILegacyAlignmentModifier selection = multi.PickRandomModifier();
+            IAlignmentModifier selection = multi.PickRandomModifier();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.AlignmentModifiers
 {
-    public class MultiRowStochasticGapShifter : AlignmentModifier, ILegacyAlignmentModifier
+    public class MultiRowStochasticGapShifter : AlignmentModifier, IAlignmentModifier
     {
         private GapShifter GapShifter = new GapShifter();
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo
 {
-    public abstract class AlignmentModifier : ILegacyAlignmentModifier
+    public abstract class AlignmentModifier : IAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment)
         {

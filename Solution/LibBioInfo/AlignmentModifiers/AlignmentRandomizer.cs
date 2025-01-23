@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.AlignmentModifiers
 {
-    public class AlignmentRandomizer : AlignmentModifier, ILegacyAlignmentModifier
+    public class AlignmentRandomizer : AlignmentModifier, IAlignmentModifier
     {
         AlignmentStateHelper StateHelper = new AlignmentStateHelper();
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.AlignmentModifiers
 {
-    public class MultiRowStochasticSwapOperator : AlignmentModifier, ILegacyAlignmentModifier
+    public class MultiRowStochasticSwapOperator : AlignmentModifier, IAlignmentModifier
     {
         private SwapOperator SwapOperator = new SwapOperator();
         private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
