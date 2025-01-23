@@ -1,4 +1,4 @@
-﻿using LibScoring.Metrics;
+﻿using LibBioInfo.Metrics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

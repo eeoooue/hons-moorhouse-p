@@ -1,6 +1,5 @@
 ﻿using LibAlignment;
 using LibBioInfo;
-using LibScoring.ScoringMatrices;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using TestsHarness;
 using LibFileIO;
 using LibAlignment.Aligners.PopulationBased;
 using LibScoring.FitnessFunctions;
+using LibBioInfo.ScoringMatrices;
 
 namespace TestsPerformance.LibAlignment
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibScoring.Metrics
+namespace LibBioInfo.Metrics
 {
     public class AffineGapPenalties
     {
@@ -24,7 +24,7 @@ namespace LibScoring.Metrics
         {
             int m = alignment.GetLength(0);
             int n = alignment.GetLength(1);
-            int maximumNumberOfOpeningsPerRow = n - (n / 2);
+            int maximumNumberOfOpeningsPerRow = n - n / 2;
             int maximumNumberOfOpenings = m * maximumNumberOfOpeningsPerRow;
             int maximumNumberOfGapsPerRow = n - 1;
             int maximumNumberOfGaps = m * maximumNumberOfGapsPerRow;
@@ -45,18 +45,18 @@ namespace LibScoring.Metrics
         public double GetPenaltyForAlignmentMatrix(in char[,] alignment)
         {
             double result = 0;
-            foreach(string payload in ExtractPayloads(alignment))
+            foreach (string payload in ExtractPayloads(alignment))
             {
                 result += ScorePayload(payload);
             }
 
             return result;
         }
-        
+
         public List<string> ExtractPayloads(in char[,] alignment)
         {
             List<string> result = new List<string>();
-            for(int i=0; i<alignment.GetLength(0); i++)
+            for (int i = 0; i < alignment.GetLength(0); i++)
             {
                 string payload = ExtractPayload(alignment, i);
                 result.Add(payload);
@@ -68,7 +68,7 @@ namespace LibScoring.Metrics
         public string ExtractPayload(in char[,] alignment, int i)
         {
             StringBuilder sb = new StringBuilder();
-            for(int j=0; j < alignment.GetLength(1); j++)
+            for (int j = 0; j < alignment.GetLength(1); j++)
             {
                 char x = alignment[i, j];
                 sb.Append(x);
