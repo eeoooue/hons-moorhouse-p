@@ -21,17 +21,17 @@ namespace LibScoring.FitnessFunctions
             return $"Sum of Pairs ({SumOfPairsScore.Matrix.GetName()})";
         }
 
-        public override double ScoreAlignment(char[,] alignment)
+        public override double ScoreAlignment(in char[,] alignment)
         {
             return SumOfPairsScore.ScoreAlignment(alignment);
         }
 
-        public override double GetBestPossibleScore(char[,] alignment)
+        public override double GetBestPossibleScore(in char[,] alignment)
         {
             return SumOfPairsScore.GetBestPossibleScore(alignment);
         }
 
-        public override double GetWorstPossibleScore(char[,] alignment)
+        public override double GetWorstPossibleScore(in char[,] alignment)
         {
             return SumOfPairsScore.GetWorstPossibleScore(alignment);
         }

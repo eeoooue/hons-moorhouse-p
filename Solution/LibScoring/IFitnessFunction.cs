@@ -9,7 +9,7 @@ namespace LibScoring
 {
     public interface IFitnessFunction
     {
-        public double GetFitness(char[,] alignment);
+        public double GetFitness(in char[,] alignment);
 
         public string GetName();
     }
