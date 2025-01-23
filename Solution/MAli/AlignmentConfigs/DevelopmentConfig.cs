@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using LibAlignment.Aligners.SingleState;
 using LibAlignment.Aligners.PopulationBased;
-using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo;
 using LibScoring.FitnessFunctions;
 using LibBioInfo.LegacyAlignmentModifiers;

@@ -1,4 +1,4 @@
-﻿using LibBioInfo.IAlignmentModifiers;
+﻿using LibBioInfo.LegacyAlignmentModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

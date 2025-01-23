@@ -1,6 +1,6 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using LibFileIO.AlignmentReaders;
 using MAli;
 

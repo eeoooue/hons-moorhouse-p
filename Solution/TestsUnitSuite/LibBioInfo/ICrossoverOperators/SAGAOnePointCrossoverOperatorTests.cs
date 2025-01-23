@@ -1,5 +1,5 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibBioInfo.LegacyAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using System;
 using System.Collections.Generic;

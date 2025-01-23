@@ -1,5 +1,4 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo.INeighbourhoodFinders;
 using LibScoring;
 using System;

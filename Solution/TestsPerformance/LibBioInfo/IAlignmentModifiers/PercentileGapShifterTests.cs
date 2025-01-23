@@ -1,11 +1,11 @@
-﻿using LibBioInfo.IAlignmentModifiers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibFileIO;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
 {

@@ -1,4 +1,4 @@
-﻿using LibBioInfo.IAlignmentModifiers;
+﻿using LibBioInfo.LegacyAlignmentModifiers;
 using LibBioInfo.ICrossoverOperators;
 using LibBioInfo;
 using System;

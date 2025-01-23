@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibScoring;
-using LibBioInfo.IAlignmentModifiers;
 using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
+using LibBioInfo.LegacyAlignmentModifiers;
 
 namespace LibAlignment.Aligners.PopulationBased
 {
