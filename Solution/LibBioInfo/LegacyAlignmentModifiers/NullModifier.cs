@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.LegacyAlignmentModifiers
 {
-    public class NullModifier : ILegacyAlignmentModifier
+    public class NullModifier : ILegacyAlignmentModifier, IAlignmentModifier
     {
         public void ModifyAlignment(Alignment alignment)
         {
-            return;
+            char[,] modified = GetModifiedAlignmentState(alignment);
+            alignment.CharacterMatrix = modified;
+        }
+
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
+        {
+            return alignment.CharacterMatrix;
         }
     }
 }
