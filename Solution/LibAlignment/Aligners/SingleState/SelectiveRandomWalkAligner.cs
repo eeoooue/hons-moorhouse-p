@@ -13,7 +13,7 @@ namespace LibAlignment.Aligners.SingleState
     {
         public IAlignmentModifier Modifier = new MultiRowStochasticGapShifter();
 
-        public SelectiveRandomWalkAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public SelectiveRandomWalkAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
 
         }

@@ -20,7 +20,7 @@ namespace LibAlignment
 
         public double AlignmentScore { get { return Aligner.AlignmentScore; } }
 
-        public IObjectiveFunction Objective { get { return Aligner.Objective; } }
+        public IFitnessFunction Objective { get { return Aligner.Objective; } }
 
         public Alignment? CurrentAlignment { get { return Aligner.CurrentAlignment; } }
 

@@ -20,7 +20,7 @@ namespace LibAlignment.Aligners.PopulationBased
         public int Mew = 5; // selection size
         public int Lambda { get { return PopulationSize; } } // population size
 
-        public MewLambdaEvolutionaryAlgorithmAligner(IObjectiveFunction objective, int iterations, int mew = 10, int lambda = 70) : base(objective, iterations, lambda)
+        public MewLambdaEvolutionaryAlgorithmAligner(IFitnessFunction objective, int iterations, int mew = 10, int lambda = 70) : base(objective, iterations, lambda)
         {
             Mew = mew;
         }

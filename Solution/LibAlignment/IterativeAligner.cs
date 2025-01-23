@@ -9,7 +9,7 @@ namespace LibAlignment
 {
     public abstract class IterativeAligner : IIterativeAligner
     {
-        public IObjectiveFunction Objective { get; protected set; }
+        public IFitnessFunction Objective { get; protected set; }
 
         public Alignment CurrentAlignment { get { return CurrentBest.Alignment; } }
 
@@ -21,7 +21,7 @@ namespace LibAlignment
 
         protected ScoredAlignment CurrentBest = null!;
 
-        public IterativeAligner(IObjectiveFunction objective, int iterations)
+        public IterativeAligner(IFitnessFunction objective, int iterations)
         {
             Objective = objective;
             IterationsLimit = iterations;
@@ -59,7 +59,7 @@ namespace LibAlignment
 
         public double ScoreAlignment(Alignment alignment)
         {
-            return Objective.ScoreAlignment(alignment);
+            return Objective.GetFitness(alignment.GetCharacterMatrix());
         }
 
         public abstract string GetName();

@@ -16,7 +16,7 @@ namespace LibAlignment.Aligners
 
         public int PopulationSize;
 
-        protected PopulationBasedAligner(IObjectiveFunction objective, int iterations, int populationSize) : base(objective, iterations)
+        protected PopulationBasedAligner(IFitnessFunction objective, int iterations, int populationSize) : base(objective, iterations)
         {
             PopulationSize = populationSize;
         }

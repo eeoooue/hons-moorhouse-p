@@ -18,7 +18,7 @@ namespace LibAlignment.Aligners.SingleState
         public ScoredAlignment HomeBase = null!;
         protected ScoredAlignment S = null!;
 
-        public IteratedLocalSearchAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public IteratedLocalSearchAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
 
         }

@@ -1,6 +1,5 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
-using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
 using System;
@@ -12,6 +11,7 @@ using LibAlignment.Aligners.SingleState;
 using LibAlignment.Aligners.PopulationBased;
 using LibBioInfo.IAlignmentModifiers;
 using LibBioInfo;
+using LibScoring.FitnessFunctions;
 
 namespace MAli.AlignmentConfigs
 {
@@ -25,7 +25,7 @@ namespace MAli.AlignmentConfigs
         private MewLambdaEvolutionaryAlgorithmAligner GetSprint04Version()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IObjectiveFunction objective = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(matrix, 4, 1);
+            IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
 
             const int maxIterations = 100;
             const int mew = 10;
@@ -49,7 +49,7 @@ namespace MAli.AlignmentConfigs
         public IterativeAligner GetRandomSearchAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
-            IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);
+            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
             int iterations = 1000;
 
             return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
@@ -58,7 +58,7 @@ namespace MAli.AlignmentConfigs
         public IterativeAligner GetILSAligner()
         {
             IScoringMatrix blosum = new BLOSUM62Matrix();
-            IObjectiveFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesObjectiveFunction(blosum);
+            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
             int iterations = 10000;
 
             return new IteratedLocalSearchAligner(sumOfPairsWithAffine, iterations);

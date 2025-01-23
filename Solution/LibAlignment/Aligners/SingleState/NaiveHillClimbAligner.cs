@@ -14,7 +14,7 @@ namespace LibAlignment.Aligners.SingleState
     {
         public INeighbourhoodFinder NeighbourhoodFinder = new SwapBasedNeighbourhoodFinder();
 
-        public NaiveHillClimbAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public NaiveHillClimbAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
         }
 

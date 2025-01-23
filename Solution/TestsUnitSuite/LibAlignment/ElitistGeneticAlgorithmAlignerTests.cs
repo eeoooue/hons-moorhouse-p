@@ -1,5 +1,4 @@
 ﻿using LibBioInfo;
-using LibScoring.ObjectiveFunctions;
 using LibScoring.ScoringMatrices;
 using LibScoring;
 using System;
@@ -10,6 +9,7 @@ using System.Threading.Tasks;
 using TestsHarness.Tools;
 using TestsHarness;
 using LibAlignment.Aligners.PopulationBased;
+using LibScoring.FitnessFunctions;
 
 namespace TestsUnitSuite.LibAlignment
 {
@@ -96,7 +96,7 @@ namespace TestsUnitSuite.LibAlignment
         public ElitistGeneticAlgorithmAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
+            IFitnessFunction objective = new SumOfPairsFitnessFunction(matrix);
             ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, 10);
             return aligner;
         }
