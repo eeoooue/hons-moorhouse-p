@@ -10,7 +10,7 @@ using TestsHarness;
 using LibFileIO;
 using LibModification;
 using LibModification.AlignmentModifiers;
-using LibModification.ICrossoverOperators;
+using LibModification.CrossoverOperators;
 
 namespace TestsPerformance.LibBioInfo.ICrossoverOperators
 {

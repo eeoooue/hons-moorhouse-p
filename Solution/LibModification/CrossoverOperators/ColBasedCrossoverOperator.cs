@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibModification.ICrossoverOperators
+namespace LibModification.CrossoverOperators
 {
     public class ColBasedCrossoverOperator : ICrossoverOperator
     {

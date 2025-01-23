@@ -8,7 +8,7 @@ using TestsHarness.Tools;
 using TestsHarness;
 using LibModification;
 using LibModification.AlignmentModifiers;
-using LibModification.ICrossoverOperators;
+using LibModification.CrossoverOperators;
 
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {
