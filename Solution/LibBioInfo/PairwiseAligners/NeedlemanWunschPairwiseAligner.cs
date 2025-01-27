@@ -8,7 +8,7 @@ namespace LibBioInfo.PairwiseAligners
 {
     public class NeedlemanWunschPairwiseAligner
     {
-        public int MatchScore = +1;
+        public int MatchScore = 1;
         public int MismatchScore = -1;
         public int GapScore = -2;
 
@@ -18,10 +18,16 @@ namespace LibBioInfo.PairwiseAligners
 
         public bool ScoresPopulated = false;
 
+        public string SequenceA;
+        public string SequenceB;
+
+
         public NeedlemanWunschPairwiseAligner(string sequenceA, string sequenceB)
         {
-            M = sequenceA.Length + 1;
-            N = sequenceB.Length + 1;
+            SequenceA = sequenceA;
+            SequenceB = sequenceB;
+            M = SequenceA.Length + 1;
+            N = SequenceB.Length + 1;
             Scores = new int[M, N];
         }
 
@@ -29,13 +35,13 @@ namespace LibBioInfo.PairwiseAligners
         {
             if (!ScoresPopulated)
             {
-                PopulateTable(sequenceA, sequenceB);
+                PopulateTable();
             }
 
             return new char[2, 10];
         }
 
-        public void PopulateTable(string sequenceA, string sequenceB)
+        public void PopulateTable()
         {
             if (ScoresPopulated)
             {
@@ -46,14 +52,14 @@ namespace LibBioInfo.PairwiseAligners
             {
                 for(int j=0; j<N; j++)
                 {
-                    PopulateCoordinates(sequenceA, sequenceB, i, j);
+                    PopulateCoordinates(i, j);
                 }
             }
 
             ScoresPopulated = true;
         }
 
-        public void PopulateCoordinates(string sequenceA, string sequenceB, int i, int j)
+        public void PopulateCoordinates(int i, int j)
         {
             if (i == 0 && j == 0)
             {
@@ -65,7 +71,7 @@ namespace LibBioInfo.PairwiseAligners
 
             if (i > 0 && j > 0)
             {
-                int pairwiseScore = (sequenceA[i - 1] == sequenceB[j - 1]) ? MatchScore : MismatchScore;
+                int pairwiseScore = (SequenceA[i - 1] == SequenceB[j - 1]) ? MatchScore : MismatchScore;
                 int option1 = Scores[i - 1, j - 1] + pairwiseScore;
                 options.Add(option1);
             }
