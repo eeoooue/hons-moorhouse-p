@@ -1,4 +1,5 @@
-﻿using LibModification.AlignmentModifiers;
+﻿using LibBioInfo;
+using LibModification.AlignmentModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,22 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
     {
         HeuristicPairwiseModifier Modifier = new HeuristicPairwiseModifier();
 
+        #region
+
+        [TestMethod]
+        public void Stuff()
+        {
+            BioSequence seqA = new BioSequence("a", "ACGTACGT");
+            BioSequence seqB = new BioSequence("a", "ACGTACGT");
 
 
+        }
+
+        #endregion
+
+
+
+        #region Canvas recipe creation
 
         [TestMethod]
         public void CanCollectDistancesBetweenResiduesA()
@@ -78,8 +93,6 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             Assert.IsTrue(listsMatch);
         }
 
-
-
         public bool ListsMatch(List<int> expected, List<int> actual)
         {
             PrintList("expected:", expected);
@@ -90,7 +103,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
                 return false;
             }
 
-            for (int i=0; i<expected.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
                 if (expected[i] != actual[i])
                 {
@@ -101,6 +114,11 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             return true;
         }
 
+        #endregion
+
+
+        #region debugging
+
         public void PrintList(string context, List<int> stuff)
         {
             Console.WriteLine(context);
@@ -110,6 +128,8 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             }
             Console.WriteLine();
         }
+
+        #endregion
 
     }
 }

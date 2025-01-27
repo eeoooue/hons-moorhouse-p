@@ -11,6 +11,16 @@ namespace LibModification.Helpers
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
 
+        public void ClearAlignmentRow(ref char[,] matrix, int i)
+        {
+            int n = matrix.GetLength(1);
+            for(int j=0; j<n; j++)
+            {
+                matrix[i, j] = '-';
+            }
+        }
+
+
         public List<string> CollectResidueChains(in char[,] matrix)
         {
             int m = matrix.GetLength(0);

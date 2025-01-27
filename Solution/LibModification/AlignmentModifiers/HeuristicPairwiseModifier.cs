@@ -15,11 +15,6 @@ namespace LibModification.AlignmentModifiers
         BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         Bioinformatics Bioinformatics = new Bioinformatics();
 
-        public HeuristicPairwiseModifier()
-        {
-
-        }
-
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int i;
@@ -34,12 +29,83 @@ namespace LibModification.AlignmentModifiers
             string newSequenceBLayout;
             GetNewSequenceLayout(in seqAresidues, in seqBresidues, out newSequenceALayout, out newSequenceBLayout);
 
-            throw new NotImplementedException();
+            char[,] result = GetExpandedCanvas(alignment.CharacterMatrix, i, newSequenceALayout);
+
+            ReplaceRowWithAlignment(ref result, newSequenceALayout, newSequenceBLayout, i, j);
+
+            return result;
         }
 
-        public char[,] GetExpandedCanvas(Alignment alignment, int i, string anchorAlignment)
+
+
+        public void ReplaceRowWithAlignment(ref char[,] matrix, string anchor, string aligned, int i, int j)
         {
-            throw new NotImplementedException();
+            CharMatrixHelper.ClearAlignmentRow(ref matrix, j);
+
+            int n = matrix.GetLength(1);
+
+            int cursor = 0;
+            for(int p = 0; p<n; p++)
+            {
+                if (cursor >= anchor.Length)
+                {
+                    return;
+                }
+
+                char target = anchor[cursor];
+                char read = matrix[i, p];
+
+                if (read == target)
+                {
+                    matrix[j, p] = aligned[cursor];
+                    cursor++;
+                }
+            }
+        }
+
+
+        public char[,] GetExpandedCanvas(char[,] matrix, int i, string newPayload)
+        {
+            string originalPayload = CharMatrixHelper.GetCharRowAsString(matrix, i);
+            List<int> recipe = GetCanvasRecipe(originalPayload, newPayload);
+
+            int m = matrix.GetLength(0);
+            int n = recipe.Count;
+
+            char[,] result = new char[m, n];
+
+            for(int destIndex=0; destIndex < n; destIndex++)
+            {
+                int sourceIndex = recipe[destIndex];
+                if (sourceIndex == -1)
+                {
+                    FillColumnWithGaps(ref result, destIndex);
+                }
+                else
+                {
+                    CopyColumnAcross(in matrix, ref result, sourceIndex, destIndex);
+                }
+            }
+
+            return result;
+        }
+
+        public void FillColumnWithGaps(ref char[,] destination, int destIndex)
+        {
+            int m = destination.GetLength(0);
+            for(int i=0; i<m; i++)
+            {
+                destination[i, destIndex] = '-';
+            }
+        }
+
+        public void CopyColumnAcross(in char[,] source, ref char[,] destination, int sourceIndex, int destIndex)
+        {
+            int m = destination.GetLength(0);
+            for (int i = 0; i < m; i++)
+            {
+                destination[i, destIndex] = source[i, sourceIndex];
+            }
         }
 
         public List<int> GetCanvasRecipe(string originalPayload, string newPayload)
