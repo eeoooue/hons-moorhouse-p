@@ -1,4 +1,5 @@
-﻿using LibBioInfo.PairwiseAligners;
+﻿using LibBioInfo;
+using LibBioInfo.PairwiseAligners;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,8 +51,7 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
 
 
         [TestMethod]
-
-        public void CanExtractPair()
+        public void CanExtractAlignedPair()
         {
             string a = "ATCGT";
             string b = "TGGTG";
@@ -73,6 +73,25 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
             PrintAlignment(result);
         }
 
+        public bool AlignmentFeaturesResiduesInOrder(char[,] alignment, string residues, int i)
+        {
+            Bioinformatics bioinformatics = new Bioinformatics();
+
+            int n = alignment.GetLength(1);
+            StringBuilder sb = new StringBuilder();
+
+            for(int j=0; j<n; j++)
+            {
+                char x = alignment[i, j];
+                if (!bioinformatics.IsGapChar(x))
+                {
+                    sb.Append(x);
+                }
+            }
+
+            return sb.ToString() == residues;
+        }
+
         public void PrintAlignment(char[,] state)
         {
             int m = state.GetLength(0);
@@ -85,11 +104,9 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
                 {
                     sb.Append(state[i, j]);
                 }
-
                 Console.WriteLine(sb.ToString());
                 sb.Clear();
             }
-
         }
 
         public bool TablesMatch(int[,] expected, int[,] actual)
