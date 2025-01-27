@@ -43,8 +43,6 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
             NeedlemanWunschPairwiseAligner aligner = GetAlignerWithScores(a, b);
             aligner.PopulateTable();
 
-            PrintTable(aligner.Scores);
-
             bool tableIsCorrect = TablesMatch(expected, aligner.Scores);
             Assert.IsTrue(tableIsCorrect);
         }
@@ -70,7 +68,8 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
             aligner.PopulateTable();
             char[,] result = aligner.ExtractPairwiseAlignment();
 
-            PrintAlignment(result);
+            Assert.IsTrue(AlignmentFeaturesResiduesInOrder(result, a, 0));
+            Assert.IsTrue(AlignmentFeaturesResiduesInOrder(result, b, 1));
         }
 
         public bool AlignmentFeaturesResiduesInOrder(char[,] alignment, string residues, int i)
