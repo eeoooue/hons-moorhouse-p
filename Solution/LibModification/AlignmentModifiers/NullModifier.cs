@@ -9,7 +9,7 @@ namespace LibModification.AlignmentModifiers
 {
     public class NullModifier : AlignmentModifier, IAlignmentModifier
     {
-        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             return alignment.CharacterMatrix;
         }

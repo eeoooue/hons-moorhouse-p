@@ -20,7 +20,7 @@ namespace LibModification.AlignmentModifiers
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public Bioinformatics Bioinformatics = new Bioinformatics();
 
-        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int i = Randomizer.Random.Next(alignment.Height);
             char[,] matrix = alignment.CharacterMatrix;

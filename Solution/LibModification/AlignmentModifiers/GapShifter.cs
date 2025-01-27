@@ -13,7 +13,7 @@ namespace LibModification.AlignmentModifiers
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
 
-        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             char[,] matrix = alignment.CharacterMatrix;
 

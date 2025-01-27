@@ -13,7 +13,7 @@ namespace LibModification.AlignmentModifiers
         private SwapOperator SwapOperator = new SwapOperator();
         private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             char[,] matrix = alignment.CharacterMatrix;
 
