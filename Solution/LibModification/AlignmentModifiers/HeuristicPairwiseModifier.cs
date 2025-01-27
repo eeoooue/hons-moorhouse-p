@@ -30,13 +30,10 @@ namespace LibModification.AlignmentModifiers
             GetNewSequenceLayout(in seqAresidues, in seqBresidues, out newSequenceALayout, out newSequenceBLayout);
 
             char[,] result = GetExpandedCanvas(alignment.CharacterMatrix, i, newSequenceALayout);
-
             ReplaceRowWithAlignment(ref result, newSequenceALayout, newSequenceBLayout, i, j);
 
             return result;
         }
-
-
 
         public void ReplaceRowWithAlignment(ref char[,] matrix, string anchor, string aligned, int i, int j)
         {
@@ -140,7 +137,6 @@ namespace LibModification.AlignmentModifiers
             return derivedRecipe;
         }
 
-
         public List<int> CollectDistancesBetweenResidues(string payload)
         {
             List<int> result = new List<int>();
@@ -165,10 +161,6 @@ namespace LibModification.AlignmentModifiers
             return result;
         }
 
-
-
-
-
         public void CollectSequenceResidues(Alignment alignment, int i, int j, out string residuesA, out string residuesB)
         {
             string sequenceA = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, i);
@@ -179,12 +171,8 @@ namespace LibModification.AlignmentModifiers
 
         public void GetNewSequenceLayout(in string residuesA, in string residuesB, out string layoutA, out string layoutB)
         {
-            StringBuilder alignedSeqAbuilder = new StringBuilder();
-            StringBuilder alignedSeqBbuilder = new StringBuilder();
             NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(residuesA, residuesB);
-            aligner.ExtractPairwiseAlignment(ref alignedSeqAbuilder, ref alignedSeqBbuilder);
-            layoutA = alignedSeqAbuilder.ToString();
-            layoutB = alignedSeqBbuilder.ToString();
+            aligner.ExtractPairwiseAlignment(out layoutA, out layoutB);
         }
 
         public void PickPairOfSequences(Alignment alignment, out int i, out int j)
