@@ -13,6 +13,7 @@ namespace LibModification.AlignmentModifiers
     {
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
+        Bioinformatics Bioinformatics = new Bioinformatics();
 
         public HeuristicPairwiseModifier()
         {
@@ -43,13 +44,60 @@ namespace LibModification.AlignmentModifiers
 
         public List<int> GetCanvasRecipe(string originalPayload, string newPayload)
         {
-            List<int> originalDistancesBetweenResidues = new List<int>();
-            List<int> suggestedDistancesBetweenResidues = new List<int>();
-            List<int> derivedDistancesBetweenResidues = new List<int>();
+            List<int> originalDistances = CollectDistancesBetweenResidues(originalPayload);
+            List<int> suggestedDistances = CollectDistancesBetweenResidues(newPayload);
+            List<int> derivedRecipe = new List<int>();
 
-            throw new NotImplementedException();
+            int n = originalDistances.Count;
+
+            int p = 0;
+            for(int i=0; i<n; i++)
+            {
+                for(int j = 0; j< originalDistances[i]; j++)
+                {
+                    int index = p++;
+                    derivedRecipe.Add(index);
+                }
+
+                int difference = Math.Max(0, suggestedDistances[i] - originalDistances[i]);
+                for(int j = 0; j<difference; j++)
+                {
+                    derivedRecipe.Add(-1);
+                }
+
+                if (i < n - 1)
+                {
+                    derivedRecipe.Add(p++);
+                }
+            }
+
+            return derivedRecipe;
         }
 
+
+        public List<int> CollectDistancesBetweenResidues(string payload)
+        {
+            List<int> result = new List<int>();
+
+            int distance = 0;
+            for(int i=0; i<payload.Length; i++)
+            {
+                char x = payload[i];
+                if (Bioinformatics.IsGapChar(x))
+                {
+                    distance++;
+                }
+                else
+                {
+                    result.Add(distance);
+                    distance = 0;
+                }
+            }
+
+            result.Add(distance);
+
+            return result;
+        }
 
 
 
