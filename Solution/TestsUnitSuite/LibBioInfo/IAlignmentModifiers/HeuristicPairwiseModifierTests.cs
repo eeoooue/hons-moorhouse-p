@@ -1,27 +1,53 @@
 ﻿using LibBioInfo;
+using LibModification;
 using LibModification.AlignmentModifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestsHarness;
+using TestsHarness.Tools;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {
     [TestClass]
     public class HeuristicPairwiseModifierTests
     {
+        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
+        AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
+        AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
+
+
         HeuristicPairwiseModifier Modifier = new HeuristicPairwiseModifier();
 
         #region
 
         [TestMethod]
-        public void Stuff()
+        public void AlignmentIsConserved()
         {
-            BioSequence seqA = new BioSequence("a", "ACGTACGT");
-            BioSequence seqB = new BioSequence("a", "ACGTACGT");
+            Alignment original = ExampleAlignments.GetExampleA();
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(original);
 
+            Alignment copy = original.GetCopy();
+            Modifier.ModifyAlignment(copy);
 
+            AlignmentConservation.AssertAlignmentsAreConserved(copy, original);
+        }
+
+        [TestMethod]
+        public void AlignmentIsDifferent()
+        {
+            Alignment original = ExampleAlignments.GetExampleA();
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(original);
+
+            Alignment copy = original.GetCopy();
+            Modifier.ModifyAlignment(copy);
+
+            bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(original, copy);
+            Assert.IsFalse(alignmentsMatch);
         }
 
         #endregion
