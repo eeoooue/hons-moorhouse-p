@@ -24,22 +24,145 @@ namespace LibBioInfo.PairwiseAligners
 
         public NeedlemanWunschPairwiseAligner(string sequenceA, string sequenceB)
         {
-            SequenceA = sequenceA;
-            SequenceB = sequenceB;
-            M = SequenceA.Length + 1;
-            N = SequenceB.Length + 1;
+            SequenceA = $"-{sequenceA}";
+            SequenceB = $"-{sequenceB}";
+            M = SequenceA.Length;
+            N = SequenceB.Length;
             Scores = new int[M, N];
         }
 
-        public char[,] ExtractPairwiseAlignment(string sequenceA, string sequenceB)
+        public char[,] ExtractPairwiseAlignment()
         {
             if (!ScoresPopulated)
             {
                 PopulateTable();
             }
 
-            return new char[2, 10];
+            StringBuilder rowA = new StringBuilder();
+            StringBuilder rowB = new StringBuilder();
+
+            return Backtrack(rowA, rowB, M - 1, N - 1);
         }
+
+        public char[,] Backtrack(StringBuilder a, StringBuilder b, int i, int j)
+        {
+            if (i == 0 && j == 0)
+            {
+                return ConstructAsMatrix(a, b);
+            }
+
+            bool canReachByPair = CanReachByPair(i, j);
+
+            if (CanReachByPair(i, j))
+            {
+                a.Append(SequenceA[i]);
+                b.Append(SequenceB[j]);
+                return Backtrack(a, b, i - 1, j - 1);
+            }
+
+            if (CanReachUpwards(i, j))
+            {
+                a.Append(SequenceA[i]);
+                b.Append('-');
+                return Backtrack(a, b, i - 1, j);
+            }
+
+            if (CanReachLeftwise(i, j))
+            {
+                a.Append('-');
+                b.Append(SequenceB[j]);
+                return Backtrack(a, b, i, j - 1);
+            }
+
+            throw new IndexOutOfRangeException("Failed to find accessible destination");
+        }
+
+        public int GetPairwiseScore(int i, int j)
+        {
+            return (SequenceA[i] == SequenceB[j]) ? MatchScore : MismatchScore;
+        }
+
+        public bool CanReachByPair(int i, int j)
+        {
+            if (i > 0 && j > 0)
+            {
+                int destinationScore = Scores[i - 1, j - 1];
+                int pairwiseScore = GetPairwiseScore(i, j);
+                int currentScore = Scores[i, j];
+
+                if (currentScore - pairwiseScore == destinationScore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool CanReachUpwards(int i, int j)
+        {
+            if (i > 0)
+            {
+                int destinationScore = Scores[i - 1, j];
+                int currentScore = Scores[i, j];
+                if (currentScore - GapScore == destinationScore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public bool CanReachLeftwise(int i, int j)
+        {
+            if (j > 0)
+            {
+                int destinationScore = Scores[i, j - 1];
+                int currentScore = Scores[i, j];
+                if (currentScore - GapScore == destinationScore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public char[,] ConstructAsMatrix(StringBuilder a, StringBuilder b)
+        {
+            string seqA = RecoverPayload(a);
+            string seqB = RecoverPayload(b);
+
+            int n = seqA.Length;
+
+            char[,] result = new char[2, n];
+
+            for(int j=0; j<n; j++)
+            {
+                result[0, j] = seqA[j];
+                result[1, j] = seqB[j];
+            }
+
+            return result;
+        }
+
+
+        public string RecoverPayload(StringBuilder sb)
+        {
+            string reversed = sb.ToString();
+            StringBuilder result = new StringBuilder();
+            for(int i=reversed.Length - 1; i>=0; i--)
+            {
+                result.Append(reversed[i]);
+            }
+
+            return result.ToString();
+        }
+
+
+
 
         public void PopulateTable()
         {
@@ -71,7 +194,7 @@ namespace LibBioInfo.PairwiseAligners
 
             if (i > 0 && j > 0)
             {
-                int pairwiseScore = (SequenceA[i - 1] == SequenceB[j - 1]) ? MatchScore : MismatchScore;
+                int pairwiseScore = (SequenceA[i] == SequenceB[j]) ? MatchScore : MismatchScore;
                 int option1 = Scores[i - 1, j - 1] + pairwiseScore;
                 options.Add(option1);
             }
