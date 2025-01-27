@@ -31,104 +31,14 @@ namespace LibBioInfo.PairwiseAligners
             Scores = new int[M, N];
         }
 
-        public char[,] ExtractPairwiseAlignment()
-        {
-            if (!ScoresPopulated)
-            {
-                PopulateTable();
-            }
-
-            StringBuilder rowA = new StringBuilder();
-            StringBuilder rowB = new StringBuilder();
-
-            return Backtrack(rowA, rowB, M - 1, N - 1);
-        }
-
-        public char[,] Backtrack(StringBuilder a, StringBuilder b, int i, int j)
-        {
-            if (i == 0 && j == 0)
-            {
-                return ConstructAsMatrix(a, b);
-            }
-
-            bool canReachByPair = CanReachByPair(i, j);
-
-            if (CanReachByPair(i, j))
-            {
-                a.Append(SequenceA[i]);
-                b.Append(SequenceB[j]);
-                return Backtrack(a, b, i - 1, j - 1);
-            }
-
-            if (CanReachUpwards(i, j))
-            {
-                a.Append(SequenceA[i]);
-                b.Append('-');
-                return Backtrack(a, b, i - 1, j);
-            }
-
-            if (CanReachLeftwise(i, j))
-            {
-                a.Append('-');
-                b.Append(SequenceB[j]);
-                return Backtrack(a, b, i, j - 1);
-            }
-
-            throw new IndexOutOfRangeException("Failed to find accessible destination");
-        }
+        
 
         public int GetPairwiseScore(int i, int j)
         {
             return (SequenceA[i] == SequenceB[j]) ? MatchScore : MismatchScore;
         }
 
-        public bool CanReachByPair(int i, int j)
-        {
-            if (i > 0 && j > 0)
-            {
-                int destinationScore = Scores[i - 1, j - 1];
-                int pairwiseScore = GetPairwiseScore(i, j);
-                int currentScore = Scores[i, j];
-
-                if (currentScore - pairwiseScore == destinationScore)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool CanReachUpwards(int i, int j)
-        {
-            if (i > 0)
-            {
-                int destinationScore = Scores[i - 1, j];
-                int currentScore = Scores[i, j];
-                if (currentScore - GapScore == destinationScore)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
-        public bool CanReachLeftwise(int i, int j)
-        {
-            if (j > 0)
-            {
-                int destinationScore = Scores[i, j - 1];
-                int currentScore = Scores[i, j];
-                if (currentScore - GapScore == destinationScore)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        
 
         public char[,] ConstructAsMatrix(StringBuilder a, StringBuilder b)
         {
@@ -148,7 +58,6 @@ namespace LibBioInfo.PairwiseAligners
             return result;
         }
 
-
         public string RecoverPayload(StringBuilder sb)
         {
             string reversed = sb.ToString();
@@ -160,9 +69,6 @@ namespace LibBioInfo.PairwiseAligners
 
             return result.ToString();
         }
-
-
-
 
         public void PopulateTable()
         {
@@ -219,5 +125,105 @@ namespace LibBioInfo.PairwiseAligners
 
             Scores[i, j] = bestScore;
         }
+
+
+
+        #region extracting alignment via backtracking
+
+        public char[,] ExtractPairwiseAlignment()
+        {
+            if (!ScoresPopulated)
+            {
+                PopulateTable();
+            }
+
+            StringBuilder rowA = new StringBuilder();
+            StringBuilder rowB = new StringBuilder();
+
+            Backtrack(ref rowA, ref rowB, M - 1, N - 1);
+
+            return ConstructAsMatrix(rowA, rowB);
+        }
+
+        public void ExtractPairwiseAlignment(ref StringBuilder a, ref StringBuilder b)
+        {
+            Backtrack(ref a, ref b, M - 1, N - 1);
+        }
+
+        public void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)
+        {
+            if (i == 0 && j == 0)
+            {
+                return;
+            }
+
+            if (CanReachByPair(i, j))
+            {
+                a.Append(SequenceA[i]);
+                b.Append(SequenceB[j]);
+                Backtrack(ref a, ref b, i - 1, j - 1);
+            }
+            else if (CanReachUpwards(i, j))
+            {
+                a.Append(SequenceA[i]);
+                b.Append('-');
+                Backtrack(ref a, ref b, i - 1, j);
+            }
+            else if (CanReachLeftwise(i, j))
+            {
+                a.Append('-');
+                b.Append(SequenceB[j]);
+                Backtrack(ref a, ref b, i, j - 1);
+            }
+        }
+
+        public bool CanReachByPair(int i, int j)
+        {
+            if (i > 0 && j > 0)
+            {
+                int destinationScore = Scores[i - 1, j - 1];
+                int pairwiseScore = GetPairwiseScore(i, j);
+                int currentScore = Scores[i, j];
+
+                if (currentScore - pairwiseScore == destinationScore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool CanReachUpwards(int i, int j)
+        {
+            if (i > 0)
+            {
+                int destinationScore = Scores[i - 1, j];
+                int currentScore = Scores[i, j];
+                if (currentScore - GapScore == destinationScore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool CanReachLeftwise(int i, int j)
+        {
+            if (j > 0)
+            {
+                int destinationScore = Scores[i, j - 1];
+                int currentScore = Scores[i, j];
+                if (currentScore - GapScore == destinationScore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }
