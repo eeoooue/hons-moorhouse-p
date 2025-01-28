@@ -1,7 +1,6 @@
 ﻿using LibAlignment;
 using LibAlignment.Aligners;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
 using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;
@@ -17,7 +16,7 @@ namespace MAli
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        public AlignmentConfig Config = new MewLambdaEvolutionaryAlgorithmAlignerConfig();
+        public AlignmentConfig Config = new Sprint05Config();
 
         public void SetSeed(string value)
         {
@@ -34,18 +33,24 @@ namespace MAli
 
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            bool debugging = CommandTableIncludesDebugFlag(table);
+            bool debugging = CommandsIncludeFlag(table, "debug");
+            bool emitFrames = CommandsIncludeFlag(table, "frames");
+            bool refineOnly = CommandsIncludeFlag(table, "refine");
 
             try
             {
                 Console.WriteLine($"Reading sequences from source: '{inputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
-                Alignment alignment = new Alignment(sequences);
+                Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IterativeAligner aligner = Config.CreateAligner();
-                    aligner.Debug = debugging;
+                    IIterativeAligner aligner = Config.CreateAligner();
+
+                    if (debugging && aligner is IterativeAligner instance)
+                    {
+                        aligner = new DebuggingWrapper(instance);
+                    }
 
                     int iterations = UnpackSpecifiedIterations(table);
                     if (iterations > 0)
@@ -53,12 +58,20 @@ namespace MAli
                         aligner.IterationsLimit = iterations;
                     }
 
-                    Console.WriteLine($"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.");
-                    alignment = aligner.AlignSequences(sequences);
+                    if (refineOnly)
+                    {
+                        aligner.InitializeForRefinement(alignment);
+                    }
+                    else
+                    {
+                        aligner.Initialize(alignment.Sequences);
+                    }
+
+                    AlignIteratively(aligner, emitFrames, refineOnly);
 
                     string outputFilename = BuildFullOutputFilename(outputPath, table);
 
-                    FileHelper.WriteAlignmentTo(alignment, outputFilename);
+                    FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
                     Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
                 }
                 else
@@ -72,13 +85,61 @@ namespace MAli
             }
         }
 
-
-        public bool CommandTableIncludesDebugFlag(Dictionary<string, string?> table)
+        public bool CommandsIncludeFlag(Dictionary<string, string?> table, string flag)
         {
-            bool result = table.ContainsKey("debug");
+            bool result = table.ContainsKey(flag);
             return result;
         }
 
+        public void AlignIteratively(IIterativeAligner aligner, bool emitFrames, bool refineOnly)
+        {
+            string context = $"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.";
+            if (refineOnly)
+            {
+                context += " (iterative refinement)";
+            }
+
+            Console.WriteLine(context);
+
+            if (emitFrames)
+            {
+                CheckCreateFramesFolder();
+            }
+
+            while(aligner.IterationsCompleted < aligner.IterationsLimit)
+            {
+                aligner.Iterate();
+                if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
+                {
+                    SaveCurrentFrame(alignment, aligner.IterationsCompleted);
+                }
+            }
+        }
+
+        public void SaveCurrentFrame(Alignment alignment, int iterations)
+        {
+            string suffix = Frontload(iterations);
+            FileHelper.WriteAlignmentTo(alignment, $"frames\\frame_{suffix}");
+        }
+
+        public string Frontload(int number)
+        {
+            string s = number.ToString();
+
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<5-s.Length; i++)
+            {
+                sb.Append('0');
+            }
+            sb.Append(s);
+
+            return sb.ToString();
+        }
+
+        public void CheckCreateFramesFolder()
+        {
+            Directory.CreateDirectory("frames");
+        }
 
         public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
         {
@@ -104,12 +165,12 @@ namespace MAli
         {
             string result = outputName;
 
-            if (table.ContainsKey("timestamp"))
+            if (CommandsIncludeFlag(table, "timestamp"))
             {
                 result += $"_{GetTimeStamp()}";
             }
 
-            if (table.ContainsKey("tag"))
+            if (CommandsIncludeFlag(table, "tag"))
             {
                 string? specifiedTag = table["tag"];
                 if (specifiedTag is string tag)

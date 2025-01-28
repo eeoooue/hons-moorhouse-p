@@ -21,6 +21,7 @@ namespace TestsUnitSuite.LibFileIO
         [DataRow("1axkA_2nlrA")]
         [DataRow("1eagA_1smrA")]
         [DataRow("1ggxA_1h4uA")]
+        [DataRow("clustalformat_BB11001.aln")]
         public void CanReadSequencesFrom(string filename)
         {
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(filename);

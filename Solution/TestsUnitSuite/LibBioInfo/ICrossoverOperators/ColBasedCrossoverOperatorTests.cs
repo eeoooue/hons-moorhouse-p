@@ -1,22 +1,20 @@
-﻿using LibBioInfo.IAlignmentModifiers;
-using LibBioInfo.ICrossoverOperators;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestsHarness.LiteratureAssets;
 using TestsHarness.Tools;
 using TestsHarness;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibModification.CrossoverOperators;
 
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {
     [TestClass]
     public class ColBasedCrossoverOperatorTests
     {
-
-        SAGAAssets SAGAAssets = Harness.LiteratureHelper.SAGAAssets;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
         AlignmentStateConverter AlignmentStateConverter = Harness.AlignmentStateConverter;
         StateEquality StateEquality = Harness.StateEquality;
@@ -24,7 +22,6 @@ namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
 
         ColBasedCrossoverOperator Operator = new ColBasedCrossoverOperator();
-
 
         [DataTestMethod]
         [DataRow(1, 0)]

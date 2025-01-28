@@ -1,68 +1,37 @@
 ﻿using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
-using LibBioInfo.ICrossoverOperators;
 using LibScoring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibModification.CrossoverOperators;
 
 namespace LibAlignment.Aligners.PopulationBased
 {
     public class GeneticAlgorithmAligner : PopulationBasedAligner
     {
         public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
-        public IAlignmentModifier MutationOperator = new PercentileGapShifter(0.02);
+        public IAlignmentModifier MutationOperator = new SwapOperator();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
         public double MutationRate = 0.2;
 
-        public int PopulationSize = 6;
-
-        public GeneticAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public GeneticAlgorithmAligner(IFitnessFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
         {
 
         }
-
 
         public override string GetName()
         {
             return $"GeneticAlgorithmAligner (population={PopulationSize})";
         }
 
-        public override Alignment AlignSequences(List<BioSequence> sequences)
-        {
-            Initialize(sequences);
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
-            CheckShowDebuggingInfo();
-
-            while (IterationsCompleted < IterationsLimit)
-            {
-                Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
-            }
-
-            return CurrentAlignment;
-        }
-
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            AlignmentRandomizer randomizer = new AlignmentRandomizer();
-            Population.Clear();
-            for (int i = 0; i < PopulationSize; i++)
-            {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
-                Population.Add(alignment);
-            }
-        }
-
-        public override void Iterate()
+        public override void PerformIteration()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
@@ -81,7 +50,6 @@ namespace LibAlignment.Aligners.PopulationBased
                 }
             }
         }
-
 
         public List<Alignment> BreedNewChildren()
         {

@@ -17,7 +17,6 @@ namespace TestsHarness
         public static ExampleAlignments ExampleAlignments = new ExampleAlignments();
         public static StateEquality StateEquality = new StateEquality();
         public static AlignmentStateConverter AlignmentStateConverter = new AlignmentStateConverter();
-        public static LiteratureHelper LiteratureHelper = new LiteratureHelper();
         public static AlignmentPrinter AlignmentPrinter = new AlignmentPrinter();
     }
 }

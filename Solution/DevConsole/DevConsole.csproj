@@ -11,6 +11,7 @@
     <ProjectReference Include="..\LibAlignment\LibAlignment.csproj" />
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
     <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
+    <ProjectReference Include="..\LibModification\LibModification.csproj" />
     <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
     <ProjectReference Include="..\MAli\MAli.csproj" />
   </ItemGroup>
@@ -24,6 +25,9 @@
     </None>
     <None Update="BB11003">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="clustalformat_BB11001.aln">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="real_marine_life">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

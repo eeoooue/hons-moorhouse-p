@@ -1,6 +1,6 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
+using LibFileIO.AlignmentReaders;
 using MAli;
 
 namespace DevConsole
@@ -13,11 +13,14 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
+            // clustalformat_BB11001.aln
+
+            // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
 
             RunMAli("-input BB11001 -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
             // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug");
+            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
             // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
             // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
 

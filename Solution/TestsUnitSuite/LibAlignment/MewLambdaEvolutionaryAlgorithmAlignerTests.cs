@@ -1,6 +1,6 @@
 ﻿using LibBioInfo;
-using LibScoring.ObjectiveFunctions;
-using LibScoring.ScoringMatrices;
+using LibBioInfo.ScoringMatrices;
+
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using TestsHarness.Tools;
 using TestsHarness;
 using LibFileIO;
 using LibAlignment.Aligners.PopulationBased;
+using LibScoring.FitnessFunctions;
 
 namespace TestsUnitSuite.LibAlignment
 {
@@ -95,7 +96,7 @@ namespace TestsUnitSuite.LibAlignment
         public MewLambdaEvolutionaryAlgorithmAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
+            IFitnessFunction objective = new SumOfPairsFitnessFunction(matrix);
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, 10);
             return aligner;
         }

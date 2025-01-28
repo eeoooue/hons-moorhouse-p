@@ -1,7 +1,6 @@
 ﻿using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
-using LibScoring.ObjectiveFunctions;
-using LibScoring.ScoringMatrices;
+using LibBioInfo.ScoringMatrices;
+
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -10,9 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using LibFileIO;
 
-
 using TestsHarness;
 using TestsHarness.Tools;
+using LibModification;
+using LibModification.AlignmentModifiers;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {

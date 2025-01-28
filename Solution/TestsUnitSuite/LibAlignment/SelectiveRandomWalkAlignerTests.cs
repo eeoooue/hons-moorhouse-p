@@ -1,8 +1,7 @@
 ﻿using LibAlignment;
 using LibBioInfo;
-using LibBioInfo.IAlignmentModifiers;
-using LibScoring.ObjectiveFunctions;
-using LibScoring.ScoringMatrices;
+using LibBioInfo.ScoringMatrices;
+
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using LibFileIO;
 using TestsHarness;
 using TestsHarness.Tools;
 using LibAlignment.Aligners.SingleState;
+using LibScoring.FitnessFunctions;
 
 
 namespace TestsUnitSuite.LibAlignment
@@ -33,7 +33,7 @@ namespace TestsUnitSuite.LibAlignment
         public IterativeAligner GetAligner()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IObjectiveFunction objective = new SumOfPairsObjectiveFunction(matrix);
+            IFitnessFunction objective = new SumOfPairsFitnessFunction(matrix);
             const int maxIterations = 50;
             SelectiveRandomWalkAligner aligner = new SelectiveRandomWalkAligner(objective, maxIterations);
             return aligner;

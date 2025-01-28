@@ -3,179 +3,86 @@ using LibBioInfo;
 using LibScoring;
 using System;
 using System.Text;
+using LibModification.AlignmentModifiers;
+using LibModification;
 
 namespace LibAlignment
 {
-    public abstract class IterativeAligner
+    public abstract class IterativeAligner : IIterativeAligner
     {
-        private IObjectiveFunction Objective;
-        public Alignment? CurrentAlignment = null;
-        private AlignmentDebugHelper DebugHelper = new AlignmentDebugHelper();
+        public IFitnessFunction Objective { get; protected set; }
+
+        public Alignment CurrentAlignment { get { return CurrentBest.Alignment; } }
 
         public int IterationsCompleted { get; protected set; } = 0;
 
-        public bool Debug = false;
-
-        public int DebugCursorStart = -1;
-
         public int IterationsLimit { get; set; } = 0;
 
-        public double AlignmentScore { get; protected set; } = 0;
+        public double AlignmentScore { get { return CurrentBest.Score; } }
 
-        public IterativeAligner(IObjectiveFunction objective, int iterations)
+        protected ScoredAlignment CurrentBest = null!;
+
+        public IterativeAligner(IFitnessFunction objective, int iterations)
         {
             Objective = objective;
             IterationsLimit = iterations;
         }
 
-        public abstract Alignment AlignSequences(List<BioSequence> sequences);
+        public Alignment AlignSequences(List<BioSequence> sequences)
+        {
+            Initialize(sequences);
+            while (IterationsCompleted < IterationsLimit)
+            {
+                Iterate();
+            }
+            return CurrentAlignment!;
+        }
 
         public abstract void Initialize(List<BioSequence> sequences);
 
-        public abstract void Iterate();
+        public abstract void InitializeForRefinement(Alignment alignment);
 
-        public void CheckShowDebuggingInfo()
+        public abstract void PerformIteration();
+
+        public void Iterate()
         {
-            if (Debug)
-            {
-                if (DebugCursorStart == -1)
-                {
-                    int cursorPos = Console.GetCursorPosition().Top;
-                    DebugCursorStart = cursorPos + 1;
-                }
-
-                List<string> lines = new List<string>() { "Debugging:", "" };
-                CollectAlignmentStrategy(lines);
-                CollectAlignmentStateInfo(lines);
-                List<string> output = DebugHelper.PadInfoLines(lines);
-                string info = ConcatenateLines(output);
-                Console.SetCursorPosition(0, DebugCursorStart);
-
-                Console.WriteLine(info);
-                TryDisplayAlignment(CurrentAlignment);
-                Console.WriteLine();
-            }
-        }
-
-        public string ConcatenateLines(List<string> lines)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            foreach(string line in lines)
-            {
-                sb.Append(line);
-                sb.Append("\n");
-            }
-
-            return sb.ToString();
-        }
-
-
-        public void CollectAlignmentStrategy(List<string> lines)
-        {
-            double percentIterationsComplete = Math.Round(100.0 * (double)IterationsCompleted/(double)IterationsLimit, 3);
-            string percentValue = percentIterationsComplete.ToString("0.0");
-
-            lines.Add(GetName());
-            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
-            lines.Add("");
-        }
-
-        public void CollectAlignmentStateInfo(List<string> lines)
-        {
-            if (CurrentAlignment is Alignment alignment)
-            {
-                int m = alignment.Height;
-                int n = alignment.Width;
-
-                lines.Add($"Current Alignment: ");
-                lines.Add($" - dimensions: ({m} x {n})");
-                lines.Add($" - objective function: {Objective.GetName()}");
-                lines.Add($" - score: {AlignmentScore}");
-            }
-        }
-
-        public void TryDisplayAlignment(Alignment? alignment)
-        {
-            if (alignment is Alignment current)
-            {
-                DebugHelper.PaintAlignment(alignment);
-            }
+            PerformIteration();
+            IterationsCompleted++;
         }
 
         public void CheckNewBest(ScoredAlignment candidate)
         {
-            if (candidate.Score > AlignmentScore)
+            if (candidate.Score > CurrentBest.Score)
             {
-                CurrentAlignment = candidate.Alignment.GetCopy();
-                AlignmentScore = candidate.Score;
+                CurrentBest = candidate.GetCopy();
             }
         }
 
         public double ScoreAlignment(Alignment alignment)
         {
-            return Objective.ScoreAlignment(alignment);
+            return Objective.GetFitness(alignment.CharacterMatrix);
         }
 
         public abstract string GetName();
 
-        public List<ScoredAlignment> ScorePopulation(List<Alignment> population)
+        public ScoredAlignment GetRandomScoredAlignment(List<BioSequence> sequences)
         {
-            List<ScoredAlignment> candidates = new List<ScoredAlignment>();
-            foreach (Alignment alignment in population)
-            {
-                double score = ScoreAlignment(alignment);
-                ScoredAlignment candidate = new ScoredAlignment(alignment, score);
-                candidates.Add(candidate);
-                CheckNewBest(candidate);
-            }
-
-            SetFitnesses(candidates);
-
-            return candidates;
+            Alignment alignment = GetRandomAlignment(sequences);
+            return GetScoredAlignment(alignment);
         }
 
-        public void SetFitnesses(List<ScoredAlignment> candidates)
+        public Alignment GetRandomAlignment(List<BioSequence> sequences)
         {
-            double bestScore = GetBestScore(candidates);
-            double worstScore = GetWorstScore(candidates);
-            double range = bestScore - worstScore;
-
-            foreach(ScoredAlignment candidate in candidates)
-            {
-                SetFitness(candidate, worstScore, range);
-            }
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            Alignment alignment = new Alignment(sequences);
+            randomizer.ModifyAlignment(alignment);
+            return alignment;
         }
 
-        public void SetFitness(ScoredAlignment candidate, in double worstScore, in double range)
+        public ScoredAlignment GetScoredAlignment(Alignment alignment)
         {
-            double unscaledFitness = candidate.Score - worstScore;
-            double scaled = unscaledFitness / range;
-            candidate.Fitness = scaled;
-        }
-
-        public double GetBestScore(List<ScoredAlignment> candidates)
-        {
-            double bestScore = double.MinValue;
-            foreach (ScoredAlignment candidate in candidates)
-            {
-                double score = candidate.Score;
-                bestScore = Math.Max(score, bestScore);
-            }
-
-            return bestScore;
-        }
-
-        public double GetWorstScore(List<ScoredAlignment> candidates)
-        {
-            double worstScore = double.MaxValue;
-            foreach (ScoredAlignment candidate in candidates)
-            {
-                double score = candidate.Score;
-                worstScore = Math.Min(score, worstScore);
-            }
-
-            return worstScore;
+            double score = ScoreAlignment(alignment);
+            return new ScoredAlignment(alignment, score);
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using LibBioInfo.ICrossoverOperators;
-using LibBioInfo;
+﻿using LibBioInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibScoring;
-using LibBioInfo.IAlignmentModifiers;
 using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
+using LibModification;
+using LibModification.AlignmentModifiers;
 
 namespace LibAlignment.Aligners.PopulationBased
 {
@@ -18,11 +18,11 @@ namespace LibAlignment.Aligners.PopulationBased
         public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int Mew = 5; // selection size
-        public int Lambda = 20; // population size
+        public int Lambda { get { return PopulationSize; } } // population size
 
-        public MewLambdaEvolutionaryAlgorithmAligner(IObjectiveFunction objective, int iterations) : base(objective, iterations)
+        public MewLambdaEvolutionaryAlgorithmAligner(IFitnessFunction objective, int iterations, int mew = 10, int lambda = 70) : base(objective, iterations, lambda)
         {
-
+            Mew = mew;
         }
 
         public override string GetName()
@@ -30,36 +30,7 @@ namespace LibAlignment.Aligners.PopulationBased
             return $"MewLambdaEvolutionaryAlgorithmAligner (selection={Mew}, population={Lambda})";
         }
 
-        public override Alignment AlignSequences(List<BioSequence> sequences)
-        {
-            Initialize(sequences);
-            CurrentAlignment = Population[0];
-            AlignmentScore = ScoreAlignment(CurrentAlignment);
-
-            while (IterationsCompleted < IterationsLimit)
-            {
-                Iterate();
-                IterationsCompleted++;
-                CheckShowDebuggingInfo();
-            }
-
-            return CurrentAlignment;
-        }
-
-        public override void Initialize(List<BioSequence> sequences)
-        {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-
-            Population.Clear();
-            for (int i = 0; i < Lambda; i++)
-            {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
-                Population.Add(alignment);
-            }
-        }
-
-        public override void Iterate()
+        public override void PerformIteration()
         {
             List<ScoredAlignment> candidates = ScorePopulation(Population);
             SelectionStrategy.PreprocessCandidateAlignments(candidates);

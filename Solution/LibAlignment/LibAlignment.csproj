@@ -8,11 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
+    <ProjectReference Include="..\LibModification\LibModification.csproj" />
     <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MOPAligners\" />
   </ItemGroup>
 
 </Project>

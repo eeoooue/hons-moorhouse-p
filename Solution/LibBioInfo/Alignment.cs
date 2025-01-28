@@ -1,212 +1,96 @@
-﻿using LibBioInfo.Helpers;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace LibBioInfo
 {
     public class Alignment
     {
-        public static AlignmentStateHelper StateHelper = new AlignmentStateHelper();
-
         public List<BioSequence> Sequences;
-        public int Height { get { return State.GetLength(0); } }
-        public int Width { get { return State.GetLength(1); } }
-
-        public bool[,] State { get; private set; } // state[i,j] being true means a gap is placed at position (i,j)
+        public int Height { get { return CharacterMatrix.GetLength(0); } }
+        public int Width { get { return CharacterMatrix.GetLength(1); } }
 
         private static Bioinformatics Bioinformatics = new Bioinformatics();
 
         public char[,] CharacterMatrix;
 
-        public bool CharacterMatrixIsUpToDate = false;
-
         public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
             Sequences = sequences;
-
             if (conserveState)
             {
-                State = ConstructStateBasedOnSequences(sequences);
+                CharacterMatrix = ConstructConservedAlignmentState(sequences);
             }
             else
             {
-                int width = DecideWidth();
-                State = new bool[sequences.Count, width];
-                InitializeAlignmentState();
+                CharacterMatrix = ConstructInitialAlignmentState(sequences);
             }
-
-            CharacterMatrix = ConstructCharacterMatrix();
-            CharacterMatrixIsUpToDate = true;
         }
 
         public Alignment(Alignment other) : this(other.GetAlignedSequences(), true) { }
-        
-        public void SetState(bool[,] state)
+
+
+        public char[,] ConstructConservedAlignmentState(List<BioSequence> sequences)
         {
-            State = state;
-            CharacterMatrixIsUpToDate = false;
-        }
+            int m = sequences.Count;
+            int n = GetLongestPayloadLength(sequences);
 
-        public void CheckResolveEmptyColumns()
-        {
-            bool verdict = StateHelper.ContainsEmptyColumns(State);
-
-            if (verdict)
-            {
-                bool[,] simplifiedState = StateHelper.RemoveEmptyColumns(State);
-                SetState(simplifiedState);
-            }
-        }
-
-        public char[,] GetCharacterMatrix()
-        {
-            UpdateCharacterMatrixIfNeeded();
-            return CharacterMatrix;
-        }
-
-        public void SetState(int i, int j, bool value)
-        {
-            State[i, j] = value;
-            CharacterMatrixIsUpToDate = false;
-        }
-
-        public void UpdateCharacterMatrixIfNeeded()
-        {
-            if (!CharacterMatrixIsUpToDate)
-            {
-                UpdateStateRepresentationIfNeeded();
-                CharacterMatrix = ConstructCharacterMatrix();
-                CharacterMatrixIsUpToDate = true;
-            }
-        }
-
-        public void UpdateStateRepresentationIfNeeded()
-        {
-            List<int> emptyColumns = CollectEmptyColumnIndexes();
-
-            if (emptyColumns.Count > 0)
-            {
-                bool[,] newState = ConstructStateIgnoringColumns(State, emptyColumns);
-                SetState(newState);
-            }
-        }
-
-        public bool[,] ConstructStateIgnoringColumns(bool[,] state, List<int> blacklist)
-        {
-            List<int> whitelist = CollectColumnWhitelist(state, blacklist);
-            return ConstructStateOfOnlyColumns(state, whitelist);
-        }
-
-        public bool[,] ConstructStateOfOnlyColumns(bool[,] state, List<int> columns)
-        {
-            int m = state.GetLength(0);
-            int n = columns.Count;
-
-            bool[,] result = new bool[m, n];
-
-            for(int i = 0; i<m; i++)
-            {
-                for(int j=0; j<n; j++)
-                {
-                    int j2 = columns[j];
-                    result[i, j] = state[i, j2];
-                }
-            }
-
-            return result;
-        }
-
-        public List<int> CollectColumnWhitelist(bool[,] state, List<int> blacklist)
-        {
-            int n = state.GetLength(1);
-
-            HashSet<int> setToIgnore = new HashSet<int>(blacklist);
-
-            List<int> result = new List<int>();
-
-            for(int j=0; j<n; j++)
-            {
-                if (setToIgnore.Contains(j))
-                {
-                    continue;
-                }
-                result.Add(j);
-            }
-
-            return result;
-        }
-
-        public List<int> CollectEmptyColumnIndexes()
-        {
-            List<int> result = new List<int>();
-
-            for(int j = 0; j < Width; j++)
-            {
-                if (ColumnIsEmpty(j))
-                {
-                    result.Add(j);
-                }
-            }
-
-            return result;
-        }
-
-        public bool ColumnIsEmpty(int j)
-        {
-            for(int i=0; i<Height; i++)
-            {
-                if (!State[i, j])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public char[,] ConstructCharacterMatrix()
-        {
-            char[,] result = new char[Height, Width];
-
-            for(int i=0; i<Height; i++)
-            {
-                string payload = GetAlignedPayload(i);
-                for(int j=0; j<Width; j++)
-                {
-                    result[i, j] = payload[j];
-                }
-            }
-
-            return result;
-        }
-
-        public bool[,] ConstructStateBasedOnSequences(List<BioSequence> sequences)
-        {
-            int width = 0;
+            List<string> payloads = new List<string>();
             foreach(BioSequence sequence in sequences)
             {
-                width = Math.Max(width, sequence.Payload.Length);
+                payloads.Add(sequence.Payload);
             }
 
-            bool[,] result = new bool[sequences.Count, width];
+            return ConstructAlignmentStateFromStrings(m, n, payloads);
+        }
 
-            for(int i=0; i<sequences.Count; i++)
+        public char[,] ConstructInitialAlignmentState(List<BioSequence> sequences)
+        {
+            int m = sequences.Count;
+            int n = DecideWidth(sequences);
+
+            List<string> residueStrings = new List<string>();
+            foreach (BioSequence sequence in sequences)
             {
-                string payload = sequences[i].Payload;
+                residueStrings.Add(sequence.Residues);
+            }
 
-                for(int j=0; j<payload.Length; j++)
-                {
-                    result[i, j] = Bioinformatics.IsGapChar(payload[j]);
-                }
+            return ConstructAlignmentStateFromStrings(m, n, residueStrings);
+        }
 
-                for(int j=payload.Length; j<width; j++)
+        public char[,] ConstructAlignmentStateFromStrings(int m, int n, List<string> payloads)
+        {
+            char[,] result = new char[m, n];
+
+            for (int i = 0; i < m; i++)
+            {
+                string payload = payloads[i];
+                for (int j = 0; j < n; j++)
                 {
-                    result[i, j] = true;
+                    if (j < payload.Length)
+                    {
+                        result[i, j] = payload[j];
+                    }
+                    else
+                    {
+                        result[i, j] = '-';
+                    }
                 }
             }
 
             return result;
         }
 
+        public int GetLongestPayloadLength(List<BioSequence> sequences)
+        {
+            int result = 0;
+            foreach(BioSequence sequence in sequences)
+            {
+                result = Math.Max(sequence.Payload.Length, result);
+            }
+
+            return result;
+        }
+        
         public List<BioSequence> GetAlignedSequences()
         {
             List<BioSequence> result = new List<BioSequence>();
@@ -227,18 +111,14 @@ namespace LibBioInfo
             return new Alignment(this);
         }
 
-        
 
         public char GetCharacterAt(int i, int j)
         {
-            UpdateCharacterMatrixIfNeeded();
             return CharacterMatrix[i, j];
         }
 
         public string GetColumn(int j)
         {
-            UpdateCharacterMatrixIfNeeded();
-
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < Height; i++)
             {
@@ -251,36 +131,22 @@ namespace LibBioInfo
 
         public string GetAlignedPayload(int i)
         {
-            BioSequence sequence = Sequences[i];
-
             StringBuilder sb = new StringBuilder();
-
-            string residues = sequence.Residues;
-            int residuesPlaced = 0;
-
             for (int j = 0; j < Width; j++)
             {
-                bool positionIsEmpty = State[i, j];
-                if (positionIsEmpty)
-                {
-                    sb.Append('-');
-                }
-                else
-                {
-                    sb.Append(residues[residuesPlaced]);
-                    residuesPlaced++;
-                }
+                char x = CharacterMatrix[i, j];
+                sb.Append(x);
             }
 
             return sb.ToString();
         }
 
-        private int DecideWidth()
+        private int DecideWidth(List<BioSequence> sequences)
         {
             // placeholder logic
 
             int width = 0;
-            foreach (BioSequence seq in Sequences)
+            foreach (BioSequence seq in sequences)
             {
                 width = Math.Max(width, seq.Residues.Length);
             }
@@ -316,39 +182,13 @@ namespace LibBioInfo
             return true;
         }
 
-        public void InitializeAlignmentState()
-        {
-            for (int i = 0; i < Height; i++)
-            {
-                InitializeAlignmentRow(i);
-            }
-        }
-
-        private void InitializeAlignmentRow(int i)
-        {
-            int unusedCharacters = Sequences[i].Residues.Length;
-
-            for (int j = 0; j < Width; j++)
-            {
-                if (unusedCharacters > 0)
-                {
-                    unusedCharacters--;
-                    State[i, j] = false;
-                }
-                else
-                {
-                    State[i, j] = true; // indicates that a gap is placed at state[i,j]
-                }
-            }
-        }
-
         public List<int> GetResiduePositionsInRow(Alignment alignment, int i)
         {
             List<int> result = new List<int>();
 
             for(int j=0; j<alignment.Width; j++)
             {
-                if (State[i,j] == false)
+                if (Bioinformatics.IsGapChar(CharacterMatrix[i,j]) == false)
                 {
                     result.Add(j);
                 }
@@ -363,7 +203,7 @@ namespace LibBioInfo
 
             for (int j = 0; j < alignment.Width; j++)
             {
-                if (State[i, j] == true)
+                if (Bioinformatics.IsGapChar(CharacterMatrix[i, j]) == true)
                 {
                     result.Add(j);
                 }
