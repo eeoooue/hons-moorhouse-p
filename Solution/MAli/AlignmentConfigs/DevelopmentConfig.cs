@@ -36,6 +36,7 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new SwapOperator(),
+                new MultiRowStochasticSwapOperator(),
                 new GapInserter(),
                 new HeuristicPairwiseModifier(),
             };
