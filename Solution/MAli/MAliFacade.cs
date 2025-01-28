@@ -16,7 +16,7 @@ namespace MAli
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        public AlignmentConfig Config = new DevelopmentConfig();
+        public AlignmentConfig Config = new Sprint05Config();
 
         public void SetSeed(string value)
         {
