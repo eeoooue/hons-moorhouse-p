@@ -21,7 +21,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetCandidateC();
+            return GetCandidateB();
         }
 
         public IFitnessFunction GetObjective()
@@ -61,7 +61,7 @@ namespace MAli.AlignmentConfigs
             const int populationSize = 35;
             GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations, populationSize);
 
-            aligner.CrossoverOperator = new RowBasedCrossoverOperator();
+            aligner.CrossoverOperator = new ColBasedCrossoverOperator();
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
