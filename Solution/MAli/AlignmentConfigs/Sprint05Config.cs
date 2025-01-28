@@ -21,7 +21,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetCandidateB();
+            return GetBestPerformer();
         }
 
         public IFitnessFunction GetObjective()
@@ -30,6 +30,11 @@ namespace MAli.AlignmentConfigs
             IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
 
             return objective;
+        }
+
+        private IterativeAligner GetBestPerformer()
+        {
+            return GetCandidateC();
         }
 
         private IterativeAligner GetCandidateA()
