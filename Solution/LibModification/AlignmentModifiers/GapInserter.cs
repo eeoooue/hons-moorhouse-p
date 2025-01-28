@@ -21,7 +21,7 @@ namespace LibModification.AlignmentModifiers
             GapWidthLimit = gapSizeLimit;
         }
 
-        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth();
             char[,] modified = InsertGapOfWidth(in alignment.CharacterMatrix, gapWidth);

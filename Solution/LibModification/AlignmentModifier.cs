@@ -15,6 +15,6 @@ namespace LibModification
             alignment.CharacterMatrix = modifiedMat;
         }
 
-        protected abstract char[,] GetModifiedAlignmentState(Alignment alignment);
+        public abstract char[,] GetModifiedAlignmentState(Alignment alignment);
     }
 }

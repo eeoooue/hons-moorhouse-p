@@ -130,9 +130,20 @@ namespace LibBioInfo.PairwiseAligners
             return result.ToString();
         }
 
-        public void ExtractPairwiseAlignment(ref StringBuilder a, ref StringBuilder b)
+        public void ExtractPairwiseAlignment(out string sequenceA, out string sequenceB)
         {
+            if (!ScoresPopulated)
+            {
+                PopulateTable();
+            }
+
+            StringBuilder a = new StringBuilder();
+            StringBuilder b = new StringBuilder();
+
             Backtrack(ref a, ref b, M - 1, N - 1);
+
+            sequenceA = RecoverPayload(a);
+            sequenceB = RecoverPayload(b);
         }
 
         public void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)

@@ -13,7 +13,7 @@ namespace LibModification.AlignmentModifiers
         AlignmentStateHelper StateHelper = new AlignmentStateHelper();
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-        protected override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             bool[,] bitmask = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
             ShuffleMatrixRows(ref bitmask);
