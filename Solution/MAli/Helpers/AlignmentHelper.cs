@@ -99,6 +99,13 @@ namespace MAli.Helpers
 
         public void AlignIteratively(IIterativeAligner aligner, AlignmentInstructions instructions)
         {
+            Console.WriteLine(instructions.GetContextString());
+
+            if (instructions.EmitFrames)
+            {
+                FrameHelper.CheckCreateFramesFolder();
+            }
+
             if (instructions.LimitedByIterations())
             {
                 AlignUntilIterationLimit(aligner, instructions);
@@ -109,25 +116,8 @@ namespace MAli.Helpers
             }
         }
 
-        public void SharedStepsBeforeAligning(IIterativeAligner aligner, AlignmentInstructions instructions)
-        {
-            string context = $"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.";
-            if (instructions.RefineOnly)
-            {
-                context += " (iterative refinement)";
-            }
-
-            Console.WriteLine(context);
-
-            if (instructions.EmitFrames)
-            {
-                FrameHelper.CheckCreateFramesFolder();
-            }
-        }
-
         public void AlignUntilIterationLimit(IIterativeAligner aligner, AlignmentInstructions instructions)
         {
-            SharedStepsBeforeAligning(aligner, instructions);
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
                 PerformIterationOfAlignment(aligner, instructions);
@@ -136,7 +126,6 @@ namespace MAli.Helpers
 
         public void AlignUntilSecondsDeadline(IIterativeAligner aligner, AlignmentInstructions instructions)
         {
-            SharedStepsBeforeAligning(aligner, instructions);
             DateTime deadline = DateTime.Now.AddSeconds(instructions.SecondsLimit);
             while (DateTime.Now < deadline)
             {
@@ -152,7 +141,6 @@ namespace MAli.Helpers
                 FrameHelper.SaveCurrentFrame(alignment, aligner.IterationsCompleted);
             }
         }
-
 
         public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
         {

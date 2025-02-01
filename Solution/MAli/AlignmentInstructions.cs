@@ -17,6 +17,25 @@ namespace MAli
         public string InputPath = "";
         public string OutputPath = "";
 
+        public string GetContextString()
+        {
+            string context = $"Performing Multiple Sequence Alignment";
+            if (RefineOnly)
+            {
+                context += " (iterative refinement)";
+            }
+            if (LimitedByIterations())
+            {
+                context += $" [ limit: {IterationsLimit} iterations ]";
+            }
+            else if (LimitedBySeconds())
+            {
+                context += $" [ limit: {SecondsLimit.ToString("#.00")} seconds ]";
+            }
+
+            return context;
+        }
+
         public bool LimitedByIterations()
         {
             return IterationsLimit > 0;
@@ -33,7 +52,7 @@ namespace MAli
             {
                 return;
             }
-            SecondsLimit = 2.0;
+            SecondsLimit = 5.0;
         }
     }
 }
