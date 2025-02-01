@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MAli.Helpers
 {
-    internal class AlignmentHelper
+    public class AlignmentHelper
     {
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();

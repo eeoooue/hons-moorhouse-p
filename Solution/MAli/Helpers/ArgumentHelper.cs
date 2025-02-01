@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli.Helpers
 {
-    internal class ArgumentHelper
+    public class ArgumentHelper
     {
 
         public AlignmentInstructions UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)

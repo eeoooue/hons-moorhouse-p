@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MAli.Helpers
 {
-    internal class FrameHelper
+    public class FrameHelper
     {
         FileHelper FileHelper = new FileHelper();
 
