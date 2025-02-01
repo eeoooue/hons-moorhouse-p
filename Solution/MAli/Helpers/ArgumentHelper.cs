@@ -9,6 +9,48 @@ namespace MAli.Helpers
     internal class ArgumentHelper
     {
 
+        public AlignmentInstructions UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
+        {
+            AlignmentInstructions instructions = new AlignmentInstructions();
+            instructions.Debug = CommandsIncludeFlag(table, "debug");
+            instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
+            instructions.RefineOnly = CommandsIncludeFlag(table, "refine");
+            instructions.IterationsLimit = UnpackSpecifiedIterations(table);
+            instructions.SecondsLimit = UnpackSpecifiedSeconds(table);
+            instructions.InputPath = inputPath;
+            instructions.OutputPath = BuildFullOutputFilename(outputPath, table);
+
+            instructions.CheckAddDefaultRestrictions();
+
+            return instructions;
+        }
+
+        public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
+        {
+            string result = outputName;
+            if (CommandsIncludeFlag(table, "timestamp"))
+            {
+                result += $"_{GetTimeStamp()}";
+            }
+            if (CommandsIncludeFlag(table, "tag"))
+            {
+                string? specifiedTag = table["tag"];
+                if (specifiedTag is string tag)
+                {
+                    result += $"_{tag}";
+                }
+            }
+            result += ".faa";
+
+            return result;
+        }
+
+        public string GetTimeStamp()
+        {
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            return timestamp;
+        }
+
 
         public Dictionary<string, string?> InterpretArguments(string[] args)
         {
