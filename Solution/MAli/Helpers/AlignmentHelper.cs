@@ -14,7 +14,6 @@ namespace MAli.Helpers
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
 
         private AlignmentConfig Config;
@@ -29,6 +28,7 @@ namespace MAli.Helpers
             bool debugging = ArgumentHelper.CommandsIncludeFlag(table, "debug");
             bool emitFrames = ArgumentHelper.CommandsIncludeFlag(table, "frames");
             bool refineOnly = ArgumentHelper.CommandsIncludeFlag(table, "refine");
+            string outputFilename = BuildFullOutputFilename(outputPath, table);
 
             try
             {
@@ -38,31 +38,8 @@ namespace MAli.Helpers
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IIterativeAligner aligner = Config.CreateAligner();
-
-                    if (debugging && aligner is IterativeAligner instance)
-                    {
-                        aligner = new DebuggingWrapper(instance);
-                    }
-
-                    int iterations = ArgumentHelper.UnpackSpecifiedIterations(table);
-                    if (iterations > 0)
-                    {
-                        aligner.IterationsLimit = iterations;
-                    }
-
-                    if (refineOnly)
-                    {
-                        aligner.InitializeForRefinement(alignment);
-                    }
-                    else
-                    {
-                        aligner.Initialize(alignment.Sequences);
-                    }
-
+                    IIterativeAligner aligner = InitialiseAligner(alignment, debugging, refineOnly, table);
                     AlignIteratively(aligner, emitFrames, refineOnly);
-
-                    string outputFilename = BuildFullOutputFilename(outputPath, table);
 
                     FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
                     Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
@@ -77,6 +54,35 @@ namespace MAli.Helpers
                 ResponseBank.ExplainException(e);
             }
         }
+
+
+        public IIterativeAligner InitialiseAligner(Alignment alignment, bool debugging, bool refineOnly, Dictionary<string, string?> table)
+        {
+            IIterativeAligner aligner = Config.CreateAligner();
+
+            if (debugging && aligner is IterativeAligner instance)
+            {
+                aligner = new DebuggingWrapper(instance);
+            }
+
+            int iterations = ArgumentHelper.UnpackSpecifiedIterations(table);
+            if (iterations > 0)
+            {
+                aligner.IterationsLimit = iterations;
+            }
+
+            if (refineOnly)
+            {
+                aligner.InitializeForRefinement(alignment);
+            }
+            else
+            {
+                aligner.Initialize(alignment.Sequences);
+            }
+
+            return aligner;
+        }
+
 
         public void AlignIteratively(IIterativeAligner aligner, bool emitFrames, bool refineOnly)
         {
@@ -102,9 +108,6 @@ namespace MAli.Helpers
                 }
             }
         }
-
-        
-
 
         public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
         {
