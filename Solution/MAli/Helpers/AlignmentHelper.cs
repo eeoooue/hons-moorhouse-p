@@ -22,6 +22,23 @@ namespace MAli.Helpers
             Config = config;
         }
 
+
+
+        public AlignmentInstructions UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
+        {
+            AlignmentInstructions instructions = new AlignmentInstructions();
+            instructions.Debug = ArgumentHelper.CommandsIncludeFlag(table, "debug");
+            instructions.EmitFrames = ArgumentHelper.CommandsIncludeFlag(table, "frames");
+            instructions.RefineOnly = ArgumentHelper.CommandsIncludeFlag(table, "refine");
+
+            instructions.InputPath = inputPath;
+            instructions.OutputPath = BuildFullOutputFilename(outputPath, table);
+
+            instructions.CheckAddDefaultRestrictions();
+
+            return instructions;
+        }
+
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
             bool debugging = ArgumentHelper.CommandsIncludeFlag(table, "debug");
@@ -52,6 +69,39 @@ namespace MAli.Helpers
                 ResponseBank.ExplainException(e);
             }
         }
+
+
+
+        //public void LegacyPerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        //{
+        //    bool debugging = ArgumentHelper.CommandsIncludeFlag(table, "debug");
+        //    bool emitFrames = ArgumentHelper.CommandsIncludeFlag(table, "frames");
+        //    bool refineOnly = ArgumentHelper.CommandsIncludeFlag(table, "refine");
+        //    string outputFilename = BuildFullOutputFilename(outputPath, table);
+
+        //    try
+        //    {
+        //        Console.WriteLine($"Reading sequences from source: '{inputPath}'");
+        //        List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+        //        Alignment alignment = new Alignment(sequences, true);
+
+        //        if (alignment.SequencesCanBeAligned())
+        //        {
+        //            IIterativeAligner aligner = InitialiseAligner(alignment, debugging, refineOnly, table);
+        //            AlignIteratively(aligner, emitFrames, refineOnly);
+        //            FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
+        //            Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Error: Sequences cannot be aligned.");
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ResponseBank.ExplainException(e);
+        //    }
+        //}
 
         public IIterativeAligner InitialiseAligner(Alignment alignment, bool debugging, bool refineOnly, Dictionary<string, string?> table)
         {

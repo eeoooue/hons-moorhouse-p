@@ -27,7 +27,7 @@ namespace MAli
             return SecondsLimit > 0.0;
         }
 
-        public void AddDefaultRestrictions()
+        public void CheckAddDefaultRestrictions()
         {
             if (LimitedByIterations() || LimitedBySeconds())
             {
