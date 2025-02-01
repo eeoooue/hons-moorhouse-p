@@ -4,6 +4,7 @@ using LibBioInfo;
 using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;
+using MAli.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace MAli
     public class MAliFacade
     {
         private FileHelper FileHelper = new FileHelper();
+
+        private FrameHelper FrameHelper = new FrameHelper();
+
         private ResponseBank ResponseBank = new ResponseBank();
         public AlignmentConfig Config = new Sprint05Config();
 
@@ -103,7 +107,7 @@ namespace MAli
 
             if (emitFrames)
             {
-                CheckCreateFramesFolder();
+                FrameHelper.CheckCreateFramesFolder();
             }
 
             while(aligner.IterationsCompleted < aligner.IterationsLimit)
@@ -111,35 +115,12 @@ namespace MAli
                 aligner.Iterate();
                 if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
                 {
-                    SaveCurrentFrame(alignment, aligner.IterationsCompleted);
+                    FrameHelper.SaveCurrentFrame(alignment, aligner.IterationsCompleted);
                 }
             }
         }
 
-        public void SaveCurrentFrame(Alignment alignment, int iterations)
-        {
-            string suffix = Frontload(iterations);
-            FileHelper.WriteAlignmentTo(alignment, $"frames\\frame_{suffix}");
-        }
-
-        public string Frontload(int number)
-        {
-            string s = number.ToString();
-
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i<5-s.Length; i++)
-            {
-                sb.Append('0');
-            }
-            sb.Append(s);
-
-            return sb.ToString();
-        }
-
-        public void CheckCreateFramesFolder()
-        {
-            Directory.CreateDirectory("frames");
-        }
+        
 
         public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
         {
