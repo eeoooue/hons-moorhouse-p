@@ -17,7 +17,11 @@ namespace DevConsole
 
             // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
 
-            RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+            // RunMAli("-help");
+
+            RunMAli("-input BB11001 -output test -debug");
+
+            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
             // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
