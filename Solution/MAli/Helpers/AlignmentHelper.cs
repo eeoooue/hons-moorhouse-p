@@ -22,15 +22,14 @@ namespace MAli.Helpers
             Config = config;
         }
 
-
-
         public AlignmentInstructions UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
             AlignmentInstructions instructions = new AlignmentInstructions();
             instructions.Debug = ArgumentHelper.CommandsIncludeFlag(table, "debug");
             instructions.EmitFrames = ArgumentHelper.CommandsIncludeFlag(table, "frames");
             instructions.RefineOnly = ArgumentHelper.CommandsIncludeFlag(table, "refine");
-
+            instructions.IterationsLimit = ArgumentHelper.UnpackSpecifiedIterations(table);
+            instructions.SecondsLimit = ArgumentHelper.UnpackSpecifiedSeconds(table);
             instructions.InputPath = inputPath;
             instructions.OutputPath = BuildFullOutputFilename(outputPath, table);
 
@@ -41,10 +40,7 @@ namespace MAli.Helpers
 
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            bool debugging = ArgumentHelper.CommandsIncludeFlag(table, "debug");
-            bool emitFrames = ArgumentHelper.CommandsIncludeFlag(table, "frames");
-            bool refineOnly = ArgumentHelper.CommandsIncludeFlag(table, "refine");
-            string outputFilename = BuildFullOutputFilename(outputPath, table);
+            AlignmentInstructions instructions = UnpackInstructions(inputPath, outputPath, table);
 
             try
             {
@@ -54,10 +50,10 @@ namespace MAli.Helpers
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IIterativeAligner aligner = InitialiseAligner(alignment, debugging, refineOnly, table);
-                    AlignIteratively(aligner, emitFrames, refineOnly);
-                    FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
-                    Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
+                    IIterativeAligner aligner = InitialiseAligner(alignment, instructions);
+                    AlignIteratively(aligner, instructions);
+                    FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, instructions.OutputPath);
+                    Console.WriteLine($"Alignment written to destination: '{instructions.OutputPath}'");
                 }
                 else
                 {
@@ -70,55 +66,25 @@ namespace MAli.Helpers
             }
         }
 
-
-
-        //public void LegacyPerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
-        //{
-        //    bool debugging = ArgumentHelper.CommandsIncludeFlag(table, "debug");
-        //    bool emitFrames = ArgumentHelper.CommandsIncludeFlag(table, "frames");
-        //    bool refineOnly = ArgumentHelper.CommandsIncludeFlag(table, "refine");
-        //    string outputFilename = BuildFullOutputFilename(outputPath, table);
-
-        //    try
-        //    {
-        //        Console.WriteLine($"Reading sequences from source: '{inputPath}'");
-        //        List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
-        //        Alignment alignment = new Alignment(sequences, true);
-
-        //        if (alignment.SequencesCanBeAligned())
-        //        {
-        //            IIterativeAligner aligner = InitialiseAligner(alignment, debugging, refineOnly, table);
-        //            AlignIteratively(aligner, emitFrames, refineOnly);
-        //            FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
-        //            Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Error: Sequences cannot be aligned.");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ResponseBank.ExplainException(e);
-        //    }
-        //}
-
-        public IIterativeAligner InitialiseAligner(Alignment alignment, bool debugging, bool refineOnly, Dictionary<string, string?> table)
+        public IIterativeAligner InitialiseAligner(Alignment alignment, AlignmentInstructions instructions)
         {
             IIterativeAligner aligner = Config.CreateAligner();
 
-            if (debugging && aligner is IterativeAligner instance)
+            if (instructions.Debug && aligner is IterativeAligner instance)
             {
                 aligner = new DebuggingWrapper(instance);
             }
 
-            int iterations = ArgumentHelper.UnpackSpecifiedIterations(table);
-            if (iterations > 0)
+            if (instructions.IterationsLimit > 0)
             {
-                aligner.IterationsLimit = iterations;
+                aligner.IterationsLimit = instructions.IterationsLimit;
+            }
+            else
+            {
+                aligner.IterationsLimit = instructions.IterationsLimit;
             }
 
-            if (refineOnly)
+            if (instructions.RefineOnly)
             {
                 aligner.InitializeForRefinement(alignment);
             }
@@ -130,28 +96,16 @@ namespace MAli.Helpers
             return aligner;
         }
 
-        public void AlignIteratively(IIterativeAligner aligner, bool emitFrames, bool refineOnly)
+
+        public void AlignIteratively(IIterativeAligner aligner, AlignmentInstructions instructions)
         {
-            string context = $"Performing Multiple Sequence Alignment: {aligner.IterationsLimit} iterations.";
-            if (refineOnly)
+            if (instructions.LimitedByIterations())
             {
-                context += " (iterative refinement)";
+                AlignUntilIterationLimit(aligner, instructions);
             }
-
-            Console.WriteLine(context);
-
-            if (emitFrames)
+            else if (instructions.LimitedBySeconds())
             {
-                FrameHelper.CheckCreateFramesFolder();
-            }
-
-            while (aligner.IterationsCompleted < aligner.IterationsLimit)
-            {
-                aligner.Iterate();
-                if (emitFrames && aligner.CurrentAlignment is Alignment alignment)
-                {
-                    FrameHelper.SaveCurrentFrame(alignment, aligner.IterationsCompleted);
-                }
+                AlignUntilSecondsDeadline(aligner, instructions);
             }
         }
 
