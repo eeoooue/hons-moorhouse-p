@@ -3,6 +3,7 @@ using LibBioInfo;
 using LibFileIO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,23 +68,66 @@ namespace MAli.Helpers
             {
                 AlignUntilSecondsDeadline(aligner, instructions);
             }
+
+            if (aligner is DebuggingWrapper wrapper)
+            {
+                wrapper.ShowDebuggingInfo();
+            }
         }
 
         public void AlignUntilIterationLimit(IIterativeAligner aligner, AlignmentInstructions instructions)
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
+                if (aligner is DebuggingWrapper debug)
+                {
+                    debug.ProgressContext = GetIterationProgressContext(aligner, instructions);
+                }
                 PerformIterationOfAlignment(aligner, instructions);
             }
         }
 
+        public string GetIterationProgressContext(IIterativeAligner aligner, AlignmentInstructions instructions)
+        {
+            int completed = aligner.IterationsCompleted;
+            int limit = aligner.IterationsLimit;
+
+            double percentIterationsComplete = Math.Round(100.0 * (double)completed / (double)limit, 3);
+            string percentValue = percentIterationsComplete.ToString("0.0");
+
+            string result = $"completed {completed} of {limit} iterations ({percentValue}%)";
+
+            return result;
+        }
+
         public void AlignUntilSecondsDeadline(IIterativeAligner aligner, AlignmentInstructions instructions)
         {
+            DateTime start = DateTime.Now;
             DateTime deadline = DateTime.Now.AddSeconds(instructions.SecondsLimit);
+
+            DateTime time = DateTime.Now;
+
             while (DateTime.Now < deadline)
             {
                 PerformIterationOfAlignment(aligner, instructions);
+                time = DateTime.Now;
+                if (aligner is DebuggingWrapper debug)
+                {
+                    debug.ProgressContext = GetTimelimitProgress(aligner, start, time, instructions.SecondsLimit);
+                }
+                if (time >= deadline)
+                {
+                    break;
+                }
             }
+        }
+
+        public string GetTimelimitProgress(IIterativeAligner aligner, DateTime start, DateTime time, double limit)
+        {
+            TimeSpan span = time - start;
+            string result = $"completed {aligner.IterationsCompleted} iterations in {span.Seconds} of {limit} seconds";
+
+            return result;
         }
 
         public void PerformIterationOfAlignment(IIterativeAligner aligner, AlignmentInstructions instructions)

@@ -18,6 +18,8 @@ namespace LibAlignment
 
         public int IterationsLimit { get { return Aligner.IterationsLimit; } set { Aligner.IterationsLimit = value; } }
 
+        public string ProgressContext = "";
+
         public double AlignmentScore { get { return Aligner.AlignmentScore; } }
 
         public IFitnessFunction Objective { get { return Aligner.Objective; } }
@@ -98,7 +100,9 @@ namespace LibAlignment
             string percentValue = percentIterationsComplete.ToString("0.0");
 
             lines.Add(Aligner.GetName());
-            lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
+            lines.Add($" - {ProgressContext}");
+
+            // lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
             lines.Add("");
         }
 
