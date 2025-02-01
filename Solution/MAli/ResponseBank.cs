@@ -54,6 +54,12 @@ namespace MAli
                 case UserRequestError.RequestIsInvalid:
                     Console.WriteLine("Error: Request is invalid. Try '-help' to view a list of commands.");
                     break;
+                case UserRequestError.MultipleLimitations:
+                    Console.WriteLine("Error: MAli doesn't support limiting both 'iterations' & 'seconds' at once.");
+                    break;
+                default:
+                    Console.WriteLine("Error: Alignment couldn't be performed.");
+                    break;
             }
         }
     }

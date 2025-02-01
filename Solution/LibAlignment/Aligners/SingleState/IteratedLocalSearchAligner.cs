@@ -55,7 +55,7 @@ namespace LibAlignment.Aligners.SingleState
 
         public void MarkUpcomingResetPoint()
         {
-            int range = IterationsLimit / 10;
+            int range = 200;
             int roll = Randomizer.Random.Next(1, range + 1);
             ResetPoint = IterationsCompleted + roll;
         }
