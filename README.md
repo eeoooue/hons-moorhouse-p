@@ -1,2 +1,21 @@
-# hons-moorhouse-p
-My Honours project
+# MAli - Metaheuristic Aligner
+
+MAli is a software tool for performing [Multiple Sequence Alignment](https://en.wikipedia.org/wiki/Multiple_sequence_alignment) iteratively.
+
+MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignments in FASTA.
+
+### Screenshot
+
+![Image](./MAliScreenshot.png)
+
+### Development
+
+| Sprint         | Date Start | Date End | Release | Additions | 
+| ------------- | ------------- |------------- |------------- | ------------- |
+| 1  | 30/10/24  | 12/11/24  | [```v0.1```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v0.1)  | ```Sequence Alignment``` ```FASTA Format``` |
+| 2  | 13/11/24  | 26/11/24  | [```v0.2```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v0.2)  | ```Iterative Alignment```  ```Sum of Pairs Objective``` |
+| 3  | 27/11/24  | 10/12/24  | [```v1.0```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.0)  |  ```(μ,λ)-Evolution Strategy``` ```Affine Gap Penalties``` |
+| 4  | 11/12/24  | 14/01/25  | [```v1.1```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.1)   | ```Iterated Local Search``` ```Debugging Mode``` |
+| 5  | 15/01/25  | 28/01/25   | [```v1.2```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.2) | ```Iterative Refinement``` ```Needleman-Wunsch Alg.``` |
+| 6  | 29/01/25  | --   | --           | -- |
+
