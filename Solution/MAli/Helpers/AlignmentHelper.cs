@@ -15,7 +15,6 @@ namespace MAli.Helpers
         private FrameHelper FrameHelper = new FrameHelper();
         private ResponseBank ResponseBank = new ResponseBank();
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
-
         private AlignmentConfig Config;
 
         public AlignmentHelper(AlignmentConfig config)
@@ -40,7 +39,6 @@ namespace MAli.Helpers
                 {
                     IIterativeAligner aligner = InitialiseAligner(alignment, debugging, refineOnly, table);
                     AlignIteratively(aligner, emitFrames, refineOnly);
-
                     FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, outputFilename);
                     Console.WriteLine($"Alignment written to destination: '{outputFilename}'");
                 }
@@ -54,7 +52,6 @@ namespace MAli.Helpers
                 ResponseBank.ExplainException(e);
             }
         }
-
 
         public IIterativeAligner InitialiseAligner(Alignment alignment, bool debugging, bool refineOnly, Dictionary<string, string?> table)
         {
@@ -82,7 +79,6 @@ namespace MAli.Helpers
 
             return aligner;
         }
-
 
         public void AlignIteratively(IIterativeAligner aligner, bool emitFrames, bool refineOnly)
         {
