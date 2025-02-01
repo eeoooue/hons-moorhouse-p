@@ -211,5 +211,11 @@ namespace MAli.Helpers
 
             return 0.0;
         }
+
+
+        public bool SpecifiesMultipleLimitations(Dictionary<string, string?> table)
+        {
+            return CommandsIncludeFlag(table, "iterations") && CommandsIncludeFlag(table, "seconds");
+        }
     }
 }

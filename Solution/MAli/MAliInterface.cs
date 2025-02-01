@@ -12,7 +12,8 @@ namespace MAli
         ContainsForeignCommands,
         RequestIsAmbiguous,
         NoArgumentsGiven,
-        RequestIsInvalid
+        RequestIsInvalid,
+        MultipleLimitations,
     }
 
     public class MAliInterface
@@ -38,6 +39,12 @@ namespace MAli
             if (ArgumentHelper.ContainsForeignCommands(table))
             {
                 Facade.NotifyUserError(UserRequestError.ContainsForeignCommands);
+                return;
+            }
+
+            if (ArgumentHelper.SpecifiesMultipleLimitations(table))
+            {
+                Facade.NotifyUserError(UserRequestError.MultipleLimitations);
                 return;
             }
 
