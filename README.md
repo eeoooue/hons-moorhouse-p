@@ -19,3 +19,9 @@ MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignmen
 | 5  | 15/01/25  | 28/01/25   | [```v1.2```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.2) | ```Iterative Refinement``` ```Needleman-Wunsch Alg.``` |
 | 6  | 29/01/25  | --   | --           | -- |
 
+### Performance
+
+The plot below shows the performance of MAli iterations in release testing. These tests were conducted using structural benchmarking on testcases from BALIS-2, a subset of BAliBASE specific to this project.
+
+![Image](./MAliPerformance.png)
+
