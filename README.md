@@ -6,7 +6,7 @@ MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignmen
 
 ### Screenshot
 
-![Image](./MAliScreenshot.png)
+![Image](./Misc/MAliScreenshot.png)
 
 ### Development
 
@@ -23,5 +23,5 @@ MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignmen
 
 The plot below shows the performance of MAli iterations in release testing. These tests were conducted using structural benchmarking on testcases from BALIS-2, a subset of BAliBASE specific to this project.
 
-![Image](./MAliPerformance.png)
+![Image](./Misc/MAliPerformance.png)
 
