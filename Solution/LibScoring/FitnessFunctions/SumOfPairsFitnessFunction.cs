@@ -36,5 +36,10 @@ namespace LibScoring.FitnessFunctions
         {
             return SumOfPairsScore.GetWorstPossibleScore(alignment);
         }
+
+        public override string GetAbbreviation()
+        {
+            return "SumOfPairs";
+        }
     }
 }

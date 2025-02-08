@@ -20,132 +20,49 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetExperimentalAligner();
+            return GetAligner();
         }
 
-        private IterativeAligner GetExperimentalAligner()
+        public IFitnessFunction GetObjective()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+            IFitnessFunction objectiveA = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+            IFitnessFunction objectiveB = new TotallyConservedColumnsFitnessFunction();
+            IFitnessFunction objectiveC = new NonGapsFitnessFunction();
+
+            List<IFitnessFunction> functions = new List<IFitnessFunction>();
+            functions.Add(objectiveA);
+            functions.Add(objectiveB);
+
+            List<double> weights = new List<double>() {0.90, 0.10 };
+
+            WeightedCombinationOfFitnessFunctions weightedCombo = new WeightedCombinationOfFitnessFunctions(functions, weights);
+
+            return weightedCombo;
+        }
+
+
+        private IterativeAligner GetAligner()
+        {
+            IFitnessFunction objective = GetObjective();
 
             const int maxIterations = 100;
-            const int mew = 10;
-            const int lambda = 10 * 7;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
+
+            IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, maxIterations);
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new SwapOperator(),
-                new MultiRowStochasticSwapOperator(),
                 new GapInserter(),
+                new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
             };
 
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
-            return aligner;
-        }
-
-        private IterativeAligner GetBottleneckedAligner()
-        {
-            IScoringMatrix matrix = new BLOSUM62Matrix();
-            // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-
-            IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
-
-
-            const int maxIterations = 100;
-            const int mew = 1000;
-            const int lambda = mew * 7;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new MultiRowStochasticSwapOperator(),
-            };
-
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
-            return aligner;
-        }
-
-        //private IterativeAligner GetRandomSearchAligner()
-        //{
-        //    IScoringMatrix matrix = new BLOSUM62Matrix();
-        //    // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-
-        //    IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
-
-        //    const int maxIterations = 100;
-        //    RandomSearchAligner aligner = new RandomSearchAligner(objective, maxIterations);
-
-        //    return aligner;
-        //}
-
-        public IterativeAligner GetRandomSearchAligner()
-        {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
-            int iterations = 1000;
-
-            return new RandomSearchAligner(sumOfPairsWithAffine, iterations);
-        }
-
-
-        private IterativeAligner GetMinimalAligner()
-        {
-            IScoringMatrix matrix = new BLOSUM62Matrix();
-            // IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-
-            IFitnessFunction objective = new TotallyConservedColumnsFitnessFunction();
-
-
-            const int maxIterations = 100;
-            const int mew = 10;
-            const int lambda = 10 * 7;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new MultiRowStochasticGapShifter(),
-                new GapInserter(),
-            };
-
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
-            return aligner;
-        }
-
-        private MewLambdaEvolutionaryAlgorithmAligner GetSprint04Version()
-        {
-            IScoringMatrix matrix = new BLOSUM62Matrix();
-            IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-
-            const int maxIterations = 100;
-            const int mew = 10;
-            const int lambda = 10 * 7;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new MultiRowStochasticSwapOperator(),
-                new SwapOperator(),
-                new GapInserter(),
-            };
-
-            MultiOperatorModifier modifier = new MultiOperatorModifier(modifiers);
-            aligner.MutationOperator = modifier;
+            aligner.TweakModifier = new MultiOperatorModifier(modifiers);
+            aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
 
             return aligner;
         }
 
-
-        
-
-        public IterativeAligner GetILSAligner()
-        {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IFitnessFunction sumOfPairsWithAffine = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
-            int iterations = 10000;
-
-            return new IteratedLocalSearchAligner(sumOfPairsWithAffine, iterations);
-        }
     }
 }

@@ -43,5 +43,10 @@ namespace LibScoring.FitnessFunctions
             double penalty = AffineGapPenalties.GetPenaltyForAlignmentMatrix(alignment);
             return score - penalty;
         }
+
+        public override string GetAbbreviation()
+        {
+            return "SumOfPairs+AGP";
+        }
     }
 }

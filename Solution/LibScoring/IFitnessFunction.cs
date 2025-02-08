@@ -12,5 +12,7 @@ namespace LibScoring
         public double GetFitness(in char[,] alignment);
 
         public string GetName();
+
+        public string GetAbbreviation();
     }
 }
