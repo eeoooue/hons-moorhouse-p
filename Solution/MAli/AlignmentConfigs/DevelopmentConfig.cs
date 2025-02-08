@@ -33,9 +33,8 @@ namespace MAli.AlignmentConfigs
             List<IFitnessFunction> functions = new List<IFitnessFunction>();
             functions.Add(objectiveA);
             functions.Add(objectiveB);
-            functions.Add(objectiveC);
 
-            List<double> weights = new List<double>() {0.60, 0.25, 0.15 };
+            List<double> weights = new List<double>() {0.90, 0.10 };
 
             WeightedCombinationOfFitnessFunctions weightedCombo = new WeightedCombinationOfFitnessFunctions(functions, weights);
 
