@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibAlignment.Helpers
+namespace MAli.Helpers
 {
     public class AlignmentDebugHelper
     {
@@ -25,7 +25,7 @@ namespace LibAlignment.Helpers
         public List<string> PadInfoLines(List<string> lines)
         {
             List<string> result = new List<string>();
-            foreach(string line in lines)
+            foreach (string line in lines)
             {
                 string padded = PadInfoLine(line);
                 result.Add(padded);
@@ -63,7 +63,7 @@ namespace LibAlignment.Helpers
 
         public void PaintAlignment(Alignment alignment)
         {
-            foreach(BioSequence sequence in alignment.GetAlignedSequences())
+            foreach (BioSequence sequence in alignment.GetAlignedSequences())
             {
                 PaintSequence(sequence);
             }
