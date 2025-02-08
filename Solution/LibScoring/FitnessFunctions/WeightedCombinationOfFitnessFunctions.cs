@@ -46,9 +46,14 @@ namespace LibScoring.FitnessFunctions
 
             for(int i=0; i<Functions.Count; i++)
             {
-                string function = $"{Weights[i]}({Functions[i].GetName()})";
+                string function = $"{Weights[i]}({Functions[i].GetAbbreviation()})";
                 sb.Append(" ");
                 sb.Append(function);
+
+                if (i + 1 < Functions.Count)
+                {
+                    sb.Append(" +");
+                }
             }
 
             return sb.ToString();
