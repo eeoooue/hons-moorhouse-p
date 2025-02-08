@@ -14,13 +14,13 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingBatchAlignment();
+            TestingMAli();
         }
 
         static void TestingBatchAlignment()
         {
             // RunMAli("-input batchin -output batchout -batch");
-            RunMAli("-input batchin -output batchout -debug -batch");
+            // RunMAli("-input batchin -output batchout -debug -batch");
         }
 
         static void TestingMAli()

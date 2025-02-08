@@ -16,11 +16,6 @@ namespace MAli
         {
             IIterativeAligner aligner = CreateAligner();
 
-            if (instructions.Debug && aligner is IterativeAligner instance)
-            {
-                aligner = new DebuggingWrapper(instance);
-            }
-
             if (instructions.IterationsLimit > 0)
             {
                 aligner.IterationsLimit = instructions.IterationsLimit;

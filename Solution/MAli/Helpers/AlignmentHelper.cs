@@ -17,6 +17,9 @@ namespace MAli.Helpers
         private ResponseBank ResponseBank = new ResponseBank();
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
         private AlignmentConfig Config;
+        private DebuggingHelper DebuggingHelper = new DebuggingHelper();
+
+        private bool DebugMode = false;
 
         public AlignmentHelper(AlignmentConfig config)
         {
@@ -26,6 +29,8 @@ namespace MAli.Helpers
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
             AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            DebuggingHelper = new DebuggingHelper();
+            DebugMode = instructions.Debug;
 
             try
             {
@@ -69,9 +74,9 @@ namespace MAli.Helpers
                 AlignUntilSecondsDeadline(aligner, instructions);
             }
 
-            if (aligner is DebuggingWrapper wrapper)
+            if (DebugMode && aligner is IterativeAligner obj)
             {
-                wrapper.ShowDebuggingInfo();
+                DebuggingHelper.ShowDebuggingInfo(obj);
             }
         }
 
@@ -79,16 +84,18 @@ namespace MAli.Helpers
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
-                if (aligner is DebuggingWrapper debug)
+                if (aligner is IterativeAligner obj)
                 {
-                    debug.ProgressContext = GetIterationProgressContext(aligner, instructions);
+                    DebuggingHelper.ProgressContext = GetIterationProgressContext(aligner, instructions);
+                    DebuggingHelper.ShowDebuggingInfo(obj);
                 }
                 PerformIterationOfAlignment(aligner, instructions);
             }
 
-            if (aligner is DebuggingWrapper wrapper)
+            if (aligner is IterativeAligner obj2)
             {
-                wrapper.ProgressContext = GetIterationProgressContext(aligner, instructions);
+                DebuggingHelper.ProgressContext = GetIterationProgressContext(aligner, instructions);
+                DebuggingHelper.ShowDebuggingInfo(obj2);
             }
         }
 
@@ -116,9 +123,10 @@ namespace MAli.Helpers
             {
                 PerformIterationOfAlignment(aligner, instructions);
                 time = DateTime.Now;
-                if (aligner is DebuggingWrapper debug)
+                if (aligner is IterativeAligner obj)
                 {
-                    debug.ProgressContext = GetTimelimitProgress(aligner, start, time, instructions.SecondsLimit);
+                    DebuggingHelper.ProgressContext = GetTimelimitProgress(aligner, start, time, instructions.SecondsLimit);
+                    DebuggingHelper.ShowDebuggingInfo(obj);
                 }
                 if (time >= deadline)
                 {
