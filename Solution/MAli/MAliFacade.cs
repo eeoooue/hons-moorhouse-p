@@ -21,6 +21,8 @@ namespace MAli
 
         private AlignmentHelper AlignmentHelper = new AlignmentHelper(Config);
 
+        private BatchAlignmentHelper BatchAlignmentHelper = new BatchAlignmentHelper(Config);
+
 
         public void SetSeed(string value)
         {
@@ -33,6 +35,11 @@ namespace MAli
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
             AlignmentHelper.PerformAlignment(inputPath, outputPath, table);
+        }
+
+        public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)
+        {
+            BatchAlignmentHelper.PerformBatchAlignment(inDirectory, outDirectory, table);
         }
 
         public void ProvideHelp()
