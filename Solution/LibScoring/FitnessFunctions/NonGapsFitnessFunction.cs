@@ -47,5 +47,10 @@ namespace LibScoring.FitnessFunctions
         {
             return 0.0;
         }
+
+        public override string GetAbbreviation()
+        {
+            return "%NonGaps";
+        }
     }
 }

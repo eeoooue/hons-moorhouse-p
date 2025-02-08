@@ -53,5 +53,10 @@ namespace LibScoring.FitnessFunctions
 
             return sb.ToString();
         }
+
+        public string GetAbbreviation()
+        {
+            return "WeightedCombo";
+        }
     }
 }
