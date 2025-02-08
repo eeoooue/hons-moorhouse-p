@@ -15,7 +15,7 @@ namespace MAli
 {
     public class MAliFacade
     {
-        public static AlignmentConfig Config = new Sprint05Config();
+        public static AlignmentConfig Config = new DevelopmentConfig();
 
         private ResponseBank ResponseBank = new ResponseBank();
 
