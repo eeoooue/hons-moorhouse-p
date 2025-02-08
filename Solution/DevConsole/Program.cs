@@ -2,6 +2,7 @@
 using LibBioInfo;
 using LibFileIO.AlignmentReaders;
 using MAli;
+using MAli.Helpers;
 
 namespace DevConsole
 {
@@ -12,6 +13,17 @@ namespace DevConsole
         private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
 
         static void Main(string[] args)
+        {
+            TestingBatchAlignment();
+
+        }
+
+        static void TestingBatchAlignment()
+        {
+            RunMAli("-input batchin -output batchout -debug -batch");
+        }
+
+        static void TestingMAli()
         {
             // clustalformat_BB11001.aln
 
@@ -29,7 +41,6 @@ namespace DevConsole
             // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
             // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
             // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
-
         }
 
         static void RunMAli(string arguments)
