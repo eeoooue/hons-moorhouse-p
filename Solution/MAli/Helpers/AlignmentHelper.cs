@@ -85,6 +85,11 @@ namespace MAli.Helpers
                 }
                 PerformIterationOfAlignment(aligner, instructions);
             }
+
+            if (aligner is DebuggingWrapper wrapper)
+            {
+                wrapper.ProgressContext = GetIterationProgressContext(aligner, instructions);
+            }
         }
 
         public string GetIterationProgressContext(IIterativeAligner aligner, AlignmentInstructions instructions)
