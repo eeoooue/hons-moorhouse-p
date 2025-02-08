@@ -33,6 +33,8 @@ namespace MAli.Helpers
                 throw new Exception("Input directory not found");
             }
 
+            EnsureOutputDirectoryExists(outDirectory);
+
             List<string> inputPaths = CollectInputPaths(inDirectory);
             List<string> outputPaths = CreateOutputPaths(inDirectory, outDirectory);
 
@@ -40,8 +42,13 @@ namespace MAli.Helpers
 
             for(int i=0; i<n; i++)
             {
+                if (table.ContainsKey("debug"))
+                {
+                    Console.Clear();
+                }
                 Console.WriteLine($"Batch Alignment: Alignment {i+1} of {n}");
                 AlignmentHelper.PerformAlignment(inputPaths[i], outputPaths[i], table);
+                Console.WriteLine();
             }
         }
 
