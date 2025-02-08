@@ -30,6 +30,8 @@ namespace MAli
             SupportedCommands.Add("seconds");
 
             SupportedCommands.Add("refine");
+            SupportedCommands.Add("batch");
+
             SupportedCommands.Add("timestamp");
             SupportedCommands.Add("debug");
             SupportedCommands.Add("frames");
@@ -45,8 +47,9 @@ namespace MAli
 
             CommandDescriptions.Add("iterations", "Specify the number of iterations of alignment to be performed.");
             CommandDescriptions.Add("seconds", "Specify the number of seconds of alignment to be performed.");
-
             CommandDescriptions.Add("refine", "(flag) Refine the alignment provided rather than starting from a randomized state.");
+            CommandDescriptions.Add("batch", "(flag) Align a series of inputs. The 'input' and 'output' paths specified must be existing directories.");
+
             CommandDescriptions.Add("timestamp", "(flag) Includes a completion date-time timestamp in the output filename.");
             CommandDescriptions.Add("debug", "(flag) View debugging information throughout the alignment process.");
             CommandDescriptions.Add("frames", "(flag) Saves the alignment state to a 'frames' subfolder after each iteration.");
