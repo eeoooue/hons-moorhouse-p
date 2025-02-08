@@ -26,7 +26,39 @@ namespace MAli.Helpers
 
         public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)
         {
+            
+
             throw new NotImplementedException();
+        }
+
+        public bool CheckInputDirectoryExists(string inDirectory)
+        {
+            return Directory.Exists(inDirectory);
+        }
+
+        public void EnsureOutputDirectoryExists(string outDirectory)
+        {
+            if (!Directory.Exists(outDirectory))
+            {
+                Directory.CreateDirectory(outDirectory);
+            }
+        }
+
+        public List<string> CollectInputPaths(string inDirectory)
+        {
+            return Directory.GetFiles(inDirectory).ToList();
+        }
+
+        public List<string> CreateOutputFilepaths(string outDirectory, List<string> inputs)
+        {
+            List<string> result = new List<string>();
+            foreach(string input in inputs)
+            {
+                string filepath = $"{outDirectory}/{input}";
+                result.Add(filepath);
+            }
+
+            return result;
         }
     }
 }
