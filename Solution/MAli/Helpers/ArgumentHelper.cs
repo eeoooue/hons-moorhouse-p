@@ -99,6 +99,11 @@ namespace MAli.Helpers
             return false;
         }
 
+        public bool IsBatchAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
+        {
+            return table.ContainsKey("batch") && IsAlignmentRequest(table);
+        }
+
         public bool IsAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
         {
             if (checkAmbiguity && IsAmbiguousRequest(table))

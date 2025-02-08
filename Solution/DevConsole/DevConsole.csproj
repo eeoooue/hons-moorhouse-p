@@ -17,6 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="batchin\BB11001">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="batchin\BB11002">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="batchin\BB11003">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="BB11001">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -44,6 +53,11 @@
     <None Update="synth_polarizing_checkerboard">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="batchin\" />
+    <Folder Include="batchout\" />
   </ItemGroup>
 
 </Project>
