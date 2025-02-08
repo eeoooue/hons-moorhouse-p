@@ -48,7 +48,7 @@ namespace MAli
             CommandDescriptions.Add("iterations", "Specify the number of iterations of alignment to be performed.");
             CommandDescriptions.Add("seconds", "Specify the number of seconds of alignment to be performed.");
             CommandDescriptions.Add("refine", "(flag) Refine the alignment provided rather than starting from a randomized state.");
-            CommandDescriptions.Add("batch", "(flag) Align a series of inputs. The 'input' and 'output' paths specified must be existing directories.");
+            CommandDescriptions.Add("batch", "(flag) Align a series of inputs. Specify the directories as 'input' and 'output' arguments.");
 
             CommandDescriptions.Add("timestamp", "(flag) Includes a completion date-time timestamp in the output filename.");
             CommandDescriptions.Add("debug", "(flag) View debugging information throughout the alignment process.");
