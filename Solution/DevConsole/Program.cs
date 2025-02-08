@@ -15,7 +15,6 @@ namespace DevConsole
         static void Main(string[] args)
         {
             TestingBatchAlignment();
-
         }
 
         static void TestingBatchAlignment()
