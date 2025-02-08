@@ -1,15 +1,17 @@
 ﻿using LibAlignment;
 using LibBioInfo;
 using LibFileIO;
+using MAli.AlignmentConfigs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MAli.Helpers
 {
-    internal class BatchAlignmentHelper
+    public class BatchAlignmentHelper
     {
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();
@@ -18,17 +20,29 @@ namespace MAli.Helpers
         private AlignmentConfig Config;
         private AlignmentHelper AlignmentHelper;
 
-        public BatchAlignmentHelper(AlignmentConfig config)
+        public BatchAlignmentHelper(AlignmentConfig config = null)
         {
             Config = config;
             AlignmentHelper = new AlignmentHelper(config);
         }
 
-        public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)
+        public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table = null)
         {
-            
+            if (!CheckInputDirectoryExists(inDirectory))
+            {
+                throw new Exception("Input directory not found");
+            }
 
-            throw new NotImplementedException();
+            List<string> inputPaths = CollectInputPaths(inDirectory);
+            List<string> outputPaths = CreateOutputPaths(inDirectory, outDirectory);
+
+            int n = inputPaths.Count;
+
+            for(int i=0; i<n; i++)
+            {
+                Console.WriteLine($"Batch Alignment: Alignment {i+1} of {n}");
+                AlignmentHelper.PerformAlignment(inputPaths[i], outputPaths[i], table);
+            }
         }
 
         public bool CheckInputDirectoryExists(string inDirectory)
@@ -49,15 +63,29 @@ namespace MAli.Helpers
             return Directory.GetFiles(inDirectory).ToList();
         }
 
-        public List<string> CreateOutputFilepaths(string outDirectory, List<string> inputs)
+        public List<string> CollectInputFilenames(string inDirectory)
         {
+            int n = inDirectory.Length + 1;
+            List<string> inputPaths = CollectInputPaths(inDirectory);
             List<string> result = new List<string>();
-            foreach(string input in inputs)
+            foreach(string path in inputPaths)
             {
-                string filepath = $"{outDirectory}/{input}";
-                result.Add(filepath);
+                string filename = path.Substring(n);
+                result.Add(filename);
             }
 
+            return result;
+        }
+
+        public List<string> CreateOutputPaths(string inDirectory, string outDirectory)
+        {
+            List<string> inputFilenames = CollectInputFilenames(inDirectory);
+            List<string> result = new List<string>();
+            foreach(string input in inputFilenames)
+            {
+                string filepath = $"{outDirectory}\\{input}";
+                result.Add(filepath);
+            }
             return result;
         }
     }
