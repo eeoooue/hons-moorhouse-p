@@ -33,7 +33,9 @@ namespace DevConsole
 
             // RunMAli("-input BB11001 -output test -debug");
             // RunMAli("-input BB11001 -output test -seconds 10 -debug");
-            RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto");
+
+            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
 
             // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
             // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");

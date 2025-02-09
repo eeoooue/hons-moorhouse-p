@@ -42,7 +42,7 @@ namespace MAli
 
         public void PerformParetoAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            throw new NotImplementedException();
+            ParetoAlignmentHelper.PerformAlignment(inputPath, outputPath, table);
         }
 
         public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)

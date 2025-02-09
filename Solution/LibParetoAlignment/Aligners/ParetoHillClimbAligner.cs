@@ -50,6 +50,9 @@ namespace LibParetoAlignment.Aligners
         public override void Initialize(List<BioSequence> sequences)
         {
             Alignment alignment = new Alignment(sequences);
+            IAlignmentModifier randomizer = new AlignmentRandomizer();
+            randomizer.ModifyAlignment(alignment);
+
             TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
             AddSolutionToArchive(tradeoff);
         }

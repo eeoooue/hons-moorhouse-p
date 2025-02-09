@@ -36,6 +36,8 @@ namespace MAli
             SupportedCommands.Add("debug");
             SupportedCommands.Add("frames");
             SupportedCommands.Add("help");
+
+            SupportedCommands.Add("pareto");
         }
 
         public void AddCommandDescriptions()
@@ -54,6 +56,8 @@ namespace MAli
             CommandDescriptions.Add("debug", "(flag) View debugging information throughout the alignment process.");
             CommandDescriptions.Add("frames", "(flag) Saves the alignment state to a 'frames' subfolder after each iteration.");
             CommandDescriptions.Add("help", "Display the list of supported commands.");
+
+            CommandDescriptions.Add("pareto", "Output a selection of alignments, approximating the Pareto front");
         }
 
         public void ListCurrentVersion()
