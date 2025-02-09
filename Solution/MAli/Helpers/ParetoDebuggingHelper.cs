@@ -27,6 +27,10 @@ namespace MAli.Helpers
 
             List<string> lines = new List<string>() { "Debugging:", "" };
             CollectAlignmentStrategy(aligner, lines);
+
+            
+
+
             CollectAlignmentStateInfo(aligner, lines);
             List<string> output = DebugHelper.PadInfoLines(lines);
             string info = ConcatenateLines(output);
@@ -72,6 +76,11 @@ namespace MAli.Helpers
 
                 lines.Add($"Current Alignment: ");
                 lines.Add($" - dimensions: ({m} x {n})");
+
+                foreach (string item in aligner.GetDebuggingInfo())
+                {
+                    lines.Add(item);
+                }
                 // lines.Add($" - objective function: {aligner.Objective.GetName()}");
                 // lines.Add($" - score: {aligner.AlignmentScore}");
             }

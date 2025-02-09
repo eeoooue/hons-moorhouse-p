@@ -98,5 +98,48 @@ namespace LibParetoAlignment.Aligners
 
             return ParetoHelper.SolutionIsNonDominated(alignment, population);
         }
+
+        public override List<string> GetDebuggingInfo()
+        {
+            List<string> result = new List<string>();
+
+            foreach(string item in GetAlignerInfo())
+            {
+                result.Add(item);
+            }
+
+            foreach (string item in GetSolutionInfo())
+            {
+                result.Add(item);
+            }
+
+            return result;
+        }
+
+        private List<string> GetAlignerInfo()
+        {
+            List<string> result = new List<string>()
+            {
+                $"Archive Size: {Archive.Count} of {ArchiveGoalSize}",
+                $"",
+            };
+
+
+
+            return result;
+        }
+
+        private List<string> GetSolutionInfo()
+        {
+            List<string> result = new List<string>();
+            TradeoffAlignment alignment = CurrentSolution;
+            foreach(string score in alignment.Scores.Keys)
+            {
+                string line = $"{score}: {alignment.GetScore(score)}";
+                result.Add(line);
+            }
+
+            return result;
+        }
     }
 }

@@ -21,8 +21,9 @@ namespace LibParetoAlignment
             Objectives = objectives;
         }
 
-        public abstract Alignment GetCurrentAlignment();
+        public abstract List<string> GetDebuggingInfo();
 
+        public abstract Alignment GetCurrentAlignment();
 
         public abstract List<Alignment> CollectTradeoffSolutions();
 
