@@ -10,7 +10,7 @@ namespace LibParetoAlignment
 {
     public abstract class ParetoIterativeAligner
     {
-        List<IFitnessFunction> Objectives;
+        public List<IFitnessFunction> Objectives;
 
         public int IterationsCompleted { get; protected set; } = 0;
 
