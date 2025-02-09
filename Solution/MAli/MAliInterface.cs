@@ -56,7 +56,7 @@ namespace MAli
 
             if (ArgumentHelper.IsParetoAlignmentRequest(table))
             {
-                // 
+                Facade.PerformParetoAlignment(table["input"]!, table["output"]!, table);
                 return;
             }
 

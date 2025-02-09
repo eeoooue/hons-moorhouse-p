@@ -37,6 +37,11 @@ namespace MAli
             AlignmentHelper.PerformAlignment(inputPath, outputPath, table);
         }
 
+        public void PerformParetoAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        {
+            throw new NotImplementedException();
+        }
+
         public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)
         {
             BatchAlignmentHelper.PerformBatchAlignment(inDirectory, outDirectory, table);
