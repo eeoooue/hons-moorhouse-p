@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Aligners\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
+    <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
   </ItemGroup>
 
 </Project>
