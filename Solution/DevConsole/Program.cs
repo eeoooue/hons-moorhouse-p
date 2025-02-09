@@ -31,7 +31,8 @@ namespace DevConsole
 
             // RunMAli("-help");
 
-            RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
+            // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
+            RunMAli("-input BB11001 -output test -debug -scorefile");
 
 
             // RunMAli("-input BB11001 -output test -debug -scorefile");

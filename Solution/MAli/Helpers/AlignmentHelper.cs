@@ -28,16 +28,16 @@ namespace MAli.Helpers
             Config = config;
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        public void PerformAlignment(AlignmentInstructions instructions)
         {
-            Instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            Instructions = instructions;
             DebuggingHelper = new DebuggingHelper();
             DebugMode = Instructions.Debug;
 
             try
             {
-                Console.WriteLine($"Reading sequences from source: '{inputPath}'");
-                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+                Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
+                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())

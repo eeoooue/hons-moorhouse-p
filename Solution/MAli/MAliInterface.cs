@@ -64,14 +64,15 @@ namespace MAli
 
             if (ArgumentHelper.IsBatchAlignmentRequest(table))
             {
-                Facade.PerformBatchAlignment(table["input"]!, table["output"]!, table);
+                AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(table);
+                Facade.PerformBatchAlignment(instructions);
                 return;
             }
 
-
             if (ArgumentHelper.IsAlignmentRequest(table))
             {
-                Facade.PerformAlignment(table["input"]!, table["output"]!, table);
+                AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(table);
+                Facade.PerformAlignment(instructions);
                 return;
             }
 

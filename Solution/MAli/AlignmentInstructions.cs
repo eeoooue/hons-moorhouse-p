@@ -19,6 +19,25 @@ namespace MAli
         public string InputPath = "";
         public string OutputPath = "";
 
+
+        public AlignmentInstructions GetCopy()
+        {
+            AlignmentInstructions result = new AlignmentInstructions();
+
+            result.Debug = Debug;
+            result.EmitFrames = EmitFrames;
+            result.RefineOnly = RefineOnly;
+            result.IncludeScoreFile = IncludeScoreFile;
+
+            result.IterationsLimit = IterationsLimit;
+            result.SecondsLimit = SecondsLimit;
+
+            result.InputPath = InputPath;
+            result.OutputPath = OutputPath;
+
+            return result;
+        }
+
         public string GetContextString()
         {
             string context = $"Performing Multiple Sequence Alignment";

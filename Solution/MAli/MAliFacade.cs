@@ -35,9 +35,9 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        public void PerformAlignment(AlignmentInstructions instructions)
         {
-            AlignmentHelper.PerformAlignment(inputPath, outputPath, table);
+            AlignmentHelper.PerformAlignment(instructions);
         }
 
         public void PerformParetoAlignment(AlignmentInstructions instructions)
@@ -45,9 +45,9 @@ namespace MAli
             ParetoAlignmentHelper.PerformAlignment(instructions);
         }
 
-        public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)
+        public void PerformBatchAlignment(AlignmentInstructions instructions)
         {
-            BatchAlignmentHelper.PerformBatchAlignment(inDirectory, outDirectory, table);
+            BatchAlignmentHelper.PerformBatchAlignment(instructions);
         }
 
         public void ProvideHelp()

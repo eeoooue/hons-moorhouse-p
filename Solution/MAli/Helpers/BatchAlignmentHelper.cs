@@ -13,43 +13,46 @@ namespace MAli.Helpers
 {
     public class BatchAlignmentHelper
     {
-        private FileHelper FileHelper = new FileHelper();
-        private FrameHelper FrameHelper = new FrameHelper();
-        private ResponseBank ResponseBank = new ResponseBank();
-        private ArgumentHelper ArgumentHelper = new ArgumentHelper();
-        private AlignmentConfig Config;
         private AlignmentHelper AlignmentHelper;
+        private AlignmentInstructions Instructions = null!;
 
-        public BatchAlignmentHelper(AlignmentConfig config = null)
+        public BatchAlignmentHelper(AlignmentConfig config)
         {
-            Config = config;
             AlignmentHelper = new AlignmentHelper(config);
         }
 
-        public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table = null)
+        public void PerformBatchAlignment(AlignmentInstructions instructions)
         {
-            if (!CheckInputDirectoryExists(inDirectory))
+            Instructions = instructions;
+
+            if (!CheckInputDirectoryExists(Instructions.InputPath))
             {
                 throw new Exception("Input directory not found");
             }
 
-            EnsureOutputDirectoryExists(outDirectory);
+            EnsureOutputDirectoryExists(Instructions.OutputPath);
 
-            List<string> inputPaths = CollectInputPaths(inDirectory);
-            List<string> outputPaths = CreateOutputPaths(inDirectory, outDirectory);
+            List<string> inputPaths = CollectInputPaths(Instructions.InputPath);
+            List<string> outputPaths = CreateOutputPaths(Instructions.InputPath, Instructions.OutputPath);
 
             int n = inputPaths.Count;
 
             for(int i=0; i<n; i++)
             {
-                if (table.ContainsKey("debug"))
+                if (Instructions.Debug)
                 {
                     Console.Clear();
                 }
                 Console.WriteLine($"Batch Alignment: Alignment {i+1} of {n}");
-                AlignmentHelper.PerformAlignment(inputPaths[i], outputPaths[i], table);
+                PerformAlignment(inputPaths[i], outputPaths[i]);
                 Console.WriteLine();
             }
+        }
+
+        public void PerformAlignment(string inputPath, string outputPath)
+        {
+            AlignmentInstructions instructions = Instructions.GetCopy();
+            AlignmentHelper.PerformAlignment(instructions);
         }
 
         public bool CheckInputDirectoryExists(string inDirectory)
