@@ -56,7 +56,7 @@ namespace MAli
 
             if (ArgumentHelper.IsParetoAlignmentRequest(table))
             {
-                AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(table);
+                AlignmentRequest instructions = ArgumentHelper.UnpackInstructions(table);
                 Facade.PerformParetoAlignment(instructions);
                 return;
             }
@@ -64,14 +64,14 @@ namespace MAli
 
             if (ArgumentHelper.IsBatchAlignmentRequest(table))
             {
-                AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(table);
+                AlignmentRequest instructions = ArgumentHelper.UnpackInstructions(table);
                 Facade.PerformBatchAlignment(instructions);
                 return;
             }
 
             if (ArgumentHelper.IsAlignmentRequest(table))
             {
-                AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(table);
+                AlignmentRequest instructions = ArgumentHelper.UnpackInstructions(table);
                 Facade.PerformAlignment(instructions);
                 return;
             }

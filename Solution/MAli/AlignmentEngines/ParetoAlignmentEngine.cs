@@ -19,7 +19,7 @@ namespace MAli.AlignmentEngines
         private ResponseBank ResponseBank = new ResponseBank();
         private ParetoDebuggingHelper DebuggingHelper = new ParetoDebuggingHelper();
         private ParetoAlignmentConfig Config;
-        private AlignmentInstructions Instructions = null!;
+        private AlignmentRequest Instructions = null!;
 
         private bool DebugMode = false;
 
@@ -28,7 +28,7 @@ namespace MAli.AlignmentEngines
             Config = config;
         }
 
-        public void PerformAlignment(AlignmentInstructions instructions)
+        public void PerformAlignment(AlignmentRequest instructions)
         {
             Instructions = instructions;
             DebuggingHelper = new ParetoDebuggingHelper();
@@ -60,7 +60,7 @@ namespace MAli.AlignmentEngines
             }
         }
 
-        public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentInstructions instructions)
+        public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentRequest instructions)
         {
             if (!instructions.IncludeScoreFile)
             {
@@ -92,7 +92,7 @@ namespace MAli.AlignmentEngines
             }
         }
 
-        public void AlignIteratively(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignIteratively(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
             Console.WriteLine(instructions.GetContextString());
 
@@ -111,7 +111,7 @@ namespace MAli.AlignmentEngines
             }
         }
 
-        public void AlignUntilIterationLimit(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilIterationLimit(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
@@ -128,7 +128,7 @@ namespace MAli.AlignmentEngines
             }
         }
 
-        public void AlignUntilSecondsDeadline(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilSecondsDeadline(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
             DateTime start = DateTime.Now;
             DateTime deadline = DateTime.Now.AddSeconds(instructions.SecondsLimit);

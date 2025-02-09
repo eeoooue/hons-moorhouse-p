@@ -8,6 +8,6 @@ namespace MAli
 {
     public interface IAlignmentEngine
     {
-        public void PerformAlignment(AlignmentInstructions instructions);
+        public void PerformAlignment(AlignmentRequest instructions);
     }
 }

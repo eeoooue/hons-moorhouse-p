@@ -9,9 +9,9 @@ namespace MAli.Helpers
     public class ArgumentHelper
     {
 
-        public AlignmentInstructions UnpackInstructions(Dictionary<string, string?> table)
+        public AlignmentRequest UnpackInstructions(Dictionary<string, string?> table)
         {
-            AlignmentInstructions instructions = new AlignmentInstructions();
+            AlignmentRequest instructions = new AlignmentRequest();
             instructions.Debug = CommandsIncludeFlag(table, "debug");
             instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
             instructions.RefineOnly = CommandsIncludeFlag(table, "refine");
@@ -26,9 +26,9 @@ namespace MAli.Helpers
             return instructions;
         }
 
-        public AlignmentInstructions UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
+        public AlignmentRequest UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            AlignmentInstructions instructions = new AlignmentInstructions();
+            AlignmentRequest instructions = new AlignmentRequest();
             instructions.Debug = CommandsIncludeFlag(table, "debug");
             instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
             instructions.RefineOnly = CommandsIncludeFlag(table, "refine");

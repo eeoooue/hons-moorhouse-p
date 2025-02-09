@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    public class AlignmentInstructions
+    public class AlignmentRequest
     {
         public bool Debug = false;
         public bool EmitFrames = false;
@@ -20,9 +20,9 @@ namespace MAli
         public string OutputPath = "";
 
 
-        public AlignmentInstructions GetCopy()
+        public AlignmentRequest GetCopy()
         {
-            AlignmentInstructions result = new AlignmentInstructions();
+            AlignmentRequest result = new AlignmentRequest();
 
             result.Debug = Debug;
             result.EmitFrames = EmitFrames;

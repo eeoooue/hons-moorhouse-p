@@ -13,7 +13,7 @@ namespace MAli
     {
         public abstract ParetoIterativeAligner CreateAligner();
 
-        public ParetoIterativeAligner InitialiseAligner(Alignment alignment, AlignmentInstructions instructions)
+        public ParetoIterativeAligner InitialiseAligner(Alignment alignment, AlignmentRequest instructions)
         {
             ParetoIterativeAligner aligner = CreateAligner();
 

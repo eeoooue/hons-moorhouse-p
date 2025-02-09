@@ -12,7 +12,7 @@ namespace MAli
     {
         public abstract IterativeAligner CreateAligner();
 
-        public IterativeAligner InitialiseAligner(Alignment alignment, AlignmentInstructions instructions)
+        public IterativeAligner InitialiseAligner(Alignment alignment, AlignmentRequest instructions)
         {
             IterativeAligner aligner = CreateAligner();
 

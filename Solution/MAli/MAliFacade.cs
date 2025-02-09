@@ -33,17 +33,17 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(AlignmentInstructions instructions)
+        public void PerformAlignment(AlignmentRequest instructions)
         {
             AlignmentEngine.PerformAlignment(instructions);
         }
 
-        public void PerformParetoAlignment(AlignmentInstructions instructions)
+        public void PerformParetoAlignment(AlignmentRequest instructions)
         {
             ParetoAlignmentEngine.PerformAlignment(instructions);
         }
 
-        public void PerformBatchAlignment(AlignmentInstructions instructions)
+        public void PerformBatchAlignment(AlignmentRequest instructions)
         {
             BatchAlignmentEngine.PerformAlignment(instructions);
         }

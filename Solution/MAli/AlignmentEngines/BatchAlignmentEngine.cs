@@ -14,14 +14,14 @@ namespace MAli.AlignmentEngines
     public class BatchAlignmentEngine : IAlignmentEngine
     {
         private AlignmentEngine AlignmentEngine;
-        private AlignmentInstructions Instructions = null!;
+        private AlignmentRequest Instructions = null!;
 
         public BatchAlignmentEngine(AlignmentConfig config)
         {
             AlignmentEngine = new AlignmentEngine(config);
         }
 
-        public void PerformAlignment(AlignmentInstructions instructions)
+        public void PerformAlignment(AlignmentRequest instructions)
         {
             Instructions = instructions;
 
@@ -51,7 +51,7 @@ namespace MAli.AlignmentEngines
 
         public void PerformIndividualAlignment(string inputPath, string outputPath)
         {
-            AlignmentInstructions instructions = Instructions.GetCopy();
+            AlignmentRequest instructions = Instructions.GetCopy();
             instructions.InputPath = inputPath;
             instructions.OutputPath = outputPath;
             AlignmentEngine.PerformAlignment(instructions);

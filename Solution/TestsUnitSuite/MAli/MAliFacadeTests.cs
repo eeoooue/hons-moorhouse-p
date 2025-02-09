@@ -31,7 +31,7 @@ namespace TestsUnitSuite.MAli
 
         public void ProducesValidAlignment(string inputFile, string outputFile)
         {
-            AlignmentInstructions instructions = new AlignmentInstructions();
+            AlignmentRequest instructions = new AlignmentRequest();
             instructions.InputPath = inputFile;
             instructions.OutputPath = outputFile;
             instructions.IterationsLimit = 3;
@@ -59,7 +59,7 @@ namespace TestsUnitSuite.MAli
             string filename_a = $"a_{outputFile}";
             string filename_b = $"b_{outputFile}";
 
-            AlignmentInstructions instructionsA = new AlignmentInstructions();
+            AlignmentRequest instructionsA = new AlignmentRequest();
             instructionsA.InputPath = inputFile;
             instructionsA.OutputPath = filename_a;
             instructionsA.IterationsLimit = 3;
@@ -69,7 +69,7 @@ namespace TestsUnitSuite.MAli
             List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}.faa");
             Alignment alignmentA = new Alignment(alignedA);
 
-            AlignmentInstructions instructionsB = new AlignmentInstructions();
+            AlignmentRequest instructionsB = new AlignmentRequest();
             instructionsA.InputPath = inputFile;
             instructionsA.OutputPath = filename_b;
             instructionsA.IterationsLimit = 3;
