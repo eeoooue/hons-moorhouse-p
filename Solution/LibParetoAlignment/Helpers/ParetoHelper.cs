@@ -13,7 +13,10 @@ namespace LibParetoAlignment.Helpers
             foreach(TradeoffAlignment existingSolution in population)
             {
                 bool isDominated = ADominatesB(existingSolution, solution);
-                return isDominated;
+                if (isDominated)
+                {
+                    return false;
+                }
             }
 
             return true;
