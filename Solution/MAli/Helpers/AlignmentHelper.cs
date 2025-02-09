@@ -119,7 +119,7 @@ namespace MAli.Helpers
             }
         }
 
-        public string GetIterationProgressContext(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public string GetIterationProgressContext(IterativeAligner aligner, AlignmentInstructions instructions)
         {
             int completed = aligner.IterationsCompleted;
             int limit = aligner.IterationsLimit;
@@ -155,7 +155,7 @@ namespace MAli.Helpers
             }
         }
 
-        public string GetTimelimitProgress(IIterativeAligner aligner, DateTime start, DateTime time, double limit)
+        public string GetTimelimitProgress(IterativeAligner aligner, DateTime start, DateTime time, double limit)
         {
             TimeSpan span = time - start;
             string result = $"completed {aligner.IterationsCompleted} iterations in {span.Seconds} of {limit} seconds";
@@ -163,7 +163,7 @@ namespace MAli.Helpers
             return result;
         }
 
-        public void PerformIterationOfAlignment(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void PerformIterationOfAlignment(IterativeAligner aligner, AlignmentInstructions instructions)
         {
             aligner.Iterate();
             if (instructions.EmitFrames && aligner.CurrentAlignment is Alignment alignment)
