@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.UserRequests
+namespace MAli
 {
-    public class HelpRequest : UserRequest
+    public class UserRequest
     {
     }
 }

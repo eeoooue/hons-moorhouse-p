@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli.UserRequests
 {
-    public class AlignmentRequest
+    public class AlignmentRequest : UserRequest
     {
         public bool Debug = false;
         public bool EmitFrames = false;
@@ -18,7 +18,6 @@ namespace MAli.UserRequests
 
         public string InputPath = "";
         public string OutputPath = "";
-
 
         public AlignmentRequest GetCopy()
         {

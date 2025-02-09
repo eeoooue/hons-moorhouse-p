@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli.UserRequests
 {
-    internal class AmbiguousRequest
+    public class AmbiguousRequest : UserRequest
     {
     }
 }

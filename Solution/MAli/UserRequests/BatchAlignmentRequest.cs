@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MAli.UserRequests
 {
-    public class HelpRequest : UserRequest
+    public class BatchAlignmentRequest : AlignmentRequest
     {
+
+
+        // TODO: move GetCopy() behaviour into this class
     }
 }

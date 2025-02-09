@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MAli.UserRequests
 {
-    public class HelpRequest : UserRequest
+    internal class ParetoAlignmentRequest : AlignmentRequest
     {
+        // TODO: specify size of archive / tradeoff selection
     }
 }
