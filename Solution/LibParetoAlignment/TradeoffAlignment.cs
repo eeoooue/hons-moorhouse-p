@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibScoring
+namespace LibParetoAlignment
 {
-    internal class TradeoffAlignment
+    public class TradeoffAlignment
     {
         public Alignment Alignment;
         public Dictionary<string, double> Scores = new Dictionary<string, double>();
