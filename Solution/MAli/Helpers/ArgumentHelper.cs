@@ -102,8 +102,6 @@ namespace MAli.Helpers
             return new MalformedRequest();
         }
 
-
-
         public UserRequest InterpretAlignmentRequest(string[] args)
         {
             Dictionary<string, string?> table = InterpretArguments(args);
@@ -116,7 +114,6 @@ namespace MAli.Helpers
             UserRequest request = UnpackInstructions(table);
             return request;
         }
-
 
         public Dictionary<string, string?> InterpretArguments(string[] args)
         {
@@ -148,7 +145,6 @@ namespace MAli.Helpers
             bool result = table.ContainsKey(flag);
             return result;
         }
-
 
         public bool ContainsForeignCommands(Dictionary<string, string?> table)
         {
