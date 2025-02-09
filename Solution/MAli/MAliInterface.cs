@@ -8,15 +8,6 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    public enum UserRequestError
-    {
-        ContainsForeignCommands,
-        RequestIsAmbiguous,
-        NoArgumentsGiven,
-        RequestIsInvalid,
-        MultipleLimitations,
-    }
-
     public class MAliInterface
     {
         private MAliFacade Facade = new MAliFacade();
