@@ -5,6 +5,7 @@ using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;
 using MAli.Helpers;
+using MAli.ParetoAlignmentConfigs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,12 @@ namespace MAli
     public class MAliFacade
     {
         public static AlignmentConfig Config = new DevelopmentConfig();
+        public static ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
 
         private ResponseBank ResponseBank = new ResponseBank();
 
         private AlignmentHelper AlignmentHelper = new AlignmentHelper(Config);
+        private ParetoAlignmentHelper ParetoAlignmentHelper = new ParetoAlignmentHelper(ParetoConfig);
 
         private BatchAlignmentHelper BatchAlignmentHelper = new BatchAlignmentHelper(Config);
 

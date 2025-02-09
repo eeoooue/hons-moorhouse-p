@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace MAli.ParetoAlignmentConfigs
 {
-    internal class ParetoDevConfig : ParetoAlignmentConfig
+    public class ParetoDevConfig : ParetoAlignmentConfig
     {
 
         public IFitnessFunction GetObjectiveOne()

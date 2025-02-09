@@ -25,6 +25,16 @@ namespace LibParetoAlignment.Aligners
 
         }
 
+        public override Alignment GetCurrentAlignment()
+        {
+            return Archive.Peek().Alignment;
+        }
+
+        public override string GetName()
+        {
+            return "(Pareto) Hill Climb Aligner";
+        }
+
         public override List<Alignment> CollectTradeoffSolutions()
         {
             List<Alignment> result = new List<Alignment>();

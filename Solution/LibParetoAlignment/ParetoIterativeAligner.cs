@@ -21,7 +21,12 @@ namespace LibParetoAlignment
             Objectives = objectives;
         }
 
+        public abstract Alignment GetCurrentAlignment();
+
+
         public abstract List<Alignment> CollectTradeoffSolutions();
+
+        public abstract string GetName();
 
         public abstract void Initialize(List<BioSequence> sequences);
 
