@@ -27,10 +27,7 @@ namespace MAli.Helpers
 
             List<string> lines = new List<string>() { "Debugging:", "" };
             CollectAlignmentStrategy(aligner, lines);
-
-            
-
-
+            lines.Add("");
             CollectAlignmentStateInfo(aligner, lines);
             List<string> output = DebugHelper.PadInfoLines(lines);
             string info = ConcatenateLines(output);
@@ -60,29 +57,17 @@ namespace MAli.Helpers
             double percentIterationsComplete = Math.Round(100.0 * aligner.IterationsCompleted / aligner.IterationsLimit, 3);
             string percentValue = percentIterationsComplete.ToString("0.0");
 
-            lines.Add(aligner.GetName());
-            lines.Add($" - {ProgressContext}");
-
-            // lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
-            lines.Add("");
+            foreach (string item in aligner.GetAlignerInfo())
+            {
+                lines.Add(item);
+            }
         }
 
         public void CollectAlignmentStateInfo(ParetoIterativeAligner aligner, List<string> lines)
         {
-            if (aligner.GetCurrentAlignment() is Alignment alignment)
+            foreach (string item in aligner.GetSolutionInfo())
             {
-                int m = alignment.Height;
-                int n = alignment.Width;
-
-                lines.Add($"Current Alignment: ");
-                lines.Add($" - dimensions: ({m} x {n})");
-
-                foreach (string item in aligner.GetDebuggingInfo())
-                {
-                    lines.Add(item);
-                }
-                // lines.Add($" - objective function: {aligner.Objective.GetName()}");
-                // lines.Add($" - score: {aligner.AlignmentScore}");
+                lines.Add(item);
             }
         }
 

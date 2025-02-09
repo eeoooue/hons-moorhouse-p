@@ -23,6 +23,10 @@ namespace LibParetoAlignment
 
         public abstract List<string> GetDebuggingInfo();
 
+        public abstract List<string> GetAlignerInfo();
+
+        public abstract List<string> GetSolutionInfo();
+
         public abstract Alignment GetCurrentAlignment();
 
         public abstract List<Alignment> CollectTradeoffSolutions();

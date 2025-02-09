@@ -116,26 +116,32 @@ namespace LibParetoAlignment.Aligners
             return result;
         }
 
-        private List<string> GetAlignerInfo()
+        public override List<string> GetAlignerInfo()
         {
             List<string> result = new List<string>()
             {
-                $"Archive Size: {Archive.Count} of {ArchiveGoalSize}",
-                $"",
+                $"{GetName()}",
+                $" - [Iterations] {IterationsCompleted}",
+                $" - [Archive] {Archive.Count} solutions",
             };
-
-
 
             return result;
         }
 
-        private List<string> GetSolutionInfo()
+        public override List<string> GetSolutionInfo()
         {
+            TradeoffAlignment current = CurrentSolution;
+            Alignment alignment = current.Alignment;
+
             List<string> result = new List<string>();
-            TradeoffAlignment alignment = CurrentSolution;
-            foreach(string score in alignment.Scores.Keys)
+
+            result.Add($"Current Alignment:");
+            result.Add($" - [Dimensions] ({alignment.Height} x {alignment.Width})");
+
+            foreach(string score in current.Scores.Keys)
             {
-                string line = $"{score}: {alignment.GetScore(score)}";
+
+                string line = $" - [Obj.] {score}: {Math.Round(current.GetScore(score), 3)}";
                 result.Add(line);
             }
 
