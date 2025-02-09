@@ -76,7 +76,7 @@ namespace MAli.Helpers
             Console.WriteLine("Saved .maliscore file.");
         }
 
-        public void AlignIteratively(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignIteratively(IterativeAligner aligner, AlignmentInstructions instructions)
         {
             Console.WriteLine(instructions.GetContextString());
 
@@ -100,22 +100,22 @@ namespace MAli.Helpers
             }
         }
 
-        public void AlignUntilIterationLimit(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilIterationLimit(IterativeAligner aligner, AlignmentInstructions instructions)
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
-                if (aligner is IterativeAligner obj)
+                if (DebugMode)
                 {
                     DebuggingHelper.ProgressContext = GetIterationProgressContext(aligner, instructions);
-                    DebuggingHelper.ShowDebuggingInfo(obj);
+                    DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
                 PerformIterationOfAlignment(aligner, instructions);
             }
 
-            if (aligner is IterativeAligner obj2)
+            if (DebugMode)
             {
                 DebuggingHelper.ProgressContext = GetIterationProgressContext(aligner, instructions);
-                DebuggingHelper.ShowDebuggingInfo(obj2);
+                DebuggingHelper.ShowDebuggingInfo(aligner);
             }
         }
 
@@ -132,7 +132,7 @@ namespace MAli.Helpers
             return result;
         }
 
-        public void AlignUntilSecondsDeadline(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilSecondsDeadline(IterativeAligner aligner, AlignmentInstructions instructions)
         {
             DateTime start = DateTime.Now;
             DateTime deadline = DateTime.Now.AddSeconds(instructions.SecondsLimit);
@@ -143,10 +143,10 @@ namespace MAli.Helpers
             {
                 PerformIterationOfAlignment(aligner, instructions);
                 time = DateTime.Now;
-                if (aligner is IterativeAligner obj)
+                if (DebugMode)
                 {
                     DebuggingHelper.ProgressContext = GetTimelimitProgress(aligner, start, time, instructions.SecondsLimit);
-                    DebuggingHelper.ShowDebuggingInfo(obj);
+                    DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
                 if (time >= deadline)
                 {

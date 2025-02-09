@@ -52,6 +52,9 @@ namespace MAli.Helpers
         public void PerformAlignment(string inputPath, string outputPath)
         {
             AlignmentInstructions instructions = Instructions.GetCopy();
+            instructions.InputPath = inputPath;
+            instructions.OutputPath = outputPath;
+
             AlignmentHelper.PerformAlignment(instructions);
         }
 

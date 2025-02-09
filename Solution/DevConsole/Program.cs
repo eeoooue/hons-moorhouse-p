@@ -19,8 +19,8 @@ namespace DevConsole
 
         static void TestingBatchAlignment()
         {
-            RunMAli("-input batchin -output batchout -batch");
-            // RunMAli("-input batchin -output batchout -debug -batch");
+            // RunMAli("-input batchin -output batchout -batch");
+            RunMAli("-input batchin -output batchout -debug -batch");
         }
 
         static void TestingMAli()
