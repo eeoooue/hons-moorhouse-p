@@ -19,7 +19,6 @@ namespace LibParetoAlignment
 
 
 
-
         public TradeoffAlignment EvaluateAlignment(Alignment alignment)
         {
             TradeoffAlignment result = new TradeoffAlignment(alignment);
