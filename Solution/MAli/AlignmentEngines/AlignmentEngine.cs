@@ -2,6 +2,8 @@
 using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
+using MAli.Helpers;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.AlignmentEngines
 {
-    public class AlignmentHelper
+    public class AlignmentEngine : IAlignmentEngine
     {
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();
@@ -21,23 +23,23 @@ namespace MAli.Helpers
         private DebuggingHelper DebuggingHelper = new DebuggingHelper();
 
         private bool DebugMode = false;
-        private AlignmentInstructions Instructions = null!;
+        private AlignmentRequest Instructions = null!;
 
-        public AlignmentHelper(AlignmentConfig config)
+        public AlignmentEngine(AlignmentConfig config)
         {
             Config = config;
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        public void PerformAlignment(AlignmentRequest instructions)
         {
-            Instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            Instructions = instructions;
             DebuggingHelper = new DebuggingHelper();
             DebugMode = Instructions.Debug;
 
             try
             {
-                Console.WriteLine($"Reading sequences from source: '{inputPath}'");
-                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+                Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
+                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
@@ -64,7 +66,7 @@ namespace MAli.Helpers
             Console.WriteLine($"Alignment written to destination: '{filepath}'");
         }
 
-        public void CheckSaveScorefile(IterativeAligner aligner, Alignment alignment, AlignmentInstructions instructions)
+        public void CheckSaveScorefile(IterativeAligner aligner, Alignment alignment, AlignmentRequest instructions)
         {
             if (!instructions.IncludeScoreFile)
             {
@@ -76,7 +78,7 @@ namespace MAli.Helpers
             Console.WriteLine("Saved .maliscore file.");
         }
 
-        public void AlignIteratively(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignIteratively(IterativeAligner aligner, AlignmentRequest instructions)
         {
             Console.WriteLine(instructions.GetContextString());
 
@@ -100,31 +102,31 @@ namespace MAli.Helpers
             }
         }
 
-        public void AlignUntilIterationLimit(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilIterationLimit(IterativeAligner aligner, AlignmentRequest instructions)
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
-                if (aligner is IterativeAligner obj)
+                if (DebugMode)
                 {
                     DebuggingHelper.ProgressContext = GetIterationProgressContext(aligner, instructions);
-                    DebuggingHelper.ShowDebuggingInfo(obj);
+                    DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
                 PerformIterationOfAlignment(aligner, instructions);
             }
 
-            if (aligner is IterativeAligner obj2)
+            if (DebugMode)
             {
                 DebuggingHelper.ProgressContext = GetIterationProgressContext(aligner, instructions);
-                DebuggingHelper.ShowDebuggingInfo(obj2);
+                DebuggingHelper.ShowDebuggingInfo(aligner);
             }
         }
 
-        public string GetIterationProgressContext(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public string GetIterationProgressContext(IterativeAligner aligner, AlignmentRequest instructions)
         {
             int completed = aligner.IterationsCompleted;
             int limit = aligner.IterationsLimit;
 
-            double percentIterationsComplete = Math.Round(100.0 * (double)completed / (double)limit, 3);
+            double percentIterationsComplete = Math.Round(100.0 * completed / limit, 3);
             string percentValue = percentIterationsComplete.ToString("0.0");
 
             string result = $"completed {completed} of {limit} iterations ({percentValue}%)";
@@ -132,7 +134,7 @@ namespace MAli.Helpers
             return result;
         }
 
-        public void AlignUntilSecondsDeadline(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilSecondsDeadline(IterativeAligner aligner, AlignmentRequest instructions)
         {
             DateTime start = DateTime.Now;
             DateTime deadline = DateTime.Now.AddSeconds(instructions.SecondsLimit);
@@ -143,10 +145,10 @@ namespace MAli.Helpers
             {
                 PerformIterationOfAlignment(aligner, instructions);
                 time = DateTime.Now;
-                if (aligner is IterativeAligner obj)
+                if (DebugMode)
                 {
                     DebuggingHelper.ProgressContext = GetTimelimitProgress(aligner, start, time, instructions.SecondsLimit);
-                    DebuggingHelper.ShowDebuggingInfo(obj);
+                    DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
                 if (time >= deadline)
                 {
@@ -155,7 +157,7 @@ namespace MAli.Helpers
             }
         }
 
-        public string GetTimelimitProgress(IIterativeAligner aligner, DateTime start, DateTime time, double limit)
+        public string GetTimelimitProgress(IterativeAligner aligner, DateTime start, DateTime time, double limit)
         {
             TimeSpan span = time - start;
             string result = $"completed {aligner.IterationsCompleted} iterations in {span.Seconds} of {limit} seconds";
@@ -163,7 +165,7 @@ namespace MAli.Helpers
             return result;
         }
 
-        public void PerformIterationOfAlignment(IIterativeAligner aligner, AlignmentInstructions instructions)
+        public void PerformIterationOfAlignment(IterativeAligner aligner, AlignmentRequest instructions)
         {
             aligner.Iterate();
             if (instructions.EmitFrames && aligner.CurrentAlignment is Alignment alignment)

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli
+namespace MAli.UserRequests
 {
-    public class AlignmentInstructions
+    public class AlignmentRequest : UserRequest
     {
         public bool Debug = false;
         public bool EmitFrames = false;
@@ -18,6 +18,30 @@ namespace MAli
 
         public string InputPath = "";
         public string OutputPath = "";
+
+        public bool SpecifiesSeed = false;
+        public string Seed = "";
+
+        public AlignmentRequest GetCopy()
+        {
+            AlignmentRequest result = new AlignmentRequest();
+
+            result.Debug = Debug;
+            result.EmitFrames = EmitFrames;
+            result.RefineOnly = RefineOnly;
+            result.IncludeScoreFile = IncludeScoreFile;
+
+            result.IterationsLimit = IterationsLimit;
+            result.SecondsLimit = SecondsLimit;
+
+            result.InputPath = InputPath;
+            result.OutputPath = OutputPath;
+
+            result.SpecifiesSeed = SpecifiesSeed;
+            result.Seed = Seed;
+
+            return result;
+        }
 
         public string GetContextString()
         {

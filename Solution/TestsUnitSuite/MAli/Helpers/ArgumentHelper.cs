@@ -80,11 +80,9 @@ namespace TestsUnitSuite.MAli.Helpers
             Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
             bool verdict1 = ArgumentHelper.IsAlignmentRequest(table);
             bool verdict2 = ArgumentHelper.IsHelpRequest(table);
-            bool verdict3 = ArgumentHelper.IsInfoRequest(table);
             bool verdict4 = ArgumentHelper.IsAmbiguousRequest(table);
             Assert.AreEqual(true, verdict1);
             Assert.AreEqual(false, verdict2);
-            Assert.AreEqual(false, verdict3);
             Assert.AreEqual(false, verdict4);
         }
 
@@ -96,11 +94,9 @@ namespace TestsUnitSuite.MAli.Helpers
             Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
             bool verdict1 = ArgumentHelper.IsAlignmentRequest(table);
             bool verdict2 = ArgumentHelper.IsHelpRequest(table);
-            bool verdict3 = ArgumentHelper.IsInfoRequest(table);
             bool verdict4 = ArgumentHelper.IsAmbiguousRequest(table);
             Assert.AreEqual(false, verdict1);
             Assert.AreEqual(true, verdict2);
-            Assert.AreEqual(false, verdict3);
             Assert.AreEqual(false, verdict4);
         }
 
@@ -112,31 +108,11 @@ namespace TestsUnitSuite.MAli.Helpers
             Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
             bool verdict1 = ArgumentHelper.IsAlignmentRequest(table);
             bool verdict2 = ArgumentHelper.IsHelpRequest(table);
-            bool verdict3 = ArgumentHelper.IsInfoRequest(table);
             bool verdict4 = ArgumentHelper.IsAmbiguousRequest(table);
             Assert.AreEqual(false, verdict1);
             Assert.AreEqual(false, verdict2);
-            Assert.AreEqual(true, verdict3);
             Assert.AreEqual(false, verdict4);
         }
-
-
-        [TestMethod]
-        public void CanIdentifyAmbiguousRequest()
-        {
-            MAliInterface mAliInterface = new MAliInterface();
-            string[] args = { "-info", "-help" };
-            Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
-            bool verdict1 = ArgumentHelper.IsAlignmentRequest(table);
-            bool verdict2 = ArgumentHelper.IsHelpRequest(table);
-            bool verdict3 = ArgumentHelper.IsInfoRequest(table);
-            bool verdict4 = ArgumentHelper.IsAmbiguousRequest(table);
-            Assert.AreEqual(false, verdict1);
-            Assert.AreEqual(false, verdict2);
-            Assert.AreEqual(false, verdict3);
-            Assert.AreEqual(true, verdict4);
-        }
-
 
         [TestMethod]
         public void CanIdentifyForeignCommands()
@@ -145,12 +121,10 @@ namespace TestsUnitSuite.MAli.Helpers
             Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
             bool verdict1 = ArgumentHelper.IsAlignmentRequest(table);
             bool verdict2 = ArgumentHelper.IsHelpRequest(table);
-            bool verdict3 = ArgumentHelper.IsInfoRequest(table);
             bool verdict4 = ArgumentHelper.IsAmbiguousRequest(table);
             bool verdict5 = ArgumentHelper.ContainsForeignCommands(table);
             Assert.AreEqual(false, verdict1);
             Assert.AreEqual(false, verdict2);
-            Assert.AreEqual(false, verdict3);
             Assert.AreEqual(false, verdict4);
             Assert.AreEqual(true, verdict5);
         }

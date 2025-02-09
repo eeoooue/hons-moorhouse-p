@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibFileIO;
 using MAli;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -23,9 +24,6 @@ namespace TestsUnitSuite.MAli
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
 
-
-
-
         #region Testing high-level behaviour
 
         [DataTestMethod]
@@ -34,13 +32,15 @@ namespace TestsUnitSuite.MAli
 
         public void ProducesValidAlignment(string inputFile, string outputFile)
         {
-            Dictionary<string, string?> table = new Dictionary<string, string?>();
-            table["iterations"] = "3";
+            AlignmentRequest instructions = new AlignmentRequest();
+            instructions.InputPath = inputFile;
+            instructions.OutputPath = outputFile;
+            instructions.IterationsLimit = 3;
 
-            MAliFacade.PerformAlignment(inputFile, outputFile, table);
+            MAliFacade.PerformAlignment(instructions);
 
             List<BioSequence> original = FileHelper.ReadSequencesFrom(inputFile);
-            List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}.faa");
+            List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}");
 
             Alignment leftJustified = new Alignment(original);
             Alignment alignment = new Alignment(aligned);
@@ -57,20 +57,29 @@ namespace TestsUnitSuite.MAli
 
         public void ProducesIdenticalAlignmentsWhenSeeded(string inputFile, string outputFile, string seed)
         {
-            Dictionary<string, string?> table = new Dictionary<string, string?>();
-            table["iterations"] = "3";
-
             string filename_a = $"a_{outputFile}";
             string filename_b = $"b_{outputFile}";
 
-            MAliFacade.SetSeed(seed);
-            MAliFacade.PerformAlignment(inputFile, filename_a, table);
-            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}.faa");
+            AlignmentRequest instructionsA = new AlignmentRequest();
+            instructionsA.InputPath = inputFile;
+            instructionsA.OutputPath = filename_a;
+            instructionsA.IterationsLimit = 3;
+            instructionsA.SpecifiesSeed = true;
+            instructionsA.Seed = seed;
+
+            MAliFacade.PerformAlignment(instructionsA);
+            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}");
             Alignment alignmentA = new Alignment(alignedA);
 
-            MAliFacade.SetSeed(seed);
-            MAliFacade.PerformAlignment(inputFile, filename_b, table);
-            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}.faa");
+            AlignmentRequest instructionsB = new AlignmentRequest();
+            instructionsB.InputPath = inputFile;
+            instructionsB.OutputPath = filename_b;
+            instructionsB.IterationsLimit = 3;
+            instructionsB.SpecifiesSeed = true;
+            instructionsB.Seed = seed;
+
+            MAliFacade.PerformAlignment(instructionsB);
+            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}");
             Alignment alignmentB = new Alignment(alignedB);
 
             AlignmentConservation.AssertAlignmentsAreConserved(alignmentA, alignmentB);
@@ -78,7 +87,5 @@ namespace TestsUnitSuite.MAli
         }
 
         #endregion
-
-
     }
 }

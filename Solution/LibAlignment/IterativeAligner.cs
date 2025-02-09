@@ -8,7 +8,7 @@ using LibModification;
 
 namespace LibAlignment
 {
-    public abstract class IterativeAligner : IIterativeAligner
+    public abstract class IterativeAligner
     {
         public IFitnessFunction Objective { get; protected set; }
 

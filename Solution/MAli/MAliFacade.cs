@@ -4,8 +4,9 @@ using LibBioInfo;
 using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;
-using MAli.Helpers;
+using MAli.AlignmentEngines;
 using MAli.ParetoAlignmentConfigs;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +17,8 @@ namespace MAli
 {
     public class MAliFacade
     {
-        public static AlignmentConfig Config = new DevelopmentConfig();
-        public static ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
-
-        private ResponseBank ResponseBank = new ResponseBank();
-
-        private AlignmentHelper AlignmentHelper = new AlignmentHelper(Config);
-        private ParetoAlignmentHelper ParetoAlignmentHelper = new ParetoAlignmentHelper(ParetoConfig);
-
-        private BatchAlignmentHelper BatchAlignmentHelper = new BatchAlignmentHelper(Config);
-
+        public AlignmentConfig Config = new DevelopmentConfig();
+        public ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
 
         public void SetSeed(string value)
         {
@@ -35,34 +28,28 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        public void PerformAlignment(AlignmentRequest request)
         {
-            AlignmentHelper.PerformAlignment(inputPath, outputPath, table);
+            if (request.SpecifiesSeed)
+            {
+                SetSeed(request.Seed);
+            }
+
+            IAlignmentEngine engine = ConstructEngine(request);
+            engine.PerformAlignment(request);
         }
 
-        public void PerformParetoAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        private IAlignmentEngine ConstructEngine(AlignmentRequest request)
         {
-            ParetoAlignmentHelper.PerformAlignment(inputPath, outputPath, table);
-        }
-
-        public void PerformBatchAlignment(string inDirectory, string outDirectory, Dictionary<string, string?> table)
-        {
-            BatchAlignmentHelper.PerformBatchAlignment(inDirectory, outDirectory, table);
-        }
-
-        public void ProvideHelp()
-        {
-            ResponseBank.ProvideHelp();
-        }
-
-        public void ProvideInfo()
-        {
-            ResponseBank.ProvideInfo();
-        }
-
-        public void NotifyUserError(UserRequestError error)
-        {
-            ResponseBank.NotifyUserError(error);
+            switch (request)
+            {
+                case ParetoAlignmentRequest:
+                    return new ParetoAlignmentEngine(ParetoConfig);
+                case BatchAlignmentRequest:
+                    return new BatchAlignmentEngine(Config);
+                default:
+                    return new AlignmentEngine(Config);
+            }
         }
     }
 }

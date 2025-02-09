@@ -1,4 +1,5 @@
 ﻿using MAli.Helpers;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,86 +8,32 @@ using System.Threading.Tasks;
 
 namespace MAli
 {
-    public enum UserRequestError
-    {
-        ContainsForeignCommands,
-        RequestIsAmbiguous,
-        NoArgumentsGiven,
-        RequestIsInvalid,
-        MultipleLimitations,
-    }
-
     public class MAliInterface
     {
         private MAliFacade Facade = new MAliFacade();
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
+        private ResponseBank ResponseBank = new ResponseBank();
 
         public void ProcessArguments(string[] args)
         {
-            Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
+            UserRequest request = ArgumentHelper.InterpretRequest(args);
+            ProcessRequest(request);
+        }
 
-            if (args.Length == 0)
+        public void ProcessRequest(UserRequest request)
+        {
+            if (request is AlignmentRequest ali)
             {
-                Facade.NotifyUserError(UserRequestError.NoArgumentsGiven);
-                return;
+                Facade.PerformAlignment(ali);
             }
-
-            if (ArgumentHelper.SpecifiesSeed(table))
+            else if (request is MalformedRequest mal)
             {
-                Facade.SetSeed(table["seed"]!);
+                ResponseBank.NotifyUserError(mal);
             }
-
-            if (ArgumentHelper.ContainsForeignCommands(table))
+            else if (request is HelpRequest)
             {
-                Facade.NotifyUserError(UserRequestError.ContainsForeignCommands);
-                return;
+                ResponseBank.ProvideHelp();
             }
-
-            if (ArgumentHelper.SpecifiesMultipleLimitations(table))
-            {
-                Facade.NotifyUserError(UserRequestError.MultipleLimitations);
-                return;
-            }
-
-            if (ArgumentHelper.IsAmbiguousRequest(table))
-            {
-                Facade.NotifyUserError(UserRequestError.RequestIsAmbiguous);
-                return;
-            }
-
-            if (ArgumentHelper.IsParetoAlignmentRequest(table))
-            {
-                Facade.PerformParetoAlignment(table["input"]!, table["output"]!, table);
-                return;
-            }
-
-
-            if (ArgumentHelper.IsBatchAlignmentRequest(table))
-            {
-                Facade.PerformBatchAlignment(table["input"]!, table["output"]!, table);
-                return;
-            }
-
-
-            if (ArgumentHelper.IsAlignmentRequest(table))
-            {
-                Facade.PerformAlignment(table["input"]!, table["output"]!, table);
-                return;
-            }
-
-            if (ArgumentHelper.IsHelpRequest(table))
-            {
-                Facade.ProvideHelp();
-                return;
-            }
-
-            if (ArgumentHelper.IsInfoRequest(table))
-            {
-                Facade.ProvideInfo();
-                return;
-            }
-
-            Facade.NotifyUserError(UserRequestError.RequestIsInvalid);
         }
     }
 }

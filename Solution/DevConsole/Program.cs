@@ -19,7 +19,7 @@ namespace DevConsole
 
         static void TestingBatchAlignment()
         {
-            // RunMAli("-input batchin -output batchout -batch");
+            RunMAli("-input batchin -output batchout -batch");
             // RunMAli("-input batchin -output batchout -debug -batch");
         }
 
@@ -32,6 +32,7 @@ namespace DevConsole
             // RunMAli("-help");
 
             RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
+            // RunMAli("-input BB11001 -output test -debug -scorefile");
 
 
             // RunMAli("-input BB11001 -output test -debug -scorefile");

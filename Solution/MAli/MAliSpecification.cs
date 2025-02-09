@@ -61,20 +61,5 @@ namespace MAli
             CommandDescriptions.Add("pareto", "(flag) Output a selection of alignments, approximating the Pareto front");
             CommandDescriptions.Add("scorefile", "(flag) Output a separate .maliscore file containing the alignment's objective scores");
         }
-
-        public void ListCurrentVersion()
-        {
-            Console.WriteLine($"MAli ({Version}) - Metaheuristic Aligner");
-        }
-
-        public void ListSupportedCommands()
-        {
-            Console.WriteLine("Supported commands:");
-            foreach (string command in SupportedCommands)
-            {
-                Console.WriteLine($"   -{command} : {CommandDescriptions[command]}");
-            }
-            Console.WriteLine();
-        }
     }
 }

@@ -3,41 +3,42 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
+using MAli.Helpers;
 using MAli.ParetoAlignmentConfigs;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.AlignmentEngines
 {
-    public class ParetoAlignmentHelper
+    public class ParetoAlignmentEngine : IAlignmentEngine
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        private ArgumentHelper ArgumentHelper = new ArgumentHelper();
         private ParetoDebuggingHelper DebuggingHelper = new ParetoDebuggingHelper();
         private ParetoAlignmentConfig Config;
-        private AlignmentInstructions Instructions = null!;
+        private AlignmentRequest Instructions = null!;
 
         private bool DebugMode = false;
 
-        public ParetoAlignmentHelper(ParetoAlignmentConfig config)
+        public ParetoAlignmentEngine(ParetoAlignmentConfig config)
         {
             Config = config;
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+        public void PerformAlignment(AlignmentRequest instructions)
         {
-            Instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            Instructions = instructions;
             DebuggingHelper = new ParetoDebuggingHelper();
             DebugMode = Instructions.Debug;
 
             try
             {
-                Console.WriteLine($"Reading sequences from source: '{inputPath}'");
-                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+                Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
+                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
@@ -46,8 +47,8 @@ namespace MAli.Helpers
                     AlignIteratively(aligner, Instructions);
 
                     List<Alignment> solutions = aligner.CollectTradeoffSolutions();
-                    SaveAlignments(solutions, outputPath);
-                    CheckSaveScorefiles(aligner,solutions, outputPath, Instructions);
+                    SaveAlignments(solutions, Instructions.OutputPath);
+                    CheckSaveScorefiles(aligner, solutions, Instructions.OutputPath, Instructions);
                 }
                 else
                 {
@@ -60,7 +61,7 @@ namespace MAli.Helpers
             }
         }
 
-        public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentInstructions instructions)
+        public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentRequest instructions)
         {
             if (!instructions.IncludeScoreFile)
             {
@@ -79,13 +80,12 @@ namespace MAli.Helpers
             Console.WriteLine("Saved .maliscore files.");
         }
 
-
         public void SaveAlignments(List<Alignment> solutions, string outPath)
         {
             Console.WriteLine($"Saving {solutions.Count} alignments:");
 
             int counter = 0;
-            foreach(Alignment solution in solutions)
+            foreach (Alignment solution in solutions)
             {
                 string filepath = $"{outPath}_{++counter}";
                 FileHelper.WriteAlignmentTo(solution, filepath);
@@ -93,8 +93,7 @@ namespace MAli.Helpers
             }
         }
 
-
-        public void AlignIteratively(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignIteratively(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
             Console.WriteLine(instructions.GetContextString());
 
@@ -113,7 +112,7 @@ namespace MAli.Helpers
             }
         }
 
-        public void AlignUntilIterationLimit(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilIterationLimit(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
@@ -121,7 +120,7 @@ namespace MAli.Helpers
                 {
                     DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
-                PerformIterationOfAlignment(aligner, instructions);
+                aligner.Iterate();
             }
 
             if (DebugMode)
@@ -130,8 +129,7 @@ namespace MAli.Helpers
             }
         }
 
-
-        public void AlignUntilSecondsDeadline(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
+        public void AlignUntilSecondsDeadline(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
             DateTime start = DateTime.Now;
             DateTime deadline = DateTime.Now.AddSeconds(instructions.SecondsLimit);
@@ -140,7 +138,7 @@ namespace MAli.Helpers
 
             while (DateTime.Now < deadline)
             {
-                PerformIterationOfAlignment(aligner, instructions);
+                aligner.Iterate();
                 time = DateTime.Now;
                 if (DebugMode)
                 {
@@ -152,11 +150,6 @@ namespace MAli.Helpers
                     break;
                 }
             }
-        }
-
-        public void PerformIterationOfAlignment(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
-        {
-            aligner.Iterate();
         }
     }
 }
