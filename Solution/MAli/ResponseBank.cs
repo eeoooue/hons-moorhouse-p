@@ -13,8 +13,8 @@ namespace MAli
 
         public void ProvideHelp()
         {
-            Specification.ListCurrentVersion();
-            Specification.ListSupportedCommands();
+            ListCurrentVersion();
+            ListSupportedCommands();
         }
 
         public void ExplainException(Exception exception)
@@ -36,6 +36,22 @@ namespace MAli
         public void NotifyUserError(MalformedRequest request)
         {
             Console.WriteLine(request.Info);
+        }
+
+        public void ListCurrentVersion()
+        {
+            Console.WriteLine($"MAli ({Specification.Version}) - Metaheuristic Aligner");
+        }
+
+        public void ListSupportedCommands()
+        {
+            Console.WriteLine("Supported commands:");
+            foreach (string command in Specification.SupportedCommands)
+            {
+                string description = Specification.CommandDescriptions[command];
+                Console.WriteLine($"   -{command} : {description}");
+            }
+            Console.WriteLine();
         }
     }
 }
