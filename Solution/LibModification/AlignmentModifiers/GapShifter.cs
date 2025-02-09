@@ -35,6 +35,11 @@ namespace LibModification.AlignmentModifiers
             List<int> residuePositions = CharMatrixHelper.GetResiduePositionsInRow(matrix, i);
             List<int> gapPositions = CharMatrixHelper.GetGapPositionsInRow(matrix, i);
 
+            if (gapPositions.Count == 0 || residuePositions.Count == 0)
+            {
+                return;
+            }
+
             string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
 
             int chosenGapPosition = GetRandomChoiceFromList(gapPositions);
