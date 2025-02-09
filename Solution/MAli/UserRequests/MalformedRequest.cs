@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace MAli.UserRequests
 {
-    public class MalformedRequest
+    public class MalformedRequest : UserRequest
     {
+        public string Info;
+
+        public MalformedRequest(string info = "Failed to interpret request.")
+        {
+            Info = info;
+        }
     }
 }
