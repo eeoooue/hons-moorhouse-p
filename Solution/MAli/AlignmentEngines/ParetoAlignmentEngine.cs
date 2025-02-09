@@ -3,6 +3,7 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
+using MAli.Helpers;
 using MAli.ParetoAlignmentConfigs;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.AlignmentEngines
 {
-    public class ParetoAlignmentHelper
+    public class ParetoAlignmentEngine : IAlignmentEngine
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
@@ -22,7 +23,7 @@ namespace MAli.Helpers
 
         private bool DebugMode = false;
 
-        public ParetoAlignmentHelper(ParetoAlignmentConfig config)
+        public ParetoAlignmentEngine(ParetoAlignmentConfig config)
         {
             Config = config;
         }
@@ -83,7 +84,7 @@ namespace MAli.Helpers
             Console.WriteLine($"Saving {solutions.Count} alignments:");
 
             int counter = 0;
-            foreach(Alignment solution in solutions)
+            foreach (Alignment solution in solutions)
             {
                 string filepath = $"{outPath}_{++counter}";
                 FileHelper.WriteAlignmentTo(solution, filepath);

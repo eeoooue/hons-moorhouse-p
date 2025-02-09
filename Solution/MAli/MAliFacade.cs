@@ -4,7 +4,7 @@ using LibBioInfo;
 using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;
-using MAli.Helpers;
+using MAli.AlignmentEngines;
 using MAli.ParetoAlignmentConfigs;
 using System;
 using System.Collections.Generic;
@@ -21,11 +21,9 @@ namespace MAli
 
         private ResponseBank ResponseBank = new ResponseBank();
 
-        private AlignmentHelper AlignmentHelper = new AlignmentHelper(Config);
-        private ParetoAlignmentHelper ParetoAlignmentHelper = new ParetoAlignmentHelper(ParetoConfig);
-
-        private BatchAlignmentHelper BatchAlignmentHelper = new BatchAlignmentHelper(Config);
-
+        private AlignmentEngine AlignmentEngine = new AlignmentEngine(Config);
+        private ParetoAlignmentEngine ParetoAlignmentEngine = new ParetoAlignmentEngine(ParetoConfig);
+        private BatchAlignmentEngine BatchAlignmentEngine = new BatchAlignmentEngine(Config);
 
         public void SetSeed(string value)
         {
@@ -37,17 +35,17 @@ namespace MAli
 
         public void PerformAlignment(AlignmentInstructions instructions)
         {
-            AlignmentHelper.PerformAlignment(instructions);
+            AlignmentEngine.PerformAlignment(instructions);
         }
 
         public void PerformParetoAlignment(AlignmentInstructions instructions)
         {
-            ParetoAlignmentHelper.PerformAlignment(instructions);
+            ParetoAlignmentEngine.PerformAlignment(instructions);
         }
 
         public void PerformBatchAlignment(AlignmentInstructions instructions)
         {
-            BatchAlignmentHelper.PerformBatchAlignment(instructions);
+            BatchAlignmentEngine.PerformAlignment(instructions);
         }
 
         public void ProvideHelp()

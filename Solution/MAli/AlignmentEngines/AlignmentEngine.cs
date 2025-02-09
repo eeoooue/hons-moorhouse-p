@@ -2,6 +2,7 @@
 using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
+using MAli.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.AlignmentEngines
 {
-    public class AlignmentHelper
+    public class AlignmentEngine : IAlignmentEngine
     {
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();
@@ -23,7 +24,7 @@ namespace MAli.Helpers
         private bool DebugMode = false;
         private AlignmentInstructions Instructions = null!;
 
-        public AlignmentHelper(AlignmentConfig config)
+        public AlignmentEngine(AlignmentConfig config)
         {
             Config = config;
         }
@@ -124,7 +125,7 @@ namespace MAli.Helpers
             int completed = aligner.IterationsCompleted;
             int limit = aligner.IterationsLimit;
 
-            double percentIterationsComplete = Math.Round(100.0 * (double)completed / (double)limit, 3);
+            double percentIterationsComplete = Math.Round(100.0 * completed / limit, 3);
             string percentValue = percentIterationsComplete.ToString("0.0");
 
             string result = $"completed {completed} of {limit} iterations ({percentValue}%)";

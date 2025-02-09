@@ -9,19 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.AlignmentEngines
 {
-    public class BatchAlignmentHelper
+    public class BatchAlignmentEngine : IAlignmentEngine
     {
-        private AlignmentHelper AlignmentHelper;
+        private AlignmentEngine AlignmentEngine;
         private AlignmentInstructions Instructions = null!;
 
-        public BatchAlignmentHelper(AlignmentConfig config)
+        public BatchAlignmentEngine(AlignmentConfig config)
         {
-            AlignmentHelper = new AlignmentHelper(config);
+            AlignmentEngine = new AlignmentEngine(config);
         }
 
-        public void PerformBatchAlignment(AlignmentInstructions instructions)
+        public void PerformAlignment(AlignmentInstructions instructions)
         {
             Instructions = instructions;
 
@@ -37,25 +37,24 @@ namespace MAli.Helpers
 
             int n = inputPaths.Count;
 
-            for(int i=0; i<n; i++)
+            for (int i = 0; i < n; i++)
             {
                 if (Instructions.Debug)
                 {
                     Console.Clear();
                 }
-                Console.WriteLine($"Batch Alignment: Alignment {i+1} of {n}");
-                PerformAlignment(inputPaths[i], outputPaths[i]);
+                Console.WriteLine($"Batch Alignment: Alignment {i + 1} of {n}");
+                PerformIndividualAlignment(inputPaths[i], outputPaths[i]);
                 Console.WriteLine();
             }
         }
 
-        public void PerformAlignment(string inputPath, string outputPath)
+        public void PerformIndividualAlignment(string inputPath, string outputPath)
         {
             AlignmentInstructions instructions = Instructions.GetCopy();
             instructions.InputPath = inputPath;
             instructions.OutputPath = outputPath;
-
-            AlignmentHelper.PerformAlignment(instructions);
+            AlignmentEngine.PerformAlignment(instructions);
         }
 
         public bool CheckInputDirectoryExists(string inDirectory)
@@ -81,7 +80,7 @@ namespace MAli.Helpers
             int n = inDirectory.Length + 1;
             List<string> inputPaths = CollectInputPaths(inDirectory);
             List<string> result = new List<string>();
-            foreach(string path in inputPaths)
+            foreach (string path in inputPaths)
             {
                 string filename = path.Substring(n);
                 result.Add(filename);
@@ -94,7 +93,7 @@ namespace MAli.Helpers
         {
             List<string> inputFilenames = CollectInputFilenames(inDirectory);
             List<string> result = new List<string>();
-            foreach(string input in inputFilenames)
+            foreach (string input in inputFilenames)
             {
                 string filepath = $"{outDirectory}\\{input}";
                 result.Add(filepath);
