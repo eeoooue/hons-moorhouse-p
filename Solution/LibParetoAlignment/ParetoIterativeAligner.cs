@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LibParetoAlignment
 {
-    internal class ParetoIterativeAligner
+    public abstract class ParetoIterativeAligner
     {
         List<IFitnessFunction> Objectives;
 
@@ -17,6 +17,8 @@ namespace LibParetoAlignment
             Objectives = objectives;
         }
 
+
+        public abstract List<Alignment> CollectTradeoffSolutions();
 
 
         public TradeoffAlignment EvaluateAlignment(Alignment alignment)
