@@ -33,6 +33,7 @@ namespace LibFileIO.AlignmentWriters
             foreach (IFitnessFunction objective in Objectives)
             {
                 string line = GetScoreLine(alignment, objective);
+                result.Add(line);
             }
 
             return result;
