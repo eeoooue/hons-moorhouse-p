@@ -1,6 +1,8 @@
 ﻿using LibAlignment.Aligners.SingleState;
 using LibBioInfo;
 using LibBioInfo.ScoringMatrices;
+using LibModification;
+using LibModification.AlignmentModifiers;
 using LibParetoAlignment;
 using LibParetoAlignment.Aligners;
 using LibScoring;
@@ -47,10 +49,28 @@ namespace MAli.ParetoAlignmentConfigs
             return result;
         }
 
+
+        public IAlignmentModifier GetModifier()
+        {
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new SwapOperator(),
+                new GapInserter(),
+                new MultiRowStochasticSwapOperator(),
+                new HeuristicPairwiseModifier(),
+            };
+
+            IAlignmentModifier result = new MultiOperatorModifier(modifiers);
+
+            return result;
+
+        }
+
         public override ParetoIterativeAligner CreateAligner()
         {
             List<IFitnessFunction> objectives = GetObjectives();
-            ParetoIterativeAligner aligner = new ParetoHillClimbAligner(objectives);
+            ParetoHillClimbAligner aligner = new ParetoHillClimbAligner(objectives);
+            aligner.Modifier = GetModifier();
 
             return aligner;
         }

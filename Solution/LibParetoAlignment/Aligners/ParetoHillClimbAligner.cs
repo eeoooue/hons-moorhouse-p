@@ -13,12 +13,14 @@ namespace LibParetoAlignment.Aligners
 {
     public class ParetoHillClimbAligner : ParetoIterativeAligner
     {
-        IAlignmentModifier Modifier = new MultiRowStochasticSwapOperator();
+        public IAlignmentModifier Modifier = new MultiRowStochasticSwapOperator();
 
         public int ArchiveGoalSize = 10;
 
         Queue<TradeoffAlignment> Archive = new Queue<TradeoffAlignment>();
         ParetoHelper ParetoHelper = new ParetoHelper();
+
+        private TradeoffAlignment CurrentSolution = null!;
 
         public ParetoHillClimbAligner(List<IFitnessFunction> objectives) : base(objectives)
         {
@@ -27,7 +29,7 @@ namespace LibParetoAlignment.Aligners
 
         public override Alignment GetCurrentAlignment()
         {
-            return Archive.Peek().Alignment;
+            return CurrentSolution.Alignment;
         }
 
         public override string GetName()
@@ -52,9 +54,7 @@ namespace LibParetoAlignment.Aligners
             Alignment alignment = new Alignment(sequences);
             IAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(alignment);
-
-            TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
-            AddSolutionToArchive(tradeoff);
+            InitializeForRefinement(alignment);
         }
 
         public override void InitializeForRefinement(Alignment alignment)
@@ -65,10 +65,11 @@ namespace LibParetoAlignment.Aligners
 
         public override void PerformIteration()
         {
-            TradeoffAlignment current = Archive.Peek();
-            Alignment alignment = current.Alignment.GetCopy();
+            Alignment alignment = CurrentSolution.Alignment.GetCopy();
+
             Modifier.ModifyAlignment(alignment);
             TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
+
             if (ShouldAddSolutionToArchive(tradeoff))
             {
                 AddSolutionToArchive(tradeoff);
@@ -83,6 +84,7 @@ namespace LibParetoAlignment.Aligners
             }
 
             Archive.Enqueue(alignment);
+            CurrentSolution = alignment;
         }
 
         public bool ShouldAddSolutionToArchive(TradeoffAlignment alignment)
