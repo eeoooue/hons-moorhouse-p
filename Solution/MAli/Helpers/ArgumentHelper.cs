@@ -54,7 +54,8 @@ namespace MAli.Helpers
             string result = outputName;
             if (CommandsIncludeFlag(table, "timestamp"))
             {
-                result += $"_{GetTimeStamp()}";
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+                result += $"_{timestamp}";
             }
             if (CommandsIncludeFlag(table, "tag"))
             {
@@ -67,12 +68,6 @@ namespace MAli.Helpers
             result += ".faa";
 
             return result;
-        }
-
-        public string GetTimeStamp()
-        {
-            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            return timestamp;
         }
 
         public UserRequest InterpretRequest(string[] args)
