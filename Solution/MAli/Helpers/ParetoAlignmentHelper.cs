@@ -1,6 +1,7 @@
 ﻿using LibAlignment;
 using LibBioInfo;
 using LibFileIO;
+using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
 using MAli.ParetoAlignmentConfigs;
 using System;
@@ -18,6 +19,7 @@ namespace MAli.Helpers
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
         private ParetoDebuggingHelper DebuggingHelper = new ParetoDebuggingHelper();
         private ParetoAlignmentConfig Config;
+        private AlignmentInstructions Instructions = null!;
 
         private bool DebugMode = false;
 
@@ -28,9 +30,9 @@ namespace MAli.Helpers
 
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            Instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
             DebuggingHelper = new ParetoDebuggingHelper();
-            DebugMode = instructions.Debug;
+            DebugMode = Instructions.Debug;
 
             try
             {
@@ -40,11 +42,12 @@ namespace MAli.Helpers
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    ParetoIterativeAligner aligner = Config.InitialiseAligner(alignment, instructions);
-                    AlignIteratively(aligner, instructions);
+                    ParetoIterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
+                    AlignIteratively(aligner, Instructions);
 
                     List<Alignment> solutions = aligner.CollectTradeoffSolutions();
                     SaveAlignments(solutions, outputPath);
+                    CheckSaveScorefiles(aligner,solutions, outputPath, Instructions);
                 }
                 else
                 {
@@ -55,6 +58,25 @@ namespace MAli.Helpers
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+        public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentInstructions instructions)
+        {
+            if (!instructions.IncludeScoreFile)
+            {
+                return;
+            }
+
+            MAliScoreWriter writer = new MAliScoreWriter(aligner.Objectives);
+
+            int counter = 0;
+            foreach (Alignment solution in solutions)
+            {
+                string filepath = $"{outPath}_{++counter}";
+                writer.WriteAlignmentTo(solution, filepath);
+            }
+
+            Console.WriteLine("Saved .maliscore files.");
         }
 
 

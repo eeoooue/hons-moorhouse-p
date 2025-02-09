@@ -15,6 +15,7 @@ namespace MAli.Helpers
             instructions.Debug = CommandsIncludeFlag(table, "debug");
             instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
             instructions.RefineOnly = CommandsIncludeFlag(table, "refine");
+            instructions.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
             instructions.IterationsLimit = UnpackSpecifiedIterations(table);
             instructions.SecondsLimit = UnpackSpecifiedSeconds(table);
             instructions.InputPath = inputPath;

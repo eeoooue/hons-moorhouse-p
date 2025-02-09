@@ -1,6 +1,7 @@
 ﻿using LibAlignment;
 using LibBioInfo;
 using LibFileIO;
+using LibFileIO.AlignmentWriters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,6 +21,7 @@ namespace MAli.Helpers
         private DebuggingHelper DebuggingHelper = new DebuggingHelper();
 
         private bool DebugMode = false;
+        private AlignmentInstructions Instructions = null!;
 
         public AlignmentHelper(AlignmentConfig config)
         {
@@ -28,9 +30,9 @@ namespace MAli.Helpers
 
         public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
-            AlignmentInstructions instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            Instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
             DebuggingHelper = new DebuggingHelper();
-            DebugMode = instructions.Debug;
+            DebugMode = Instructions.Debug;
 
             try
             {
@@ -40,10 +42,10 @@ namespace MAli.Helpers
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IIterativeAligner aligner = Config.InitialiseAligner(alignment, instructions);
-                    AlignIteratively(aligner, instructions);
-                    FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, instructions.OutputPath);
-                    Console.WriteLine($"Alignment written to destination: '{instructions.OutputPath}'");
+                    IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
+                    AlignIteratively(aligner, Instructions);
+                    SaveAlignment(aligner.CurrentAlignment!, Instructions.OutputPath);
+                    CheckSaveScorefile(aligner, aligner.CurrentAlignment!, Instructions);
                 }
                 else
                 {
@@ -54,6 +56,24 @@ namespace MAli.Helpers
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+        public void SaveAlignment(Alignment alignment, string filepath)
+        {
+            FileHelper.WriteAlignmentTo(alignment, filepath);
+            Console.WriteLine($"Alignment written to destination: '{filepath}'");
+        }
+
+        public void CheckSaveScorefile(IterativeAligner aligner, Alignment alignment, AlignmentInstructions instructions)
+        {
+            if (!instructions.IncludeScoreFile)
+            {
+                return;
+            }
+
+            MAliScoreWriter writer = new MAliScoreWriter(aligner.Objective);
+            writer.WriteAlignmentTo(alignment, instructions.OutputPath);
+            Console.WriteLine("Saved .maliscore file.");
         }
 
         public void AlignIteratively(IIterativeAligner aligner, AlignmentInstructions instructions)
