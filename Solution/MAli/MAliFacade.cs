@@ -54,11 +54,6 @@ namespace MAli
             ResponseBank.ProvideHelp();
         }
 
-        public void ProvideInfo()
-        {
-            ResponseBank.ProvideInfo();
-        }
-
         public void NotifyUserError(UserRequestError error)
         {
             ResponseBank.NotifyUserError(error);
