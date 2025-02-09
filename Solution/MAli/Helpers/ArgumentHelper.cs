@@ -184,11 +184,6 @@ namespace MAli.Helpers
                 counter++;
             }
 
-            if (IsInfoRequest(table, false))
-            {
-                counter++;
-            }
-
             return counter > 1;
         }
 

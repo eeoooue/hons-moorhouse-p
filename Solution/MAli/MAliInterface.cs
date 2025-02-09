@@ -82,12 +82,6 @@ namespace MAli
                 return;
             }
 
-            if (ArgumentHelper.IsInfoRequest(table))
-            {
-                Facade.ProvideInfo();
-                return;
-            }
-
             Facade.NotifyUserError(UserRequestError.RequestIsInvalid);
         }
     }
