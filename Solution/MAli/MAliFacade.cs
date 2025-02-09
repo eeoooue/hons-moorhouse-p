@@ -22,10 +22,6 @@ namespace MAli
 
         private ResponseBank ResponseBank = new ResponseBank();
 
-        private AlignmentEngine AlignmentEngine = new AlignmentEngine(Config);
-        private ParetoAlignmentEngine ParetoAlignmentEngine = new ParetoAlignmentEngine(ParetoConfig);
-        private BatchAlignmentEngine BatchAlignmentEngine = new BatchAlignmentEngine(Config);
-
         public void SetSeed(string value)
         {
             if (int.TryParse(value, out int seed))
@@ -34,19 +30,23 @@ namespace MAli
             }
         }
 
-        public void PerformAlignment(AlignmentRequest instructions)
+        public void PerformAlignment(AlignmentRequest request)
         {
-            AlignmentEngine.PerformAlignment(instructions);
+            IAlignmentEngine engine = ConstructEngine(request);
+            engine.PerformAlignment(request);
         }
 
-        public void PerformParetoAlignment(AlignmentRequest instructions)
+        private IAlignmentEngine ConstructEngine(AlignmentRequest request)
         {
-            ParetoAlignmentEngine.PerformAlignment(instructions);
-        }
-
-        public void PerformBatchAlignment(AlignmentRequest instructions)
-        {
-            BatchAlignmentEngine.PerformAlignment(instructions);
+            switch (request)
+            {
+                case ParetoAlignmentRequest:
+                    return new ParetoAlignmentEngine(ParetoConfig);
+                case BatchAlignmentRequest:
+                    return new BatchAlignmentEngine(Config);
+                default:
+                    return new AlignmentEngine(Config);
+            }
         }
 
         public void ProvideHelp()

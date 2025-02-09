@@ -22,6 +22,20 @@ namespace MAli
         private MAliFacade Facade = new MAliFacade();
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
 
+
+        public void NewProcessArguments(string[] args)
+        {
+            UserRequest request = ArgumentHelper.InterpretRequest(args);
+
+            if (request is AlignmentRequest ali){
+                Facade.PerformAlignment(ali);
+            }
+
+
+
+            throw new NotImplementedException();
+        }
+
         public void ProcessArguments(string[] args)
         {
             Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
@@ -52,21 +66,6 @@ namespace MAli
             if (ArgumentHelper.IsAmbiguousRequest(table))
             {
                 Facade.NotifyUserError(UserRequestError.RequestIsAmbiguous);
-                return;
-            }
-
-            if (ArgumentHelper.IsParetoAlignmentRequest(table))
-            {
-                AlignmentRequest instructions = ArgumentHelper.UnpackInstructions(table);
-                Facade.PerformParetoAlignment(instructions);
-                return;
-            }
-
-
-            if (ArgumentHelper.IsBatchAlignmentRequest(table))
-            {
-                AlignmentRequest instructions = ArgumentHelper.UnpackInstructions(table);
-                Facade.PerformBatchAlignment(instructions);
                 return;
             }
 

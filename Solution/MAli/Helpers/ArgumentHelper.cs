@@ -12,36 +12,29 @@ namespace MAli.Helpers
 
         public AlignmentRequest UnpackInstructions(Dictionary<string, string?> table)
         {
-            AlignmentRequest instructions = new AlignmentRequest();
-            instructions.Debug = CommandsIncludeFlag(table, "debug");
-            instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
-            instructions.RefineOnly = CommandsIncludeFlag(table, "refine");
-            instructions.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
-            instructions.IterationsLimit = UnpackSpecifiedIterations(table);
-            instructions.SecondsLimit = UnpackSpecifiedSeconds(table);
-            instructions.InputPath = table["input"]!;
-            instructions.OutputPath = BuildFullOutputFilename(table["output"]!, table);
+            AlignmentRequest request = new AlignmentRequest();
 
-            instructions.CheckAddDefaultRestrictions();
+            if (table.ContainsKey("pareto"))
+            {
+                request = new ParetoAlignmentRequest();
+            }
+            if (table.ContainsKey("batch"))
+            {
+                request = new BatchAlignmentRequest();
+            }
 
-            return instructions;
-        }
 
-        public AlignmentRequest UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
-        {
-            AlignmentRequest instructions = new AlignmentRequest();
-            instructions.Debug = CommandsIncludeFlag(table, "debug");
-            instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
-            instructions.RefineOnly = CommandsIncludeFlag(table, "refine");
-            instructions.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
-            instructions.IterationsLimit = UnpackSpecifiedIterations(table);
-            instructions.SecondsLimit = UnpackSpecifiedSeconds(table);
-            instructions.InputPath = inputPath;
-            instructions.OutputPath = BuildFullOutputFilename(outputPath, table);
+            request.Debug = CommandsIncludeFlag(table, "debug");
+            request.EmitFrames = CommandsIncludeFlag(table, "frames");
+            request.RefineOnly = CommandsIncludeFlag(table, "refine");
+            request.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
+            request.IterationsLimit = UnpackSpecifiedIterations(table);
+            request.SecondsLimit = UnpackSpecifiedSeconds(table);
+            request.InputPath = table["input"]!;
+            request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
+            request.CheckAddDefaultRestrictions();
 
-            instructions.CheckAddDefaultRestrictions();
-
-            return instructions;
+            return request;
         }
 
         public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
@@ -68,6 +61,49 @@ namespace MAli.Helpers
         {
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             return timestamp;
+        }
+
+        public UserRequest InterpretRequest(string[] args)
+        {
+            Dictionary<string, string?> table = InterpretArguments(args);
+
+            if (ContainsForeignCommands(table))
+            {
+                return new MalformedRequest();
+            }
+
+            if (IsAmbiguousRequest(table))
+            {
+                return new AmbiguousRequest();
+            }
+
+            if (IsHelpRequest(table))
+            {
+                return new HelpRequest();
+            }
+
+            if (IsAlignmentRequest(table))
+            {
+                return InterpretAlignmentRequest(args);
+            }
+
+
+            return new MalformedRequest();
+        }
+
+
+
+        public UserRequest InterpretAlignmentRequest(string[] args)
+        {
+            Dictionary<string, string?> table = InterpretArguments(args);
+
+            if (table.ContainsKey("batch") && table.ContainsKey("pareto"))
+            {
+                return new MalformedRequest();
+            }
+
+            AlignmentRequest request = UnpackInstructions(table);
+            return request;
         }
 
 
