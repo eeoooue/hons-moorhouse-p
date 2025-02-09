@@ -16,7 +16,6 @@ namespace MAli.Helpers
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        private ArgumentHelper ArgumentHelper = new ArgumentHelper();
         private ParetoDebuggingHelper DebuggingHelper = new ParetoDebuggingHelper();
         private ParetoAlignmentConfig Config;
         private AlignmentInstructions Instructions = null!;
@@ -27,7 +26,6 @@ namespace MAli.Helpers
         {
             Config = config;
         }
-
 
         public void PerformAlignment(AlignmentInstructions instructions)
         {
@@ -80,7 +78,6 @@ namespace MAli.Helpers
             Console.WriteLine("Saved .maliscore files.");
         }
 
-
         public void SaveAlignments(List<Alignment> solutions, string outPath)
         {
             Console.WriteLine($"Saving {solutions.Count} alignments:");
@@ -93,7 +90,6 @@ namespace MAli.Helpers
                 Console.WriteLine($"saved: {filepath}");
             }
         }
-
 
         public void AlignIteratively(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
         {
@@ -122,7 +118,7 @@ namespace MAli.Helpers
                 {
                     DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
-                PerformIterationOfAlignment(aligner, instructions);
+                aligner.Iterate();
             }
 
             if (DebugMode)
@@ -130,7 +126,6 @@ namespace MAli.Helpers
                 DebuggingHelper.ShowDebuggingInfo(aligner);
             }
         }
-
 
         public void AlignUntilSecondsDeadline(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
         {
@@ -141,7 +136,7 @@ namespace MAli.Helpers
 
             while (DateTime.Now < deadline)
             {
-                PerformIterationOfAlignment(aligner, instructions);
+                aligner.Iterate();
                 time = DateTime.Now;
                 if (DebugMode)
                 {
@@ -153,11 +148,6 @@ namespace MAli.Helpers
                     break;
                 }
             }
-        }
-
-        public void PerformIterationOfAlignment(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
-        {
-            aligner.Iterate();
         }
     }
 }
