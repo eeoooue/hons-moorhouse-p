@@ -40,7 +40,7 @@ namespace TestsUnitSuite.MAli
             MAliFacade.PerformAlignment(instructions);
 
             List<BioSequence> original = FileHelper.ReadSequencesFrom(inputFile);
-            List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}.faa");
+            List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}");
 
             Alignment leftJustified = new Alignment(original);
             Alignment alignment = new Alignment(aligned);
@@ -64,20 +64,22 @@ namespace TestsUnitSuite.MAli
             instructionsA.InputPath = inputFile;
             instructionsA.OutputPath = filename_a;
             instructionsA.IterationsLimit = 3;
+            instructionsA.SpecifiesSeed = true;
+            instructionsA.Seed = seed;
 
-            MAliFacade.SetSeed(seed);
             MAliFacade.PerformAlignment(instructionsA);
-            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}.faa");
+            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}");
             Alignment alignmentA = new Alignment(alignedA);
 
             AlignmentRequest instructionsB = new AlignmentRequest();
-            instructionsA.InputPath = inputFile;
-            instructionsA.OutputPath = filename_b;
-            instructionsA.IterationsLimit = 3;
+            instructionsB.InputPath = inputFile;
+            instructionsB.OutputPath = filename_b;
+            instructionsB.IterationsLimit = 3;
+            instructionsB.SpecifiesSeed = true;
+            instructionsB.Seed = seed;
 
-            MAliFacade.SetSeed(seed);
             MAliFacade.PerformAlignment(instructionsB);
-            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}.faa");
+            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}");
             Alignment alignmentB = new Alignment(alignedB);
 
             AlignmentConservation.AssertAlignmentsAreConserved(alignmentA, alignmentB);
