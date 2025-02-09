@@ -12,14 +12,28 @@ namespace LibParetoAlignment
     {
         List<IFitnessFunction> Objectives;
 
+        public int IterationsCompleted { get; protected set; } = 0;
+
+        public int IterationsLimit { get; set; } = 0;
+
         public ParetoIterativeAligner(List<IFitnessFunction> objectives)
         {
             Objectives = objectives;
         }
 
-
         public abstract List<Alignment> CollectTradeoffSolutions();
 
+        public abstract void Initialize(List<BioSequence> sequences);
+
+        public abstract void InitializeForRefinement(Alignment alignment);
+
+        public abstract void PerformIteration();
+
+        public void Iterate()
+        {
+            PerformIteration();
+            IterationsCompleted++;
+        }
 
         public TradeoffAlignment EvaluateAlignment(Alignment alignment)
         {
