@@ -28,16 +28,17 @@ namespace MAli.Helpers
             Config = config;
         }
 
-        public void PerformAlignment(string inputPath, string outputPath, Dictionary<string, string?> table)
+
+        public void PerformAlignment(AlignmentInstructions instructions)
         {
-            Instructions = ArgumentHelper.UnpackInstructions(inputPath, outputPath, table);
+            Instructions = instructions;
             DebuggingHelper = new ParetoDebuggingHelper();
             DebugMode = Instructions.Debug;
 
             try
             {
-                Console.WriteLine($"Reading sequences from source: '{inputPath}'");
-                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+                Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
+                List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
@@ -46,8 +47,8 @@ namespace MAli.Helpers
                     AlignIteratively(aligner, Instructions);
 
                     List<Alignment> solutions = aligner.CollectTradeoffSolutions();
-                    SaveAlignments(solutions, outputPath);
-                    CheckSaveScorefiles(aligner,solutions, outputPath, Instructions);
+                    SaveAlignments(solutions, Instructions.OutputPath);
+                    CheckSaveScorefiles(aligner, solutions, Instructions.OutputPath, Instructions);
                 }
                 else
                 {

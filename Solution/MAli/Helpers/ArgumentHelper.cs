@@ -9,6 +9,23 @@ namespace MAli.Helpers
     public class ArgumentHelper
     {
 
+        public AlignmentInstructions UnpackInstructions(Dictionary<string, string?> table)
+        {
+            AlignmentInstructions instructions = new AlignmentInstructions();
+            instructions.Debug = CommandsIncludeFlag(table, "debug");
+            instructions.EmitFrames = CommandsIncludeFlag(table, "frames");
+            instructions.RefineOnly = CommandsIncludeFlag(table, "refine");
+            instructions.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
+            instructions.IterationsLimit = UnpackSpecifiedIterations(table);
+            instructions.SecondsLimit = UnpackSpecifiedSeconds(table);
+            instructions.InputPath = table["input"]!;
+            instructions.OutputPath = BuildFullOutputFilename(table["output"]!, table);
+
+            instructions.CheckAddDefaultRestrictions();
+
+            return instructions;
+        }
+
         public AlignmentInstructions UnpackInstructions(string inputPath, string outputPath, Dictionary<string, string?> table)
         {
             AlignmentInstructions instructions = new AlignmentInstructions();
