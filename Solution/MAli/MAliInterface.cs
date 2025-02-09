@@ -54,6 +54,12 @@ namespace MAli
                 return;
             }
 
+            if (ArgumentHelper.IsParetoAlignmentRequest(table))
+            {
+                // 
+                return;
+            }
+
 
             if (ArgumentHelper.IsBatchAlignmentRequest(table))
             {

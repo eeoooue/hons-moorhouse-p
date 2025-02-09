@@ -104,6 +104,11 @@ namespace MAli.Helpers
             return table.ContainsKey("batch") && IsAlignmentRequest(table);
         }
 
+        public bool IsParetoAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
+        {
+            return table.ContainsKey("pareto") && IsAlignmentRequest(table);
+        }
+
         public bool IsAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
         {
             if (checkAmbiguity && IsAmbiguousRequest(table))
