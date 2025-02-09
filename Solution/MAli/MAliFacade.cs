@@ -32,6 +32,11 @@ namespace MAli
 
         public void PerformAlignment(AlignmentRequest request)
         {
+            if (request.SpecifiesSeed)
+            {
+                SetSeed(request.Seed);
+            }
+
             IAlignmentEngine engine = ConstructEngine(request);
             engine.PerformAlignment(request);
         }

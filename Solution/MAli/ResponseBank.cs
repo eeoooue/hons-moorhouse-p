@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MAli.UserRequests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,12 +17,6 @@ namespace MAli
             Specification.ListSupportedCommands();
         }
 
-        public void ProvideInfo()
-        {
-            Specification.ListCurrentVersion();
-            Console.WriteLine($"For more information, see 'readme.txt' or try the '-help' command.");
-        }
-
         public void ExplainException(Exception exception)
         {
             switch (exception)
@@ -36,6 +31,11 @@ namespace MAli
                     Console.WriteLine("Error: Runtime error.");
                     break;
             }
+        }
+
+        public void NotifyUserError(MalformedRequest request)
+        {
+            Console.WriteLine(request.Info);
         }
 
         public void NotifyUserError(UserRequestError error)

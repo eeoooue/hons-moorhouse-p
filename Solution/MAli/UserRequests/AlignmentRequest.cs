@@ -19,6 +19,9 @@ namespace MAli.UserRequests
         public string InputPath = "";
         public string OutputPath = "";
 
+        public bool SpecifiesSeed = false;
+        public string Seed = "";
+
         public AlignmentRequest GetCopy()
         {
             AlignmentRequest result = new AlignmentRequest();
@@ -33,6 +36,9 @@ namespace MAli.UserRequests
 
             result.InputPath = InputPath;
             result.OutputPath = OutputPath;
+
+            result.SpecifiesSeed = SpecifiesSeed;
+            result.Seed = Seed;
 
             return result;
         }

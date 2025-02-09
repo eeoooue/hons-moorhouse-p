@@ -21,68 +21,26 @@ namespace MAli
     {
         private MAliFacade Facade = new MAliFacade();
         private ArgumentHelper ArgumentHelper = new ArgumentHelper();
-
-
-        public void NewProcessArguments(string[] args)
-        {
-            UserRequest request = ArgumentHelper.InterpretRequest(args);
-
-            if (request is AlignmentRequest ali){
-                Facade.PerformAlignment(ali);
-            }
-
-
-
-            throw new NotImplementedException();
-        }
+        private ResponseBank ResponseBank = new ResponseBank();
 
         public void ProcessArguments(string[] args)
         {
-            Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
+            UserRequest request = ArgumentHelper.InterpretRequest(args);
 
-            if (args.Length == 0)
+            if (request is AlignmentRequest ali)
             {
-                Facade.NotifyUserError(UserRequestError.NoArgumentsGiven);
-                return;
+                Facade.PerformAlignment(ali);
             }
 
-            if (ArgumentHelper.SpecifiesSeed(table))
+            if (request is MalformedRequest mal)
             {
-                Facade.SetSeed(table["seed"]!);
+                ResponseBank.NotifyUserError(mal);
             }
 
-            if (ArgumentHelper.ContainsForeignCommands(table))
-            {
-                Facade.NotifyUserError(UserRequestError.ContainsForeignCommands);
-                return;
-            }
-
-            if (ArgumentHelper.SpecifiesMultipleLimitations(table))
-            {
-                Facade.NotifyUserError(UserRequestError.MultipleLimitations);
-                return;
-            }
-
-            if (ArgumentHelper.IsAmbiguousRequest(table))
-            {
-                Facade.NotifyUserError(UserRequestError.RequestIsAmbiguous);
-                return;
-            }
-
-            if (ArgumentHelper.IsAlignmentRequest(table))
-            {
-                AlignmentRequest instructions = ArgumentHelper.UnpackInstructions(table);
-                Facade.PerformAlignment(instructions);
-                return;
-            }
-
-            if (ArgumentHelper.IsHelpRequest(table))
+            if (request is HelpRequest)
             {
                 Facade.ProvideHelp();
-                return;
             }
-
-            Facade.NotifyUserError(UserRequestError.RequestIsInvalid);
         }
     }
 }

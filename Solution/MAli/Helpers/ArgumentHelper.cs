@@ -10,7 +10,7 @@ namespace MAli.Helpers
     public class ArgumentHelper
     {
 
-        public AlignmentRequest UnpackInstructions(Dictionary<string, string?> table)
+        public UserRequest UnpackInstructions(Dictionary<string, string?> table)
         {
             AlignmentRequest request = new AlignmentRequest();
 
@@ -23,18 +23,30 @@ namespace MAli.Helpers
                 request = new BatchAlignmentRequest();
             }
 
+            try
+            {
+                request.Debug = CommandsIncludeFlag(table, "debug");
+                request.EmitFrames = CommandsIncludeFlag(table, "frames");
+                request.RefineOnly = CommandsIncludeFlag(table, "refine");
+                request.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
+                request.IterationsLimit = UnpackSpecifiedIterations(table);
+                request.SecondsLimit = UnpackSpecifiedSeconds(table);
+                request.InputPath = table["input"]!;
+                request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
+                request.CheckAddDefaultRestrictions();
 
-            request.Debug = CommandsIncludeFlag(table, "debug");
-            request.EmitFrames = CommandsIncludeFlag(table, "frames");
-            request.RefineOnly = CommandsIncludeFlag(table, "refine");
-            request.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
-            request.IterationsLimit = UnpackSpecifiedIterations(table);
-            request.SecondsLimit = UnpackSpecifiedSeconds(table);
-            request.InputPath = table["input"]!;
-            request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
-            request.CheckAddDefaultRestrictions();
+                request.SpecifiesSeed = CommandsIncludeFlag(table, "seed");
+                if (request.SpecifiesSeed)
+                {
+                    request.Seed = table["seed"]!;
+                }
 
-            return request;
+                return request;
+            }
+            catch
+            {
+                return new MalformedRequest();
+            }
         }
 
         public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
@@ -69,12 +81,17 @@ namespace MAli.Helpers
 
             if (ContainsForeignCommands(table))
             {
-                return new MalformedRequest();
+                return new MalformedRequest("Error: Request contains foreign commands.");
+            }
+
+            if (SpecifiesMultipleLimitations(table))
+            {
+                return new MalformedRequest("Error: MAli doesn't support limiting both 'iterations' & 'seconds' at once.");
             }
 
             if (IsAmbiguousRequest(table))
             {
-                return new AmbiguousRequest();
+                return new MalformedRequest("Error: Request is ambiguous.");
             }
 
             if (IsHelpRequest(table))
@@ -86,7 +103,6 @@ namespace MAli.Helpers
             {
                 return InterpretAlignmentRequest(args);
             }
-
 
             return new MalformedRequest();
         }
@@ -102,7 +118,7 @@ namespace MAli.Helpers
                 return new MalformedRequest();
             }
 
-            AlignmentRequest request = UnpackInstructions(table);
+            UserRequest request = UnpackInstructions(table);
             return request;
         }
 

@@ -14,13 +14,13 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingBatchAlignment();
+            TestingMAli();
         }
 
         static void TestingBatchAlignment()
         {
-            // RunMAli("-input batchin -output batchout -batch");
-            RunMAli("-input batchin -output batchout -debug -batch");
+            RunMAli("-input batchin -output batchout -batch");
+            // RunMAli("-input batchin -output batchout -debug -batch");
         }
 
         static void TestingMAli()
@@ -31,8 +31,8 @@ namespace DevConsole
 
             // RunMAli("-help");
 
-            // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
-            RunMAli("-input BB11001 -output test -debug -scorefile");
+            RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
+            // RunMAli("-input BB11001 -output test -debug -scorefile");
 
 
             // RunMAli("-input BB11001 -output test -debug -scorefile");
