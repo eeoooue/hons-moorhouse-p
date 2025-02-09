@@ -11,6 +11,8 @@ namespace MAli
         public bool Debug = false;
         public bool EmitFrames = false;
         public bool RefineOnly = false;
+        public bool IncludeScoreFile = false;
+
         public int IterationsLimit = 0;
         public double SecondsLimit = 0.0;
 
