@@ -170,16 +170,6 @@ namespace MAli.Helpers
             return false;
         }
 
-        public bool IsBatchAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
-        {
-            return table.ContainsKey("batch") && IsAlignmentRequest(table);
-        }
-
-        public bool IsParetoAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
-        {
-            return table.ContainsKey("pareto") && IsAlignmentRequest(table);
-        }
-
         public bool IsAlignmentRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
         {
             if (checkAmbiguity && IsAmbiguousRequest(table))
@@ -198,16 +188,6 @@ namespace MAli.Helpers
             return false;
         }
 
-        public bool IsInfoRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
-        {
-            if (checkAmbiguity && IsAmbiguousRequest(table))
-            {
-                return false;
-            }
-
-            return table.ContainsKey("info");
-        }
-
         public bool IsHelpRequest(Dictionary<string, string?> table, bool checkAmbiguity = true)
         {
             if (checkAmbiguity && IsAmbiguousRequest(table))
@@ -216,11 +196,6 @@ namespace MAli.Helpers
             }
 
             return table.ContainsKey("help");
-        }
-
-        public bool SpecifiesSeed(Dictionary<string, string?> table)
-        {
-            return table.ContainsKey("seed");
         }
 
         public bool IsAmbiguousRequest(Dictionary<string, string?> table)
@@ -249,7 +224,6 @@ namespace MAli.Helpers
         {
             return !candidate.StartsWith('-');
         }
-
 
         public int UnpackSpecifiedIterations(Dictionary<string, string?> table)
         {
@@ -287,7 +261,6 @@ namespace MAli.Helpers
 
             return 0.0;
         }
-
 
         public bool SpecifiesMultipleLimitations(Dictionary<string, string?> table)
         {
