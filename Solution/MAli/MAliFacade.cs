@@ -17,10 +17,8 @@ namespace MAli
 {
     public class MAliFacade
     {
-        public static AlignmentConfig Config = new DevelopmentConfig();
-        public static ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
-
-        private ResponseBank ResponseBank = new ResponseBank();
+        public AlignmentConfig Config = new DevelopmentConfig();
+        public ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
 
         public void SetSeed(string value)
         {
@@ -52,16 +50,6 @@ namespace MAli
                 default:
                     return new AlignmentEngine(Config);
             }
-        }
-
-        public void ProvideHelp()
-        {
-            ResponseBank.ProvideHelp();
-        }
-
-        public void NotifyUserError(UserRequestError error)
-        {
-            ResponseBank.NotifyUserError(error);
         }
     }
 }

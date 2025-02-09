@@ -10,7 +10,7 @@ namespace MAli.UserRequests
     {
         public string Info;
 
-        public MalformedRequest(string info = "Error: Failed to interpret request.")
+        public MalformedRequest(string info = "Error: Failed to interpret request. Try '-help' to view a list of commands.")
         {
             Info = info;
         }

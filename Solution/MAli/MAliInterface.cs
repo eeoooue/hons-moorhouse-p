@@ -26,20 +26,22 @@ namespace MAli
         public void ProcessArguments(string[] args)
         {
             UserRequest request = ArgumentHelper.InterpretRequest(args);
+            ProcessRequest(request);
+        }
 
+        public void ProcessRequest(UserRequest request)
+        {
             if (request is AlignmentRequest ali)
             {
                 Facade.PerformAlignment(ali);
             }
-
-            if (request is MalformedRequest mal)
+            else if (request is MalformedRequest mal)
             {
                 ResponseBank.NotifyUserError(mal);
             }
-
-            if (request is HelpRequest)
+            else if (request is HelpRequest)
             {
-                Facade.ProvideHelp();
+                ResponseBank.ProvideHelp();
             }
         }
     }
