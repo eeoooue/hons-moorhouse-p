@@ -31,10 +31,14 @@ namespace DevConsole
 
             // RunMAli("-help");
 
-            // RunMAli("-input BB11001 -output test -debug");
+            RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
+
+
+            // RunMAli("-input BB11001 -output test -debug -scorefile");
+
             // RunMAli("-input BB11001 -output test -seconds 100 -debug");
             // RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto");
-            RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
+            // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
 
             // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
 
