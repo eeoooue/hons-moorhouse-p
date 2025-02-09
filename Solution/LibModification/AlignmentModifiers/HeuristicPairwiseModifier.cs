@@ -32,7 +32,7 @@ namespace LibModification.AlignmentModifiers
             char[,] result = GetExpandedCanvas(alignment.CharacterMatrix, i, newSequenceALayout);
             ReplaceRowWithAlignment(ref result, newSequenceALayout, newSequenceBLayout, i, j);
 
-            return result;
+            return CharMatrixHelper.RemoveEmptyColumns(in result);
         }
 
         public void ReplaceRowWithAlignment(ref char[,] matrix, string anchor, string aligned, int i, int j)
