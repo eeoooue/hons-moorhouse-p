@@ -3,6 +3,7 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using MAli.Helpers;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

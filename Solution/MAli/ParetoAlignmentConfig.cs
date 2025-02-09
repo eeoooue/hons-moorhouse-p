@@ -1,6 +1,7 @@
 ﻿using LibAlignment;
 using LibBioInfo;
 using LibParetoAlignment;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;

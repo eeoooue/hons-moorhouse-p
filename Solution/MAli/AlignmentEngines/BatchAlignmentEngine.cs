@@ -2,6 +2,7 @@
 using LibBioInfo;
 using LibFileIO;
 using MAli.AlignmentConfigs;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.IO;

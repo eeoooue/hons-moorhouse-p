@@ -6,6 +6,7 @@ using LibScoring;
 using MAli.AlignmentConfigs;
 using MAli.AlignmentEngines;
 using MAli.ParetoAlignmentConfigs;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;

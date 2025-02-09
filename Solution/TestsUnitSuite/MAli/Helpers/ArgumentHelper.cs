@@ -114,22 +114,6 @@ namespace TestsUnitSuite.MAli.Helpers
             Assert.AreEqual(false, verdict4);
         }
 
-
-        [TestMethod]
-        public void CanIdentifyAmbiguousRequest()
-        {
-            MAliInterface mAliInterface = new MAliInterface();
-            string[] args = { "-info", "-help" };
-            Dictionary<string, string?> table = ArgumentHelper.InterpretArguments(args);
-            bool verdict1 = ArgumentHelper.IsAlignmentRequest(table);
-            bool verdict2 = ArgumentHelper.IsHelpRequest(table);
-            bool verdict4 = ArgumentHelper.IsAmbiguousRequest(table);
-            Assert.AreEqual(false, verdict1);
-            Assert.AreEqual(false, verdict2);
-            Assert.AreEqual(true, verdict4);
-        }
-
-
         [TestMethod]
         public void CanIdentifyForeignCommands()
         {

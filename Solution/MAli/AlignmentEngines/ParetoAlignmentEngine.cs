@@ -5,6 +5,7 @@ using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
 using MAli.Helpers;
 using MAli.ParetoAlignmentConfigs;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
