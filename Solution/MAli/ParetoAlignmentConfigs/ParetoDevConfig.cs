@@ -63,7 +63,6 @@ namespace MAli.ParetoAlignmentConfigs
             IAlignmentModifier result = new MultiOperatorModifier(modifiers);
 
             return result;
-
         }
 
         public override ParetoIterativeAligner CreateAligner()
