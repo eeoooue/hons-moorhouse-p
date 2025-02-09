@@ -19,6 +19,8 @@ namespace LibFileIO.AlignmentWriters
             Objectives = objectives;
         }
 
+        public MAliScoreWriter(IFitnessFunction objective) : this([objective]) { }
+
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
             List<string> contents = GetFileContents(alignment);
