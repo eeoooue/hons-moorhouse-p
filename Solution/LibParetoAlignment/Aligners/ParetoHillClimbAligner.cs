@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LibParetoAlignment.Aligners
 {
-    internal class ParetoHillClimbAligner : ParetoIterativeAligner
+    public class ParetoHillClimbAligner : ParetoIterativeAligner
     {
         IAlignmentModifier Modifier = new MultiRowStochasticSwapOperator();
 
