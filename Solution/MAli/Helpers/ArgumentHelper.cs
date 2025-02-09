@@ -9,7 +9,6 @@ namespace MAli.Helpers
 {
     public class ArgumentHelper
     {
-
         public UserRequest UnpackInstructions(Dictionary<string, string?> table)
         {
             AlignmentRequest request = new AlignmentRequest();
@@ -45,7 +44,7 @@ namespace MAli.Helpers
             }
             catch
             {
-                return new MalformedRequest();
+                return new MalformedRequest("Error: Failed to unpack alignment request.");
             }
         }
 
