@@ -43,9 +43,8 @@ namespace MAli.Helpers
                     ParetoIterativeAligner aligner = Config.InitialiseAligner(alignment, instructions);
                     AlignIteratively(aligner, instructions);
 
-
-                    // FileHelper.WriteAlignmentTo(aligner.CurrentAlignment!, instructions.OutputPath);
-                    // Console.WriteLine($"Alignment written to destination: '{instructions.OutputPath}'");
+                    List<Alignment> solutions = aligner.CollectTradeoffSolutions();
+                    SaveAlignments(solutions, outputPath);
                 }
                 else
                 {
@@ -55,6 +54,20 @@ namespace MAli.Helpers
             catch (Exception e)
             {
                 ResponseBank.ExplainException(e);
+            }
+        }
+
+
+        public void SaveAlignments(List<Alignment> solutions, string outPath)
+        {
+            Console.WriteLine($"Saving {solutions.Count} alignments:");
+
+            int counter = 0;
+            foreach(Alignment solution in solutions)
+            {
+                string filepath = $"{outPath}_{++counter}";
+                FileHelper.WriteAlignmentTo(solution, filepath);
+                Console.WriteLine($"saved: {filepath}");
             }
         }
 
@@ -72,22 +85,27 @@ namespace MAli.Helpers
                 AlignUntilSecondsDeadline(aligner, instructions);
             }
 
-            //if (DebugMode && aligner is IterativeAligner obj)
-            //{
-            //    DebuggingHelper.ShowDebuggingInfo(obj);
-            //}
+            if (DebugMode)
+            {
+                DebuggingHelper.ShowDebuggingInfo(aligner);
+            }
         }
-
 
         public void AlignUntilIterationLimit(ParetoIterativeAligner aligner, AlignmentInstructions instructions)
         {
             while (aligner.IterationsCompleted < aligner.IterationsLimit)
             {
-                DebuggingHelper.ShowDebuggingInfo(aligner);
+                if (DebugMode)
+                {
+                    DebuggingHelper.ShowDebuggingInfo(aligner);
+                }
                 PerformIterationOfAlignment(aligner, instructions);
             }
 
-            DebuggingHelper.ShowDebuggingInfo(aligner);
+            if (DebugMode)
+            {
+                DebuggingHelper.ShowDebuggingInfo(aligner);
+            }
         }
 
 
@@ -102,8 +120,10 @@ namespace MAli.Helpers
             {
                 PerformIterationOfAlignment(aligner, instructions);
                 time = DateTime.Now;
-                // DebuggingHelper.ProgressContext = GetTimelimitProgress(aligner, start, time, instructions.SecondsLimit);
-                DebuggingHelper.ShowDebuggingInfo(aligner);
+                if (DebugMode)
+                {
+                    DebuggingHelper.ShowDebuggingInfo(aligner);
+                }
 
                 if (time >= deadline)
                 {
