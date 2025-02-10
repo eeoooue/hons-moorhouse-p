@@ -10,7 +10,7 @@ namespace LibAlignment
 {
     public abstract class IterativeAligner
     {
-        public IFitnessFunction Objective { get; protected set; }
+        public IFitnessFunction Objective { get; set; }
 
         public Alignment CurrentAlignment { get { return CurrentBest.Alignment; } }
 
