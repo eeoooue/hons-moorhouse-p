@@ -39,6 +39,8 @@ namespace MAli
 
             SupportedCommands.Add("pareto");
             SupportedCommands.Add("scorefile");
+
+            SupportedCommands.Add("config");
         }
 
         public void AddCommandDescriptions()
@@ -60,6 +62,8 @@ namespace MAli
 
             CommandDescriptions.Add("pareto", "(flag) Output a selection of alignments, approximating the Pareto front");
             CommandDescriptions.Add("scorefile", "(flag) Output a separate .maliscore file containing the alignment's objective scores");
+
+            CommandDescriptions.Add("config", "(flag) Read custom objective function configuration from config.json.");
         }
     }
 }

@@ -16,7 +16,7 @@ using LibBioInfo.ScoringMatrices;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class DevelopmentConfig : AlignmentConfig
+    public class DevelopmentConfig : AlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {
