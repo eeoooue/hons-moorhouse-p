@@ -29,8 +29,12 @@ namespace MAli.Helpers
             {
                 case "WeightedCombination":
                     return ExtractWeightedCombination(element);
+                case "AffineGapPenalties":
+                    return ExtractAffineGapPenalties(element);
                 case "SumOfPairs":
                     return ExtractSumOfPairs(element);
+                case "SumOfPairsWithAffineGapPenalties":
+                    return ExtractSumOfPairsWithAffineGapPenalties(element);
                 case "PercentTCCs":
                     return new TotallyConservedColumnsFitnessFunction();
                 case "PercentNonGaps":
@@ -66,6 +70,23 @@ namespace MAli.Helpers
             string matrixValue = element.GetProperty("Matrix").GetString()!;
             IScoringMatrix matrix = GetMatchingMatrix(matrixValue);
             return new SumOfPairsFitnessFunction(matrix);
+        }
+
+        private IFitnessFunction ExtractAffineGapPenalties(JsonElement element)
+        {
+            double openingCost = element.GetProperty("OpeningCost").GetDouble()!;
+            double nullCost = element.GetProperty("NullCost").GetDouble()!;
+            return new AffineGapPenaltyFitnessFunction(openingCost, nullCost);
+        }
+
+        private IFitnessFunction ExtractSumOfPairsWithAffineGapPenalties(JsonElement element)
+        {
+            string matrixValue = element.GetProperty("Matrix").GetString()!;
+            double openingCost = element.GetProperty("OpeningCost").GetDouble()!;
+            double nullCost = element.GetProperty("NullCost").GetDouble()!;
+
+            IScoringMatrix matrix = GetMatchingMatrix(matrixValue);
+            return new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, openingCost, nullCost);
         }
 
         private IScoringMatrix GetMatchingMatrix(string value)
