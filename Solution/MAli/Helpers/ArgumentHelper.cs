@@ -40,6 +40,8 @@ namespace MAli.Helpers
                     request.Seed = table["seed"]!;
                 }
 
+                request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
+
                 return request;
             }
             catch
