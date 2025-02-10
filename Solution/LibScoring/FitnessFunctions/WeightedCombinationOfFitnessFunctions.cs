@@ -26,9 +26,9 @@ namespace LibScoring.FitnessFunctions
             {
                 IFitnessFunction function = Functions[i];
                 double weight = Weights[i];
-
-                totalScore += function.GetFitness(in alignment);
-                maxPossibleScore += 1.0;
+                double fitness = function.GetFitness(in alignment);
+                totalScore += weight * fitness;
+                maxPossibleScore += weight * 1.0;
             }
 
             return totalScore / maxPossibleScore;
