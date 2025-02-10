@@ -52,7 +52,6 @@ namespace MAli.Helpers
             {
                 IFitnessFunction objective = ExtractObjective(objChild);
                 objectives.Add(objective);
-
             }
 
             List<double> weights = new List<double>();
