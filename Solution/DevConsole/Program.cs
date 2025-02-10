@@ -20,10 +20,12 @@ namespace DevConsole
 
         static void TestingConfigParsing()
         {
-            Sprint05Config baseCfg = new Sprint05Config();
-            UserConfig config = new UserConfig(baseCfg);
+            //Sprint05Config baseCfg = new Sprint05Config();
+            //UserConfig config = new UserConfig(baseCfg);
 
-            config.CreateAligner();
+            //config.CreateAligner();
+
+            RunMAli("-input BB11001 -output test -debug -config");
         }
 
         static void TestingBatchAlignment()
