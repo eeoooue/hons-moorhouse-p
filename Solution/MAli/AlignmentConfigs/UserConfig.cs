@@ -14,28 +14,26 @@ namespace MAli.AlignmentConfigs
 {
     public class CustomConfig : AlignmentConfig
     {
+        // allows the user to provide a customized configuration of objectives
+
+        private AlignmentConfig BaseConfig;
         private JsonDocument Document;
 
-        public CustomConfig(JsonDocument document)
+        public CustomConfig(AlignmentConfig baseConfig, JsonDocument document)
         {
+            BaseConfig = baseConfig;
             Document = document;
         }
 
         public override IterativeAligner CreateAligner()
         {
-            IFitnessFunction objective = ExtractObjective(Document);
-            IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, 1000);
-            aligner.TweakModifier = ExtractModifier(Document);
+            IterativeAligner aligner = BaseConfig.CreateAligner();
+            aligner.Objective = ExtractObjective(Document);
 
             return aligner;
         }
 
         public IFitnessFunction ExtractObjective(JsonDocument document)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IAlignmentModifier ExtractModifier(JsonDocument document)
         {
             throw new NotImplementedException();
         }
