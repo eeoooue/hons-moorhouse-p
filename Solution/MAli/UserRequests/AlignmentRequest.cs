@@ -22,6 +22,8 @@ namespace MAli.UserRequests
         public bool SpecifiesSeed = false;
         public string Seed = "";
 
+        public bool SpecifiesCustomConfig = false;
+
         public AlignmentRequest GetCopy()
         {
             AlignmentRequest result = new AlignmentRequest();
