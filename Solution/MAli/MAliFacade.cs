@@ -20,20 +20,29 @@ namespace MAli
         public AlignmentConfig Config = new Sprint06MatrixComparisonConfig();
         public ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
 
-        public void SetSeed(string value)
+        public void CheckSetSeed(AlignmentRequest request)
         {
-            if (int.TryParse(value, out int seed))
+            if (request.SpecifiesSeed)
             {
-                Randomizer.SetSeed(seed);
+                if (int.TryParse(request.Seed, out int seed))
+                {
+                    Randomizer.SetSeed(seed);
+                }
+            }
+        }
+
+        public void CheckCustomConfig(AlignmentRequest request)
+        {
+            if (request.SpecifiesCustomConfig)
+            {
+                Config = new UserConfig(Config);
             }
         }
 
         public void PerformAlignment(AlignmentRequest request)
         {
-            if (request.SpecifiesSeed)
-            {
-                SetSeed(request.Seed);
-            }
+            CheckSetSeed(request);
+            CheckCustomConfig(request);
 
             IAlignmentEngine engine = ConstructEngine(request);
             engine.PerformAlignment(request);
