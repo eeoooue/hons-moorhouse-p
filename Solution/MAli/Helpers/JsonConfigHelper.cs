@@ -36,10 +36,9 @@ namespace MAli.Helpers
                 case "PercentNonGaps":
                     return new NonGapsFitnessFunction();
                 default:
-                    throw new KeyNotFoundException("Failed to find matching objective function.");
+                    throw new KeyNotFoundException($"Failed to find matching objective function for key: '{name}'.");
             }
         }
-
 
         private IFitnessFunction ExtractWeightedCombination(JsonElement element)
         {
@@ -68,7 +67,6 @@ namespace MAli.Helpers
             IScoringMatrix matrix = GetMatchingMatrix(matrixValue);
             return new SumOfPairsFitnessFunction(matrix);
         }
-
 
         private IScoringMatrix GetMatchingMatrix(string value)
         {
