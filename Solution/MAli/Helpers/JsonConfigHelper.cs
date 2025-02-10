@@ -25,8 +25,6 @@ namespace MAli.Helpers
         {
             string name = element.GetProperty("Name").GetString()!;
 
-            Console.WriteLine($"extracting objective: '{name}'");
-
             if (name == "WeightedCombination")
             {
                 List<IFitnessFunction> objectives = new List<IFitnessFunction>();
