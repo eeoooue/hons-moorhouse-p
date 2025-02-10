@@ -19,13 +19,14 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetVersionA();
+            return GetVersionB();
         }
 
         private IterativeAligner GetVersionA()
         {
             return CreateAligner(new PAM250Matrix());
         }
+
         private IterativeAligner GetVersionB()
         {
             return CreateAligner(new BLOSUM62Matrix());
