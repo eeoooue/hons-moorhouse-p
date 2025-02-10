@@ -25,6 +25,8 @@ namespace MAli.Helpers
         {
             string name = element.GetProperty("Name").GetString()!;
 
+            Console.WriteLine($"extracting objective: '{name}'");
+
             if (name == "WeightedCombination")
             {
                 List<IFitnessFunction> objectives = new List<IFitnessFunction>();
@@ -40,7 +42,7 @@ namespace MAli.Helpers
                 JsonElement weightsElement = element.GetProperty("Weights");
                 foreach (JsonElement weightChild in weightsElement.EnumerateArray())
                 {
-                    weights.Add(weightsElement.GetDouble());
+                    weights.Add(weightChild.GetDouble());
                 }
 
                 return new WeightedCombinationOfFitnessFunctions(objectives, weights);

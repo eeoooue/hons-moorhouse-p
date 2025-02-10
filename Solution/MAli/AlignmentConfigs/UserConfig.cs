@@ -17,14 +17,14 @@ using System.Xml.Linq;
 
 namespace MAli.AlignmentConfigs
 {
-    public class CustomConfig : AlignmentConfig
+    public class UserConfig : AlignmentConfig
     {
         // allows the user to provide a customized configuration of objectives
 
         private AlignmentConfig BaseConfig;
         private JsonConfigHelper Helper = new JsonConfigHelper();
 
-        public CustomConfig(AlignmentConfig baseConfig)
+        public UserConfig(AlignmentConfig baseConfig)
         {
             BaseConfig = baseConfig;
         }

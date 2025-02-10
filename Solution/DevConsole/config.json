@@ -1,0 +1,28 @@
+{
+  "Objective": {
+
+    "Name": "WeightedCombination",
+
+    "Objectives": [
+      {
+        "Name": "SumOfPairs",
+        "Matrix": "PAM250"
+      },
+
+      {
+        "Name": "PercentTCCs"
+      },
+
+      {
+        "Name": "PercentNonGaps"
+      }
+    ],
+
+    "Weights": [
+      1.0,
+      1.0,
+      1.0
+    ]
+
+  }
+}

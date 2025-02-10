@@ -2,6 +2,7 @@
 using LibBioInfo;
 using LibFileIO.AlignmentReaders;
 using MAli;
+using MAli.AlignmentConfigs;
 using MAli.Helpers;
 
 namespace DevConsole
@@ -14,7 +15,15 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingMAli();
+            TestingConfigParsing();
+        }
+
+        static void TestingConfigParsing()
+        {
+            Sprint05Config baseCfg = new Sprint05Config();
+            UserConfig config = new UserConfig(baseCfg);
+
+            config.CreateAligner();
         }
 
         static void TestingBatchAlignment()
