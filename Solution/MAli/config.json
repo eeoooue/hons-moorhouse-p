@@ -4,19 +4,9 @@
     "Name": "WeightedCombination",
 
     "Objectives": {
-
-      "Obj1": {
-        "Name": "SumOfPairs",
-        "Matrix": "PAM250"
-      },
-
-      "Obj2": {
-        "Name": "PercentTCCs"
-      },
-
-      "Obj3": {
-        "Name": "PercentNonGaps"
-      }
+      "Obj1": "SumOfPairs(PAM250)",
+      "Obj2": "PercentTCCs",
+      "Obj3": "PercentNonGaps"
     },
 
     "Weights": {
