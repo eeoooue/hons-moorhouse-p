@@ -8,6 +8,6 @@ namespace MAli.UserRequests
 {
     internal class ParetoAlignmentRequest : AlignmentRequest
     {
-        // TODO: specify size of archive / tradeoff selection
+        public int NumberOfTradeoffs = 10;
     }
 }
