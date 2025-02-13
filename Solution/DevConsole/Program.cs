@@ -15,7 +15,9 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingConfigParsing();
+            RunMAli("-input BB11001 -output test -debug");
+
+            // TestingConfigParsing();
         }
 
         static void TestingConfigParsing()
