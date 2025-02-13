@@ -23,6 +23,7 @@ namespace MAli.UserRequests
         public string Seed = "";
 
         public bool SpecifiesCustomConfig = false;
+        public string ConfigPath = "";
 
         public AlignmentRequest GetCopy()
         {
