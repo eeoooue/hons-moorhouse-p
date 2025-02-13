@@ -35,7 +35,7 @@ namespace MAli
         {
             if (request.SpecifiesCustomConfig)
             {
-                Config = new UserConfig(Config);
+                Config = new UserConfig(Config, request.ConfigPath);
             }
         }
 
