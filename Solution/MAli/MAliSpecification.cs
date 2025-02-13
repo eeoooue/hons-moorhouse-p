@@ -63,7 +63,7 @@ namespace MAli
             CommandDescriptions.Add("pareto", "(flag) Output a selection of alignments, approximating the Pareto front");
             CommandDescriptions.Add("scorefile", "(flag) Output a separate .maliscore file containing the alignment's objective scores");
 
-            CommandDescriptions.Add("config", "(flag) Read custom objective function configuration from config.json.");
+            CommandDescriptions.Add("config", "Specify a custom .json config defining the objective to guide the alignment process.");
         }
     }
 }
