@@ -13,6 +13,20 @@ namespace TestsUnitSuite.LibBioInfo.Metrics
         AffineGapPenalties Metric = new AffineGapPenalties();
 
         [TestMethod]
+        public void CanCorrectlyCalculatePenalty()
+        {
+            string payload = "--A-----A--A-A-";
+            int numGaps = 3;
+            int totalNulls = 8;
+
+            double score = Metric.ScorePayload(payload);
+            double totalOpeningPenalty = numGaps * Metric.OpeningCost;
+            double totalNullPenalty = totalNulls * Metric.NullCost;
+
+            Assert.AreEqual(score, totalOpeningPenalty + totalNullPenalty, 0.0001);
+        }
+
+        [TestMethod]
         public void CanCorrectlyExtractGapSizes()
         {
             string payload = "--A-----A--A-A-";
@@ -26,7 +40,5 @@ namespace TestsUnitSuite.LibBioInfo.Metrics
                 Assert.AreEqual(expected[i], actual[i]);
             }
         }
-
-
     }
 }
