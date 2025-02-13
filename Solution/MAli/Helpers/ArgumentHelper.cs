@@ -41,6 +41,10 @@ namespace MAli.Helpers
                 }
 
                 request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
+                if (request.SpecifiesCustomConfig)
+                {
+                    request.ConfigPath = table["config"]!;
+                }
 
                 return request;
             }
