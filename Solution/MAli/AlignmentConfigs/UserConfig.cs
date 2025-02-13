@@ -23,16 +23,18 @@ namespace MAli.AlignmentConfigs
 
         private AlignmentConfig BaseConfig;
         private JsonConfigHelper Helper = new JsonConfigHelper();
+        private string FilePath;
 
-        public UserConfig(AlignmentConfig baseConfig)
+        public UserConfig(AlignmentConfig baseConfig, string filepath)
         {
             BaseConfig = baseConfig;
+            FilePath = filepath;
         }
 
         public override IterativeAligner CreateAligner()
         {
             IterativeAligner aligner = BaseConfig.CreateAligner();
-            JsonElement root = Helper.ReadConfigFrom("config.json");
+            JsonElement root = Helper.ReadConfigFrom(FilePath);
             JsonElement objElement = root.GetProperty("Objective");
             aligner.Objective = Helper.ExtractObjective(objElement);
 
