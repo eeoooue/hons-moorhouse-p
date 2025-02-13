@@ -79,8 +79,7 @@ namespace LibBioInfo.Metrics
 
         public double ScorePayload(string payload)
         {
-            string trimmed = TrimPayload(payload);
-            List<int> sizes = CollectGapSizes(trimmed);
+            List<int> sizes = CollectGapSizes(payload);
 
             double result = 0;
             foreach (int size in sizes)
@@ -94,6 +93,8 @@ namespace LibBioInfo.Metrics
 
         public List<int> CollectGapSizes(string payload)
         {
+            payload = TrimPayload(payload);
+
             List<int> result = new List<int>();
 
             int gaplength = 0;
