@@ -60,7 +60,7 @@ namespace MAli
             CommandDescriptions.Add("frames", "(flag) Saves the alignment state to a 'frames' subfolder after each iteration.");
             CommandDescriptions.Add("help", "Display the list of supported commands.");
 
-            CommandDescriptions.Add("pareto", "(flag) Output a selection of alignments, approximating the Pareto front");
+            CommandDescriptions.Add("pareto", "Output a selection of (n) tradeoff alignments, approximating the Pareto front");
             CommandDescriptions.Add("scorefile", "(flag) Output a separate .maliscore file containing the alignment's objective scores");
 
             CommandDescriptions.Add("config", "Specify a custom .json config defining the objective to guide the alignment process.");
