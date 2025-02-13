@@ -16,6 +16,8 @@ namespace LibParetoAlignment
 
         public int IterationsLimit { get; set; } = 0;
 
+        public int NumberOfTradeoffs { get; set; } = 10;
+
         public ParetoIterativeAligner(List<IFitnessFunction> objectives)
         {
             Objectives = objectives;

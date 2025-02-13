@@ -31,6 +31,19 @@ namespace MAli.AlignmentEngines
 
         public void PerformAlignment(AlignmentRequest instructions)
         {
+            if (instructions is ParetoAlignmentRequest request)
+            {
+                PerformAlignment(request);
+            }
+            else
+            {
+                throw new Exception("Alignment failed due to incorrect execution pathway (pareto alignment).");
+            }
+        }
+
+
+        private void PerformAlignment(ParetoAlignmentRequest instructions)
+        {
             Instructions = instructions;
             DebuggingHelper = new ParetoDebuggingHelper();
             DebugMode = Instructions.Debug;
@@ -44,6 +57,8 @@ namespace MAli.AlignmentEngines
                 if (alignment.SequencesCanBeAligned())
                 {
                     ParetoIterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
+                    aligner.NumberOfTradeoffs = instructions.NumberOfTradeoffs;
+
                     AlignIteratively(aligner, Instructions);
 
                     List<Alignment> solutions = aligner.CollectTradeoffSolutions();

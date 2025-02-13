@@ -11,46 +11,63 @@ namespace MAli.Helpers
     {
         public UserRequest UnpackInstructions(Dictionary<string, string?> table)
         {
+            try
+            {
+                AlignmentRequest request = InitializeAlignmentRequest(table);
+                EmbellishRequest(request, table);
+                return request;
+            }
+            catch
+            {
+                return new MalformedRequest("Error: Failed to unpack alignment request.");
+            }
+        }
+
+        public AlignmentRequest InitializeAlignmentRequest(Dictionary<string, string?> table)
+        {
             AlignmentRequest request = new AlignmentRequest();
 
             if (table.ContainsKey("pareto"))
             {
                 request = new ParetoAlignmentRequest();
+
+                if (request is ParetoAlignmentRequest paretoReq)
+                {
+                    paretoReq.NumberOfTradeoffs = int.Parse(table["pareto"]!);
+                }
+
             }
             if (table.ContainsKey("batch"))
             {
                 request = new BatchAlignmentRequest();
             }
 
-            try
+            return request;
+        }
+
+
+        public void EmbellishRequest(AlignmentRequest request, Dictionary<string, string?> table)
+        {
+            request.Debug = CommandsIncludeFlag(table, "debug");
+            request.EmitFrames = CommandsIncludeFlag(table, "frames");
+            request.RefineOnly = CommandsIncludeFlag(table, "refine");
+            request.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
+            request.IterationsLimit = UnpackSpecifiedIterations(table);
+            request.SecondsLimit = UnpackSpecifiedSeconds(table);
+            request.InputPath = table["input"]!;
+            request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
+            request.CheckAddDefaultRestrictions();
+
+            request.SpecifiesSeed = CommandsIncludeFlag(table, "seed");
+            if (request.SpecifiesSeed)
             {
-                request.Debug = CommandsIncludeFlag(table, "debug");
-                request.EmitFrames = CommandsIncludeFlag(table, "frames");
-                request.RefineOnly = CommandsIncludeFlag(table, "refine");
-                request.IncludeScoreFile = CommandsIncludeFlag(table, "scorefile");
-                request.IterationsLimit = UnpackSpecifiedIterations(table);
-                request.SecondsLimit = UnpackSpecifiedSeconds(table);
-                request.InputPath = table["input"]!;
-                request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
-                request.CheckAddDefaultRestrictions();
-
-                request.SpecifiesSeed = CommandsIncludeFlag(table, "seed");
-                if (request.SpecifiesSeed)
-                {
-                    request.Seed = table["seed"]!;
-                }
-
-                request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
-                if (request.SpecifiesCustomConfig)
-                {
-                    request.ConfigPath = table["config"]!;
-                }
-
-                return request;
+                request.Seed = table["seed"]!;
             }
-            catch
+
+            request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
+            if (request.SpecifiesCustomConfig)
             {
-                return new MalformedRequest("Error: Failed to unpack alignment request.");
+                request.ConfigPath = table["config"]!;
             }
         }
 

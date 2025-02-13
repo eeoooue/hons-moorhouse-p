@@ -15,8 +15,6 @@ namespace LibParetoAlignment.Aligners
     {
         public IAlignmentModifier Modifier = new MultiRowStochasticSwapOperator();
 
-        public int ArchiveGoalSize = 10;
-
         Queue<TradeoffAlignment> Archive = new Queue<TradeoffAlignment>();
         ParetoHelper ParetoHelper = new ParetoHelper();
 
@@ -78,7 +76,7 @@ namespace LibParetoAlignment.Aligners
 
         private void AddSolutionToArchive(TradeoffAlignment alignment)
         {
-            if (Archive.Count == ArchiveGoalSize)
+            if (Archive.Count == NumberOfTradeoffs)
             {
                 Archive.Dequeue();
             }
@@ -89,7 +87,7 @@ namespace LibParetoAlignment.Aligners
 
         public bool ShouldAddSolutionToArchive(TradeoffAlignment alignment)
         {
-            if (Archive.Count < ArchiveGoalSize)
+            if (Archive.Count < NumberOfTradeoffs)
             {
                 return true;
             }

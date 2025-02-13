@@ -18,7 +18,6 @@ namespace MAli.AlignmentEngines
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        private ArgumentHelper ArgumentHelper = new ArgumentHelper();
         private AlignmentConfig Config;
         private DebuggingHelper DebuggingHelper = new DebuggingHelper();
 
