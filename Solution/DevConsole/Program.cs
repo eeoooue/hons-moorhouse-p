@@ -15,7 +15,7 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingConfigParsing();
+            TestingParetoAlignment();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -38,6 +38,13 @@ namespace DevConsole
             // RunMAli("-input batchin -output batchout -debug -batch");
         }
 
+        static void TestingParetoAlignment()
+        {
+            // RunMAli("-input BB11001 -output test -seconds 100 -debug");
+            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 5");
+            // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
+        }
+
         static void TestingMAli()
         {
             // clustalformat_BB11001.aln
@@ -55,9 +62,6 @@ namespace DevConsole
 
             // RunMAli("-input BB11001 -output test -debug -scorefile");
 
-            // RunMAli("-input BB11001 -output test -seconds 100 -debug");
-            // RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto");
-            // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
 
             // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
 
