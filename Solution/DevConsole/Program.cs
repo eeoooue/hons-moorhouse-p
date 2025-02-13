@@ -15,7 +15,9 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            RunMAli("-input BB11001 -output test -debug");
+            TestingConfigParsing();
+
+            // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
         }
@@ -27,7 +29,7 @@ namespace DevConsole
 
             //config.CreateAligner();
 
-            RunMAli("-input BB11001 -output test -debug -config");
+            RunMAli("-input BB11001 -output test -debug -config config.json");
         }
 
         static void TestingBatchAlignment()
