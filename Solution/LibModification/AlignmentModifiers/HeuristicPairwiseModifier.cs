@@ -20,7 +20,11 @@ namespace LibModification.AlignmentModifiers
             int i;
             int j;
             PickPairOfSequences(alignment, out i, out j);
+            return AlignPairOfSequences(alignment, i, j);
+        }
 
+        public char[,] AlignPairOfSequences(Alignment alignment, int i, int j)
+        {
             string seqAresidues;
             string seqBresidues;
             CollectSequenceResidues(alignment, i, j, out seqAresidues, out seqBresidues);
@@ -59,7 +63,6 @@ namespace LibModification.AlignmentModifiers
                 }
             }
         }
-
 
         public char[,] GetExpandedCanvas(char[,] matrix, int i, string newPayload)
         {

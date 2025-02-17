@@ -13,6 +13,8 @@ namespace LibBioInfo
 
         public char[,] CharacterMatrix;
 
+        public int[] ProgressiveOrder;
+
         public Alignment(List<BioSequence> sequences, bool conserveState=false)
         {
             Sequences = sequences;
@@ -24,9 +26,25 @@ namespace LibBioInfo
             {
                 CharacterMatrix = ConstructInitialAlignmentState(sequences);
             }
+
+            ProgressiveOrder = new int[Height];
+            for(int i=0; i<Height; i++)
+            {
+                ProgressiveOrder[i] = i;
+            }
         }
 
-        public Alignment(Alignment other) : this(other.GetAlignedSequences(), true) { }
+        public Alignment(Alignment other)
+        {
+            Sequences = other.GetAlignedSequences();
+            CharacterMatrix = ConstructConservedAlignmentState(Sequences);
+
+            ProgressiveOrder = new int[Height];
+            for (int i = 0; i < Height; i++)
+            {
+                ProgressiveOrder[i] = other.ProgressiveOrder[i];
+            }
+        }
 
 
         public char[,] ConstructConservedAlignmentState(List<BioSequence> sequences)

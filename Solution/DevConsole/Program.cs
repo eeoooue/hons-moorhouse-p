@@ -15,7 +15,7 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingParetoAlignment();
+            TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
