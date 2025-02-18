@@ -24,6 +24,48 @@ namespace LibModification.Helpers
             return sb.ToString();
         }
 
+
+
+        public char[,] SprinkleEmptyColumnsIntoAlignment(Alignment alignment, int n)
+        {
+            List<int> insertions = new List<int>();
+
+            for(int i=0; i<n; i++)
+            {
+                int position = Randomizer.Random.Next(alignment.Width);
+                insertions.Add(position);
+            }
+            
+
+        }
+
+        public List<int> CreateColumnInsertionRecipe(Alignment alignment, List<int> insertions)
+        {
+            int n = alignment.Width;
+            int expected = alignment.Width + insertions.Count;
+
+            List<int> result = new List<int>();
+
+            int currentPosition = 0;
+            foreach(int insertion in insertions)
+            {
+                while (currentPosition < insertion)
+                {
+                    result.Add(currentPosition++);
+                }
+                result.Add(-1);
+            }
+            
+            if (result.Count != expected)
+            {
+                throw new NotImplementedException("Implementation is incorrect");
+            }
+
+            return result;
+        }
+
+
+
         public string GetPayloadWithGapInserted(string payload, int gapWidth, int position)
         {
             string before = payload.Substring(0, position);
