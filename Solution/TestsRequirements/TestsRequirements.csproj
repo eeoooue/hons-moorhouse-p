@@ -13,6 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LibAlignment\LibAlignment.csproj" />
+    <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
+    <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
+    <ProjectReference Include="..\LibModification\LibModification.csproj" />
+    <ProjectReference Include="..\LibParetoAlignment\LibParetoAlignment.csproj" />
+    <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
+    <ProjectReference Include="..\MAli\MAli.csproj" />
+    <ProjectReference Include="..\TestsHarness\TestsHarness.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
