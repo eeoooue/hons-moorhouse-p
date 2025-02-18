@@ -10,7 +10,7 @@ namespace TestsRequirements.Obj2
     public class Req2x01
     {
         [TestMethod]
-        public void Stuff()
+        public void EmploysAMetaheuristicAlgorithm()
         {
             throw new NotImplementedException();
         }

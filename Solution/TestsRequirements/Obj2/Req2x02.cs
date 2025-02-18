@@ -10,7 +10,7 @@ namespace TestsRequirements.Obj2
     public class Req2x02
     {
         [TestMethod]
-        public void Stuff()
+        public void DemonstratesSingleStateApproachForMSA()
         {
             throw new NotImplementedException();
         }
