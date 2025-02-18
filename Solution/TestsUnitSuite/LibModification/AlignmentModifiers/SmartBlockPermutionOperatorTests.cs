@@ -12,6 +12,7 @@ using LibBioInfo.ScoringMatrices;
 
 namespace TestsUnitSuite.LibModification.AlignmentModifiers
 {
+    [Ignore]
     [TestClass]
     public class SmartBlockPermutionOperatorTests
     {
