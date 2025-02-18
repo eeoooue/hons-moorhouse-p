@@ -20,6 +20,10 @@ namespace LibModification.Helpers
             }
         }
 
+        public void RemoveEmptyColumns(Alignment alignment)
+        {
+            alignment.CharacterMatrix = RemoveEmptyColumns(in alignment.CharacterMatrix);
+        }
 
         public List<string> CollectResidueChains(in char[,] matrix)
         {
