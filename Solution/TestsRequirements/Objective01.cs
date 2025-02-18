@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MAli;
+using MAli.AlignmentEngines;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +14,21 @@ namespace TestsRequirements
         /// <summary>
         /// Given sequences to align, produces a valid solution - independent of quality.
         /// </summary>
-        [TestMethod]
-        public void Req1x01()
+        [DataTestMethod]
+        [DataRow("", "")]
+        public void Req1x01(string inputPath, string outputPath)
         {
             throw new NotImplementedException();
+
+            MAliInterface mali = new MAliInterface();
+
+            string command = $"-input {inputPath} -output {outputPath}";
+            string[] args = command.Split(' ');
+            mali.ProcessArguments(args);
+
+            bool alignmentProduced = File.Exists(outputPath);
+
+            Assert.IsTrue(alignmentProduced);
         }
 
         /// <summary>
@@ -30,10 +43,22 @@ namespace TestsRequirements
         /// <summary>
         /// Aligns sets of 6 typical protein sequences within 10 seconds on a university machine.
         /// </summary>
-        [TestMethod]
-        public void Req1x03()
+        [DataTestMethod]
+        [DataRow("", "")]
+        [Timeout(10000)]
+        public void Req1x03(string inputPath, string outputPath)
         {
             throw new NotImplementedException();
+
+            MAliInterface mali = new MAliInterface();
+
+            string command = $"-input {inputPath} -output {outputPath}";
+            string[] args = command.Split(' ');
+            mali.ProcessArguments(args);
+
+            bool alignmentProduced = File.Exists(outputPath);
+
+            Assert.IsTrue(alignmentProduced);
         }
     }
 }
