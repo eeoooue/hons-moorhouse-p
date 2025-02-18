@@ -105,8 +105,9 @@ namespace LibModification.AlignmentModifiers
             bool[] blockBitmask = ConvertBlockToBitmask(originalBlock);
 
             List<bool[]> permutations = GetValidBitmaskPermutations(blockBitmask);
+            permutations.Remove(blockBitmask);
 
-            double bestScore = ScoreSection(originalBlock, tables);
+            double bestScore = 0.0;
             char[] bestSection = originalBlock;
             foreach (bool[] option in permutations)
             {
