@@ -9,13 +9,18 @@ namespace TestsRequirements
     [TestClass]
     public class Objective06
     {
+        /// <summary>
+        /// Supports batch alignment of a series of sets of sequences from a directory.
+        /// </summary>
         [TestMethod]
         public void Req6x01()
         {
             throw new NotImplementedException();
         }
 
-
+        /// <summary>
+        /// Interface displays progress on the current alignment task - in terms of time or iterations.
+        /// </summary>
         [TestMethod]
         public void Req6x02()
         {
