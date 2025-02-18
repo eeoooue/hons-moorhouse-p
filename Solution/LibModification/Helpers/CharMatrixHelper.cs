@@ -25,6 +25,97 @@ namespace LibModification.Helpers
             alignment.CharacterMatrix = RemoveEmptyColumns(in alignment.CharacterMatrix);
         }
 
+        public void SprinkleEmptyColumnsIntoAlignment(Alignment alignment, int n)
+        {
+            if (n == 0)
+            {
+                return;
+            }
+
+            List<int> insertions = new List<int>();
+            for (int i = 0; i < n; i++)
+            {
+                int position = Randomizer.Random.Next(alignment.Width);
+                insertions.Add(position);
+            }
+            insertions.Sort();
+
+            List<int> recipe = CreateColumnInsertionRecipe(alignment, insertions);
+
+            alignment.CharacterMatrix = InsertEmptyColumns(alignment, recipe);
+        }
+
+
+        public char[,] InsertEmptyColumns(Alignment alignment, List<int> recipe)
+        {
+            return InsertEmptyColumns(alignment.CharacterMatrix, recipe);
+        }
+
+        public char[,] InsertEmptyColumns(char[,] alignment, List<int> recipe)
+        {
+            int m = alignment.GetLength(0);
+            int n = recipe.Count;
+            char[,] result = new char[m, n];
+
+            for(int j=0; j<n; j++)
+            {
+                if (recipe[j] == -1)
+                {
+                    FillColumnWithGaps(result, j);
+                }
+                else
+                {
+                    CopyColumnFromSourceToDestination(alignment, recipe[j], result, j);
+                }
+            }
+
+            return result;
+        }
+
+        public void CopyColumnFromSourceToDestination(char[,] source, int srcIndex, char[,] destination, int destIndex)
+        {
+            int m = source.GetLength(0);
+
+            for(int i=0; i<m; i++)
+            {
+                destination[i, destIndex] = source[i, srcIndex];
+            }
+        }
+
+        public void FillColumnWithGaps(char[,] matrix, int j)
+        {
+            int m = matrix.GetLength(0);
+            for (int i = 0; i < m; i++)
+            {
+                matrix[i, j] = '-';
+            }
+        }
+
+        public List<int> CreateColumnInsertionRecipe(Alignment alignment, List<int> insertions)
+        {
+            int n = alignment.Width;
+            int expected = alignment.Width + insertions.Count;
+
+            List<int> result = new List<int>();
+
+            int currentPosition = 0;
+            foreach (int insertion in insertions)
+            {
+                while (currentPosition < insertion)
+                {
+                    result.Add(currentPosition++);
+                }
+                result.Add(-1);
+            }
+
+            while (currentPosition < alignment.Width)
+            {
+                result.Add(currentPosition++);
+            }
+
+            return result;
+        }
+
         public List<string> CollectResidueChains(in char[,] matrix)
         {
             int m = matrix.GetLength(0);
