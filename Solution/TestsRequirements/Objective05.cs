@@ -44,7 +44,6 @@ namespace TestsRequirements
             Assert.IsTrue(tradeoffs.Count > 1);
         }
 
-
         private void InitializeAlignerWithSequences(ParetoIterativeAligner aligner)
         {
             Alignment alignment = ExampleAlignments.GetExampleA();
