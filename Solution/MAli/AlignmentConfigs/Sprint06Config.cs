@@ -31,6 +31,8 @@ namespace MAli.AlignmentConfigs
             return objective;
         }
 
+
+
         private IterativeAligner GetNewExperimentalConfig()
         {
             IFitnessFunction objective = GetObjective();
@@ -45,6 +47,8 @@ namespace MAli.AlignmentConfigs
                 new GapInserter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
+                new SmartBlockPermutationOperator(new PAM250Matrix()),
+                new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             aligner.TweakModifier = new MultiOperatorModifier(modifiers);
