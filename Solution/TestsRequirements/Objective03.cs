@@ -21,5 +21,19 @@ namespace TestsRequirements
         {
             throw new NotImplementedException();
         }
+
+
+        [TestMethod]
+        public void Req3x03()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [TestMethod]
+        public void Req3x04()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
