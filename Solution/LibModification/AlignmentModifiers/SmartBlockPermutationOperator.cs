@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibModification.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace LibModification.AlignmentModifiers
     {
         private Bioinformatics Bioinformatics = new Bioinformatics();
         private IScoringMatrix Matrix;
+        private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
         public int MinBlockLength = 4;
         public int MaxBlockLength = 8;
@@ -35,6 +37,8 @@ namespace LibModification.AlignmentModifiers
             {
                 PermuteBlockAt(alignment, n, i, j);
             }
+
+            CharMatrixHelper.RemoveEmptyColumns(alignment);
         }
 
         public bool SelectBlockPosition(Alignment alignment, out int n, out int i, out int j)
