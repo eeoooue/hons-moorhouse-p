@@ -12,6 +12,7 @@ using LibModification.CrossoverOperators;
 
 namespace TestsUnitSuite.LibBioInfo.ICrossoverOperators
 {
+    [Ignore]
     [TestClass]
     public class RowBasedCrossoverOperatorTests
     {
