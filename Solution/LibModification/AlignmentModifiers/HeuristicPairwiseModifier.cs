@@ -17,6 +17,12 @@ namespace LibModification.AlignmentModifiers
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
+            if (Randomizer.CoinFlip())
+            {
+                int extent = Randomizer.Random.Next(alignment.Width);
+                CharMatrixHelper.SprinkleEmptyColumnsIntoAlignment(alignment, extent);
+            }
+
             int i;
             int j;
             PickPairOfSequences(alignment, out i, out j);

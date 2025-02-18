@@ -25,6 +25,12 @@ namespace LibModification.AlignmentModifiers
 
         public void ModifyAlignment(Alignment alignment)
         {
+            if (Randomizer.CoinFlip())
+            {
+                int extent = Randomizer.Random.Next(alignment.Width);
+                CharMatrixHelper.SprinkleEmptyColumnsIntoAlignment(alignment, extent);
+            }
+
             int n;
             int i;
             int j;
