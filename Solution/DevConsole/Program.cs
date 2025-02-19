@@ -1,6 +1,8 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
+using LibFileIO;
 using LibFileIO.AlignmentReaders;
+using LibFileIO.AlignmentWriters;
 using MAli;
 using MAli.AlignmentConfigs;
 using MAli.Helpers;
@@ -13,6 +15,7 @@ namespace DevConsole
         private static MAliInterface Interface = new MAliInterface();
         private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
 
+
         static void Main(string[] args)
         {
             TestingMAli();
@@ -20,6 +23,25 @@ namespace DevConsole
             // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
+        }
+
+        static void TestingClustalWriter()
+        {
+            FileHelper helper = new FileHelper();
+            Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
+
+            ClustalWriter writer = new ClustalWriter();
+            List<string> lines = writer.CreateAlignmentLines(alignment);
+
+            foreach(string line in lines)
+            {
+                Console.WriteLine(line);
+            }
+            writer.WriteAlignmentTo(alignment, "clustalaln");
+
+            FileHelper stuff = new FileHelper();
+
+            Alignment check = stuff.ReadAlignmentFrom("clustalaln.aln");
         }
 
         static void TestingConfigParsing()
@@ -53,7 +75,7 @@ namespace DevConsole
 
             // RunMAli("-help");
 
-            RunMAli("-input BB11001 -output test -debug");
+            RunMAli("-input BB11001 -output test -debug -format clustal");
 
 
             // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");

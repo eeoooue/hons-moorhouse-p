@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibFileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,8 @@ namespace MAli.UserRequests
         public bool SpecifiesCustomConfig = false;
         public string ConfigPath = "";
 
+        public AlignmentOutputFormat OutputFormat = AlignmentOutputFormat.FASTA;
+
         public AlignmentRequest GetCopy()
         {
             AlignmentRequest result = new AlignmentRequest();
@@ -43,7 +46,26 @@ namespace MAli.UserRequests
             result.SpecifiesSeed = SpecifiesSeed;
             result.Seed = Seed;
 
+            result.SpecifiesCustomConfig = SpecifiesCustomConfig;
+            result.ConfigPath = ConfigPath;
+
+            result.OutputFormat = OutputFormat;
+
             return result;
+        }
+
+        public void SetOutputFormat(string format)
+        {
+            switch (format)
+            {
+                case "clustal":
+                case "clustalw":
+                    OutputFormat = AlignmentOutputFormat.ClustalW;
+                    return;
+                default:
+                    OutputFormat = AlignmentOutputFormat.FASTA;
+                    return;
+            }
         }
 
         public string GetContextString()

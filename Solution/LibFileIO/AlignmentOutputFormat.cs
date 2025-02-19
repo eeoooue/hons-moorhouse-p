@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.UserRequests
+namespace LibFileIO
 {
-    public class ParetoAlignmentRequest : AlignmentRequest
+    public enum AlignmentOutputFormat
     {
-        public int NumberOfTradeoffs = 10;
+        ClustalW,
+        FASTA,
     }
 }

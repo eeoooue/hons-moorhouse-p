@@ -56,8 +56,8 @@ namespace TestsRequirements
         /// Supports multiple bioinformatics file formats for outputting alignments.
         /// </summary>
         [DataTestMethod]
-        [DataRow("BB11001", "fasta", ".faa")]
-        [DataRow("BB11001", "clustal", ".aln")]
+        [DataRow("BB11001", "fasta", "faa")]
+        [DataRow("BB11001", "clustal", "aln")]
         public void Req3x04(string inputPath, string format, string extension)
         {
             string outputPath = "Req3x04";

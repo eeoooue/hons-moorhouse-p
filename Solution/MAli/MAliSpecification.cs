@@ -25,6 +25,7 @@ namespace MAli
             SupportedCommands.Add("output");
             SupportedCommands.Add("seed");
             SupportedCommands.Add("tag");
+            SupportedCommands.Add("format");
 
             SupportedCommands.Add("iterations");
             SupportedCommands.Add("seconds");
@@ -49,6 +50,7 @@ namespace MAli
             CommandDescriptions.Add("output", "Specify the output file path for the alignment of sequences.");
             CommandDescriptions.Add("seed", "Specify a seed value for reproducible results.");
             CommandDescriptions.Add("tag", "Specify a suffix to be included in the output filename.");
+            CommandDescriptions.Add("format", "Specify the file format to use for the output alignment. ('fasta' or 'clustal')");
 
             CommandDescriptions.Add("iterations", "Specify the number of iterations of alignment to be performed.");
             CommandDescriptions.Add("seconds", "Specify the number of seconds of alignment to be performed.");

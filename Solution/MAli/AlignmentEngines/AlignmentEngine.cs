@@ -45,7 +45,7 @@ namespace MAli.AlignmentEngines
                 {
                     IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
                     AlignIteratively(aligner, Instructions);
-                    SaveAlignment(aligner.CurrentAlignment!, Instructions.OutputPath);
+                    SaveAlignment(instructions, aligner.CurrentAlignment!, Instructions.OutputPath);
                     CheckSaveScorefile(aligner, aligner.CurrentAlignment!, Instructions);
                 }
                 else
@@ -59,9 +59,9 @@ namespace MAli.AlignmentEngines
             }
         }
 
-        public void SaveAlignment(Alignment alignment, string filepath)
+        public void SaveAlignment(in AlignmentRequest request, Alignment alignment, string filepath)
         {
-            FileHelper.WriteAlignmentTo(alignment, filepath);
+            FileHelper.WriteAlignment(alignment, request.OutputFormat, filepath);
         }
 
         public void CheckSaveScorefile(IterativeAligner aligner, Alignment alignment, AlignmentRequest instructions)
