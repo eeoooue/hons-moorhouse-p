@@ -15,10 +15,18 @@ namespace TestsRequirements
         /// <summary>
         /// Supports batch alignment of a series of sets of sequences from a directory.
         /// </summary>
-        [TestMethod]
-        public void Req6x01()
+        [DataTestMethod]
+        [DataRow("batchin", "batchout")]
+        public void Req6x01(string inputDirPath, string outputDirPath)
         {
-            throw new NotImplementedException();
+            Directory.CreateDirectory(outputDirPath);
+            RunMAli($"-input {inputDirPath} -output {outputDirPath} -iterations 1 -batch");
+
+            string[] inputs = Directory.GetFiles(inputDirPath);
+            Assert.IsTrue(inputs.Length > 1);
+
+            string[] outputs = Directory.GetFiles(outputDirPath);
+            Assert.IsTrue(inputs.Length == outputs.Length);
         }
 
         /// <summary>
@@ -29,6 +37,12 @@ namespace TestsRequirements
         public void Req6x02()
         {
             throw new NotImplementedException("Cannot automate tests for this requirement.");
+        }
+
+        private void RunMAli(string command)
+        {
+            string[] args = command.Split(' ');
+            MAli.ProcessArguments(args);
         }
     }
 }

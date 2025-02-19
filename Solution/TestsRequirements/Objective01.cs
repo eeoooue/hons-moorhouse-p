@@ -19,60 +19,56 @@ namespace TestsRequirements
     [TestClass]
     public class Objective01
     {
-
-        private ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
-        private AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
+        private MAliInterface MAli = new MAliInterface();
 
         /// <summary>
         /// Given sequences to align, produces a valid solution - independent of quality.
         /// </summary>
         [DataTestMethod]
-        public void Req1x01()
+        [DataRow("BB11001")]
+        public void Req1x01(string inputPath)
         {
-            IterativeAligner aligner = GetAligner();
-            Alignment original = ExampleAlignments.GetExampleA();
-            List<BioSequence> sequences = original.Sequences;
-            Alignment alignment = aligner.AlignSequences(sequences);
-            AlignmentConservation.AssertAlignmentsAreConserved(alignment, original);
+            string outputPath = "Req1x01";
+            RunMAli($"-input {inputPath} -output {outputPath} -iterations 10");
+            bool producedFasta = File.Exists($"{outputPath}.faa");
+            Assert.IsTrue(producedFasta);
         }
 
         /// <summary>
         /// Employs a heuristic to estimate a number of iterations needed to align each set of sequences.
         /// </summary>
         [TestMethod]
-        public void Req1x02()
+        [DataRow("BB11001")]
+        [DataRow("BB11002")]
+        [DataRow("BB11003")]
+        [Timeout(8000)]
+        public void Req1x02(string inputPath)
         {
-            throw new NotImplementedException();
+            string outputPath = "Req1x02";
+            RunMAli($"-input {inputPath} -output {outputPath}");
+            bool producedFasta = File.Exists($"{outputPath}.faa");
+            Assert.IsTrue(producedFasta);
         }
 
         /// <summary>
         /// Aligns sets of 6 typical protein sequences within 10 seconds on a university machine.
         /// </summary>
+        [TestMethod]
         [DataTestMethod]
+        [DataRow("sequences_x06")]
         [Timeout(10000)]
-        public void Req1x03()
+        public void Req1x03(string inputPath)
         {
-            IterativeAligner aligner = GetAligner();
-            List<BioSequence> sequences = GetTypicalSequences();
-            Assert.IsTrue(sequences.Count == 6);
-            Alignment alignment = aligner.AlignSequences(sequences);
+            string outputPath = "Req1x03";
+            RunMAli($"-input {inputPath} -output {outputPath}");
+            bool producedFasta = File.Exists($"{outputPath}.faa");
+            Assert.IsTrue(producedFasta);
         }
 
-        private IterativeAligner GetAligner()
+        private void RunMAli(string command)
         {
-            IScoringMatrix matrix = new PAM250Matrix();
-            IFitnessFunction objective = new SumOfPairsFitnessFunction(matrix);
-            IterativeAligner aligner = new IteratedLocalSearchAligner(objective, 100);
-
-            return aligner;
-        }
-
-        private List<BioSequence> GetTypicalSequences()
-        {
-            Alignment original = ExampleAlignments.GetExampleB();
-            List<BioSequence> sequences = original.Sequences;
-
-            return sequences;
+            string[] args = command.Split(' ');
+            MAli.ProcessArguments(args);
         }
     }
 }

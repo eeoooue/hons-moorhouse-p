@@ -28,63 +28,70 @@ namespace TestsRequirements
         /// Can align structural benchmarking test cases containing as many as 30 sequences.
         /// </summary>
         [DataTestMethod]
-        [DataRow("", "")]
-        public void Req4x01(string inputPath, string outputPath)
+        [DataRow("sequences_x30")] // TODO: Create file
+        public void Req4x01(string inputPath)
         {
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
             Assert.IsTrue(sequences.Count >= 30);
 
-            string command = "";
-            string[] args = command.Split(' ');
-            MAli.ProcessArguments(args);
-
-            bool producedAlignment = File.Exists(outputPath);
-            Assert.IsTrue(producedAlignment);
-
-            Alignment alignment = FileHelper.ReadAlignmentFrom(outputPath);
+            string outputPath = "Req4x01";
+            RunMAli($"-input {inputPath} -output {outputPath} -iterations 10");
+            AssertAlignmentExists($"{outputPath}.faa");
         }
 
         /// <summary>
         /// Can align a structural benchmarking test case of at least 20 sequences within 60 seconds.
         /// </summary>
         [TestMethod]
-        [DataRow("", "")]
+        [DataRow("sequences_x20")] // TODO: Create file
         [Timeout(60000)]
-        public void Req4x02(string inputPath, string outputPath)
+        public void Req4x02(string inputPath)
         {
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
             Assert.IsTrue(sequences.Count >= 20);
 
-            string command = "";
-            string[] args = command.Split(' ');
-            MAli.ProcessArguments(args);
-
-            bool producedAlignment = File.Exists(outputPath);
-            Assert.IsTrue(producedAlignment);
-
-            Alignment alignment = FileHelper.ReadAlignmentFrom(outputPath);
+            string outputPath = "Req4x02";
+            RunMAli($"-input {inputPath} -output {outputPath}");
+            AssertAlignmentExists($"{outputPath}.faa");
         }
 
         /// <summary>
         /// Can specify a randomness seed to support reproduction of results under the same settings.
         /// </summary>
         [DataTestMethod]
-        [DataRow("", "", 17)]
-        [DataRow("", "", 56)]
-        public void Req4x03(string outputPath1, string outputPath2, int seed)
+        [DataRow("BB11001", 17)]
+        [DataRow("BB11002", 56)]
+        public void Req4x03(string inputPath, int seed)
         {
-            string command1 = "";
-            string[] args1 = command1.Split(' ');
-            MAli.ProcessArguments(args1);
-            Alignment alignment1 = FileHelper.ReadAlignmentFrom(outputPath1);
+            string outputPath1 = $"Req4x03_1_seed{seed}";
+            RunMAli($"-input {inputPath} -output {outputPath1} -seed {seed} -iterations 10");
+            Alignment alignment1 = ReadAlignmentFrom($"{outputPath1}.faa");
 
-            string command2 = "";
-            string[] args2 = command2.Split(' ');
-            MAli.ProcessArguments(args2);
-            Alignment alignment2 = FileHelper.ReadAlignmentFrom(outputPath2);
+            string outputPath2 = $"Req4x03_2_seed{seed}";
+            RunMAli($"-input {inputPath} -output {outputPath2} -seed {seed} -iterations 10");
+            Alignment alignment2 = ReadAlignmentFrom($"{outputPath2}.faa");
 
             bool alignmentsMatch = AlignmentEquality.AlignmentsMatch(alignment1, alignment2);
             Assert.IsTrue(alignmentsMatch);
+        }
+
+        private void AssertAlignmentExists(string outputPath)
+        {
+            Alignment alignment = ReadAlignmentFrom(outputPath);
+            Assert.IsTrue(alignment is Alignment);
+        }
+
+        private Alignment ReadAlignmentFrom(string outputPath)
+        {
+            bool fileExists = File.Exists(outputPath);
+            Assert.IsTrue(fileExists);
+            return FileHelper.ReadAlignmentFrom(outputPath);
+        }
+
+        private void RunMAli(string command)
+        {
+            string[] args = command.Split(' ');
+            MAli.ProcessArguments(args);
         }
     }
 }
