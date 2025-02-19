@@ -1,6 +1,8 @@
 ﻿using LibAlignment.Helpers;
 using LibBioInfo;
+using LibFileIO;
 using LibFileIO.AlignmentReaders;
+using LibFileIO.AlignmentWriters;
 using MAli;
 using MAli.AlignmentConfigs;
 using MAli.Helpers;
@@ -13,13 +15,29 @@ namespace DevConsole
         private static MAliInterface Interface = new MAliInterface();
         private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
 
+
         static void Main(string[] args)
         {
-            TestingMAli();
+            TestingClustalWriter();
+            // TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
+        }
+
+        static void TestingClustalWriter()
+        {
+            FileHelper helper = new FileHelper();
+            Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
+
+            ClustalWriter writer = new ClustalWriter();
+            List<string> lines = writer.CreateAlignmentLines(alignment);
+
+            foreach(string line in lines)
+            {
+                Console.WriteLine(line);
+            }
         }
 
         static void TestingConfigParsing()
