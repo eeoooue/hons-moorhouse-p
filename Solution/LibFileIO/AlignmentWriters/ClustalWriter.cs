@@ -20,6 +20,8 @@ namespace LibFileIO.AlignmentWriters
             Console.WriteLine($"Alignment written to destination: '{destination}'");
         }
 
+        
+
         public List<string> CreateAlignmentLines(Alignment alignment)
         {
             List<string> result = new List<string>();
@@ -42,6 +44,7 @@ namespace LibFileIO.AlignmentWriters
             List<string> result = new List<string>()
             {
                 "CLUSTAL W (1.82) multiple sequence alignment",
+                "",
                 "",
             };
 
@@ -71,15 +74,17 @@ namespace LibFileIO.AlignmentWriters
             char[,] blockMatrix = ExtractBlockMatrix(alignment, startPoint);
             char[] conservation = ComputeConservation(blockMatrix);
 
+            List<string> margin = CollectPaddedSequenceIdentifiers(alignment);
             List<string> result = new List<string>();
             for(int i=0; i<alignment.Height; i++)
             {
                 string payload = ExtractRowOfMatrix(blockMatrix, i);
-                result.Add(payload);
+                result.Add(margin[i] + payload);
             }
 
+            string whitespace = GetWhitespace(margin[0].Length);
             string markers = ConvertArrToString(conservation);
-            result.Add(markers);
+            result.Add(whitespace + markers);
 
             return result;
         }
@@ -112,7 +117,7 @@ namespace LibFileIO.AlignmentWriters
         public char[,] ExtractBlockMatrix(Alignment alignment, int startPoint)
         {
             int m = alignment.Height;
-            int n = Math.Min(BlockWidth, 1 + alignment.Width - startPoint); // TODO: check this
+            int n = Math.Min(BlockWidth, alignment.Width - startPoint); // TODO: check this
 
             char[,] result = new char[m, n];
 
@@ -126,6 +131,8 @@ namespace LibFileIO.AlignmentWriters
 
             return result;
         }
+
+        #region Column Conservation
 
         public char[] ComputeConservation(char[,] matrix)
         {
@@ -153,5 +160,62 @@ namespace LibFileIO.AlignmentWriters
 
             return '*';
         }
+
+        #endregion
+
+
+        #region Identifier Margin
+
+        public List<string> CollectPaddedSequenceIdentifiers(Alignment alignment)
+        {
+            int maxLength = GetMaxSequenceIdentifierLength(alignment);
+            int padding = 3;
+            int goal = maxLength + padding;
+
+            List<string> result = new List<string>();
+            foreach (BioSequence sequence in alignment.Sequences)
+            {
+                string identifier = GetPaddedIdentifier(sequence.Identifier, goal);
+                result.Add(identifier);
+            }
+
+            return result;
+        }
+
+        public int GetMaxSequenceIdentifierLength(Alignment alignment)
+        {
+            int maxLength = 0;
+            foreach (BioSequence sequence in alignment.Sequences)
+            {
+                string identifier = sequence.Identifier;
+                maxLength = Math.Max(maxLength, identifier.Length);
+            }
+
+            return maxLength;
+        }
+
+        public string GetPaddedIdentifier(string identifier, int lengthGoal)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(identifier);
+            while (sb.Length < lengthGoal)
+            {
+                sb.Append(' ');
+            }
+
+            return sb.ToString();
+        }
+
+        public string GetWhitespace(int n)
+        {
+            StringBuilder sb = new StringBuilder();
+            while (sb.Length < n)
+            {
+                sb.Append(' ');
+            }
+            return sb.ToString();
+        }
+
+        #endregion
     }
 }
