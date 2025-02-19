@@ -1,25 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest" Version="3.6.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LibAlignment\LibAlignment.csproj" />
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
     <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
+    <ProjectReference Include="..\LibModification\LibModification.csproj" />
+    <ProjectReference Include="..\LibParetoAlignment\LibParetoAlignment.csproj" />
     <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
     <ProjectReference Include="..\MAli\MAli.csproj" />
     <ProjectReference Include="..\TestsHarness\TestsHarness.csproj" />
@@ -30,13 +28,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="1axkA_2nlrA">
+    <None Update="1a0cA_1ubpC">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="1eagA_1smrA">
+    <None Update="20_sequences">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="1ggxA_1h4uA">
+    <None Update="30_sequences">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="batchin\BB11001">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="batchin\BB11002">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="batchin\BB11003">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="BB11001">
@@ -48,10 +55,9 @@
     <None Update="BB11003">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="LibScoring\" />
+    <None Update="clustalformat_BB11001.aln">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

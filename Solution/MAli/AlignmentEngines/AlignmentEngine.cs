@@ -62,7 +62,6 @@ namespace MAli.AlignmentEngines
         public void SaveAlignment(Alignment alignment, string filepath)
         {
             FileHelper.WriteAlignmentTo(alignment, filepath);
-            Console.WriteLine($"Alignment written to destination: '{filepath}'");
         }
 
         public void CheckSaveScorefile(IterativeAligner aligner, Alignment alignment, AlignmentRequest instructions)
@@ -74,7 +73,6 @@ namespace MAli.AlignmentEngines
 
             MAliScoreWriter writer = new MAliScoreWriter(aligner.Objective);
             writer.WriteAlignmentTo(alignment, instructions.OutputPath);
-            Console.WriteLine("Saved .maliscore file.");
         }
 
         public void AlignIteratively(IterativeAligner aligner, AlignmentRequest instructions)
