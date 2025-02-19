@@ -46,6 +46,7 @@ namespace MAli
 
             IAlignmentEngine engine = ConstructEngine(request);
             engine.PerformAlignment(request);
+            Console.WriteLine();
         }
 
         private IAlignmentEngine ConstructEngine(AlignmentRequest request)
