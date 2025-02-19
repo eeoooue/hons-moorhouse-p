@@ -36,5 +36,10 @@ namespace LibScoring.FitnessFunctions
         {
             return -1 * Penalties.GetMaximumPossiblePenalty(alignment);
         }
+
+        public override string GetAbbreviation()
+        {
+            return "Inv.AffineGaps";
+        }
     }
 }

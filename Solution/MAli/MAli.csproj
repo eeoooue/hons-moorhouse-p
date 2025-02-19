@@ -11,11 +11,15 @@
     <ProjectReference Include="..\LibAlignment\LibAlignment.csproj" />
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
     <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
+    <ProjectReference Include="..\LibParetoAlignment\LibParetoAlignment.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="BB11002">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

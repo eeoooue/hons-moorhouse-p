@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibFileIO;
 using MAli;
+using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -23,9 +24,6 @@ namespace TestsUnitSuite.MAli
         AlignmentConservation AlignmentConservation = Harness.AlignmentConservation;
         AlignmentEquality AlignmentEquality = Harness.AlignmentEquality;
 
-
-
-
         #region Testing high-level behaviour
 
         [DataTestMethod]
@@ -34,10 +32,12 @@ namespace TestsUnitSuite.MAli
 
         public void ProducesValidAlignment(string inputFile, string outputFile)
         {
-            Dictionary<string, string?> table = new Dictionary<string, string?>();
-            table["iterations"] = "3";
+            AlignmentRequest instructions = new AlignmentRequest();
+            instructions.InputPath = inputFile;
+            instructions.OutputPath = outputFile;
+            instructions.IterationsLimit = 3;
 
-            MAliFacade.PerformAlignment(inputFile, outputFile, table);
+            MAliFacade.PerformAlignment(instructions);
 
             List<BioSequence> original = FileHelper.ReadSequencesFrom(inputFile);
             List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}.faa");
@@ -57,59 +57,33 @@ namespace TestsUnitSuite.MAli
 
         public void ProducesIdenticalAlignmentsWhenSeeded(string inputFile, string outputFile, string seed)
         {
-            Dictionary<string, string?> table = new Dictionary<string, string?>();
-            table["iterations"] = "3";
-
             string filename_a = $"a_{outputFile}";
             string filename_b = $"b_{outputFile}";
 
-            MAliFacade.SetSeed(seed);
-            MAliFacade.PerformAlignment(inputFile, filename_a, table);
+            AlignmentRequest instructionsA = new AlignmentRequest();
+            instructionsA.InputPath = inputFile;
+            instructionsA.OutputPath = filename_a;
+            instructionsA.IterationsLimit = 3;
+            instructionsA.SpecifiesSeed = true;
+            instructionsA.Seed = seed;
+
+            MAliFacade.PerformAlignment(instructionsA);
             List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}.faa");
             Alignment alignmentA = new Alignment(alignedA);
 
-            MAliFacade.SetSeed(seed);
-            MAliFacade.PerformAlignment(inputFile, filename_b, table);
+            AlignmentRequest instructionsB = new AlignmentRequest();
+            instructionsB.InputPath = inputFile;
+            instructionsB.OutputPath = filename_b;
+            instructionsB.IterationsLimit = 3;
+            instructionsB.SpecifiesSeed = true;
+            instructionsB.Seed = seed;
+
+            MAliFacade.PerformAlignment(instructionsB);
             List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}.faa");
             Alignment alignmentB = new Alignment(alignedB);
 
             AlignmentConservation.AssertAlignmentsAreConserved(alignmentA, alignmentB);
             AlignmentEquality.AssertAlignmentsMatch(alignmentA, alignmentB);
-        }
-
-        #endregion
-
-
-        #region Testing tagging
-
-        [DataTestMethod]
-        [DataRow("output", "one", "output_one.faa")]
-        [DataRow("output_this_please", "two", "output_this_please_two.faa")]
-
-        public void TestingIterationsAreUnpacked(string outputpath, string tag, string expected)
-        {
-            Dictionary<string, string?> table = new Dictionary<string, string?>();
-            table["tag"] = tag;
-            string actual = MAliFacade.BuildFullOutputFilename(outputpath, table);
-            Assert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Testing iterations are unpacked correctly 
-
-        [DataTestMethod]
-        [DataRow(1756)]
-        [DataRow(81)]
-        [DataRow(1)]
-
-        public void TestingIterationsAreUnpacked(int counter)
-        {
-            Dictionary<string, string?> table = new Dictionary<string, string?>();
-            table["iterations"] = counter.ToString();
-
-            int actual = MAliFacade.UnpackSpecifiedIterations(table);
-            Assert.AreEqual(counter, actual);
         }
 
         #endregion

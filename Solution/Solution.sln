@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevConsole", "DevConsole\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibModification", "LibModification\LibModification.csproj", "{92AD927A-87BC-46D4-9576-9D8F09DA576B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibParetoAlignment", "LibParetoAlignment\LibParetoAlignment.csproj", "{46E5E5CA-82B0-427C-A46F-B406BC7F100C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsRequirements", "TestsRequirements\TestsRequirements.csproj", "{071446A1-23F9-4CF4-A3A3-130B81B6619D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{92AD927A-87BC-46D4-9576-9D8F09DA576B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92AD927A-87BC-46D4-9576-9D8F09DA576B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92AD927A-87BC-46D4-9576-9D8F09DA576B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E5E5CA-82B0-427C-A46F-B406BC7F100C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E5E5CA-82B0-427C-A46F-B406BC7F100C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E5E5CA-82B0-427C-A46F-B406BC7F100C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E5E5CA-82B0-427C-A46F-B406BC7F100C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

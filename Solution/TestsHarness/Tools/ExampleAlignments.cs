@@ -31,9 +31,23 @@ namespace TestsHarness.Tools
         {
             List<BioSequence> sequences = new List<BioSequence>();
             sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleA));
+            sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleB));
+            sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleD));
             sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleA));
+
+            return new Alignment(sequences);
+        }
+
+
+        public Alignment GetExampleB()
+        {
+            List<BioSequence> sequences = new List<BioSequence>();
             sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleA));
+            sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleB));
+            sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleD));
             sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleA));
+            sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleB));
+            sequences.Add(ExampleSequences.GetSequence(ExampleSequence.ExampleD));
 
             return new Alignment(sequences);
         }

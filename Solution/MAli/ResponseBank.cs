@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MAli.UserRequests;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,8 @@ namespace MAli
 
         public void ProvideHelp()
         {
-            Specification.ListCurrentVersion();
-            Specification.ListSupportedCommands();
-        }
-
-        public void ProvideInfo()
-        {
-            Specification.ListCurrentVersion();
-            Console.WriteLine($"For more information, see 'readme.txt' or try the '-help' command.");
+            ListCurrentVersion();
+            ListSupportedCommands();
         }
 
         public void ExplainException(Exception exception)
@@ -38,23 +33,25 @@ namespace MAli
             }
         }
 
-        public void NotifyUserError(UserRequestError error)
+        public void NotifyUserError(MalformedRequest request)
         {
-            switch (error)
+            Console.WriteLine(request.Info);
+        }
+
+        public void ListCurrentVersion()
+        {
+            Console.WriteLine($"MAli ({Specification.Version}) - Metaheuristic Aligner");
+        }
+
+        public void ListSupportedCommands()
+        {
+            Console.WriteLine("Supported commands:");
+            foreach (string command in Specification.SupportedCommands)
             {
-                case UserRequestError.ContainsForeignCommands:
-                    Console.WriteLine("Error: Contains foreign commands.");
-                    break;
-                case UserRequestError.RequestIsAmbiguous:
-                    Console.WriteLine("Error: Request is ambiguous.");
-                    break;
-                case UserRequestError.NoArgumentsGiven:
-                    Console.WriteLine("Error: No arguments given. Try '-help' to view a list of commands.");
-                    break;
-                case UserRequestError.RequestIsInvalid:
-                    Console.WriteLine("Error: Request is invalid. Try '-help' to view a list of commands.");
-                    break;
+                string description = Specification.CommandDescriptions[command];
+                Console.WriteLine($"   -{command} : {description}");
             }
+            Console.WriteLine();
         }
     }
 }

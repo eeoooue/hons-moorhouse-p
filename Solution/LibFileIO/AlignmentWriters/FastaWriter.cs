@@ -9,10 +9,14 @@ namespace LibFileIO.AlignmentWriters
 {
     public class FastaWriter : IAlignmentWriter
     {
+        public string FileExtension = "faa";
+
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
+            string destination = $"{filename}.{FileExtension}";
             List<string> lines = CreateAlignmentLines(alignment);
-            File.WriteAllLines(filename, lines);
+            File.WriteAllLines(destination, lines);
+            Console.WriteLine($"Alignment written to destination: '{destination}'");
         }
 
         public List<string> CreateAlignmentLines(Alignment alignment)

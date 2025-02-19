@@ -17,10 +17,20 @@ namespace LibModification.AlignmentModifiers
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
+            //if (Randomizer.CoinFlip())
+            //{
+            //    int extent = Randomizer.Random.Next(alignment.Width);
+            //    CharMatrixHelper.SprinkleEmptyColumnsIntoAlignment(alignment, extent);
+            //}
+
             int i;
             int j;
             PickPairOfSequences(alignment, out i, out j);
+            return AlignPairOfSequences(alignment, i, j);
+        }
 
+        public char[,] AlignPairOfSequences(Alignment alignment, int i, int j)
+        {
             string seqAresidues;
             string seqBresidues;
             CollectSequenceResidues(alignment, i, j, out seqAresidues, out seqBresidues);
@@ -32,7 +42,7 @@ namespace LibModification.AlignmentModifiers
             char[,] result = GetExpandedCanvas(alignment.CharacterMatrix, i, newSequenceALayout);
             ReplaceRowWithAlignment(ref result, newSequenceALayout, newSequenceBLayout, i, j);
 
-            return result;
+            return CharMatrixHelper.RemoveEmptyColumns(in result);
         }
 
         public void ReplaceRowWithAlignment(ref char[,] matrix, string anchor, string aligned, int i, int j)
@@ -59,7 +69,6 @@ namespace LibModification.AlignmentModifiers
                 }
             }
         }
-
 
         public char[,] GetExpandedCanvas(char[,] matrix, int i, string newPayload)
         {

@@ -27,5 +27,7 @@ namespace LibScoring
         public abstract double GetBestPossibleScore(in char[,] alignment);
 
         public abstract double GetWorstPossibleScore(in char[,] alignment);
+
+        public abstract string GetAbbreviation();
     }
 }

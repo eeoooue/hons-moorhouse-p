@@ -11,7 +11,7 @@ namespace MAli
     {
         public HashSet<string> SupportedCommands = new HashSet<string>();
         public Dictionary<string, string> CommandDescriptions = new Dictionary<string, string>();
-        public string Version = "v1.2";
+        public string Version = "v1.21";
 
         public MAliSpecification()
         {
@@ -24,14 +24,24 @@ namespace MAli
             SupportedCommands.Add("input");
             SupportedCommands.Add("output");
             SupportedCommands.Add("seed");
-            SupportedCommands.Add("iterations");
             SupportedCommands.Add("tag");
+            SupportedCommands.Add("format");
+
+            SupportedCommands.Add("iterations");
+            SupportedCommands.Add("seconds");
 
             SupportedCommands.Add("refine");
+            SupportedCommands.Add("batch");
+
             SupportedCommands.Add("timestamp");
             SupportedCommands.Add("debug");
             SupportedCommands.Add("frames");
             SupportedCommands.Add("help");
+
+            SupportedCommands.Add("pareto");
+            SupportedCommands.Add("scorefile");
+
+            SupportedCommands.Add("config");
         }
 
         public void AddCommandDescriptions()
@@ -39,29 +49,23 @@ namespace MAli
             CommandDescriptions.Add("input", "Specify the input file of sequences to be aligned.");
             CommandDescriptions.Add("output", "Specify the output file path for the alignment of sequences.");
             CommandDescriptions.Add("seed", "Specify a seed value for reproducible results.");
-            CommandDescriptions.Add("iterations", "Specify the number of iterations of refinement to be performed.");
             CommandDescriptions.Add("tag", "Specify a suffix to be included in the output filename.");
+            CommandDescriptions.Add("format", "Specify the file format to use for the output alignment. ('fasta' or 'clustal')");
 
+            CommandDescriptions.Add("iterations", "Specify the number of iterations of alignment to be performed.");
+            CommandDescriptions.Add("seconds", "Specify the number of seconds of alignment to be performed.");
             CommandDescriptions.Add("refine", "(flag) Refine the alignment provided rather than starting from a randomized state.");
+            CommandDescriptions.Add("batch", "(flag) Align a series of inputs. Specify the directories as 'input' and 'output' arguments.");
+
             CommandDescriptions.Add("timestamp", "(flag) Includes a completion date-time timestamp in the output filename.");
             CommandDescriptions.Add("debug", "(flag) View debugging information throughout the alignment process.");
             CommandDescriptions.Add("frames", "(flag) Saves the alignment state to a 'frames' subfolder after each iteration.");
             CommandDescriptions.Add("help", "Display the list of supported commands.");
-        }
 
-        public void ListCurrentVersion()
-        {
-            Console.WriteLine($"MAli ({Version}) - Metaheuristic Aligner");
-        }
+            CommandDescriptions.Add("pareto", "Output a selection of (n) tradeoff alignments, approximating the Pareto front");
+            CommandDescriptions.Add("scorefile", "(flag) Output a separate .maliscore file containing the alignment's objective scores");
 
-        public void ListSupportedCommands()
-        {
-            Console.WriteLine("Supported commands:");
-            foreach (string command in SupportedCommands)
-            {
-                Console.WriteLine($"   -{command} : {CommandDescriptions[command]}");
-            }
-            Console.WriteLine();
+            CommandDescriptions.Add("config", "Specify a custom .json config defining the objective to guide the alignment process.");
         }
     }
 }

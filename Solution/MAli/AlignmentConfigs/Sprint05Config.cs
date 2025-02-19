@@ -17,7 +17,7 @@ using LibAlignment.Aligners.SingleState;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class Sprint05Config : AlignmentConfig
+    public class Sprint05Config : AlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {
