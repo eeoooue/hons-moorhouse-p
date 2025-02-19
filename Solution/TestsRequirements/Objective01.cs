@@ -32,8 +32,7 @@ namespace TestsRequirements
         {
             string outputPath = "Req1x01";
             RunMAli($"-input {inputPath} -output {outputPath} -iterations 10");
-            bool producedFasta = File.Exists($"{outputPath}.faa");
-            Assert.IsTrue(producedFasta);
+            AssertAlignmentExists($"{outputPath}.faa");
         }
 
         /// <summary>
@@ -49,8 +48,7 @@ namespace TestsRequirements
         {
             string outputPath = "Req1x02";
             RunMAli($"-input {inputPath} -output {outputPath}");
-            bool producedFasta = File.Exists($"{outputPath}.faa");
-            Assert.IsTrue(producedFasta);
+            AssertAlignmentExists($"{outputPath}.faa");
         }
 
         /// <summary>
@@ -67,8 +65,20 @@ namespace TestsRequirements
 
             string outputPath = "Req1x03";
             RunMAli($"-input {inputPath} -output {outputPath}");
-            bool producedFasta = File.Exists($"{outputPath}.faa");
-            Assert.IsTrue(producedFasta);
+            AssertAlignmentExists($"{outputPath}.faa");
+        }
+
+        private void AssertAlignmentExists(string outputPath)
+        {
+            Alignment alignment = ReadAlignmentFrom(outputPath);
+            Assert.IsTrue(alignment is Alignment);
+        }
+
+        private Alignment ReadAlignmentFrom(string outputPath)
+        {
+            bool fileExists = File.Exists(outputPath);
+            Assert.IsTrue(fileExists);
+            return FileHelper.ReadAlignmentFrom(outputPath);
         }
 
         private void RunMAli(string command)

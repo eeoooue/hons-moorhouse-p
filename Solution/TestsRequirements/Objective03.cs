@@ -15,6 +15,7 @@ namespace TestsRequirements
     public class Objective03
     {
         private MAliInterface MAli = new MAliInterface();
+        private FileHelper FileHelper = new FileHelper();
 
         /// <summary>
         /// Can load a set of biological sequences from an appropriate bioinformatics file format. 
@@ -36,8 +37,7 @@ namespace TestsRequirements
         {
             string outputPath = "Req3x02";
             RunMAli($"-input {inputPath} -output {outputPath} -iterations 10");
-            bool producedFasta = File.Exists($"{outputPath}.faa");
-            Assert.IsTrue(producedFasta);
+            AssertAlignmentExists($"{outputPath}.faa");
         }
 
         /// <summary>
@@ -49,8 +49,7 @@ namespace TestsRequirements
         {
             string outputPath = "Req3x03";
             RunMAli($"-input {inputPath} -output {outputPath} -iterations 10 -refine");
-            bool producedFasta = File.Exists($"{outputPath}.faa");
-            Assert.IsTrue(producedFasta);
+            AssertAlignmentExists($"{outputPath}.faa");
         }
 
         /// <summary>
@@ -63,8 +62,20 @@ namespace TestsRequirements
         {
             string outputPath = "Req3x04";
             RunMAli($"-input {inputPath} -output {outputPath} -iterations 10 -format {format}");
-            bool producedAlignment = File.Exists($"{outputPath}.{extension}");
-            Assert.IsTrue(producedAlignment);
+            AssertAlignmentExists($"{outputPath}.{extension}");
+        }
+
+        private void AssertAlignmentExists(string outputPath)
+        {
+            Alignment alignment = ReadAlignmentFrom(outputPath);
+            Assert.IsTrue(alignment is Alignment);
+        }
+
+        private Alignment ReadAlignmentFrom(string outputPath)
+        {
+            bool fileExists = File.Exists(outputPath);
+            Assert.IsTrue(fileExists);
+            return FileHelper.ReadAlignmentFrom(outputPath);
         }
 
         private void RunMAli(string command)
