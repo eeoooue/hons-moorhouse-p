@@ -16,8 +16,8 @@ namespace TestsUnitSuite.MAli.Helpers
         #region Testing tagging
 
         [DataTestMethod]
-        [DataRow("output", "one", "output_one.faa")]
-        [DataRow("output_this_please", "two", "output_this_please_two.faa")]
+        [DataRow("output", "one", "output_one")]
+        [DataRow("output_this_please", "two", "output_this_please_two")]
 
         public void TestingIterationsAreUnpacked(string outputpath, string tag, string expected)
         {
