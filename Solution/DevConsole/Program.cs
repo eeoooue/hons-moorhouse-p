@@ -18,8 +18,7 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingClustalWriter();
-            // TestingMAli();
+            TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -76,7 +75,7 @@ namespace DevConsole
 
             // RunMAli("-help");
 
-            RunMAli("-input BB11001 -output test -debug");
+            RunMAli("-input BB11001 -output test -debug -format clustal");
 
 
             // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
