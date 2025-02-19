@@ -69,6 +69,11 @@ namespace MAli.Helpers
             {
                 request.ConfigPath = table["config"]!;
             }
+
+            if (CommandsIncludeFlag(table, "format"))
+            {
+                request.SetOutputFormat(table["format"]!);
+            }
         }
 
         public string BuildFullOutputFilename(string outputName, Dictionary<string, string?> table)
