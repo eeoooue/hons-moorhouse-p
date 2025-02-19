@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAli.UserRequests
 {
-    internal class ParetoAlignmentRequest : AlignmentRequest
+    public class ParetoAlignmentRequest : AlignmentRequest
     {
         public int NumberOfTradeoffs = 10;
     }
