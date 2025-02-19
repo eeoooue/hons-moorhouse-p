@@ -12,7 +12,7 @@ namespace LibFileIO.AlignmentWriters
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
             List<string> lines = CreateAlignmentLines(alignment);
-            File.WriteAllLines(filename, lines);
+            File.WriteAllLines($"{filename}.faa", lines);
         }
 
         public List<string> CreateAlignmentLines(Alignment alignment)

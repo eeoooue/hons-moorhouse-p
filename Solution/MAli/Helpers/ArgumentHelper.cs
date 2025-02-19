@@ -87,7 +87,6 @@ namespace MAli.Helpers
                     result += $"_{tag}";
                 }
             }
-            result += ".faa";
 
             return result;
         }
