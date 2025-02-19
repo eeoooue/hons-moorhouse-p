@@ -43,7 +43,7 @@ namespace LibFileIO.AlignmentWriters
         {
             List<string> result = new List<string>()
             {
-                "CLUSTAL W (1.82) multiple sequence alignment",
+                "CLUSTAL W (MAli v1.3) multiple sequence alignment",
                 "",
                 "",
             };
