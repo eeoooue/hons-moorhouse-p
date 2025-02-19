@@ -43,6 +43,7 @@ namespace TestsRequirements
         [DataRow("BB11001")]
         [DataRow("BB11002")]
         [DataRow("BB11003")]
+        [DataRow("1a0cA_1ubpC")]
         [Timeout(8000)]
         public void Req1x02(string inputPath)
         {
