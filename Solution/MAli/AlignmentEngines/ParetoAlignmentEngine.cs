@@ -62,7 +62,7 @@ namespace MAli.AlignmentEngines
                     AlignIteratively(aligner, Instructions);
 
                     List<Alignment> solutions = aligner.CollectTradeoffSolutions();
-                    SaveAlignments(solutions, Instructions.OutputPath);
+                    SaveAlignments(instructions, solutions, Instructions.OutputPath);
                     CheckSaveScorefiles(aligner, solutions, Instructions.OutputPath, Instructions);
                 }
                 else
@@ -95,7 +95,7 @@ namespace MAli.AlignmentEngines
             Console.WriteLine("Saved .maliscore files.");
         }
 
-        public void SaveAlignments(List<Alignment> solutions, string outPath)
+        public void SaveAlignments(in ParetoAlignmentRequest request, List<Alignment> solutions, string outPath)
         {
             Console.WriteLine($"Saving {solutions.Count} alignments:");
 
@@ -103,7 +103,7 @@ namespace MAli.AlignmentEngines
             foreach (Alignment solution in solutions)
             {
                 string filepath = $"{outPath}_{++counter}";
-                FileHelper.WriteAlignmentTo(solution, filepath);
+                FileHelper.WriteAlignment(solution, request.OutputFormat, filepath);
                 Console.WriteLine($"saved: {filepath}");
             }
         }
