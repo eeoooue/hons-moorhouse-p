@@ -47,7 +47,7 @@ namespace MAli.AlignmentConfigs
                 new GapInserter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
-                new SmartBlockPermutationOperator(new PAM250Matrix()),
+                // new SmartBlockPermutationOperator(new PAM250Matrix()),
                 new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 

@@ -11,9 +11,6 @@ namespace LibModification.AlignmentModifiers
 {
     public class ProgressiveOrderModifier : AlignmentModifier
     {
-        CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-        BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
-        Bioinformatics Bioinformatics = new Bioinformatics();
         HeuristicPairwiseModifier PairwiseModifier = new HeuristicPairwiseModifier();
 
         public void SwapRandomIndicesWithinArray(ref int[] arr)
