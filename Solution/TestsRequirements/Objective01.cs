@@ -39,14 +39,14 @@ namespace TestsRequirements
         /// Employs a heuristic to estimate a number of iterations needed to align each set of sequences.
         /// </summary>
         [TestMethod]
-        [DataRow("BB11001")]
-        [DataRow("BB11002")]
-        [DataRow("BB11003")]
-        [DataRow("1a0cA_1ubpC")]
+        [DataRow("BB11001", "A")]
+        [DataRow("BB11002", "B")]
+        [DataRow("BB11003", "C")]
+        [DataRow("1a0cA_1ubpC", "D")]
         [Timeout(8000)]
-        public void Req1x02(string inputPath)
+        public void Req1x02(string inputPath, string suffix)
         {
-            string outputPath = "Req1x02";
+            string outputPath = $"Req1x02_{suffix}";
             RunMAli($"-input {inputPath} -output {outputPath}");
             AssertAlignmentExists($"{outputPath}.faa");
         }

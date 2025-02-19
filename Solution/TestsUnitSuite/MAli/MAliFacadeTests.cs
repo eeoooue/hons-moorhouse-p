@@ -40,7 +40,7 @@ namespace TestsUnitSuite.MAli
             MAliFacade.PerformAlignment(instructions);
 
             List<BioSequence> original = FileHelper.ReadSequencesFrom(inputFile);
-            List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}");
+            List<BioSequence> aligned = FileHelper.ReadSequencesFrom($"{outputFile}.faa");
 
             Alignment leftJustified = new Alignment(original);
             Alignment alignment = new Alignment(aligned);
@@ -68,7 +68,7 @@ namespace TestsUnitSuite.MAli
             instructionsA.Seed = seed;
 
             MAliFacade.PerformAlignment(instructionsA);
-            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}");
+            List<BioSequence> alignedA = FileHelper.ReadSequencesFrom($"{filename_a}.faa");
             Alignment alignmentA = new Alignment(alignedA);
 
             AlignmentRequest instructionsB = new AlignmentRequest();
@@ -79,7 +79,7 @@ namespace TestsUnitSuite.MAli
             instructionsB.Seed = seed;
 
             MAliFacade.PerformAlignment(instructionsB);
-            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}");
+            List<BioSequence> alignedB = FileHelper.ReadSequencesFrom($"{filename_b}.faa");
             Alignment alignmentB = new Alignment(alignedB);
 
             AlignmentConservation.AssertAlignmentsAreConserved(alignmentA, alignmentB);
