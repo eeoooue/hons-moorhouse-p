@@ -38,6 +38,11 @@ namespace DevConsole
             {
                 Console.WriteLine(line);
             }
+            writer.WriteAlignmentTo(alignment, "clustalaln");
+
+            FileHelper stuff = new FileHelper();
+
+            Alignment check = stuff.ReadAlignmentFrom("clustalaln.aln");
         }
 
         static void TestingConfigParsing()
