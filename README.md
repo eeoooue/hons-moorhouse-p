@@ -17,7 +17,8 @@ MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignmen
 | 3  | 27/11/24  | 10/12/24  | [```v1.0```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.0)  |  ```(μ,λ)-Evolution Strategy``` ```Affine Gap Penalties``` |
 | 4  | 11/12/24  | 14/01/25  | [```v1.1```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.1)   | ```Iterated Local Search``` ```Debugging Mode``` |
 | 5  | 15/01/25  | 28/01/25   | [```v1.2```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.2) | ```Iterative Refinement``` ```Needleman-Wunsch Alg.``` |
-| 6  | 29/01/25  | --   | --           | -- |
+| 6  | 29/01/25  | 19/02/25   | [```v1.21```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.21)          | ```Multi-Objective Alignment``` ```ClustalW Format``` |
+| 7  | 19/02/25  | --   | --          | -- |
 
 ### Performance
 
