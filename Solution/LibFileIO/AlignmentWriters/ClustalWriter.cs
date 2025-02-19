@@ -14,11 +14,27 @@ namespace LibFileIO.AlignmentWriters
 
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
+            string destination = $"{filename}.{FileExtension}";
+            List<string> lines = CreateAlignmentLines(alignment);
+            File.WriteAllLines(destination, lines);
+            Console.WriteLine($"Alignment written to destination: '{destination}'");
+        }
+
+        public List<string> CreateAlignmentLines(Alignment alignment)
+        {
+            List<string> result = new List<string>();
             List<string> header = GetHeader();
+            foreach(string s in header)
+            {
+                result.Add(s);
+            }
             List<string> body = GetBody(alignment);
+            foreach (string s in body)
+            {
+                result.Add(s);
+            }
 
-
-            throw new NotImplementedException();
+            return result;
         }
 
         public List<string> GetHeader()
@@ -44,6 +60,7 @@ namespace LibFileIO.AlignmentWriters
                 {
                     result.Add(line);
                 }
+                result.Add("");
             }
 
             return result;
@@ -54,9 +71,42 @@ namespace LibFileIO.AlignmentWriters
             char[,] blockMatrix = ExtractBlockMatrix(alignment, startPoint);
             char[] conservation = ComputeConservation(blockMatrix);
 
+            List<string> result = new List<string>();
+            for(int i=0; i<alignment.Height; i++)
+            {
+                string payload = ExtractRowOfMatrix(blockMatrix, i);
+                result.Add(payload);
+            }
+
+            string markers = ConvertArrToString(conservation);
+            result.Add(markers);
+
+            return result;
+        }
 
 
-            throw new NotImplementedException();
+        public string ExtractRowOfMatrix(char[,] matrix, int i)
+        {
+            int n = matrix.GetLength(1);
+
+            StringBuilder sb = new StringBuilder();
+            for(int j=0; j<n; j++)
+            {
+                sb.Append(matrix[i, j]);
+            }
+
+            return sb.ToString();
+        }
+
+        public string ConvertArrToString(char[] arr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(char x in arr)
+            {
+                sb.Append(x);
+            }
+
+            return sb.ToString();
         }
 
         public char[,] ExtractBlockMatrix(Alignment alignment, int startPoint)
