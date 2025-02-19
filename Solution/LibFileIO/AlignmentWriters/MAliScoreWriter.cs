@@ -23,8 +23,10 @@ namespace LibFileIO.AlignmentWriters
 
         public void WriteAlignmentTo(Alignment alignment, string filename)
         {
+            string destination = $"{filename}.{FileExtension}";
             List<string> contents = GetFileContents(alignment);
             File.WriteAllLines($"{filename}.{FileExtension}", contents);
+            Console.WriteLine($"Scorefile written to destination: '{destination}'");
         }
 
         public List<string> GetFileContents(Alignment alignment)
