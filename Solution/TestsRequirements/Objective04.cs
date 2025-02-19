@@ -28,7 +28,7 @@ namespace TestsRequirements
         /// Can align structural benchmarking test cases containing as many as 30 sequences.
         /// </summary>
         [DataTestMethod]
-        [DataRow("sequences_x30")] // TODO: Create file
+        [DataRow("1a0cA_1ubpC")]
         public void Req4x01(string inputPath)
         {
             List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
@@ -43,7 +43,7 @@ namespace TestsRequirements
         /// Can align a structural benchmarking test case of at least 20 sequences within 60 seconds.
         /// </summary>
         [TestMethod]
-        [DataRow("sequences_x20")] // TODO: Create file
+        [DataRow("1a0cA_1ubpC")]
         [Timeout(60000)]
         public void Req4x02(string inputPath)
         {
@@ -59,6 +59,7 @@ namespace TestsRequirements
         /// Can specify a randomness seed to support reproduction of results under the same settings.
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("BB11001", 17)]
         [DataRow("BB11002", 56)]
         public void Req4x03(string inputPath, int seed)

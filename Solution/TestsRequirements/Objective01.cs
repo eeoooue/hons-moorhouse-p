@@ -2,6 +2,7 @@
 using LibAlignment.Aligners.SingleState;
 using LibBioInfo;
 using LibBioInfo.ScoringMatrices;
+using LibFileIO;
 using LibScoring;
 using LibScoring.FitnessFunctions;
 using MAli;
@@ -19,6 +20,7 @@ namespace TestsRequirements
     [TestClass]
     public class Objective01
     {
+        private FileHelper FileHelper = new FileHelper();
         private MAliInterface MAli = new MAliInterface();
 
         /// <summary>
@@ -55,10 +57,13 @@ namespace TestsRequirements
         /// </summary>
         [TestMethod]
         [DataTestMethod]
-        [DataRow("sequences_x06")]
+        [DataRow("BB11002")]
         [Timeout(10000)]
         public void Req1x03(string inputPath)
         {
+            List<BioSequence> sequences = FileHelper.ReadSequencesFrom(inputPath);
+            Assert.IsTrue(sequences.Count >= 6);
+
             string outputPath = "Req1x03";
             RunMAli($"-input {inputPath} -output {outputPath}");
             bool producedFasta = File.Exists($"{outputPath}.faa");
