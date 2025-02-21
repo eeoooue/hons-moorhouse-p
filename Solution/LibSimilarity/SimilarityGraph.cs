@@ -9,6 +9,8 @@ namespace LibSimilarity
         private HashSet<string> HasConnection = new HashSet<string>();
         private List<string> ConnectedIdentifiers = new List<string>();
 
+        public int Population { get { return Identifiers.Count; } }
+
         public SimilarityGraph(List<BioSequence> sequences)
         {
             List<SequenceNode> nodes = CreateNodes(sequences);

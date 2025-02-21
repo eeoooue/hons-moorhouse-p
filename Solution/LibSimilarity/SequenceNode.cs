@@ -35,5 +35,41 @@ namespace LibSimilarity
         {
             return ConnectedNodes.Contains(identifier);
         }
+
+        public List<SequenceNode> GetNeighbours()
+        {
+            List<SequenceNode> result = new List<SequenceNode>();
+            foreach(SimilarityLink link in Connections)
+            {
+                SequenceNode nodeA = link.NodeA;
+                SequenceNode nodeB = link.NodeB;
+                if (nodeA.Identifier != Identifier)
+                {
+                    result.Add(nodeA);
+                }
+                else
+                {
+                    result.Add(nodeB);
+                }
+            }
+
+            return result;
+        }
+
+
+        // TODO: replace this with a roulette selection implementation
+        public SequenceNode? SuggestNeighbour()
+        {
+            List<SequenceNode> options = GetNeighbours();
+            int n = options.Count;
+
+            if (n > 0)
+            {
+                int i = Randomizer.Random.Next(n);
+                return options[i];
+            }
+
+            return null;
+        }
     }
 }

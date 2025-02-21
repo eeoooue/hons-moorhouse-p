@@ -8,9 +8,9 @@ namespace LibSimilarity
 {
     public class SimilarityLink
     {
-        SequenceNode NodeA;
-        SequenceNode NodeB;
-        double SimilarityScore;
+        public SequenceNode NodeA;
+        public SequenceNode NodeB;
+        public double SimilarityScore;
 
         public SimilarityLink(SequenceNode a, SequenceNode b, double score)
         {
