@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibParetoAlignment", "LibPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsRequirements", "TestsRequirements\TestsRequirements.csproj", "{071446A1-23F9-4CF4-A3A3-130B81B6619D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSimilarity", "LibSimilarity\LibSimilarity.csproj", "{11670794-9F67-4272-BF21-9E47DA3174F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{071446A1-23F9-4CF4-A3A3-130B81B6619D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11670794-9F67-4272-BF21-9E47DA3174F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11670794-9F67-4272-BF21-9E47DA3174F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11670794-9F67-4272-BF21-9E47DA3174F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11670794-9F67-4272-BF21-9E47DA3174F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

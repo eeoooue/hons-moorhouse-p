@@ -21,6 +21,7 @@
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
     <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
     <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
+    <ProjectReference Include="..\LibSimilarity\LibSimilarity.csproj" />
     <ProjectReference Include="..\MAli\MAli.csproj" />
     <ProjectReference Include="..\TestsHarness\TestsHarness.csproj" />
   </ItemGroup>
