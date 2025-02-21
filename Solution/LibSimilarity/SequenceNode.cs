@@ -60,6 +60,8 @@ namespace LibSimilarity
         // TODO: replace this with a roulette selection implementation
         public SequenceNode? SuggestNeighbour()
         {
+            throw new NotImplementedException();
+
             List<SequenceNode> options = GetNeighbours();
             int n = options.Count;
 
