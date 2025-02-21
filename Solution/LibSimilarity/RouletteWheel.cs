@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibSimilarity
 {
-    internal class RouletteWheel
+    public class RouletteWheel
     {
         public SimilarityLink PerformSelectionOn(List<SimilarityLink> options)
         {

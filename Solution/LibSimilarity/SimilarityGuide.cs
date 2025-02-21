@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace LibSimilarity
 {
-    internal class SimilarityGuide : ISimilarityGuide
+    public class SimilarityGuide : ISimilarityGuide
     {
         private SimilarityGraph Graph;
 

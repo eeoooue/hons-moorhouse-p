@@ -24,13 +24,21 @@ namespace LibSimilarity
             Sequence = sequence;
         }
 
-        public void AddConnection(string identifier, SimilarityLink link)
+        public void AddConnection(SimilarityLink link)
         {
+            SequenceNode neighbour = link.GetNeighbour(this);
+            string identifier = neighbour.Identifier;
+
             if (!IsConnectedTo(identifier))
             {
                 Connections.Add(link);
                 ConnectedNodes.Add(identifier);
             }
+        }
+
+        public bool IsConnectedTo(SequenceNode node)
+        {
+            return ConnectedNodes.Contains(node.Identifier);
         }
 
         public bool IsConnectedTo(string identifier)
