@@ -13,7 +13,6 @@ namespace LibModification.AlignmentModifiers
     public class HeuristicPairwiseModifier : AlignmentModifier
     {
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-        BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         Bioinformatics Bioinformatics = new Bioinformatics();
         PairwiseAlignmentHelper PairwiseAlignmentHelper = new PairwiseAlignmentHelper();
 
@@ -167,8 +166,6 @@ namespace LibModification.AlignmentModifiers
 
             return result;
         }
-
-        
 
         public void PickPairOfSequences(Alignment alignment, out int i, out int j)
         {

@@ -97,18 +97,33 @@ namespace LibBioInfo.PairwiseAligners
 
             Backtrack(ref rowA, ref rowB, M - 1, N - 1);
 
-            return ConstructAsMatrix(rowA, rowB);
+            string sequenceA = RecoverPayload(rowA);
+            string sequenceB = RecoverPayload(rowB);
+
+            return ConstructAsMatrix(sequenceA, sequenceB);
         }
 
-        public char[,] ConstructAsMatrix(StringBuilder a, StringBuilder b)
+        public void ExtractPairwiseAlignment(out string sequenceA, out string sequenceB)
         {
-            string seqA = RecoverPayload(a);
-            string seqB = RecoverPayload(b);
+            if (!ScoresPopulated)
+            {
+                PopulateTable();
+            }
 
+            StringBuilder a = new StringBuilder();
+            StringBuilder b = new StringBuilder();
+
+            Backtrack(ref a, ref b, M - 1, N - 1);
+
+            sequenceA = RecoverPayload(a);
+            sequenceB = RecoverPayload(b);
+        }
+
+        public char[,] ConstructAsMatrix(string seqA, string seqB)
+        {
             int n = seqA.Length;
 
             char[,] result = new char[2, n];
-
             for (int j = 0; j < n; j++)
             {
                 result[0, j] = seqA[j];
@@ -130,21 +145,7 @@ namespace LibBioInfo.PairwiseAligners
             return result.ToString();
         }
 
-        public void ExtractPairwiseAlignment(out string sequenceA, out string sequenceB)
-        {
-            if (!ScoresPopulated)
-            {
-                PopulateTable();
-            }
-
-            StringBuilder a = new StringBuilder();
-            StringBuilder b = new StringBuilder();
-
-            Backtrack(ref a, ref b, M - 1, N - 1);
-
-            sequenceA = RecoverPayload(a);
-            sequenceB = RecoverPayload(b);
-        }
+        
 
         public void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)
         {
