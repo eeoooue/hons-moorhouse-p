@@ -11,6 +11,8 @@ namespace LibSimilarity
     {
         public List<SimilarityLink> Connections = new List<SimilarityLink>();
 
+        private HashSet<string> ConnectedNodes = new HashSet<string>();
+
         public BioSequence Sequence;
 
         public string Identifier { get { return Sequence.Identifier; } }
@@ -20,9 +22,18 @@ namespace LibSimilarity
             Sequence = sequence;
         }
 
-        public void AddConnection(SimilarityLink link)
+        public void AddConnection(string identifier, SimilarityLink link)
         {
-            Connections.Add(link);
+            if (!IsConnectedTo(identifier))
+            {
+                Connections.Add(link);
+                ConnectedNodes.Add(identifier);
+            }
+        }
+
+        public bool IsConnectedTo(string identifier)
+        {
+            return ConnectedNodes.Contains(identifier);
         }
     }
 }
