@@ -24,10 +24,8 @@ namespace LibModification.Helpers
 
         public string CollectSequenceResidues(Alignment alignment, int i)
         {
-            string payload = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, i);
-            string result = PayloadHelper.ExtractResiduesFromString(payload);
-
-            return result;
+            BioSequence sequence = alignment.Sequences[i];
+            return sequence.Residues;
         }
     }
 }
