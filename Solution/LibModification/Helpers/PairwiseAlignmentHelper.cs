@@ -13,19 +13,21 @@ namespace LibModification.Helpers
         BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-
-        public void CollectSequenceResidues(Alignment alignment, int i, int j, out string residuesA, out string residuesB)
+        public void GetNewSequenceLayout(Alignment alignment, int i, int j, out string layoutA, out string layoutB)
         {
-            string sequenceA = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, i);
-            string sequenceB = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, j);
-            residuesA = PayloadHelper.ExtractResiduesFromString(sequenceA);
-            residuesB = PayloadHelper.ExtractResiduesFromString(sequenceB);
+            string seqAresidues = CollectSequenceResidues(alignment, i);
+            string seqBresidues = CollectSequenceResidues(alignment, j);
+
+            NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(seqAresidues, seqBresidues);
+            aligner.ExtractPairwiseAlignment(out layoutA, out layoutB);
         }
 
-        public void GetNewSequenceLayout(Alignment alignment, in string residuesA, in string residuesB, out string layoutA, out string layoutB)
+        public string CollectSequenceResidues(Alignment alignment, int i)
         {
-            NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(residuesA, residuesB);
-            aligner.ExtractPairwiseAlignment(out layoutA, out layoutB);
+            string payload = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, i);
+            string result = PayloadHelper.ExtractResiduesFromString(payload);
+
+            return result;
         }
     }
 }

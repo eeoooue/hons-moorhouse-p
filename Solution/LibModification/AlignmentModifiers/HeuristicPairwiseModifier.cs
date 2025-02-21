@@ -33,13 +33,9 @@ namespace LibModification.AlignmentModifiers
 
         public char[,] AlignPairOfSequences(Alignment alignment, int i, int j)
         {
-            string seqAresidues;
-            string seqBresidues;
-            PairwiseAlignmentHelper.CollectSequenceResidues(alignment, i, j, out seqAresidues, out seqBresidues);
-
             string newSequenceALayout;
             string newSequenceBLayout;
-            PairwiseAlignmentHelper.GetNewSequenceLayout(alignment, in seqAresidues, in seqBresidues, out newSequenceALayout, out newSequenceBLayout);
+            PairwiseAlignmentHelper.GetNewSequenceLayout(alignment, i, j, out newSequenceALayout, out newSequenceBLayout);
 
             char[,] result = GetExpandedCanvas(alignment.CharacterMatrix, i, newSequenceALayout);
             ReplaceRowWithAlignment(ref result, newSequenceALayout, newSequenceBLayout, i, j);
