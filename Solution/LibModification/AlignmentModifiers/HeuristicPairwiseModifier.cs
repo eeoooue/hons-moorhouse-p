@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibBioInfo.PairwiseAligners;
 using LibModification.Helpers;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace LibModification.AlignmentModifiers
         CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         Bioinformatics Bioinformatics = new Bioinformatics();
+        PairwiseAlignmentHelper PairwiseAlignmentHelper = new PairwiseAlignmentHelper();
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
@@ -33,11 +35,11 @@ namespace LibModification.AlignmentModifiers
         {
             string seqAresidues;
             string seqBresidues;
-            CollectSequenceResidues(alignment, i, j, out seqAresidues, out seqBresidues);
+            PairwiseAlignmentHelper.CollectSequenceResidues(alignment, i, j, out seqAresidues, out seqBresidues);
 
             string newSequenceALayout;
             string newSequenceBLayout;
-            GetNewSequenceLayout(in seqAresidues, in seqBresidues, out newSequenceALayout, out newSequenceBLayout);
+            PairwiseAlignmentHelper.GetNewSequenceLayout(alignment, in seqAresidues, in seqBresidues, out newSequenceALayout, out newSequenceBLayout);
 
             char[,] result = GetExpandedCanvas(alignment.CharacterMatrix, i, newSequenceALayout);
             ReplaceRowWithAlignment(ref result, newSequenceALayout, newSequenceBLayout, i, j);
@@ -170,19 +172,7 @@ namespace LibModification.AlignmentModifiers
             return result;
         }
 
-        public void CollectSequenceResidues(Alignment alignment, int i, int j, out string residuesA, out string residuesB)
-        {
-            string sequenceA = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, i);
-            string sequenceB = CharMatrixHelper.GetCharRowAsString(alignment.CharacterMatrix, j);
-            residuesA = PayloadHelper.ExtractResiduesFromString(sequenceA);
-            residuesB = PayloadHelper.ExtractResiduesFromString(sequenceB);
-        }
-
-        public void GetNewSequenceLayout(in string residuesA, in string residuesB, out string layoutA, out string layoutB)
-        {
-            NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(residuesA, residuesB);
-            aligner.ExtractPairwiseAlignment(out layoutA, out layoutB);
-        }
+        
 
         public void PickPairOfSequences(Alignment alignment, out int i, out int j)
         {
