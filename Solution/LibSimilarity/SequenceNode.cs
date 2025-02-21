@@ -15,6 +15,8 @@ namespace LibSimilarity
 
         public BioSequence Sequence;
 
+        private static RouletteWheel RouletteWheel = new RouletteWheel();
+
         public string Identifier { get { return Sequence.Identifier; } }
 
         public SequenceNode(BioSequence sequence)
@@ -56,19 +58,13 @@ namespace LibSimilarity
             return result;
         }
 
-
-        // TODO: replace this with a roulette selection implementation
         public SequenceNode? SuggestNeighbour()
         {
-            throw new NotImplementedException();
-
-            List<SequenceNode> options = GetNeighbours();
-            int n = options.Count;
-
-            if (n > 0)
+            if (Connections.Count > 0)
             {
-                int i = Randomizer.Random.Next(n);
-                return options[i];
+                SimilarityLink link = RouletteWheel.PerformSelectionOn(Connections);
+                SequenceNode neighbour = link.GetNeighbour(this);
+                return neighbour;
             }
 
             return null;
