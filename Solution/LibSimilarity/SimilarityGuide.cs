@@ -8,26 +8,24 @@ using System.Xml.Linq;
 
 namespace LibSimilarity
 {
-    public class SimilarityGuide : ISimilarityGuide
+    public static class SimilarityGuide
     {
-        private SimilarityGraph Graph;
-
-        public SimilarityGuide(List<BioSequence> sequences)
+        public static void SetSequences(List<BioSequence> sequences)
         {
-            Graph = new SimilarityGraph(sequences);
+            SimilarityGraph.SetSequences(sequences);
         }
 
-        public void RecordSimilarity(BioSequence a, BioSequence b, double score)
+        public static void RecordSimilarity(BioSequence a, BioSequence b, double score)
         {
-            Graph.RecordSimilarity(a, b, score);
+            SimilarityGraph.RecordSimilarity(a, b, score);
         }
 
-        public List<BioSequence> GetSetOfSimilarSequences()
+        public static List<BioSequence> GetSetOfSimilarSequences()
         {
-            int n = Graph.Population / 2;
+            int n = SimilarityGraph.Population / 2;
             int attempts = Randomizer.Random.Next(1, n+1);
 
-            SequenceNode source = Graph.GetRandomStartingNode();
+            SequenceNode source = SimilarityGraph.GetRandomStartingNode();
             List<SequenceNode> group = GetRandomSetAroundNode(source, attempts);
 
             List<BioSequence> result = new List<BioSequence>();
@@ -39,7 +37,7 @@ namespace LibSimilarity
             return result;
         }
 
-        public List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
+        public static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
         {
             List<SequenceNode> members = new List<SequenceNode>();
             HashSet<string> blacklist = new HashSet<string>();
@@ -63,7 +61,7 @@ namespace LibSimilarity
             return members;
         }
 
-        private SequenceNode PickNodeFromListRandomly(List<SequenceNode> nodes)
+        private static SequenceNode PickNodeFromListRandomly(List<SequenceNode> nodes)
         {
             int n = nodes.Count;
             int i = Randomizer.Random.Next(n);
