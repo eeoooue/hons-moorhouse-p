@@ -18,5 +18,20 @@ namespace LibSimilarity
             NodeB = b;
             SimilarityScore = score;
         }
+
+        public SequenceNode GetNeighbour(SequenceNode node)
+        {
+            if (node.Identifier == NodeA.Identifier)
+            {
+                return NodeB;
+            }
+
+            if (node.Identifier == NodeB.Identifier)
+            {
+                return NodeA;
+            }
+
+            throw new ArgumentException("node passed into GetOtherNode() was not a member of the link");
+        }
     }
 }
