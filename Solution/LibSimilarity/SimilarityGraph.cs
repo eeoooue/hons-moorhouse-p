@@ -53,9 +53,8 @@ namespace LibSimilarity
             }
 
             SimilarityLink link = new SimilarityLink(nodeA, nodeB, score);
-            nodeA.AddConnection(nodeB.Identifier, link);
-            nodeB.AddConnection(nodeA.Identifier, link);
-
+            nodeA.AddConnection(link);
+            nodeB.AddConnection(link);
             RecordConnected(nodeA.Identifier);
             RecordConnected(nodeB.Identifier);
         }
