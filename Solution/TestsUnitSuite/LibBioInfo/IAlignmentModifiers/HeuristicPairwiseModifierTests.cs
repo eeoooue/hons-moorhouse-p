@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         public void AlignmentIsConserved()
         {
             Alignment original = ExampleAlignments.GetExampleA();
+            SimilarityGuide.SetSequences(original.Sequences);
+
             IAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(original);
 
@@ -40,6 +43,8 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         public void AlignmentIsDifferent()
         {
             Alignment original = ExampleAlignments.GetExampleA();
+            SimilarityGuide.SetSequences(original.Sequences);
+
             IAlignmentModifier randomizer = new AlignmentRandomizer();
             randomizer.ModifyAlignment(original);
 
