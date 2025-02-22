@@ -14,16 +14,9 @@ namespace LibModification.AlignmentModifiers
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-        public int GapWidthLimit;
-
-        public SmartGapInserter(int gapSizeLimit = 4)
-        {
-            GapWidthLimit = gapSizeLimit;
-        }
-
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            int gapWidth = PickGapWidth();
+            int gapWidth = PickGapWidth(alignment);
             char[,] modified = InsertGapOfWidth(alignment, gapWidth);
             return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
@@ -94,9 +87,10 @@ namespace LibModification.AlignmentModifiers
             return result;
         }
 
-        public int PickGapWidth()
+        public int PickGapWidth(Alignment alignment)
         {
-            int gapWidth = Randomizer.Random.Next(1, GapWidthLimit + 1);
+            int n = alignment.Width / 2;
+            int gapWidth = Randomizer.Random.Next(1, n + 1);
             return gapWidth;
         }
     }
