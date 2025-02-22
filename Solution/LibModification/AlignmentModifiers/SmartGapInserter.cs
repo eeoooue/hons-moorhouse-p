@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibModification.Helpers;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,24 +24,24 @@ namespace LibModification.AlignmentModifiers
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth();
-            char[,] modified = InsertGapOfWidth(in alignment.CharacterMatrix, gapWidth);
+            char[,] modified = InsertGapOfWidth(alignment, gapWidth);
             return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
 
-        public char[,] InsertGapOfWidth(in char[,] matrix, int gapWidth)
+        public char[,] InsertGapOfWidth(Alignment alignment, int gapWidth)
         {
-            int m = matrix.GetLength(0);
-            int n = matrix.GetLength(1) + gapWidth;
+            int m = alignment.Height;
+            int n = alignment.Width + gapWidth;
             int position1 = SuggestGapPosition(gapWidth, n);
             int position2 = SuggestGapPosition(gapWidth, n);
 
-            bool[] mapping = GetRowMapping(m);
+            bool[] mapping = GetRowMapping(alignment);
 
             char[,] result = new char[m, n];
 
             for (int i = 0; i < m; i++)
             {
-                string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
+                string payload = CharMatrixHelper.GetCharRowAsString(in alignment.CharacterMatrix, i);
 
                 if (mapping[i])
                 {
@@ -63,12 +64,39 @@ namespace LibModification.AlignmentModifiers
             return Randomizer.Random.Next(0, n);
         }
 
-        public bool[] GetRowMapping(int n)
+        public bool[] GetRowMapping(Alignment alignment)
         {
-            bool[] result = new bool[n];
-            for (int i = 0; i < n; i++)
+
+            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences();
+            int m = alignment.Height;
+
+            bool[] result = new bool[m];
+
+            for (int i=0; i<m; i++)
             {
-                result[i] = Randomizer.CoinFlip();
+                BioSequence sequence = alignment.Sequences[i];
+                if (selected.Contains(sequence.Identifier))
+                {
+                    result[i] = true;
+                }
+                else
+                {
+                    result[i] = false;
+                }
+            }
+
+            return result;
+        }
+
+
+        public HashSet<string> GetIdentifiersOfSetOfSimilarSequences()
+        {
+            List<BioSequence> selection = SimilarityGuide.GetSetOfSimilarSequences();
+
+            HashSet<string> result = new HashSet<string>();
+            foreach (BioSequence sequence in selection)
+            {
+                result.Add(sequence.Identifier);
             }
 
             return result;
