@@ -5,11 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibScoring;
+using LibBioInfo.ScoringMatrices;
+using LibScoring.FitnessFunctions;
+using LibSimilarity;
 
 namespace LibModification.Helpers
 {
     public class PairwiseAlignmentHelper
     {
+        private IFitnessFunction SimilarityScorer;
+
+        public PairwiseAlignmentHelper()
+        {
+            IScoringMatrix matrix = new PAM250Matrix();
+            SimilarityScorer = new SumOfPairsFitnessFunction(matrix);
+        }
+
         public void GetNewSequenceLayout(Alignment alignment, int i, int j, out string layoutA, out string layoutB)
         {
             char[,] matrix = PerformPairwiseAlignment(alignment, i, j);
@@ -43,8 +55,10 @@ namespace LibModification.Helpers
 
         public void UpdateSimilarityGuide(Alignment alignment, int i, int j, char[,] pairwiseMatrix)
         {
-            // TODO: implement
-            // throw new NotImplementedException("Update Similarity Guide method is not implemented");
+            double similarity = SimilarityScorer.GetFitness(pairwiseMatrix);
+            BioSequence a = alignment.Sequences[i];
+            BioSequence b = alignment.Sequences[j];
+            SimilarityGuide.RecordSimilarity(a, b, similarity);
         }
 
         public string CollectSequenceResidues(Alignment alignment, int i)
