@@ -22,7 +22,7 @@ namespace LibSimilarity
 
         public static List<BioSequence> GetSetOfSimilarSequences()
         {
-            int n = SimilarityGraph.Population / 2;
+            int n = SimilarityGraph.Population;
             int attempts = Randomizer.Random.Next(1, n+1);
 
             SequenceNode source = SimilarityGraph.GetRandomStartingNode();
