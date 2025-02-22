@@ -43,8 +43,8 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new SwapOperator(),
-                new GapInserter(),
-                new MultiRowStochasticSwapOperator(),
+                new SmartGapInserter(),
+                // new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
                 // new SmartBlockPermutationOperator(new PAM250Matrix()),
                 new SmartBlockScrollingOperator(new PAM250Matrix()),

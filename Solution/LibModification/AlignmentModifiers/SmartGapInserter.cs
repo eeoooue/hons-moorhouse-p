@@ -66,7 +66,6 @@ namespace LibModification.AlignmentModifiers
 
         public bool[] GetRowMapping(Alignment alignment)
         {
-
             HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences();
             int m = alignment.Height;
 
@@ -75,14 +74,7 @@ namespace LibModification.AlignmentModifiers
             for (int i=0; i<m; i++)
             {
                 BioSequence sequence = alignment.Sequences[i];
-                if (selected.Contains(sequence.Identifier))
-                {
-                    result[i] = true;
-                }
-                else
-                {
-                    result[i] = false;
-                }
+                result[i] = selected.Contains(sequence.Identifier);
             }
 
             return result;
