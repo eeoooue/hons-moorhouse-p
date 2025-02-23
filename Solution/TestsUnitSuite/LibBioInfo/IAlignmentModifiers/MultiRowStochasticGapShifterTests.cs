@@ -8,6 +8,7 @@ using TestsHarness.Tools;
 using TestsHarness;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 
 namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 {

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibModification.AlignmentModifiers
+namespace LibModification.AlignmentModifiers.Guided
 {
-    public class SmartGapInserter : AlignmentModifier, IAlignmentModifier
+    public class GuidedGapInserter : AlignmentModifier, IAlignmentModifier
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
@@ -64,7 +64,7 @@ namespace LibModification.AlignmentModifiers
 
             bool[] result = new bool[m];
 
-            for (int i=0; i<m; i++)
+            for (int i = 0; i < m; i++)
             {
                 BioSequence sequence = alignment.Sequences[i];
                 result[i] = selected.Contains(sequence.Identifier);
@@ -89,7 +89,7 @@ namespace LibModification.AlignmentModifiers
 
         public int PickGapWidth(Alignment alignment)
         {
-            int n = alignment.Width / 2;
+            int n = alignment.Width;
             int gapWidth = Randomizer.Random.Next(1, n + 1);
             return gapWidth;
         }
