@@ -10,19 +10,29 @@ namespace LibSimilarity
 {
     public static class SimilarityGuide
     {
+        public static SimilarityJudge Judge = new SimilarityJudge();
+
         public static void SetSequences(List<BioSequence> sequences)
         {
             SimilarityGraph.SetSequences(sequences);
         }
 
-        public static void RecordSimilarity(BioSequence a, BioSequence b, double score)
+        public static void UpdateSimilarity()
         {
-            SimilarityGraph.RecordSimilarity(a, b, score);
+            int i;
+            int j;
+            Randomizer.PickPairOfSequences(SimilarityGraph.Population, out i, out j);
+
+            BioSequence a = SimilarityGraph.Sequences[i];
+            BioSequence b = SimilarityGraph.Sequences[j];
+
+            double similarity = Judge.GetSimilarity(a, b);
+            SimilarityGraph.RecordSimilarity(a, b, similarity);
         }
 
         public static List<BioSequence> GetSetOfSimilarSequences()
         {
-            int n = SimilarityGraph.Population;
+            int n = SimilarityGraph.Population / 2;
             int attempts = Randomizer.Random.Next(1, n+1);
 
             SequenceNode source = SimilarityGraph.GetRandomStartingNode();
@@ -47,7 +57,7 @@ namespace LibSimilarity
             for(int i=0; i<attempts; i++)
             {
                 SequenceNode current = PickNodeFromListRandomly(members);
-                SequenceNode? suggestion = current.SuggestNeighbour();
+                SequenceNode? suggestion = start.SuggestNeighbour();
                 if (suggestion is SequenceNode option)
                 {
                     if (!blacklist.Contains(suggestion.Identifier))
