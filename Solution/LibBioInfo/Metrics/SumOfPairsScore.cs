@@ -83,13 +83,18 @@ namespace LibBioInfo.Metrics
                         combinations = a_count * (a_count - 1) / 2;
                     }
 
-                    int score = Matrix.ScorePair(a, b);
+                    int score = ScorePair(a, b);
                     int contribution = score * combinations;
                     result += contribution;
                 }
             }
 
             return result;
+        }
+
+        public int ScorePair(char a, char b)
+        {
+            return Matrix.ScorePair(a, b);
         }
 
         public int GetNumberOfPossiblePairs(in char[,] alignment)
