@@ -9,6 +9,8 @@ namespace LibSimilarity
         private static HashSet<string> HasConnection = new HashSet<string>();
         private static List<string> ConnectedIdentifiers = new List<string>();
 
+        public static List<BioSequence> Sequences = new List<BioSequence>();
+
         public static int ConnectedNodes { get { return ConnectedIdentifiers.Count; } }
 
         public static int NodeCount { get { return Identifiers.Count; } }
@@ -17,6 +19,7 @@ namespace LibSimilarity
 
         private static void ClearState()
         {
+            Sequences.Clear();
             Nodes.Clear();
             Identifiers.Clear();
             HasConnection.Clear();
@@ -65,6 +68,7 @@ namespace LibSimilarity
         public static void SetSequences(List<BioSequence> sequences)
         {
             ClearState();
+            Sequences = sequences;
             List<SequenceNode> nodes = CreateNodes(sequences);
             foreach (SequenceNode node in nodes)
             {
