@@ -21,9 +21,9 @@ namespace DevConsole
 
         public static void Main(string[] args)
         {
-            TestSimGuide();
+            // TestSimGuide();
 
-            // TestingMAli();
+            TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -35,7 +35,7 @@ namespace DevConsole
         public static void TestSimGuide()
         {
             FileHelper helper = new FileHelper();
-            Alignment alignment = helper.ReadAlignmentFrom("BB11002");
+            Alignment alignment = helper.ReadAlignmentFrom("BB11001");
 
             SimilarityGuide.SetSequences(alignment.Sequences);
 
@@ -52,6 +52,7 @@ namespace DevConsole
                     if (i != j)
                     {
                         modifier.AlignPairOfSequences(alignment, i, j);
+                        SimilarityGuide.UpdateSimilarity();
                         SayGraphState();
                     }
                 }
