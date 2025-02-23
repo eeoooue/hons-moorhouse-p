@@ -9,6 +9,10 @@ namespace LibSimilarity
         private static HashSet<string> HasConnection = new HashSet<string>();
         private static List<string> ConnectedIdentifiers = new List<string>();
 
+        public static int ConnectedNodes { get { return ConnectedIdentifiers.Count; } }
+
+        public static int NodeCount { get { return Identifiers.Count; } }
+
         public static int Population { get { return Identifiers.Count; } }
 
         private static void ClearState()
@@ -18,6 +22,45 @@ namespace LibSimilarity
             HasConnection.Clear();
             ConnectedIdentifiers.Clear();
         }
+
+
+        public static double GetPercentageSaturation()
+        {
+            int currentTotal = 0;
+            int maximumTotal = 0;
+
+            foreach (string identifier in Identifiers)
+            {
+                SequenceNode node = Nodes[identifier];
+                currentTotal += node.Connections.Count;
+                maximumTotal += Identifiers.Count - 1;
+            }
+
+            return (double) 100.0 * currentTotal / maximumTotal;
+        }
+
+        public static void DebugConnections()
+        {
+
+            foreach(string identifier in Identifiers)
+            {
+                SequenceNode node = Nodes[identifier];
+                foreach(SimilarityLink link in node.Connections)
+                {
+                    SequenceNode other = link.GetNeighbour(node);
+
+                    string a = node.Identifier;
+                    string b = other.Identifier;
+                    Console.WriteLine($"SimilarityLink: {a} -> {b} ({link.SimilarityScore})");
+                }
+                Console.WriteLine();
+            }
+
+
+
+        }
+
+
 
         public static void SetSequences(List<BioSequence> sequences)
         {

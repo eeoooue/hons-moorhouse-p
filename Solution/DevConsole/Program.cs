@@ -19,7 +19,7 @@ namespace DevConsole
         private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
 
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             TestSimGuide();
 
@@ -32,18 +32,18 @@ namespace DevConsole
 
 
 
-        static void TestSimGuide()
+        public static void TestSimGuide()
         {
             FileHelper helper = new FileHelper();
-            Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
+            Alignment alignment = helper.ReadAlignmentFrom("BB11002");
 
             SimilarityGuide.SetSequences(alignment.Sequences);
 
             int n = alignment.Sequences.Count;
 
-            Console.WriteLine($"Guide contains {n} sequences");
-
             HeuristicPairwiseModifier modifier = new HeuristicPairwiseModifier();
+
+            SayGraphState();
 
             for (int i=0; i<n; i++)
             {
@@ -52,17 +52,31 @@ namespace DevConsole
                     if (i != j)
                     {
                         modifier.AlignPairOfSequences(alignment, i, j);
+                        SayGraphState();
                     }
                 }
             }
+        }
 
+        public static void SayGraphState()
+        {
+            int connected = SimilarityGraph.ConnectedNodes;
+            int n = SimilarityGraph.NodeCount;
+            double saturation = Math.Round(SimilarityGraph.GetPercentageSaturation(), 0);
+            int percent = (int)Math.Round((double)(100 * connected / n), 0);
+
+            Console.WriteLine($"Graph contains {connected} connected nodes ({percent}%)");
+            Console.WriteLine($"Graph is {saturation}% saturated.");
+            Console.WriteLine();
+            SimilarityGraph.DebugConnections();
+            Console.WriteLine();
 
 
         }
 
 
 
-        static void TestingClustalWriter()
+        public static void TestingClustalWriter()
         {
             FileHelper helper = new FileHelper();
             Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
