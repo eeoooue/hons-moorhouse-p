@@ -3,6 +3,9 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibSimilarity;
 using MAli;
 using MAli.AlignmentConfigs;
 using MAli.Helpers;
@@ -18,12 +21,46 @@ namespace DevConsole
 
         static void Main(string[] args)
         {
-            TestingMAli();
+            TestSimGuide();
+
+            // TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
         }
+
+
+
+        static void TestSimGuide()
+        {
+            FileHelper helper = new FileHelper();
+            Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
+
+            SimilarityGuide.SetSequences(alignment.Sequences);
+
+            int n = alignment.Sequences.Count;
+
+            Console.WriteLine($"Guide contains {n} sequences");
+
+            HeuristicPairwiseModifier modifier = new HeuristicPairwiseModifier();
+
+            for (int i=0; i<n; i++)
+            {
+                for(int j=i+1; j<n; j++)
+                {
+                    if (i != j)
+                    {
+                        modifier.AlignPairOfSequences(alignment, i, j);
+                    }
+                }
+            }
+
+
+
+        }
+
+
 
         static void TestingClustalWriter()
         {
