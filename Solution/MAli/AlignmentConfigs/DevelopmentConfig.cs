@@ -13,6 +13,8 @@ using LibScoring.FitnessFunctions;
 using LibModification;
 using LibModification.AlignmentModifiers;
 using LibBioInfo.ScoringMatrices;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
+using LibModification.AlignmentModifiers.Guided;
 
 namespace MAli.AlignmentConfigs
 {
@@ -43,10 +45,10 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new SwapOperator(),
-                new SmartGapInserter(),
-                // new MultiRowStochasticSwapOperator(),
+                new GuidedGapInserter(),
+                new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
-                // new SmartBlockPermutationOperator(new PAM250Matrix()),
+                new SmartBlockPermutationOperator(new PAM250Matrix()),
                 new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 

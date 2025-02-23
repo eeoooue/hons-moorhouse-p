@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using LibModification.CrossoverOperators;
 using System.Security.AccessControl;
 using LibAlignment.Aligners.SingleState;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 
 namespace MAli.AlignmentConfigs
 {
