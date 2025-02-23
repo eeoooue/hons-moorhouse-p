@@ -14,14 +14,6 @@ namespace LibModification.Helpers
 {
     public class PairwiseAlignmentHelper
     {
-        private IFitnessFunction SimilarityScorer;
-
-        public PairwiseAlignmentHelper()
-        {
-            IScoringMatrix matrix = new PAM250Matrix();
-            SimilarityScorer = new SumOfPairsFitnessFunction(matrix);
-        }
-
         public void GetNewSequenceLayout(Alignment alignment, int i, int j, out string layoutA, out string layoutB)
         {
             char[,] matrix = PerformPairwiseAlignment(alignment, i, j);
@@ -43,28 +35,13 @@ namespace LibModification.Helpers
 
         public char[,] PerformPairwiseAlignment(Alignment alignment, int i, int j)
         {
-            string seqAresidues = CollectSequenceResidues(alignment, i);
-            string seqBresidues = CollectSequenceResidues(alignment, j);
+            string seqAresidues = alignment.Sequences[i].Residues;
+            string seqBresidues = alignment.Sequences[j].Residues;
 
             NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(seqAresidues, seqBresidues);
             char[,] result = aligner.ExtractPairwiseAlignment();
-            UpdateSimilarityGuide(alignment, i, j, result);
 
             return result;
-        }
-
-        public void UpdateSimilarityGuide(Alignment alignment, int i, int j, char[,] pairwiseMatrix)
-        {
-            double similarity = SimilarityScorer.GetFitness(pairwiseMatrix);
-            BioSequence a = alignment.Sequences[i];
-            BioSequence b = alignment.Sequences[j];
-            SimilarityGuide.RecordSimilarity(a, b, similarity);
-        }
-
-        public string CollectSequenceResidues(Alignment alignment, int i)
-        {
-            BioSequence sequence = alignment.Sequences[i];
-            return sequence.Residues;
         }
     }
 }
