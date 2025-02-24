@@ -139,5 +139,22 @@ namespace LibSimilarity
 
             return identifiers[i];
         }
+
+        public static List<BioSequence> TryFindPairOfUnconnectedSequences()
+        {
+            List<BioSequence> result = new List<BioSequence>();
+
+            string identifier = GetRandomIdentifier(Identifiers);
+            SequenceNode node = GetNode(identifier);
+
+            if (node.HasMissingConnections(Population))
+            {
+                BioSequence target = node.SelectRandomMissingNeighbour(Sequences);
+                result.Add(node.Sequence);
+                result.Add(target);
+            }
+
+            return result;
+        }
     }
 }
