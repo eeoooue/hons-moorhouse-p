@@ -12,7 +12,7 @@ namespace LibBioInfo.PairwiseAligners
         public int MismatchScore { get { return ScoringScheme.ResidueMismatch; } }
         public int GapScore { get { return ScoringScheme.ResidueWithGap; } }
 
-        private PairwiseScoringScheme ScoringScheme;
+        public PairwiseScoringScheme ScoringScheme;
 
         public int M;
         public int N;
