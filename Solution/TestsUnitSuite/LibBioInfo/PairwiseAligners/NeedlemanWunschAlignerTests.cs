@@ -16,10 +16,7 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
         public NeedlemanWunschPairwiseAligner GetAlignerWithScores(string a, string b)
         {
             NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(a, b);
-
-            aligner.MatchScore = 1;
-            aligner.MismatchScore = -1;
-            aligner.GapScore = -2;
+            aligner.ScoringScheme = new PairwiseScoringScheme(1, -1, -2);
 
             return aligner;
         }
