@@ -137,7 +137,7 @@ namespace MAli.AlignmentEngines
                 {
                     DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
-                aligner.Iterate();
+                PerformIterationOfAlignment(aligner, instructions);
             }
 
             if (DebugMode)
@@ -155,7 +155,7 @@ namespace MAli.AlignmentEngines
 
             while (DateTime.Now < deadline)
             {
-                aligner.Iterate();
+                PerformIterationOfAlignment(aligner, instructions);
                 time = DateTime.Now;
                 if (DebugMode)
                 {
@@ -167,6 +167,12 @@ namespace MAli.AlignmentEngines
                     break;
                 }
             }
+        }
+
+        public void PerformIterationOfAlignment(ParetoIterativeAligner aligner, AlignmentRequest instructions)
+        {
+            SimilarityGuide.UpdateSimilarity();
+            aligner.Iterate();
         }
     }
 }
