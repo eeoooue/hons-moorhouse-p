@@ -61,21 +61,19 @@ namespace DevConsole
 
         public static void SayGraphState()
         {
-            int connected = SimilarityGraph.ConnectedNodes;
-            int n = SimilarityGraph.NodeCount;
-            double saturation = Math.Round(SimilarityGraph.GetPercentageSaturation(), 0);
+            SimilarityGraph graph = SimilarityGuide.Graph;
+
+            int connected = graph.ConnectedNodes;
+            int n = graph.NodeCount;
+            double saturation = Math.Round(graph.GetPercentageSaturation(), 0);
             int percent = (int)Math.Round((double)(100 * connected / n), 0);
 
             Console.WriteLine($"Graph contains {connected} connected nodes ({percent}%)");
             Console.WriteLine($"Graph is {saturation}% saturated.");
             Console.WriteLine();
-            SimilarityGraph.DebugConnections();
+            graph.DebugConnections();
             Console.WriteLine();
-
-
         }
-
-
 
         public static void TestingClustalWriter()
         {

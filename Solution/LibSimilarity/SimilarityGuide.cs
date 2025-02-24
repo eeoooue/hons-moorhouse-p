@@ -12,14 +12,17 @@ namespace LibSimilarity
     {
         public static SimilarityJudge Judge = new SimilarityJudge();
 
+        public static SimilarityGraph Graph = new SimilarityGraph();
+
+
         public static void SetSequences(List<BioSequence> sequences)
         {
-            SimilarityGraph.SetSequences(sequences);
+            Graph.SetSequences(sequences);
         }
 
         public static void TryUpdateSimilarity()
         {
-            List<BioSequence> sequences = SimilarityGraph.TryFindPairOfUnconnectedSequences();
+            List<BioSequence> sequences = Graph.TryFindPairOfUnconnectedSequences();
             if (sequences.Count == 2)
             {
                 UpdateSimilarity(sequences[0], sequences[1]);
@@ -29,15 +32,15 @@ namespace LibSimilarity
         public static void UpdateSimilarity(BioSequence a, BioSequence b)
         {
             double similarity = Judge.GetSimilarity(a, b);
-            SimilarityGraph.RecordSimilarity(a, b, similarity);
+            Graph.RecordSimilarity(a, b, similarity);
         }
 
         public static List<BioSequence> GetSetOfSimilarSequences()
         {
-            int n = SimilarityGraph.Population / 2;
+            int n = Graph.Population / 2;
             int attempts = Randomizer.Random.Next(1, n+1);
 
-            SequenceNode source = SimilarityGraph.GetRandomStartingNode();
+            SequenceNode source = Graph.GetRandomStartingNode();
             List<SequenceNode> group = GetRandomSetAroundNode(source, attempts);
 
             List<BioSequence> result = new List<BioSequence>();

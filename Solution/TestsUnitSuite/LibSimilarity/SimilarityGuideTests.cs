@@ -20,7 +20,8 @@ namespace TestsUnitSuite.LibSimilarity
         {
             List<BioSequence> sequences = GetExampleSequences();
             SimilarityGuide.SetSequences(sequences);
-            SimilarityGraph.RecordSimilarity(sequences[0], sequences[1], 200);
+            SimilarityGraph graph = SimilarityGuide.Graph;
+            graph.RecordSimilarity(sequences[0], sequences[1], 200);
 
             List<BioSequence> set = SimilarityGuide.GetSetOfSimilarSequences();
             Assert.IsTrue(set.Count > 0);

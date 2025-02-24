@@ -2,21 +2,21 @@
 
 namespace LibSimilarity
 {
-    public static class SimilarityGraph
+    public class SimilarityGraph
     {
-        private static Dictionary<string, SequenceNode> Nodes = new Dictionary<string, SequenceNode>();
-        private static List<string> Identifiers = new List<string>();
-        private static HashSet<string> HasConnection = new HashSet<string>();
-        private static List<string> ConnectedIdentifiers = new List<string>();
-        public static List<BioSequence> Sequences = new List<BioSequence>();
+        private Dictionary<string, SequenceNode> Nodes = new Dictionary<string, SequenceNode>();
+        private List<string> Identifiers = new List<string>();
+        private HashSet<string> HasConnection = new HashSet<string>();
+        private List<string> ConnectedIdentifiers = new List<string>();
+        public List<BioSequence> Sequences = new List<BioSequence>();
 
-        public static int ConnectedNodes { get { return ConnectedIdentifiers.Count; } }
+        public int ConnectedNodes { get { return ConnectedIdentifiers.Count; } }
 
-        public static int NodeCount { get { return Identifiers.Count; } }
+        public int NodeCount { get { return Identifiers.Count; } }
 
-        public static int Population { get { return Identifiers.Count; } }
+        public int Population { get { return Identifiers.Count; } }
 
-        private static void ClearState()
+        private void ClearState()
         {
             Sequences.Clear();
             Nodes.Clear();
@@ -25,7 +25,7 @@ namespace LibSimilarity
             ConnectedIdentifiers.Clear();
         }
 
-        public static double GetPercentageSaturation()
+        public double GetPercentageSaturation()
         {
             int currentTotal = 0;
             int maximumTotal = 0;
@@ -40,7 +40,7 @@ namespace LibSimilarity
             return (double) 100.0 * currentTotal / maximumTotal;
         }
 
-        public static void DebugConnections()
+        public void DebugConnections()
         {
             foreach(string identifier in Identifiers)
             {
@@ -57,7 +57,7 @@ namespace LibSimilarity
             }
         }
 
-        public static void SetSequences(List<BioSequence> sequences)
+        public void SetSequences(List<BioSequence> sequences)
         {
             ClearState();
             Sequences = sequences;
@@ -69,7 +69,7 @@ namespace LibSimilarity
             }
         }
 
-        public static List<SequenceNode> CreateNodes(List<BioSequence> sequences)
+        public List<SequenceNode> CreateNodes(List<BioSequence> sequences)
         {
             List<SequenceNode> result = new List<SequenceNode>();
             foreach (BioSequence sequence in sequences)
@@ -81,19 +81,19 @@ namespace LibSimilarity
             return result;
         }
 
-        public static SequenceNode GetNode(string identifier)
+        public SequenceNode GetNode(string identifier)
         {
             return Nodes[identifier];
         }
 
-        public static void RecordSimilarity(BioSequence a, BioSequence b, double score)
+        public void RecordSimilarity(BioSequence a, BioSequence b, double score)
         {
             SequenceNode nodeA = GetNode(a.Identifier);
             SequenceNode nodeB = GetNode(b.Identifier);
             ConnectNodes(nodeA, nodeB, score);
         }
 
-        public static void ConnectNodes(SequenceNode nodeA, SequenceNode nodeB, double score)
+        public void ConnectNodes(SequenceNode nodeA, SequenceNode nodeB, double score)
         {
             if (nodeA.IsConnectedTo(nodeB.Identifier))
             {
@@ -107,7 +107,7 @@ namespace LibSimilarity
             RecordConnected(nodeB.Identifier);
         }
 
-        private static void RecordConnected(string identifier)
+        private void RecordConnected(string identifier)
         {
             if (!HasConnection.Contains(identifier))
             {
@@ -116,13 +116,13 @@ namespace LibSimilarity
             }
         }
 
-        public static SequenceNode GetRandomStartingNode()
+        public SequenceNode GetRandomStartingNode()
         {
             string identifier = GetRandomConnectedIdentifierIfPossible();
             return Nodes[identifier];
         }
 
-        public static string GetRandomConnectedIdentifierIfPossible()
+        public string GetRandomConnectedIdentifierIfPossible()
         {
             if (ConnectedIdentifiers.Count > 0)
             {
@@ -132,7 +132,7 @@ namespace LibSimilarity
             return GetRandomIdentifier(Identifiers);
         }
 
-        public static string GetRandomIdentifier(List<string> identifiers)
+        public string GetRandomIdentifier(List<string> identifiers)
         {
             int n = identifiers.Count;
             int i = Randomizer.Random.Next(n);
@@ -140,7 +140,7 @@ namespace LibSimilarity
             return identifiers[i];
         }
 
-        public static List<BioSequence> TryFindPairOfUnconnectedSequences()
+        public List<BioSequence> TryFindPairOfUnconnectedSequences()
         {
             List<BioSequence> result = new List<BioSequence>();
 
