@@ -28,6 +28,7 @@ namespace TestsRequirements
         /// Can align structural benchmarking test cases containing as many as 30 sequences.
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("1a0cA_1ubpC")]
         public void Req4x01(string inputPath)
         {
@@ -43,6 +44,7 @@ namespace TestsRequirements
         /// Can align a structural benchmarking test case of at least 20 sequences within 60 seconds.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         [DataRow("1a0cA_1ubpC")]
         [Timeout(60000)]
         public void Req4x02(string inputPath)
