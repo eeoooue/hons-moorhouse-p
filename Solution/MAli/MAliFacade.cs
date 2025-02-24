@@ -57,6 +57,8 @@ namespace MAli
                     return new ParetoAlignmentEngine(ParetoConfig);
                 case BatchAlignmentRequest:
                     return new BatchAlignmentEngine(Config);
+                case ScoringRequest:
+                    return new ScoringEngine(Config);
                 default:
                     return new AlignmentEngine(Config);
             }

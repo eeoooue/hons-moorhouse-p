@@ -30,13 +30,17 @@ namespace MAli.Helpers
             if (table.ContainsKey("pareto"))
             {
                 request = new ParetoAlignmentRequest();
-
                 if (request is ParetoAlignmentRequest paretoReq)
                 {
                     paretoReq.NumberOfTradeoffs = int.Parse(table["pareto"]!);
                 }
-
             }
+
+            if (table.ContainsKey("scoreonly"))
+            {
+                request = new ScoringRequest();
+            }
+
             if (table.ContainsKey("batch"))
             {
                 request = new BatchAlignmentRequest();
