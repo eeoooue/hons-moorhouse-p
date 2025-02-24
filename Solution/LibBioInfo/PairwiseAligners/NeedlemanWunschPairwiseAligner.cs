@@ -8,9 +8,11 @@ namespace LibBioInfo.PairwiseAligners
 {
     public class NeedlemanWunschPairwiseAligner
     {
-        public int MatchScore = 1;
-        public int MismatchScore = -1;
-        public int GapScore = -2;
+        public int MatchScore { get { return ScoringScheme.ResidueMatch; } }
+        public int MismatchScore { get { return ScoringScheme.ResidueMismatch; } }
+        public int GapScore { get { return ScoringScheme.ResidueWithGap; } }
+
+        private PairwiseScoringScheme ScoringScheme;
 
         public int M;
         public int N;
@@ -21,6 +23,7 @@ namespace LibBioInfo.PairwiseAligners
 
         public NeedlemanWunschPairwiseAligner(string sequenceA, string sequenceB)
         {
+            ScoringScheme = new PairwiseScoringScheme(0, -20, -25);
             SequenceA = $"-{sequenceA}";
             SequenceB = $"-{sequenceB}";
             M = SequenceA.Length;
@@ -144,8 +147,6 @@ namespace LibBioInfo.PairwiseAligners
 
             return result.ToString();
         }
-
-        
 
         public void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)
         {
