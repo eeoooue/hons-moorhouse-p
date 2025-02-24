@@ -3,6 +3,7 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
+using LibSimilarity;
 using MAli.Helpers;
 using MAli.ParetoAlignmentConfigs;
 using MAli.UserRequests;
@@ -52,6 +53,7 @@ namespace MAli.AlignmentEngines
             {
                 Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
+                SimilarityGuide.SetSequences(sequences);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
@@ -135,7 +137,7 @@ namespace MAli.AlignmentEngines
                 {
                     DebuggingHelper.ShowDebuggingInfo(aligner);
                 }
-                aligner.Iterate();
+                PerformIterationOfAlignment(aligner, instructions);
             }
 
             if (DebugMode)
@@ -153,7 +155,7 @@ namespace MAli.AlignmentEngines
 
             while (DateTime.Now < deadline)
             {
-                aligner.Iterate();
+                PerformIterationOfAlignment(aligner, instructions);
                 time = DateTime.Now;
                 if (DebugMode)
                 {
@@ -165,6 +167,12 @@ namespace MAli.AlignmentEngines
                     break;
                 }
             }
+        }
+
+        public void PerformIterationOfAlignment(ParetoIterativeAligner aligner, AlignmentRequest instructions)
+        {
+            SimilarityGuide.TryUpdateSimilarity();
+            aligner.Iterate();
         }
     }
 }

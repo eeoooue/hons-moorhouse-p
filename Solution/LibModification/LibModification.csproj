@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
     <ProjectReference Include="..\LibScoring\LibScoring.csproj" />
+    <ProjectReference Include="..\LibSimilarity\LibSimilarity.csproj" />
   </ItemGroup>
 
 </Project>

@@ -27,6 +27,7 @@ namespace TestsRequirements
         /// Given sequences to align, produces a valid solution - independent of quality.
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("BB11001")]
         public void Req1x01(string inputPath)
         {
@@ -43,6 +44,7 @@ namespace TestsRequirements
         [DataRow("BB11002", "B")]
         [DataRow("BB11003", "C")]
         [DataRow("1a0cA_1ubpC", "D")]
+        [DoNotParallelize]
         [Timeout(8000)]
         public void Req1x02(string inputPath, string suffix)
         {
@@ -57,6 +59,7 @@ namespace TestsRequirements
         [TestMethod]
         [DataTestMethod]
         [DataRow("BB11002")]
+        [DoNotParallelize]
         [Timeout(10000)]
         public void Req1x03(string inputPath)
         {

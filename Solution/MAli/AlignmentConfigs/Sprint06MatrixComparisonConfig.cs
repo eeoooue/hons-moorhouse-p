@@ -12,6 +12,7 @@ using LibModification;
 using LibModification.AlignmentModifiers;
 using LibAlignment.Aligners.PopulationBased;
 using LibAlignment.Aligners.SingleState;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 
 namespace MAli.AlignmentConfigs
 {

@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment.Helpers;
 using LibScoring;
 using System;

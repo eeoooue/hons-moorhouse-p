@@ -3,6 +3,9 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibSimilarity;
 using MAli;
 using MAli.AlignmentConfigs;
 using MAli.Helpers;
@@ -16,8 +19,10 @@ namespace DevConsole
         private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
 
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            // TestSimGuide();
+
             TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
@@ -25,7 +30,52 @@ namespace DevConsole
             // TestingConfigParsing();
         }
 
-        static void TestingClustalWriter()
+
+
+        public static void TestSimGuide()
+        {
+            FileHelper helper = new FileHelper();
+            Alignment alignment = helper.ReadAlignmentFrom("BB11001");
+
+            SimilarityGuide.SetSequences(alignment.Sequences);
+
+            int n = alignment.Sequences.Count;
+
+            HeuristicPairwiseModifier modifier = new HeuristicPairwiseModifier();
+
+            SayGraphState();
+
+            for (int i=0; i<n; i++)
+            {
+                for(int j=i+1; j<n; j++)
+                {
+                    if (i != j)
+                    {
+                        modifier.AlignPairOfSequences(alignment, i, j);
+                        SimilarityGuide.TryUpdateSimilarity();
+                        SayGraphState();
+                    }
+                }
+            }
+        }
+
+        public static void SayGraphState()
+        {
+            SimilarityGraph graph = SimilarityGuide.Graph;
+
+            int connected = graph.ConnectedNodes;
+            int n = graph.NodeCount;
+            double saturation = Math.Round(graph.GetPercentageSaturation(), 0);
+            int percent = (int)Math.Round((double)(100 * connected / n), 0);
+
+            Console.WriteLine($"Graph contains {connected} connected nodes ({percent}%)");
+            Console.WriteLine($"Graph is {saturation}% saturated.");
+            Console.WriteLine();
+            graph.DebugConnections();
+            Console.WriteLine();
+        }
+
+        public static void TestingClustalWriter()
         {
             FileHelper helper = new FileHelper();
             Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
@@ -75,14 +125,16 @@ namespace DevConsole
 
             // RunMAli("-help");
 
-            RunMAli("-input BB11001 -output test -debug -format clustal");
+            // RunMAli("-input BB11001 -output test -debug -format clustal");
 
 
             // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
-            // RunMAli("-input BB11001 -output test -debug -scorefile");
 
+            // RunMAli("-input BB11001 -output test -debug");
 
-            // RunMAli("-input BB11001 -output test -debug -scorefile");
+            // RunMAli("-input BB11002 -output test -debug");
+
+            RunMAli("-input 1a0cA_1ubpC -output test -debug");
 
 
             // RunMAli("-input BB11001 -output test -iterations 1000 -debug");

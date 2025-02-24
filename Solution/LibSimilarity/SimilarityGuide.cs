@@ -8,21 +8,34 @@ using System.Xml.Linq;
 
 namespace LibSimilarity
 {
-    public class SimilarityGuide : ISimilarityGuide
+    public static class SimilarityGuide
     {
-        private SimilarityGraph Graph;
+        public static SimilarityJudge Judge = new SimilarityJudge();
 
-        public SimilarityGuide(List<BioSequence> sequences)
+        public static SimilarityGraph Graph = new SimilarityGraph();
+
+
+        public static void SetSequences(List<BioSequence> sequences)
         {
-            Graph = new SimilarityGraph(sequences);
+            Graph.SetSequences(sequences);
         }
 
-        public void RecordSimilarity(BioSequence a, BioSequence b, double score)
+        public static void TryUpdateSimilarity()
         {
-            Graph.RecordSimilarity(a, b, score);
+            List<BioSequence> sequences = Graph.TryFindPairOfUnconnectedSequences();
+            if (sequences.Count == 2)
+            {
+                UpdateSimilarity(sequences[0], sequences[1]);
+            }
         }
 
-        public List<BioSequence> GetSetOfSimilarSequences()
+        public static void UpdateSimilarity(BioSequence a, BioSequence b)
+        {
+            double similarity = Judge.GetSimilarity(a, b);
+            Graph.RecordSimilarity(a, b, similarity);
+        }
+
+        public static List<BioSequence> GetSetOfSimilarSequences()
         {
             int n = Graph.Population / 2;
             int attempts = Randomizer.Random.Next(1, n+1);
@@ -39,7 +52,7 @@ namespace LibSimilarity
             return result;
         }
 
-        public List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
+        public static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
         {
             List<SequenceNode> members = new List<SequenceNode>();
             HashSet<string> blacklist = new HashSet<string>();
@@ -49,7 +62,7 @@ namespace LibSimilarity
             for(int i=0; i<attempts; i++)
             {
                 SequenceNode current = PickNodeFromListRandomly(members);
-                SequenceNode? suggestion = current.SuggestNeighbour();
+                SequenceNode? suggestion = start.SuggestNeighbour();
                 if (suggestion is SequenceNode option)
                 {
                     if (!blacklist.Contains(suggestion.Identifier))
@@ -63,7 +76,7 @@ namespace LibSimilarity
             return members;
         }
 
-        private SequenceNode PickNodeFromListRandomly(List<SequenceNode> nodes)
+        private static SequenceNode PickNodeFromListRandomly(List<SequenceNode> nodes)
         {
             int n = nodes.Count;
             int i = Randomizer.Random.Next(n);

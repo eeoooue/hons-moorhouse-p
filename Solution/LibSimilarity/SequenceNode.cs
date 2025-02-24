@@ -46,24 +46,34 @@ namespace LibSimilarity
             return ConnectedNodes.Contains(identifier);
         }
 
-        public List<SequenceNode> GetNeighbours()
+        public bool HasMissingConnections(int alignmentHeight)
         {
-            List<SequenceNode> result = new List<SequenceNode>();
-            foreach(SimilarityLink link in Connections)
+            int possibleNeighbours = alignmentHeight - 1;
+            return Connections.Count < possibleNeighbours;
+        }
+
+        public List<BioSequence> ListMissingConnections(List<BioSequence> sequences)
+        {
+            List<BioSequence> result = new List<BioSequence>();
+            foreach (BioSequence sequence in sequences)
             {
-                SequenceNode nodeA = link.NodeA;
-                SequenceNode nodeB = link.NodeB;
-                if (nodeA.Identifier != Identifier)
+                if (!IsConnectedTo(sequence.Identifier))
                 {
-                    result.Add(nodeA);
-                }
-                else
-                {
-                    result.Add(nodeB);
+                    if (sequence.Identifier != Identifier)
+                    {
+                        result.Add(sequence);
+                    }
                 }
             }
 
             return result;
+        }
+
+        public BioSequence SelectRandomMissingNeighbour(List<BioSequence> sequences)
+        {
+            List<BioSequence> candidates = ListMissingConnections(sequences);
+            int i = Randomizer.Random.Next(candidates.Count);
+            return candidates[i];
         }
 
         public SequenceNode? SuggestNeighbour()

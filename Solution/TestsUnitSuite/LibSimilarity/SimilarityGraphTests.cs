@@ -19,7 +19,9 @@ namespace TestsUnitSuite.LibSimilarity
         public void CanRecordSimilarity()
         {
             List<BioSequence> sequences = GetExampleSequences();
-            SimilarityGraph graph = new SimilarityGraph(sequences);
+            SimilarityGuide.SetSequences(sequences);
+
+            SimilarityGraph graph = SimilarityGuide.Graph;
             graph.RecordSimilarity(sequences[0], sequences[1], 200);
         }
 
@@ -27,11 +29,11 @@ namespace TestsUnitSuite.LibSimilarity
         public void CanGetStartingNode()
         {
             List<BioSequence> sequences = GetExampleSequences();
-            SimilarityGraph graph = new SimilarityGraph(sequences);
+            SimilarityGuide.SetSequences(sequences);
+
+            SimilarityGraph graph = SimilarityGuide.Graph;
             SequenceNode node1 = graph.GetRandomStartingNode();
-
             graph.RecordSimilarity(sequences[0], sequences[1], 200);
-
             SequenceNode node2 = graph.GetRandomStartingNode();
 
             bool isSeq0 = node2.Identifier == sequences[0].Identifier;

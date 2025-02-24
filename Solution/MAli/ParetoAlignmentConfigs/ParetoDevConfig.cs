@@ -3,6 +3,7 @@ using LibBioInfo;
 using LibBioInfo.ScoringMatrices;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment;
 using LibParetoAlignment.Aligners;
 using LibScoring;

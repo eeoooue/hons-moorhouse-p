@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibModification.AlignmentModifiers
+namespace LibModification.AlignmentModifiers.MultiRowStochastic
 {
     public class MultiRowStochasticGapShifter : AlignmentModifier, IAlignmentModifier
     {

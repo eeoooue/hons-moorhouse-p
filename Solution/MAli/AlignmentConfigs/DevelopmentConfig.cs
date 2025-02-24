@@ -13,6 +13,8 @@ using LibScoring.FitnessFunctions;
 using LibModification;
 using LibModification.AlignmentModifiers;
 using LibBioInfo.ScoringMatrices;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
+using LibModification.AlignmentModifiers.Guided;
 
 namespace MAli.AlignmentConfigs
 {
@@ -26,19 +28,9 @@ namespace MAli.AlignmentConfigs
         public IFitnessFunction GetObjective()
         {
             IScoringMatrix matrix = new BLOSUM62Matrix();
-            IFitnessFunction objectiveA = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-            IFitnessFunction objectiveB = new TotallyConservedColumnsFitnessFunction();
-            IFitnessFunction objectiveC = new NonGapsFitnessFunction();
+            IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
 
-            List<IFitnessFunction> functions = new List<IFitnessFunction>();
-            functions.Add(objectiveA);
-            functions.Add(objectiveB);
-
-            List<double> weights = new List<double>() {0.90, 0.10 };
-
-            WeightedCombinationOfFitnessFunctions weightedCombo = new WeightedCombinationOfFitnessFunctions(functions, weights);
-
-            return weightedCombo;
+            return objective;
         }
 
 
@@ -53,9 +45,11 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new SwapOperator(),
-                new GapInserter(),
+                new GuidedGapInserter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
+                // new SmartBlockPermutationOperator(new PAM250Matrix()),
+                // new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             aligner.TweakModifier = new MultiOperatorModifier(modifiers);

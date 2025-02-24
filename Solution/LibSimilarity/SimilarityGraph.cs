@@ -8,13 +8,61 @@ namespace LibSimilarity
         private List<string> Identifiers = new List<string>();
         private HashSet<string> HasConnection = new HashSet<string>();
         private List<string> ConnectedIdentifiers = new List<string>();
+        public List<BioSequence> Sequences = new List<BioSequence>();
+
+        public int ConnectedNodes { get { return ConnectedIdentifiers.Count; } }
+
+        public int NodeCount { get { return Identifiers.Count; } }
 
         public int Population { get { return Identifiers.Count; } }
 
-        public SimilarityGraph(List<BioSequence> sequences)
+        private void ClearState()
         {
+            Sequences.Clear();
+            Nodes.Clear();
+            Identifiers.Clear();
+            HasConnection.Clear();
+            ConnectedIdentifiers.Clear();
+        }
+
+        public double GetPercentageSaturation()
+        {
+            int currentTotal = 0;
+            int maximumTotal = 0;
+
+            foreach (string identifier in Identifiers)
+            {
+                SequenceNode node = Nodes[identifier];
+                currentTotal += node.Connections.Count;
+                maximumTotal += Identifiers.Count - 1;
+            }
+
+            return (double) 100.0 * currentTotal / maximumTotal;
+        }
+
+        public void DebugConnections()
+        {
+            foreach(string identifier in Identifiers)
+            {
+                SequenceNode node = Nodes[identifier];
+                foreach(SimilarityLink link in node.Connections)
+                {
+                    SequenceNode other = link.GetNeighbour(node);
+
+                    string a = node.Identifier;
+                    string b = other.Identifier;
+                    Console.WriteLine($"SimilarityLink: {a} -> {b} ({link.SimilarityScore})");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public void SetSequences(List<BioSequence> sequences)
+        {
+            ClearState();
+            Sequences = sequences;
             List<SequenceNode> nodes = CreateNodes(sequences);
-            foreach(SequenceNode node in nodes)
+            foreach (SequenceNode node in nodes)
             {
                 Nodes[node.Identifier] = node;
                 Identifiers.Add(node.Identifier);
@@ -90,6 +138,23 @@ namespace LibSimilarity
             int i = Randomizer.Random.Next(n);
 
             return identifiers[i];
+        }
+
+        public List<BioSequence> TryFindPairOfUnconnectedSequences()
+        {
+            List<BioSequence> result = new List<BioSequence>();
+
+            string identifier = GetRandomIdentifier(Identifiers);
+            SequenceNode node = GetNode(identifier);
+
+            if (node.HasMissingConnections(Population))
+            {
+                BioSequence target = node.SelectRandomMissingNeighbour(Sequences);
+                result.Add(node.Sequence);
+                result.Add(target);
+            }
+
+            return result;
         }
     }
 }

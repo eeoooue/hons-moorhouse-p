@@ -9,6 +9,7 @@ using TestsHarness;
 using LibFileIO;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 
 namespace TestsPerformance.LibBioInfo.IAlignmentModifiers
 {

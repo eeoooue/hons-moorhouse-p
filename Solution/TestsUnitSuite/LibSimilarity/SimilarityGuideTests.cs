@@ -16,21 +16,14 @@ namespace TestsUnitSuite.LibSimilarity
         ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
 
         [TestMethod]
-        public void CanRecordSimilarity()
-        {
-            List<BioSequence> sequences = GetExampleSequences();
-            SimilarityGuide guide = new SimilarityGuide(sequences);
-            guide.RecordSimilarity(sequences[0], sequences[1], 200);
-        }
-
-        [TestMethod]
         public void CanGetSetOfSequences()
         {
             List<BioSequence> sequences = GetExampleSequences();
-            SimilarityGuide guide = new SimilarityGuide(sequences);
-            guide.RecordSimilarity(sequences[0], sequences[1], 200);
+            SimilarityGuide.SetSequences(sequences);
+            SimilarityGraph graph = SimilarityGuide.Graph;
+            graph.RecordSimilarity(sequences[0], sequences[1], 200);
 
-            List<BioSequence> set = guide.GetSetOfSimilarSequences();
+            List<BioSequence> set = SimilarityGuide.GetSetOfSimilarSequences();
             Assert.IsTrue(set.Count > 0);
         }
 
