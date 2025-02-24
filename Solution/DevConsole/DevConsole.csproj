@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="1a0cA_1ubpC">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="batchin\BB11001">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
