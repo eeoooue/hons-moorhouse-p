@@ -11,6 +11,11 @@ namespace MAli.Helpers
     {
         public UserRequest UnpackInstructions(Dictionary<string, string?> table)
         {
+            if (table.ContainsKey("scoreonly"))
+            {
+                return ConstructScoreRequest(table);
+            }
+
             try
             {
                 AlignmentRequest request = InitializeAlignmentRequest(table);
@@ -21,6 +26,22 @@ namespace MAli.Helpers
             {
                 return new MalformedRequest("Error: Failed to unpack alignment request.");
             }
+        }
+
+        public UserRequest ConstructScoreRequest(Dictionary<string, string?> table)
+        {
+            ScoreRequest request = new ScoreRequest();
+
+            request.InputPath = table["input"]!;
+            request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
+
+            request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
+            if (request.SpecifiesCustomConfig)
+            {
+                request.ConfigPath = table["config"]!;
+            }
+
+            return request;
         }
 
         public AlignmentRequest InitializeAlignmentRequest(Dictionary<string, string?> table)
