@@ -78,9 +78,13 @@ namespace MAli.Helpers
 
         public void TryDisplayAlignment(Alignment? alignment)
         {
-            if (alignment is Alignment current)
+            if (alignment is Alignment current && alignment.Height < 10)
             {
                 DebugHelper.PaintAlignment(alignment);
+            }
+            else
+            {
+                Console.WriteLine("[ Alignment contains too many sequences to display. ]");
             }
         }
     }

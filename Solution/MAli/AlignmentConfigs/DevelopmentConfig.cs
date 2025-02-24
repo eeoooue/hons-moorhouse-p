@@ -48,8 +48,8 @@ namespace MAli.AlignmentConfigs
                 new GuidedGapInserter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
-                new SmartBlockPermutationOperator(new PAM250Matrix()),
-                new SmartBlockScrollingOperator(new PAM250Matrix()),
+                // new SmartBlockPermutationOperator(new PAM250Matrix()),
+                // new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             aligner.TweakModifier = new MultiOperatorModifier(modifiers);
