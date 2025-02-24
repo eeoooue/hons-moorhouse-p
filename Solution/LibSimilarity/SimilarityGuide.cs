@@ -17,15 +17,13 @@ namespace LibSimilarity
             SimilarityGraph.SetSequences(sequences);
         }
 
-        public static void UpdateSimilarity()
+        public static void TryUpdateSimilarity()
         {
-            int i;
-            int j;
-            Randomizer.PickPairOfSequences(SimilarityGraph.Population, out i, out j);
-
-            BioSequence a = SimilarityGraph.Sequences[i];
-            BioSequence b = SimilarityGraph.Sequences[j];
-            UpdateSimilarity(a, b);
+            List<BioSequence> sequences = SimilarityGraph.TryFindPairOfUnconnectedSequences();
+            if (sequences.Count == 2)
+            {
+                UpdateSimilarity(sequences[0], sequences[1]);
+            }
         }
 
         public static void UpdateSimilarity(BioSequence a, BioSequence b)
