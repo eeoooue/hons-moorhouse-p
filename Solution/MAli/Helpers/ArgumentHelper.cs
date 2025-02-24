@@ -11,11 +11,6 @@ namespace MAli.Helpers
     {
         public UserRequest UnpackInstructions(Dictionary<string, string?> table)
         {
-            if (table.ContainsKey("scoreonly"))
-            {
-                return ConstructScoreRequest(table);
-            }
-
             try
             {
                 AlignmentRequest request = InitializeAlignmentRequest(table);
@@ -28,20 +23,6 @@ namespace MAli.Helpers
             }
         }
 
-        public UserRequest ConstructScoreRequest(Dictionary<string, string?> table)
-        {
-            ScoreRequest request = new ScoreRequest();
-            request.InputPath = table["input"]!;
-            request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
-            request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
-            if (request.SpecifiesCustomConfig)
-            {
-                request.ConfigPath = table["config"]!;
-            }
-
-            return request;
-        }
-
         public AlignmentRequest InitializeAlignmentRequest(Dictionary<string, string?> table)
         {
             AlignmentRequest request = new AlignmentRequest();
@@ -49,13 +30,17 @@ namespace MAli.Helpers
             if (table.ContainsKey("pareto"))
             {
                 request = new ParetoAlignmentRequest();
-
                 if (request is ParetoAlignmentRequest paretoReq)
                 {
                     paretoReq.NumberOfTradeoffs = int.Parse(table["pareto"]!);
                 }
-
             }
+
+            if (table.ContainsKey("scoreonly"))
+            {
+                request = new ScoringRequest();
+            }
+
             if (table.ContainsKey("batch"))
             {
                 request = new BatchAlignmentRequest();
