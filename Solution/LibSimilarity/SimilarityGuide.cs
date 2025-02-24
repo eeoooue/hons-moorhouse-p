@@ -25,7 +25,11 @@ namespace LibSimilarity
 
             BioSequence a = SimilarityGraph.Sequences[i];
             BioSequence b = SimilarityGraph.Sequences[j];
+            UpdateSimilarity(a, b);
+        }
 
+        public static void UpdateSimilarity(BioSequence a, BioSequence b)
+        {
             double similarity = Judge.GetSimilarity(a, b);
             SimilarityGraph.RecordSimilarity(a, b, similarity);
         }
