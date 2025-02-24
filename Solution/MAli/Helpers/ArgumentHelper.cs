@@ -31,10 +31,8 @@ namespace MAli.Helpers
         public UserRequest ConstructScoreRequest(Dictionary<string, string?> table)
         {
             ScoreRequest request = new ScoreRequest();
-
             request.InputPath = table["input"]!;
             request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
-
             request.SpecifiesCustomConfig = CommandsIncludeFlag(table, "config");
             if (request.SpecifiesCustomConfig)
             {
