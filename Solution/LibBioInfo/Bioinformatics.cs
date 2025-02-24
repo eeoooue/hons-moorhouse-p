@@ -13,12 +13,20 @@ namespace LibBioInfo
         public HashSet<char> ProteinResidues = new HashSet<char>();
         public HashSet<char> GapCharacters = new HashSet<char> { '-', '.' };
 
+        public static HashSet<char> GapChars = new HashSet<char> { '-', '.' };
+
+
         public Bioinformatics()
         {
             foreach (char c in "CSTAGPDEQNHRKMILVWYF")
             {
                 ProteinResidues.Add(c);
             }
+        }
+
+        public static bool IsGap(char c)
+        {
+            return GapChars.Contains(c);
         }
 
         public bool IsGapChar(char c)

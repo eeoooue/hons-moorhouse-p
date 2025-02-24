@@ -26,5 +26,21 @@ namespace LibBioInfo
             double result = Random.NextDouble();
             return result <= chanceOfEvent;
         }
+
+        public static void PickPairOfSequences(Alignment alignment, out int i, out int j)
+        {
+            PickPairOfSequences(alignment.Height, out i, out j);
+        }
+
+        public static void PickPairOfSequences(int height, out int i, out int j) {
+
+            i = Random.Next(height);
+            j = i;
+            while (i == j)
+            {
+                j = Random.Next(height);
+            }
+        }
+
     }
 }
