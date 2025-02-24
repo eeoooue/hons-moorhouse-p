@@ -49,6 +49,11 @@ namespace MAli
             Console.WriteLine();
         }
 
+        public void PerformScoring(ScoreRequest request)
+        {
+
+        }
+
         private IAlignmentEngine ConstructEngine(AlignmentRequest request)
         {
             switch (request)
