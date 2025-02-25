@@ -5,6 +5,7 @@ using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.Mechanisms;
 using LibSimilarity;
 using MAli;
 using MAli.AlignmentConfigs;
@@ -23,11 +24,32 @@ namespace DevConsole
         {
             // TestSimGuide();
 
-            TestingMAli();
+            TestGapInsertion();
+
+            // TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
+        }
+
+
+        public static void TestGapInsertion()
+        {
+            FileHelper helper = new FileHelper();
+            Alignment alignment = helper.ReadAlignmentFrom("BB11001");
+
+            Console.WriteLine("BEFORE");
+            Helper.PrintAlignmentState(alignment);
+
+            GapInsertion insertion = new GapInsertion();
+            bool[] mask = { true, true, false, false };
+            insertion.InsertGaps(alignment, mask, 4, 0, 1);
+
+            Console.WriteLine("AFTER");
+            Helper.PrintAlignmentState(alignment);
+
+
         }
 
 
