@@ -44,7 +44,12 @@ namespace LibModification.Mechanisms
 
             if (gapIndex == -1)
             {
-                throw new NotImplementedException();
+                // TODO: FIX LOGIC
+
+                //char[,] matrix = ColumnInsertion.InsertEmptyColumn(original, 0);
+                //Console.WriteLine($"matrix has with = {matrix.GetLength(1)}");
+                //return ShiftResidueLeft(matrix, i, j);
+
                 return original;
             }
 
@@ -65,7 +70,12 @@ namespace LibModification.Mechanisms
 
             if (gapIndex == -1)
             {
-                throw new NotImplementedException();
+                // TODO: FIX LOGIC
+
+                //int n = original.GetLength(1);
+                //char[,] matrix = ColumnInsertion.InsertEmptyColumn(original, n);
+                //return ShiftResidueRight(matrix, i, j);
+
                 return original;
             }
 

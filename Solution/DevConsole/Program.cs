@@ -24,9 +24,9 @@ namespace DevConsole
         {
             // TestSimGuide();
 
-            // TestGapInsertion();
+            TestGapInsertion();
 
-            TestingMAli();
+            // TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -42,7 +42,9 @@ namespace DevConsole
             Console.WriteLine("BEFORE");
             Helper.PrintAlignmentState(alignment);
 
-            ResidueShift.ShiftResidue(alignment, 0, 0, ShiftDirection.Rightwise);
+            ColumnInsertion.InsertEmptyColumn(alignment, 0);
+
+            // ResidueShift.ShiftResidue(alignment, 0, 0, ShiftDirection.Leftwise);
 
             Console.WriteLine("AFTER");
             Helper.PrintAlignmentState(alignment);
