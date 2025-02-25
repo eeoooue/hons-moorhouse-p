@@ -9,8 +9,6 @@ namespace LibModification.Helpers
 {
     public class BiosequencePayloadHelper
     {
-        public Bioinformatics Bioinformatics = new Bioinformatics();
-
         public string ExtractResiduesFromString(string payload)
         {
             StringBuilder sb = new StringBuilder();
@@ -23,12 +21,6 @@ namespace LibModification.Helpers
             }
             return sb.ToString();
         }
-
-
-
-        
-
-
 
         public string GetPayloadWithGapInserted(string payload, int gapWidth, int position)
         {

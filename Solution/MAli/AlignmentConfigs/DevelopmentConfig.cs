@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetEvoAligner();
+            return GetAligner();
         }
 
         public IFitnessFunction GetObjective()
@@ -70,6 +70,7 @@ namespace MAli.AlignmentConfigs
             {
                 new SwapOperator(),
                 new GuidedGapInserter(),
+                // new GuidedResidueShifter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
                 new ResidueShifter(),

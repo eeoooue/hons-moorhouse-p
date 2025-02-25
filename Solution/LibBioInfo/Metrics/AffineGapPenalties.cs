@@ -12,8 +12,6 @@ namespace LibBioInfo.Metrics
         public double OpeningCost { get; private set; }
         public double NullCost { get; private set; }
 
-        private Bioinformatics Bioinformatics = new Bioinformatics();
-
         public AffineGapPenalties(double openingCost = 4, double nullCost = 1)
         {
             OpeningCost = openingCost;
@@ -23,15 +21,9 @@ namespace LibBioInfo.Metrics
         public double GetMaximumPossiblePenalty(in char[,] alignment)
         {
             int m = alignment.GetLength(0);
-            int n = alignment.GetLength(1);
-            int maximumNumberOfOpeningsPerRow = n - n / 2;
-            int maximumNumberOfOpenings = m * maximumNumberOfOpeningsPerRow;
-            int maximumNumberOfGapsPerRow = n - 1;
-            int maximumNumberOfGaps = m * maximumNumberOfGapsPerRow;
-
-            double result = 0.0;
-            result += maximumNumberOfOpenings * OpeningCost;
-            result += maximumNumberOfGaps * NullCost;
+            int residueCount = GetNumberOfResiduesInFirstRow(alignment);
+            int pseudoCount = m * residueCount;
+            double result = pseudoCount * (OpeningCost + NullCost);
 
             return result;
         }
@@ -41,6 +33,21 @@ namespace LibBioInfo.Metrics
             return 0.0;
         }
 
+        public int GetNumberOfResiduesInFirstRow(in char[,] alignment)
+        {
+            int n = alignment.GetLength(1);
+            int total = 0;
+
+            for(int j=0; j<n; j++)
+            {
+                if (!Bioinformatics.IsGap(alignment[0, j]))
+                {
+                    total++;
+                }
+            }
+
+            return total;
+        }
 
         public double GetPenaltyForAlignmentMatrix(in char[,] alignment)
         {

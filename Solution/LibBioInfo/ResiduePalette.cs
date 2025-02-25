@@ -8,8 +8,6 @@ namespace LibBioInfo
 {
     public class ResiduePalette
     {
-        public Bioinformatics Bioinformatics = new Bioinformatics();
-
         public ConsoleColor GetForegroundColour(char x)
         {
             return ConsoleColor.White;

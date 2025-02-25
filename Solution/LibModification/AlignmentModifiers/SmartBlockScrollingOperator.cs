@@ -10,7 +10,6 @@ namespace LibModification.AlignmentModifiers
 {
     public class SmartBlockScrollingOperator : IAlignmentModifier
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
         private IScoringMatrix Matrix;
         private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 

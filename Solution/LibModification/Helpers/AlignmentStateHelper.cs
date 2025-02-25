@@ -9,8 +9,6 @@ namespace LibModification.Helpers
 {
     public class AlignmentStateHelper
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
-
         public bool[,] ConvertMatrixFromCharToBool(in char[,] state)
         {
             int m = state.GetLength(0);
