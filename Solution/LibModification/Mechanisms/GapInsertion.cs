@@ -24,6 +24,7 @@ namespace LibModification.Mechanisms
             for(int i=0; i<m; i++)
             {
                 int gapPosition = mask[i] ? j1 : j2;
+                // Console.WriteLine($"Inserting gap of width = {width} @ {gapPosition}");
                 PasteSequenceWithGapAt(alignment, matrix, i, gapPosition, width);
             }
 
@@ -32,8 +33,9 @@ namespace LibModification.Mechanisms
 
         public void PasteSequenceWithGapAt(Alignment alignment, char[,] destination, int i, int gapPosition, int width)
         {
+
             string payload = alignment.GetAlignedPayload(i);
-            payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapPosition, width);
+            payload = PayloadHelper.GetPayloadWithGapInserted(payload, width, gapPosition);
 
             for(int j=0; j<payload.Length; j++)
             {
