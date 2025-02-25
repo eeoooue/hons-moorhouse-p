@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.Mechanisms;
 using LibSimilarity;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         {
             string stuff = "--X--";
             List<int> expected = new List<int>() { 2, 2 };
-            List<int> actual = Modifier.CollectDistancesBetweenResidues(stuff);
+            List<int> actual = PairwiseAlignment.CollectDistancesBetweenResidues(stuff);
             bool listsMatch = ListsMatch(expected, actual);
             Assert.IsTrue(listsMatch);
         }
@@ -76,7 +77,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
         {
             string stuff = "X----X--X";
             List<int> expected = new List<int>() { 0, 4, 2, 0 };
-            List<int> actual = Modifier.CollectDistancesBetweenResidues(stuff);
+            List<int> actual = PairwiseAlignment.CollectDistancesBetweenResidues(stuff);
             bool listsMatch = ListsMatch(expected, actual);
             Assert.IsTrue(listsMatch);
         }
@@ -88,7 +89,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             string before = "--X--";
             string after =  "--X--";
 
-            List<int> actual = Modifier.GetCanvasRecipe(before, after);
+            List<int> actual = PairwiseAlignment.GetCanvasRecipe(before, after);
 
             bool listsMatch = ListsMatch(expected, actual);
             Assert.IsTrue(listsMatch);
@@ -101,7 +102,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             string before = "--X--";
             string after = "---X---";
 
-            List<int> actual = Modifier.GetCanvasRecipe(before, after);
+            List<int> actual = PairwiseAlignment.GetCanvasRecipe(before, after);
 
             bool listsMatch = ListsMatch(expected, actual);
             Assert.IsTrue(listsMatch);
@@ -118,7 +119,7 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
             // - X--X-X- X-
             // --X--X-X--X-
 
-            List<int> actual = Modifier.GetCanvasRecipe(before, after);
+            List<int> actual = PairwiseAlignment.GetCanvasRecipe(before, after);
 
             bool listsMatch = ListsMatch(expected, actual);
             Assert.IsTrue(listsMatch);
