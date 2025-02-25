@@ -39,14 +39,9 @@ namespace LibModification.AlignmentModifiers
                 k = Randomizer.Random.Next(1, n / 2);
             }
 
-            if (Randomizer.CoinFlip())
-            {
-                SwapMSASA.Swap(ref matrix, i, j, k, SwapDirection.Left);
-            }
-            else
-            {
-                SwapMSASA.Swap(ref matrix, i, j, k, SwapDirection.Right);
-            }
+            SwapDirection direction = Randomizer.CoinFlip() ? SwapDirection.Left : SwapDirection.Right;
+
+            SwapMSASA.Swap(ref matrix, i, j, k, direction);
         }
     }
 }

@@ -13,6 +13,11 @@ namespace LibModification.AlignmentModifiers.Guided
 {
     public class GuidedMultiplePairwiseModifier : AlignmentModifier
     {
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
+        {
+            return AlignSetOfSimilarSequencesAtOnce(alignment);
+        }
+
         public char[,] AlignSetOfSimilarSequencesAtOnce(Alignment alignment)
         {
             List<BioSequence> selection = SimilarityGuide.GetSetOfSimilarSequences();
@@ -26,11 +31,6 @@ namespace LibModification.AlignmentModifiers.Guided
             }
 
             return alignment.CharacterMatrix;
-        }
-
-        public override char[,] GetModifiedAlignmentState(Alignment alignment)
-        {
-            return AlignSetOfSimilarSequencesAtOnce(alignment);
         }
     }
 }
