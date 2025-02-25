@@ -24,9 +24,9 @@ namespace DevConsole
         {
             // TestSimGuide();
 
-            TestGapInsertion();
+            // TestGapInsertion();
 
-            // TestingMAli();
+            TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -71,7 +71,7 @@ namespace DevConsole
                 {
                     if (i != j)
                     {
-                        modifier.AlignPairOfSequences(alignment, i, j);
+                        PairwiseAlignment.AlignPairOfSequences(alignment, i, j);
                         SimilarityGuide.TryUpdateSimilarity();
                         SayGraphState();
                     }
