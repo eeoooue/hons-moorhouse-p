@@ -12,8 +12,6 @@ namespace LibBioInfo.Metrics
         public double OpeningCost { get; private set; }
         public double NullCost { get; private set; }
 
-        private Bioinformatics Bioinformatics = new Bioinformatics();
-
         public AffineGapPenalties(double openingCost = 4, double nullCost = 1)
         {
             OpeningCost = openingCost;

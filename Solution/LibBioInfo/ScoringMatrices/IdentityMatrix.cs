@@ -9,8 +9,6 @@ namespace LibBioInfo.ScoringMatrices
 {
     public class IdentityMatrix : IScoringMatrix
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
-
         public double GetBestPairwiseScorePossible()
         {
             return 1;

@@ -18,7 +18,6 @@ namespace LibModification.AlignmentModifiers
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-        public Bioinformatics Bioinformatics = new Bioinformatics();
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {

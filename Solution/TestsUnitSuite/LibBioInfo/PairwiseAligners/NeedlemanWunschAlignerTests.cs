@@ -71,15 +71,13 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
 
         public bool AlignmentFeaturesResiduesInOrder(char[,] alignment, string residues, int i)
         {
-            Bioinformatics bioinformatics = new Bioinformatics();
-
             int n = alignment.GetLength(1);
             StringBuilder sb = new StringBuilder();
 
             for(int j=0; j<n; j++)
             {
                 char x = alignment[i, j];
-                if (!bioinformatics.IsGapChar(x))
+                if (!Bioinformatics.IsGapChar(x))
                 {
                     sb.Append(x);
                 }

@@ -12,7 +12,6 @@ namespace LibModification.Mechanisms
     {
         public static CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         public static PairwiseAlignmentHelper PairwiseAlignmentHelper = new PairwiseAlignmentHelper();
-        public static Bioinformatics Bioinformatics = new Bioinformatics();
 
         public static char[,] AlignPairOfSequences(Alignment alignment, int i, int j)
         {

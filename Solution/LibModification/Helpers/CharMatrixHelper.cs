@@ -9,8 +9,6 @@ namespace LibModification.Helpers
 {
     public class CharMatrixHelper
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
-
         public void ClearAlignmentRow(ref char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);

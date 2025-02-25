@@ -9,7 +9,6 @@ namespace MAli.Helpers
 {
     public class AlignmentDebugHelper
     {
-        public Bioinformatics Bioinformatics = new Bioinformatics();
         public ResiduePalette ResiduePalette = new ResiduePalette();
         public NucleotidePalette NucleotidePalette = new NucleotidePalette();
 
