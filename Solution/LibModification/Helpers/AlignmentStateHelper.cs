@@ -55,44 +55,5 @@ namespace LibModification.Helpers
 
             return result;
         }
-
-        public char[,] ConvertMatrixFromBoolToChar(List<string> residueChains, in bool[,] state)
-        {
-            int m = state.GetLength(0);
-            int n = state.GetLength(1);
-
-            char[,] result = new char[m, n];
-
-            for (int i = 0; i < m; i++)
-            {
-                string residues = residueChains[i];
-                int p = 0;
-                for (int j = 0; j < n; j++)
-                {
-                    result[i, j] = '-';
-                    if (!state[i, j])
-                    {
-                        char x = residues[p++];
-                        result[i, j] = x;
-                    }
-                }
-            }
-
-            return result;
-        }
-
-
-        public bool[] ExtractRow(in bool[,] matrix, int i)
-        {
-            int n = matrix.GetLength(1);
-            bool[] result = new bool[n];
-
-            for (int j = 0; j < n; j++)
-            {
-                result[j] = matrix[i, j];
-            }
-
-            return result;
-        }
     }
 }
