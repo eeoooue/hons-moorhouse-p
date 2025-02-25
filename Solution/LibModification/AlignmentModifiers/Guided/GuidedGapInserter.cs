@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibModification.Helpers;
+using LibModification.Mechanisms;
 using LibSimilarity;
 using System;
 using System.Collections.Generic;
@@ -13,78 +14,28 @@ namespace LibModification.AlignmentModifiers.Guided
     {
         public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+        private GapInsertion GapInsertion = new GapInsertion();
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth(alignment);
-            char[,] modified = InsertGapOfWidth(alignment, gapWidth);
-            return CharMatrixHelper.RemoveEmptyColumns(in modified);
+            bool[] mapping = SimilarityGuide.GetSetOfSimilarSequencesAsMask(alignment);
+            SuggestPairOfGapPositions(alignment, out int j1, out int j2);
+            GapInsertion.InsertGaps(alignment, mapping, gapWidth, j1, j2);
+
+            return CharMatrixHelper.RemoveEmptyColumns(alignment.CharacterMatrix);
         }
 
-        public char[,] InsertGapOfWidth(Alignment alignment, int gapWidth)
+        public void SuggestPairOfGapPositions(Alignment alignment, out int j1, out int j2)
         {
-            int m = alignment.Height;
-            int n = alignment.Width + gapWidth;
-            int position1 = SuggestGapPosition(gapWidth, n);
-            int position2 = SuggestGapPosition(gapWidth, n);
+            int limit = alignment.Width + 1;
+            j1 = Randomizer.Random.Next(0, limit);
+            j2 = j1;
 
-            bool[] mapping = GetRowMapping(alignment);
-
-            char[,] result = new char[m, n];
-
-            for (int i = 0; i < m; i++)
+            while (j1 == j2)
             {
-                string payload = CharMatrixHelper.GetCharRowAsString(in alignment.CharacterMatrix, i);
-
-                if (mapping[i])
-                {
-                    payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapWidth, position1);
-                }
-                else
-                {
-                    payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapWidth, position2);
-                }
-
-                CharMatrixHelper.WriteStringOverMatrixRow(ref result, i, payload);
+                j2 = Randomizer.Random.Next(0, limit);
             }
-
-            return result;
-        }
-
-        public int SuggestGapPosition(int gapWidth, int stateWidth)
-        {
-            int n = stateWidth - gapWidth;
-            return Randomizer.Random.Next(0, n);
-        }
-
-        public bool[] GetRowMapping(Alignment alignment)
-        {
-            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences();
-            int m = alignment.Height;
-
-            bool[] result = new bool[m];
-
-            for (int i = 0; i < m; i++)
-            {
-                BioSequence sequence = alignment.Sequences[i];
-                result[i] = selected.Contains(sequence.Identifier);
-            }
-
-            return result;
-        }
-
-
-        public HashSet<string> GetIdentifiersOfSetOfSimilarSequences()
-        {
-            List<BioSequence> selection = SimilarityGuide.GetSetOfSimilarSequences();
-
-            HashSet<string> result = new HashSet<string>();
-            foreach (BioSequence sequence in selection)
-            {
-                result.Add(sequence.Identifier);
-            }
-
-            return result;
         }
 
         public int PickGapWidth(Alignment alignment)

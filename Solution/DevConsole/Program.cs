@@ -24,9 +24,9 @@ namespace DevConsole
         {
             // TestSimGuide();
 
-            TestGapInsertion();
+            // TestGapInsertion();
 
-            // TestingMAli();
+            TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -48,8 +48,6 @@ namespace DevConsole
 
             Console.WriteLine("AFTER");
             Helper.PrintAlignmentState(alignment);
-
-
         }
 
 
@@ -152,13 +150,13 @@ namespace DevConsole
 
             // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
 
-            // RunMAli("-input BB11001 -output test -debug");
+            RunMAli("-input BB11001 -output test -debug");
 
             // RunMAli("-input BB11002 -output test -debug");
 
             // RunMAli("-input 1a0cA_1ubpC -output test -debug");
 
-            RunMAli("-input 1a0cA_1ubpC -output test -scoreonly");
+            // RunMAli("-input 1a0cA_1ubpC -output test -scoreonly");
 
 
 
