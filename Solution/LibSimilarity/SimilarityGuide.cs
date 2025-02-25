@@ -67,7 +67,9 @@ namespace LibSimilarity
 
         public static List<BioSequence> GetSetOfSimilarSequences()
         {
-            int n = Graph.Population / 2;
+            TryUpdateSimilarity();
+
+            int n = Graph.Population;
             int attempts = Randomizer.Random.Next(1, n+1);
 
             SequenceNode source = Graph.GetRandomStartingNode();
@@ -92,7 +94,7 @@ namespace LibSimilarity
             for(int i=0; i<attempts; i++)
             {
                 SequenceNode current = PickNodeFromListRandomly(members);
-                SequenceNode? suggestion = start.SuggestNeighbour();
+                SequenceNode? suggestion = current.SuggestNeighbour();
                 if (suggestion is SequenceNode option)
                 {
                     if (!blacklist.Contains(suggestion.Identifier))
