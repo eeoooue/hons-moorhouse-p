@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibModification.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,14 @@ namespace LibModification.Mechanisms
 {
     public static class VerticalCrossover
     {
-        public static void ProduceChildrenFromMapping(Alignment a, Alignment b, bool[] mapping, out Alignment child1, out Alignment child2)
+        private static CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+
+        public static List<Alignment> ProduceChildrenFromMapping(Alignment a, Alignment b, bool[] mapping)
         {
-            child1 = ProduceChildUsingMapping(a, b, mapping);
-            child2 = ProduceChildUsingMapping(b, a, mapping);
+            Alignment child1 = ProduceChildUsingMapping(a, b, mapping);
+            Alignment child2 = ProduceChildUsingMapping(b, a, mapping);
+
+            return new List<Alignment> { child1, child2 };
         }
 
         public static Alignment ProduceChildUsingMapping(Alignment a, Alignment b, bool[] mapping)
@@ -36,7 +41,7 @@ namespace LibModification.Mechanisms
                 PastePayloadOntoMatrix(current.CharacterMatrix, result, i);
             }
 
-            return result;
+            return CharMatrixHelper.RemoveEmptyColumns(result);
         }
 
         public static void PastePayloadOntoMatrix(in char[,] source, char[,] destination, int i)
