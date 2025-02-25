@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetAligner();
+            return GetEvoAligner();
         }
 
         public IFitnessFunction GetObjective()
@@ -33,6 +33,30 @@ namespace MAli.AlignmentConfigs
             return objective;
         }
 
+        private IterativeAligner GetEvoAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+
+            const int maxIterations = 100;
+
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new SwapOperator(),
+                new GuidedGapInserter(),
+                new MultiRowStochasticSwapOperator(),
+                new HeuristicPairwiseModifier(),
+                new ResidueShifter(),
+                // new SmartBlockPermutationOperator(new PAM250Matrix()),
+                // new SmartBlockScrollingOperator(new PAM250Matrix()),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+
+
+            return aligner;
+        }
 
         private IterativeAligner GetAligner()
         {
