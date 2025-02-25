@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetAligner();
+            return GetGeneticAligner();
         }
 
         public IFitnessFunction GetObjective()
@@ -31,6 +31,33 @@ namespace MAli.AlignmentConfigs
             IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
 
             return objective;
+        }
+
+        private IterativeAligner GetGeneticAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+
+            const int maxIterations = 100;
+
+            GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations, 50);
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                // new SwapOperator(),
+                new GuidedGapInserter(),
+                new GuidedResidueShifter(),
+                // new GapShifter(),
+                // new MultiRowStochasticSwapOperator(),
+                new HeuristicPairwiseModifier(),
+                // new ResidueShifter(),
+                new GuidedSwap(),
+                //new SmartBlockPermutationOperator(new PAM250Matrix()),
+                //new SmartBlockScrollingOperator(new PAM250Matrix()),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+
+            return aligner;
         }
 
         private IterativeAligner GetEvoAligner()
