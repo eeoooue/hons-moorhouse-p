@@ -14,7 +14,7 @@ namespace LibSimilarity
         public RouletteSlice(SimilarityLink link, double weighting)
         {
             Link = link;
-            Weighting = weighting;
+            Weighting = Math.Max(1e-10, weighting);
         }
     }
 }
