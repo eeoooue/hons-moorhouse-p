@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace LibModification.Mechanisms
 {
-    internal class GapInsertion
+    public class GapInsertion
     {
         private BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
-
 
         public void InsertGaps(Alignment alignment, bool[] mask, int width, int j1, int j2)
         {
