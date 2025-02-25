@@ -33,6 +33,71 @@ namespace MAli.AlignmentConfigs
             return objective;
         }
 
+        private IterativeAligner GetGeneticAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+
+            const int maxIterations = 100;
+
+            ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, maxIterations, 50);
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                // new SwapOperator(),
+                new GuidedGapInserter(),
+                new GuidedResidueShifter(),
+                // new GapShifter(),
+                // new MultiRowStochasticSwapOperator(),
+                new HeuristicPairwiseModifier(),
+                // new ResidueShifter(),
+                new GuidedSwap(),
+                //new SmartBlockPermutationOperator(new PAM250Matrix()),
+                //new SmartBlockScrollingOperator(new PAM250Matrix()),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+
+            return aligner;
+        }
+
+        private IterativeAligner GetEvoAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+
+            const int maxIterations = 100;
+
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
+
+            //List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            //{
+            //    new SwapOperator(),
+            //    new GuidedGapInserter(),
+            //    new MultiRowStochasticSwapOperator(),
+            //    new HeuristicPairwiseModifier(),
+            //    new ResidueShifter(),
+            //    // new SmartBlockPermutationOperator(new PAM250Matrix()),
+            //    // new SmartBlockScrollingOperator(new PAM250Matrix()),
+            //};
+
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                // new SwapOperator(),
+                new GuidedGapInserter(),
+                new GuidedResidueShifter(),
+                // new GapShifter(),
+                // new MultiRowStochasticSwapOperator(),
+                new HeuristicPairwiseModifier(),
+                // new ResidueShifter(),
+                new GuidedSwap(),
+                //new SmartBlockPermutationOperator(new PAM250Matrix()),
+                //new SmartBlockScrollingOperator(new PAM250Matrix()),
+            };
+
+            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+
+
+            return aligner;
+        }
 
         private IterativeAligner GetAligner()
         {
@@ -44,12 +109,16 @@ namespace MAli.AlignmentConfigs
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                new SwapOperator(),
+                // new SwapOperator(),
                 new GuidedGapInserter(),
-                new MultiRowStochasticSwapOperator(),
+                new GuidedResidueShifter(),
+                // new GapShifter(),
+                // new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
-                // new SmartBlockPermutationOperator(new PAM250Matrix()),
-                // new SmartBlockScrollingOperator(new PAM250Matrix()),
+                // new ResidueShifter(),
+                new GuidedSwap(),
+                //new SmartBlockPermutationOperator(new PAM250Matrix()),
+                //new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             aligner.TweakModifier = new MultiOperatorModifier(modifiers);

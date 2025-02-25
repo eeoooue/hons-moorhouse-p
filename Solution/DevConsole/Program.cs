@@ -5,6 +5,7 @@ using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.Mechanisms;
 using LibSimilarity;
 using MAli;
 using MAli.AlignmentConfigs;
@@ -23,11 +24,30 @@ namespace DevConsole
         {
             // TestSimGuide();
 
+            // TestGapInsertion();
+
             TestingMAli();
 
             // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
+        }
+
+
+        public static void TestGapInsertion()
+        {
+            FileHelper helper = new FileHelper();
+            Alignment alignment = helper.ReadAlignmentFrom("BB11001");
+
+            Console.WriteLine("BEFORE");
+            Helper.PrintAlignmentState(alignment);
+
+            ColumnInsertion.InsertEmptyColumn(alignment, 0);
+
+            // ResidueShift.ShiftResidue(alignment, 0, 0, ShiftDirection.Leftwise);
+
+            Console.WriteLine("AFTER");
+            Helper.PrintAlignmentState(alignment);
         }
 
 
@@ -51,7 +71,7 @@ namespace DevConsole
                 {
                     if (i != j)
                     {
-                        modifier.AlignPairOfSequences(alignment, i, j);
+                        PairwiseAlignment.AlignPairOfSequences(alignment, i, j);
                         SimilarityGuide.TryUpdateSimilarity();
                         SayGraphState();
                     }
@@ -130,13 +150,14 @@ namespace DevConsole
 
             // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
 
+            RunMAli("-input BB11001 -output test -debug -seconds 10");
             // RunMAli("-input BB11001 -output test -debug");
 
             // RunMAli("-input BB11002 -output test -debug");
 
             // RunMAli("-input 1a0cA_1ubpC -output test -debug");
 
-            RunMAli("-input 1a0cA_1ubpC -output test -scoreonly");
+            // RunMAli("-input 1a0cA_1ubpC -output test -scoreonly");
 
 
 

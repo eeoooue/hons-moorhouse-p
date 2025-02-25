@@ -35,6 +35,36 @@ namespace LibSimilarity
             Graph.RecordSimilarity(a, b, similarity);
         }
 
+        public static bool[] GetSetOfSimilarSequencesAsMask(Alignment alignment)
+        {
+            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences();
+            int m = alignment.Height;
+
+            bool[] result = new bool[m];
+
+            for (int i = 0; i < m; i++)
+            {
+                BioSequence sequence = alignment.Sequences[i];
+                result[i] = selected.Contains(sequence.Identifier);
+            }
+
+            return result;
+        }
+
+        public static HashSet<string> GetIdentifiersOfSetOfSimilarSequences()
+        {
+            List<BioSequence> selection = GetSetOfSimilarSequences();
+
+            HashSet<string> result = new HashSet<string>();
+            foreach (BioSequence sequence in selection)
+            {
+                result.Add(sequence.Identifier);
+            }
+
+            return result;
+        }
+
+
         public static List<BioSequence> GetSetOfSimilarSequences()
         {
             int n = Graph.Population / 2;

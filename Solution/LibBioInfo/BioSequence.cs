@@ -12,8 +12,6 @@ namespace LibBioInfo
         public string Payload { get; private set; }
         public string Residues { get; private set; }
 
-        private static Bioinformatics Bioinformatics = new Bioinformatics();
-
         public BioSequence(string identifier, string payload)
         {
             Identifier = identifier;

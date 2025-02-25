@@ -1,6 +1,7 @@
 ﻿using LibBioInfo;
 using LibBioInfo.PairwiseAligners;
 using LibModification.Helpers;
+using LibModification.Mechanisms;
 using LibSimilarity;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,10 @@ namespace LibModification.AlignmentModifiers.Guided
 {
     public class GuidedMultiplePairwiseModifier : AlignmentModifier
     {
-        HeuristicPairwiseModifier PairwiseModifier = new HeuristicPairwiseModifier();
+        public override char[,] GetModifiedAlignmentState(Alignment alignment)
+        {
+            return AlignSetOfSimilarSequencesAtOnce(alignment);
+        }
 
         public char[,] AlignSetOfSimilarSequencesAtOnce(Alignment alignment)
         {
@@ -22,26 +26,11 @@ namespace LibModification.AlignmentModifiers.Guided
             for (int i = 1; i < selection.Count; i++)
             {
                 int current = alignment.GetIndexOfSequence(selection[i]);
-                alignment.CharacterMatrix = PairwiseModifier.AlignPairOfSequences(alignment, previous, current);
+                alignment.CharacterMatrix = PairwiseAlignment.AlignPairOfSequences(alignment, previous, current);
                 previous = current;
             }
 
             return alignment.CharacterMatrix;
-        }
-
-        public override char[,] GetModifiedAlignmentState(Alignment alignment)
-        {
-            return AlignSetOfSimilarSequencesAtOnce(alignment);
-        }
-
-        public void PickRandomPairOfSequences(Alignment alignment, out int i, out int j)
-        {
-            i = Randomizer.Random.Next(alignment.Height);
-            j = i;
-            while (i == j)
-            {
-                j = Randomizer.Random.Next(alignment.Height);
-            }
         }
     }
 }

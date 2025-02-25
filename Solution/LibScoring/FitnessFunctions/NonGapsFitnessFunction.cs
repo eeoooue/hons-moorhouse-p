@@ -9,7 +9,6 @@ namespace LibScoring.FitnessFunctions
 {
     public class NonGapsFitnessFunction : NormalisedFitnessFunction
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
 
         public override string GetName()
         {
