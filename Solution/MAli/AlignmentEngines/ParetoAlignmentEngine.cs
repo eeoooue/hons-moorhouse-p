@@ -171,7 +171,6 @@ namespace MAli.AlignmentEngines
 
         public void PerformIterationOfAlignment(ParetoIterativeAligner aligner, AlignmentRequest instructions)
         {
-            SimilarityGuide.TryUpdateSimilarity();
             aligner.Iterate();
         }
     }
