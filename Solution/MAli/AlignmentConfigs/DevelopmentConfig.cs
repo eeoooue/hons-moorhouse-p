@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetGeneticAligner();
+            return GetAligner();
         }
 
         public IFitnessFunction GetObjective()
@@ -39,7 +39,7 @@ namespace MAli.AlignmentConfigs
 
             const int maxIterations = 100;
 
-            GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations, 50);
+            ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, maxIterations, 50);
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
