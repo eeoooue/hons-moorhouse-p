@@ -42,9 +42,7 @@ namespace DevConsole
             Console.WriteLine("BEFORE");
             Helper.PrintAlignmentState(alignment);
 
-            GapInsertion insertion = new GapInsertion();
-            bool[] mask = { true, true, false, false };
-            insertion.InsertGaps(alignment, mask, 4, 0, 1);
+            ResidueShift.ShiftResidue(alignment, 0, 0, ShiftDirection.Rightwise);
 
             Console.WriteLine("AFTER");
             Helper.PrintAlignmentState(alignment);

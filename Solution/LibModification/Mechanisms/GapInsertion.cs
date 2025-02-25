@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace LibModification.Mechanisms
 {
-    public class GapInsertion
+    public static class GapInsertion
     {
-        public void InsertGaps(Alignment alignment, bool[] mask, int width, int j1, int j2)
+        public static void InsertGaps(Alignment alignment, bool[] mask, int width, int j1, int j2)
         {
             // j values denote where gaps start. so j can be 0 to n (alignment width)
 
@@ -18,7 +18,7 @@ namespace LibModification.Mechanisms
             alignment.CharacterMatrix = matrix;
         }
 
-        public char[,] InsertGaps(char[,] original, bool[] mask, int width, int j1, int j2)
+        public static char[,] InsertGaps(char[,] original, bool[] mask, int width, int j1, int j2)
         {
             int m = original.GetLength(0);
             int n = original.GetLength(1) + width;
@@ -34,7 +34,7 @@ namespace LibModification.Mechanisms
             return result;
         }
 
-        public void PasteSequenceWithGapAt(in char[,] source, char[,] destination, int i, int gapPosition, int width)
+        public static void PasteSequenceWithGapAt(in char[,] source, char[,] destination, int i, int gapPosition, int width)
         {
             int n = source.GetLength(1);
 

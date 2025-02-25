@@ -13,15 +13,15 @@ namespace LibModification.Mechanisms
         Rightwise,
     }
 
-    public class ResidueShift
+    public static class ResidueShift
     {
-        public void ShiftResidue(Alignment alignment, int i, int j, ShiftDirection direction)
+        public static void ShiftResidue(Alignment alignment, int i, int j, ShiftDirection direction)
         {
             char[,] matrix = ShiftResidue(alignment.CharacterMatrix, i, j, direction);
             alignment.CharacterMatrix = matrix;
         }
 
-        public char[,] ShiftResidue(char[,] original, int i, int j, ShiftDirection direction)
+        public static char[,] ShiftResidue(char[,] original, int i, int j, ShiftDirection direction)
         {
             if (Bioinformatics.IsGap(original[i, j]))
             {
@@ -38,7 +38,7 @@ namespace LibModification.Mechanisms
             }
         }
 
-        public char[,] ShiftResidueLeft(char[,] original, int i, int j)
+        public static char[,] ShiftResidueLeft(char[,] original, int i, int j)
         {
             int gapIndex = GetEarliestIndexOfGap(original, i, j, -1);
 
@@ -59,7 +59,7 @@ namespace LibModification.Mechanisms
             return original;
         }
 
-        public char[,] ShiftResidueRight(char[,] original, int i, int j)
+        public static char[,] ShiftResidueRight(char[,] original, int i, int j)
         {
             int gapIndex = GetEarliestIndexOfGap(original, i, j, 1);
 
@@ -80,20 +80,23 @@ namespace LibModification.Mechanisms
             return original;
         }
 
-        public int GetEarliestIndexOfGap(in char[,] matrix, int i, int j, int delta)
+        public static int GetEarliestIndexOfGap(in char[,] matrix, int i, int j, int delta)
         {
             int n = matrix.GetLength(1);
-            while (0 <= j && j < n)
+            while (true)
             {
                 j += delta;
+                if (j < 0 || n <= j)
+                {
+                    return -1;
+                }
+
                 char x = matrix[i, j];
                 if (Bioinformatics.IsGap(x))
                 {
                     return j;
                 }
             }
-
-            return -1;
         }
     }
 }
