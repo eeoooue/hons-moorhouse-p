@@ -37,6 +37,28 @@ namespace LibModification.Mechanisms
 
         public void PasteSequenceWithGapAt(in char[,] source, char[,] destination, int i, int gapPosition, int width)
         {
+            int n = source.GetLength(1);
+
+            for (int j = 0; j < gapPosition; j++)
+            {
+                destination[i, j] = source[i, j];
+            }
+
+            for (int j = gapPosition; j < gapPosition + width; j++)
+            {
+                destination[i, j] = '-';
+            }
+
+            for (int j=gapPosition; j < n; j++)
+            {
+                destination[i, j + width] = source[i, j];
+            }
+        }
+
+
+
+        public void OldPasteSequenceWithGapAt(in char[,] source, char[,] destination, int i, int gapPosition, int width)
+        {
             string original = ReadMatrixRow(source, i);
             string payload = InsertGapInPayload(original, width, gapPosition);
 
