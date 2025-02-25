@@ -13,7 +13,7 @@ namespace LibModification.Mechanisms
         Rightwise,
     }
 
-    internal class ResidueShift
+    public class ResidueShift
     {
         public void ShiftResidue(Alignment alignment, int i, int j, ShiftDirection direction)
         {
@@ -23,10 +23,16 @@ namespace LibModification.Mechanisms
 
         public char[,] ShiftResidue(char[,] original, int i, int j, ShiftDirection direction)
         {
+            if (Bioinformatics.IsGap(original[i, j]))
+            {
+                return original;
+            }
+
             switch (direction)
             {
                 case ShiftDirection.Leftwise:
                     return ShiftResidueLeft(original, i, j);
+                case ShiftDirection.Rightwise:
                 default:
                     return ShiftResidueRight(original, i, j);
             }
@@ -34,12 +40,44 @@ namespace LibModification.Mechanisms
 
         public char[,] ShiftResidueLeft(char[,] original, int i, int j)
         {
-            throw new NotImplementedException();
+            int gapIndex = GetEarliestIndexOfGap(original, i, j, -1);
+
+            if (gapIndex == -1)
+            {
+                throw new NotImplementedException();
+                return original;
+            }
+
+            int j2 = gapIndex;
+            while (j2 < j)
+            {
+                original[i, j2] = original[i, j2 + 1];
+                j2++;
+            }
+            original[i, j2] = '-';
+
+            return original;
         }
 
         public char[,] ShiftResidueRight(char[,] original, int i, int j)
         {
-            throw new NotImplementedException();
+            int gapIndex = GetEarliestIndexOfGap(original, i, j, 1);
+
+            if (gapIndex == -1)
+            {
+                throw new NotImplementedException();
+                return original;
+            }
+
+            int j2 = gapIndex;
+            while (j < j2)
+            {
+                original[i, j2] = original[i, j2 - 1];
+                j2--;
+            }
+            original[i, j2] = '-';
+
+            return original;
         }
 
         public int GetEarliestIndexOfGap(in char[,] matrix, int i, int j, int delta)
