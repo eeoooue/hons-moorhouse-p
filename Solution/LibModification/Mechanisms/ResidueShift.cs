@@ -46,11 +46,9 @@ namespace LibModification.Mechanisms
             {
                 // TODO: FIX LOGIC
 
-                //char[,] matrix = ColumnInsertion.InsertEmptyColumn(original, 0);
-                //Console.WriteLine($"matrix has with = {matrix.GetLength(1)}");
-                //return ShiftResidueLeft(matrix, i, j);
-
-                return original;
+                char[,] matrix = ColumnInsertion.InsertEmptyColumn(original, 0);
+                // Console.WriteLine($"matrix has with = {matrix.GetLength(1)}");
+                return ShiftResidueLeft(matrix, i, j+1);
             }
 
             int j2 = gapIndex;
@@ -72,11 +70,9 @@ namespace LibModification.Mechanisms
             {
                 // TODO: FIX LOGIC
 
-                //int n = original.GetLength(1);
-                //char[,] matrix = ColumnInsertion.InsertEmptyColumn(original, n);
-                //return ShiftResidueRight(matrix, i, j);
-
-                return original;
+                int n = original.GetLength(1);
+                char[,] matrix = ColumnInsertion.InsertEmptyColumn(original, n);
+                return ShiftResidueRight(matrix, i, j);
             }
 
             int j2 = gapIndex;

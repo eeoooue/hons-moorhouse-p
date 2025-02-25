@@ -70,12 +70,12 @@ namespace MAli.AlignmentConfigs
             {
                 new SwapOperator(),
                 new GuidedGapInserter(),
-                // new GuidedResidueShifter(),
+                new GuidedResidueShifter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
                 new ResidueShifter(),
-                // new SmartBlockPermutationOperator(new PAM250Matrix()),
-                // new SmartBlockScrollingOperator(new PAM250Matrix()),
+                //new SmartBlockPermutationOperator(new PAM250Matrix()),
+                //new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             aligner.TweakModifier = new MultiOperatorModifier(modifiers);
