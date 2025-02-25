@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibModification.Helpers;
 using LibModification.Mechanisms;
 using LibSimilarity;
 using System;
@@ -11,6 +12,8 @@ namespace LibModification.AlignmentModifiers.Guided
 {
     public class GuidedResidueShifter : AlignmentModifier
     {
+        private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
+
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences();
@@ -38,7 +41,7 @@ namespace LibModification.AlignmentModifiers.Guided
                 }
             }
 
-            return alignment.CharacterMatrix;
+            return CharMatrixHelper.RemoveEmptyColumns(alignment.CharacterMatrix);
         }
     }
 }
