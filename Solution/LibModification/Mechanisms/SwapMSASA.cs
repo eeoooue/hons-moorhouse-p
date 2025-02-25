@@ -13,6 +13,12 @@ namespace LibModification.Mechanisms
     {
         public static CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
+        public static void Swap(Alignment alignment, int i, int j, int k, SwapDirection direction)
+        {
+            Swap(ref alignment.CharacterMatrix, i, j, k, direction);
+        }
+
+        
         public static void Swap(ref char[,] matrix, int i, int j, int k, SwapDirection direction)
         {
             // affects ith sequence only
