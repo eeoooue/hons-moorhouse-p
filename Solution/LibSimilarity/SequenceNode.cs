@@ -15,8 +15,6 @@ namespace LibSimilarity
 
         public BioSequence Sequence;
 
-        private static RouletteWheel RouletteWheel = new RouletteWheel();
-
         public string Identifier { get { return Sequence.Identifier; } }
 
         public SequenceNode(BioSequence sequence)
