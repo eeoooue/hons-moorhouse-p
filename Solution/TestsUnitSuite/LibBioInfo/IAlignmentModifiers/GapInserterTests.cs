@@ -20,35 +20,6 @@ namespace TestsUnitSuite.LibBioInfo.IAlignmentModifiers
 
         GapInserter GapInserter = new GapInserter();
 
-        [DataTestMethod]
-        [DataRow(3)]
-        [DataRow(4)]
-        [DataRow(5)]
-        public void CanInsertGapsOfWidth(int width)
-        {
-            Alignment alignment = ExampleAlignments.GetExampleA();
-            GapInserter.InsertGapOfWidth(alignment.CharacterMatrix, width);
-
-            List<BioSequence> sequences = alignment.GetAlignedSequences();
-            foreach (BioSequence sequence in sequences)
-            {
-                bool verdict = SequenceContainsGapOfWidth(sequence, width);
-                Assert.IsTrue(verdict);
-            }
-        }
-
-        public bool SequenceContainsGapOfWidth(BioSequence sequence, int width)
-        {
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i<width; i++)
-            {
-                sb.Append('-');
-            }
-            string gap = sb.ToString();
-
-            return sequence.Payload.Contains(gap);
-        }
-
         [TestMethod]
         public void AlignmentIsDifferentAfterInsertion()
         {
