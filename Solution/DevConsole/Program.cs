@@ -150,7 +150,8 @@ namespace DevConsole
 
             // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
 
-            RunMAli("-input BB11001 -output test -debug");
+            RunMAli("-input BB11001 -output test -debug -seconds 100");
+            // RunMAli("-input BB11001 -output test -debug");
 
             // RunMAli("-input BB11002 -output test -debug");
 
