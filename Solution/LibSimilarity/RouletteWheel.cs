@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace LibSimilarity
 {
-    public class RouletteWheel
+    public static class RouletteWheel
     {
-        public SimilarityLink PerformSelectionOn(List<SimilarityLink> options)
+        public static SimilarityLink PerformSelectionOn(List<SimilarityLink> options)
         {
             List<RouletteSlice> slices = CreateRouletteSlices(options);
 
@@ -29,7 +29,7 @@ namespace LibSimilarity
             return slices[i].Link;
         }
 
-        public List<RouletteSlice> CreateRouletteSlices(List<SimilarityLink> links)
+        public static List<RouletteSlice> CreateRouletteSlices(List<SimilarityLink> links)
         {
             double minValue = GetMinimumValue(links);
             List<RouletteSlice> result = new List<RouletteSlice>();
@@ -43,7 +43,7 @@ namespace LibSimilarity
             return result;
         }
 
-        public double GetMinimumValue(List<SimilarityLink> links)
+        public static double GetMinimumValue(List<SimilarityLink> links)
         {
             double result = double.MaxValue;
             foreach(SimilarityLink link in links)
@@ -55,14 +55,14 @@ namespace LibSimilarity
         }
 
 
-        public double RollThreshhold(List<RouletteSlice> options)
+        public static double RollThreshhold(List<RouletteSlice> options)
         {
             double total = GetTotalScore(options);
             double roll = Randomizer.Random.NextDouble();
             return total * roll;
         }
 
-        public double GetTotalScore(List<RouletteSlice> options)
+        public static double GetTotalScore(List<RouletteSlice> options)
         {
             double total = 0.0;
             foreach (RouletteSlice option in options)
