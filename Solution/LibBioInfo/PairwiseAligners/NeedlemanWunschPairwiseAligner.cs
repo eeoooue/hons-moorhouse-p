@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.PairwiseAligners
 {
+    enum BacktrackingDirection
+    {
+        Diagonal,
+        Leftwise,
+        Upwards,
+    }
+
     public class NeedlemanWunschPairwiseAligner
     {
         public int MatchScore { get { return ScoringScheme.ResidueMatch; } }
@@ -155,24 +162,58 @@ namespace LibBioInfo.PairwiseAligners
                 return;
             }
 
+            List<BacktrackingDirection> options = CollectOptions(i, j);
+            BacktrackingDirection choice = PickDirectionRandomly(options);
+
+            switch (choice)
+            {
+                case BacktrackingDirection.Diagonal:
+                    a.Append(SequenceA[i]);
+                    b.Append(SequenceB[j]);
+                    Backtrack(ref a, ref b, i - 1, j - 1);
+                    return;
+                case BacktrackingDirection.Upwards:
+                    a.Append(SequenceA[i]);
+                    b.Append('-');
+                    Backtrack(ref a, ref b, i - 1, j);
+                    return;
+                case BacktrackingDirection.Leftwise:
+                    a.Append('-');
+                    b.Append(SequenceB[j]);
+                    Backtrack(ref a, ref b, i, j - 1);
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private BacktrackingDirection PickDirectionRandomly(List<BacktrackingDirection> options)
+        {
+            int n = options.Count;
+            int i = Randomizer.Random.Next(n);
+
+            return options[i];
+        }
+
+
+        private List<BacktrackingDirection> CollectOptions(int i, int j)
+        {
+            List<BacktrackingDirection> options = new List<BacktrackingDirection>();
+
             if (CanReachByPair(i, j))
             {
-                a.Append(SequenceA[i]);
-                b.Append(SequenceB[j]);
-                Backtrack(ref a, ref b, i - 1, j - 1);
+                options.Add(BacktrackingDirection.Diagonal);
             }
-            else if (CanReachUpwards(i, j))
+            if (CanReachUpwards(i, j))
             {
-                a.Append(SequenceA[i]);
-                b.Append('-');
-                Backtrack(ref a, ref b, i - 1, j);
+                options.Add(BacktrackingDirection.Upwards);
             }
-            else if (CanReachLeftwise(i, j))
+            if (CanReachLeftwise(i, j))
             {
-                a.Append('-');
-                b.Append(SequenceB[j]);
-                Backtrack(ref a, ref b, i, j - 1);
+                options.Add(BacktrackingDirection.Leftwise);
             }
+
+            return options;
         }
 
         public bool CanReachByPair(int i, int j)
