@@ -3,6 +3,7 @@ using LibBioInfo;
 using LibBioInfo.ScoringMatrices;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.Guided;
 using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment;
 using LibParetoAlignment.Aligners;
@@ -21,8 +22,8 @@ namespace MAli.ParetoAlignmentConfigs
 
         public IFitnessFunction GetObjectiveOne()
         {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IFitnessFunction result = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
+            IScoringMatrix matrix = new PAM250Matrix();
+            IFitnessFunction result = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix);
             return result;
         }
 
@@ -53,12 +54,31 @@ namespace MAli.ParetoAlignmentConfigs
 
         public IAlignmentModifier GetModifier()
         {
+            //List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            //{
+            //    new SwapOperator(),
+            //    new GapInserter(),
+            //    new MultiRowStochasticSwapOperator(),
+            //    new HeuristicPairwiseModifier(),
+            //};
+
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
+                new GuidedSwap(),
+                new GuidedGapInserter(),
+                new GuidedResidueShifter(),
+                // new GuidedRelativeScroll(),
+
                 new SwapOperator(),
                 new GapInserter(),
-                new MultiRowStochasticSwapOperator(),
+                new ResidueShifter(),
+
+                // new GapShifter(),
+                // new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
+                // new ResidueShifter(),
+                //new SmartBlockPermutationOperator(new PAM250Matrix()),
+                //new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             IAlignmentModifier result = new MultiOperatorModifier(modifiers);
