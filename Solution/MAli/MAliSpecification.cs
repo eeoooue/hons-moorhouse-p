@@ -1,4 +1,8 @@
-﻿using MAli.AlignmentConfigs;
+﻿using LibBioInfo.ScoringMatrices;
+using LibBioInfo;
+using LibScoring.FitnessFunctions;
+using LibScoring;
+using MAli.AlignmentConfigs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +72,34 @@ namespace MAli
             CommandDescriptions.Add("scoreonly", "(flag) Output only a .maliscore file containing the alignment's objective scores");
 
             CommandDescriptions.Add("config", "Specify a custom .json config defining the objective to guide the alignment process.");
+        }
+
+        public static List<IFitnessFunction> GetSupportedObjectives()
+        {
+            IScoringMatrix blosum62 = new BLOSUM62Matrix();
+            IFitnessFunction sopBlosum = new SumOfPairsFitnessFunction(blosum62);
+            IFitnessFunction sopBlosumGapPen = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum62);
+
+            IScoringMatrix pam250 = new PAM250Matrix();
+            IFitnessFunction sopPam = new SumOfPairsFitnessFunction(pam250);
+            IFitnessFunction sopPamGapPen = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(pam250);
+
+            IFitnessFunction affineGapPenalty = new AffineGapPenaltyFitnessFunction();
+            IFitnessFunction nonGapPenalty = new NonGapsFitnessFunction();
+            IFitnessFunction totallyConservedColumns = new TotallyConservedColumnsFitnessFunction();
+
+            List<IFitnessFunction> result = new List<IFitnessFunction>()
+            {
+                sopBlosum,
+                sopBlosumGapPen,
+                sopPam,
+                sopPamGapPen,
+                affineGapPenalty,
+                nonGapPenalty,
+                totallyConservedColumns,
+            };
+
+            return result;
         }
     }
 }

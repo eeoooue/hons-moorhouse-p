@@ -36,11 +36,6 @@ namespace MAli.Helpers
                 }
             }
 
-            if (table.ContainsKey("scoreonly"))
-            {
-                request = new ScoringRequest();
-            }
-
             if (table.ContainsKey("batch"))
             {
                 request = new BatchAlignmentRequest();
@@ -61,6 +56,11 @@ namespace MAli.Helpers
             request.InputPath = table["input"]!;
             request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
             request.CheckAddDefaultRestrictions();
+
+            if (table.ContainsKey("scoreonly"))
+            {
+                request.SpecifiesScoreOnly = true;
+            }
 
             request.SpecifiesSeed = CommandsIncludeFlag(table, "seed");
             if (request.SpecifiesSeed)

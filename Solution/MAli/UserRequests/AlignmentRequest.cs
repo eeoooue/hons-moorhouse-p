@@ -9,49 +9,80 @@ namespace MAli.UserRequests
 {
     public class AlignmentRequest : UserRequest
     {
-        public bool Debug = false;
-        public bool EmitFrames = false;
-        public bool RefineOnly = false;
-        public bool IncludeScoreFile = false;
+        public bool Debug;
+        public bool EmitFrames;
+        public bool RefineOnly;
+        public bool IncludeScoreFile;
 
-        public int IterationsLimit = 0;
-        public double SecondsLimit = 0.0;
+        public int IterationsLimit;
+        public double SecondsLimit;
 
-        public string InputPath = "";
-        public string OutputPath = "";
+        public string InputPath;
+        public string OutputPath;
 
-        public bool SpecifiesSeed = false;
-        public string Seed = "";
+        public bool SpecifiesSeed;
+        public string Seed;
 
-        public bool SpecifiesCustomConfig = false;
-        public string ConfigPath = "";
+        public bool SpecifiesCustomConfig;
+        public string ConfigPath;
 
-        public AlignmentOutputFormat OutputFormat = AlignmentOutputFormat.FASTA;
+        public bool SpecifiesScoreOnly;
+
+        public AlignmentOutputFormat OutputFormat;
+
+
+        public AlignmentRequest()
+        {
+            Debug = false;
+            EmitFrames = false;
+            RefineOnly = false;
+            IncludeScoreFile = false;
+
+            IterationsLimit = 0;
+            SecondsLimit = 0.0;
+
+            InputPath = "";
+            OutputPath = "";
+
+            SpecifiesSeed = false;
+            Seed = "";
+
+            SpecifiesCustomConfig = false;
+            ConfigPath = "";
+
+            SpecifiesScoreOnly = false;
+
+            OutputFormat = AlignmentOutputFormat.FASTA;
+        }
+
+
+        public AlignmentRequest(AlignmentRequest other)
+        {
+            Debug = other.Debug;
+            EmitFrames = other.EmitFrames;
+            RefineOnly = other.RefineOnly;
+            IncludeScoreFile = other.IncludeScoreFile;
+
+            IterationsLimit = other.IterationsLimit;
+            SecondsLimit = other.SecondsLimit;
+
+            InputPath = other.InputPath;
+            OutputPath = other.OutputPath;
+
+            SpecifiesSeed = other.SpecifiesSeed;
+            Seed = other.Seed;
+
+            SpecifiesCustomConfig = other.SpecifiesCustomConfig;
+            ConfigPath = other.ConfigPath;
+
+            SpecifiesScoreOnly = other.SpecifiesScoreOnly;
+
+            OutputFormat = other.OutputFormat;
+        }
 
         public AlignmentRequest GetCopy()
         {
-            AlignmentRequest result = new AlignmentRequest();
-
-            result.Debug = Debug;
-            result.EmitFrames = EmitFrames;
-            result.RefineOnly = RefineOnly;
-            result.IncludeScoreFile = IncludeScoreFile;
-
-            result.IterationsLimit = IterationsLimit;
-            result.SecondsLimit = SecondsLimit;
-
-            result.InputPath = InputPath;
-            result.OutputPath = OutputPath;
-
-            result.SpecifiesSeed = SpecifiesSeed;
-            result.Seed = Seed;
-
-            result.SpecifiesCustomConfig = SpecifiesCustomConfig;
-            result.ConfigPath = ConfigPath;
-
-            result.OutputFormat = OutputFormat;
-
-            return result;
+            return new AlignmentRequest(this);
         }
 
         public void SetOutputFormat(string format)

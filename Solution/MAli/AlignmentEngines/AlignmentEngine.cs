@@ -2,6 +2,7 @@
 using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
+using LibScoring;
 using LibSimilarity;
 using MAli.Helpers;
 using MAli.UserRequests;
@@ -45,10 +46,17 @@ namespace MAli.AlignmentEngines
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
-                    AlignIteratively(aligner, Instructions);
-                    SaveAlignment(instructions, aligner.CurrentAlignment!, Instructions.OutputPath);
-                    CheckSaveScorefile(aligner, aligner.CurrentAlignment!, Instructions);
+                    if (instructions.SpecifiesScoreOnly)
+                    {
+                        SaveRichScoreFile(alignment);
+                    }
+                    else
+                    {
+                        IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
+                        AlignIteratively(aligner, Instructions);
+                        SaveAlignment(instructions, aligner.CurrentAlignment!, Instructions.OutputPath);
+                        CheckSaveScorefile(aligner, aligner.CurrentAlignment!, Instructions);
+                    }
                 }
                 else
                 {
@@ -59,6 +67,13 @@ namespace MAli.AlignmentEngines
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+        public void SaveRichScoreFile(Alignment alignment)
+        {
+            List<IFitnessFunction> objectives = MAliSpecification.GetSupportedObjectives();
+            MAliScoreWriter writer = new MAliScoreWriter(objectives);
+            writer.WriteAlignmentTo(alignment, Instructions.OutputPath);
         }
 
         public void SaveAlignment(in AlignmentRequest request, Alignment alignment, string filepath)
