@@ -112,7 +112,7 @@ namespace MAli.AlignmentConfigs
                 new GuidedSwap(),
                 new GuidedGapInserter(),
                 new GuidedResidueShifter(),
-                new GuidedRelativeScroll(),
+                // new GuidedRelativeScroll(),
 
                 new SwapOperator(),
                 new GapInserter(),
