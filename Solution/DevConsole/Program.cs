@@ -183,7 +183,7 @@ namespace DevConsole
         static void TestingParetoAlignment()
         {
             // RunMAli("-input BB11001 -output test -seconds 100 -debug");
-            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 5");
+            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 50");
             // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
         }
 
