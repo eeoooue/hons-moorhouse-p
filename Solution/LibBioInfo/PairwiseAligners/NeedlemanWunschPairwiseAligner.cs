@@ -56,6 +56,16 @@ namespace LibBioInfo.PairwiseAligners
             ScoresPopulated = true;
         }
 
+        public int GetSimilarityScore()
+        {
+            if (!ScoresPopulated)
+            {
+                PopulateTable();
+            }
+
+            return Scores[M - 1, N - 1];
+        }
+
         public void PopulateCoordinates(int i, int j)
         {
             if (i == 0 && j == 0)

@@ -49,6 +49,8 @@ namespace LibModification.CrossoverOperators
 
             Alignment x = new Alignment(xParts, true);
             Alignment y = new Alignment(yParts, true);
+            x.AlignmentCore = a.AlignmentCore;
+            y.AlignmentCore = a.AlignmentCore;
 
             return new List<Alignment> { x, y };
         }

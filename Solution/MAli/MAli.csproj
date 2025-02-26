@@ -12,6 +12,7 @@
     <ProjectReference Include="..\LibBioInfo\LibBioInfo.csproj" />
     <ProjectReference Include="..\LibFileIO\LibFileIO.csproj" />
     <ProjectReference Include="..\LibParetoAlignment\LibParetoAlignment.csproj" />
+    <ProjectReference Include="..\LibSimilarity\LibSimilarity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

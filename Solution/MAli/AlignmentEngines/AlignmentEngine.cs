@@ -166,7 +166,6 @@ namespace MAli.AlignmentEngines
 
         public void PerformIterationOfAlignment(IterativeAligner aligner, AlignmentRequest instructions)
         {
-            SimilarityGuide.TryUpdateSimilarity();
             aligner.Iterate();
             if (instructions.EmitFrames && aligner.CurrentAlignment is Alignment alignment)
             {

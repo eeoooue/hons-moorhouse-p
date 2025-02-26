@@ -9,7 +9,7 @@ namespace LibModification.Helpers
 {
     public class CharMatrixHelper
     {
-        public void ClearAlignmentRow(ref char[,] matrix, int i)
+        public static void ClearAlignmentRow(ref char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
             for(int j=0; j<n; j++)
@@ -18,12 +18,12 @@ namespace LibModification.Helpers
             }
         }
 
-        public void RemoveEmptyColumns(Alignment alignment)
+        public static void RemoveEmptyColumns(Alignment alignment)
         {
             alignment.CharacterMatrix = RemoveEmptyColumns(in alignment.CharacterMatrix);
         }
 
-        public void SprinkleEmptyColumnsIntoAlignment(Alignment alignment, int n)
+        public static void SprinkleEmptyColumnsIntoAlignment(Alignment alignment, int n)
         {
             if (n == 0)
             {
@@ -44,12 +44,12 @@ namespace LibModification.Helpers
         }
 
 
-        public char[,] InsertEmptyColumns(Alignment alignment, List<int> recipe)
+        public static char[,] InsertEmptyColumns(Alignment alignment, List<int> recipe)
         {
             return InsertEmptyColumns(alignment.CharacterMatrix, recipe);
         }
 
-        public char[,] InsertEmptyColumns(char[,] alignment, List<int> recipe)
+        public static char[,] InsertEmptyColumns(char[,] alignment, List<int> recipe)
         {
             int m = alignment.GetLength(0);
             int n = recipe.Count;
@@ -70,7 +70,7 @@ namespace LibModification.Helpers
             return result;
         }
 
-        public void CopyColumnFromSourceToDestination(char[,] source, int srcIndex, char[,] destination, int destIndex)
+        public static void CopyColumnFromSourceToDestination(char[,] source, int srcIndex, char[,] destination, int destIndex)
         {
             int m = source.GetLength(0);
 
@@ -80,7 +80,7 @@ namespace LibModification.Helpers
             }
         }
 
-        public void FillColumnWithGaps(char[,] matrix, int j)
+        public static void FillColumnWithGaps(char[,] matrix, int j)
         {
             int m = matrix.GetLength(0);
             for (int i = 0; i < m; i++)
@@ -89,7 +89,7 @@ namespace LibModification.Helpers
             }
         }
 
-        public List<int> CreateColumnInsertionRecipe(Alignment alignment, List<int> insertions)
+        public static List<int> CreateColumnInsertionRecipe(Alignment alignment, List<int> insertions)
         {
             int n = alignment.Width;
             int expected = alignment.Width + insertions.Count;
@@ -127,7 +127,7 @@ namespace LibModification.Helpers
             return sb.ToString();
         }
 
-        public char[,] RemoveEmptyColumns(in char[,] matrix)
+        public static char[,] RemoveEmptyColumns(in char[,] matrix)
         {
             int n = matrix.GetLength(1);
             List<int> whitelist = new List<int>();
@@ -143,7 +143,7 @@ namespace LibModification.Helpers
             return GetMatrixOfOnlyWhitelistedColumns(in matrix, whitelist);
         }
 
-        private char[,] GetMatrixOfOnlyWhitelistedColumns(in char[,] matrix, List<int> whitelist)
+        private static char[,] GetMatrixOfOnlyWhitelistedColumns(in char[,] matrix, List<int> whitelist)
         {
             int m = matrix.GetLength(0);
             int n = whitelist.Count;
@@ -167,7 +167,7 @@ namespace LibModification.Helpers
             return result;
         }
 
-        public bool ColumnIsEmpty(in char[,] matrix, int j)
+        public static bool ColumnIsEmpty(in char[,] matrix, int j)
         {
             int m = matrix.GetLength(0);
 
@@ -182,7 +182,7 @@ namespace LibModification.Helpers
             return true;
         }
 
-        public void WriteStringOverMatrixRow(ref char[,] matrix, int i, string s)
+        public static void WriteStringOverMatrixRow(ref char[,] matrix, int i, string s)
         {
             for (int j = 0; j < s.Length; j++)
             {
@@ -190,7 +190,7 @@ namespace LibModification.Helpers
             }
         }
 
-        public bool RowContainsGap(in char[,] matrix, int i)
+        public static bool RowContainsGap(in char[,] matrix, int i)
         {
             int n = matrix.GetLength(1);
 
@@ -206,7 +206,7 @@ namespace LibModification.Helpers
             return false;
         }
 
-        public List<int> GetGapPositionsInRow(in char[,] matrix, int i)
+        public static List<int> GetGapPositionsInRow(in char[,] matrix, int i)
         {
             List<int> result = new List<int>();
 
@@ -224,7 +224,7 @@ namespace LibModification.Helpers
             return result;
         }
 
-        public List<int> GetResiduePositionsInRow(in char[,] matrix, int i)
+        public static List<int> GetResiduePositionsInRow(in char[,] matrix, int i)
         {
             List<int> result = new List<int>();
 

@@ -1,5 +1,6 @@
 ﻿using LibAlignment;
 using LibBioInfo;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace MAli.Helpers
 
             List<string> lines = new List<string>() { "Debugging:", "" };
             CollectAlignmentStrategy(aligner, lines);
+            CollectSimilarityGuideInfo(lines);
             CollectAlignmentStateInfo(aligner, lines);
             List<string> output = DebugHelper.PadInfoLines(lines);
             string info = ConcatenateLines(output);
@@ -61,6 +63,14 @@ namespace MAli.Helpers
             // lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
             lines.Add("");
         }
+
+        public void CollectSimilarityGuideInfo(List<string> lines)
+        {
+            lines.Add(SimilarityGuide.GetDebugString());
+            lines.Add("");
+        }
+
+
 
         public void CollectAlignmentStateInfo(IterativeAligner aligner, List<string> lines)
         {
