@@ -110,13 +110,17 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 // new SwapOperator(),
+                new GuidedSwap(),
                 new GuidedGapInserter(),
                 new GuidedResidueShifter(),
+                new SwapOperator(),
+                new GapInserter(),
+                new ResidueShifter(),
+
                 // new GapShifter(),
                 // new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
                 // new ResidueShifter(),
-                new GuidedSwap(),
                 //new SmartBlockPermutationOperator(new PAM250Matrix()),
                 //new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
