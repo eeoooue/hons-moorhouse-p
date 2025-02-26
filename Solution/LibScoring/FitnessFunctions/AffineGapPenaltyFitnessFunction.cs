@@ -19,7 +19,7 @@ namespace LibScoring.FitnessFunctions
 
         public override string GetName()
         {
-            return $"Affine Gap Penalties (open={Penalties.OpeningCost}, null={Penalties.NullCost})";
+            return $"Affine Gap Penalties (open={Penalties.OpeningCost}) (null={Penalties.NullCost})";
         }
 
         public override double ScoreAlignment(in char[,] alignment)

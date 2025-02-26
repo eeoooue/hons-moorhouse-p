@@ -12,7 +12,7 @@ namespace LibFileIO.AlignmentWriters
     public class MAliScoreWriter : IAlignmentWriter
     {
         public List<IFitnessFunction> Objectives;
-        public string FileExtension = "maliscore";
+        public string FileExtension = "csv";
 
         public MAliScoreWriter(List<IFitnessFunction> objectives)
         {
@@ -32,6 +32,7 @@ namespace LibFileIO.AlignmentWriters
         public List<string> GetFileContents(Alignment alignment)
         {
             List<string> result = new List<string>();
+            result.Add("Objective,Score");
             foreach (IFitnessFunction objective in Objectives)
             {
                 string line = GetScoreLine(alignment, objective);
@@ -43,11 +44,8 @@ namespace LibFileIO.AlignmentWriters
 
         public string GetScoreLine(Alignment alignment, IFitnessFunction objective)
         {
-            string nameSection = $"[Objective: <{objective.GetName()}>]";
             double score = objective.GetFitness(alignment.CharacterMatrix);
-            string scoreSection = $"[Score: <{Math.Round(score, 5)}>]";
-
-            return $"{nameSection} {scoreSection}";
+            return $"{objective.GetName()},{Math.Round(score, 5)}";
         }
     }
 }

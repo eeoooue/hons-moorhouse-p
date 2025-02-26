@@ -26,12 +26,58 @@ namespace DevConsole
 
             // TestGapInsertion();
 
-            TestingMAli();
+            TestingMAliScoreonly();
 
             // RunMAli("-input BB11001 -output test -debug");
 
             // TestingConfigParsing();
         }
+
+
+        static void TestingMAli()
+        {
+            // clustalformat_BB11001.aln
+
+            // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
+
+            // RunMAli("-help");
+
+            // RunMAli("-input BB11001 -output test -debug -format clustal");
+
+
+
+            RunMAli("-input BB11001 -output test -debug -seconds 100");
+
+            // RunMAli("-input synth_polarizing_checkerboard -output test -debug -seconds 100");
+            // RunMAli("-input 1a0cA_1ubpC -output test -debug -seconds 100");
+            // RunMAli("-input BB11001 -output test -debug");
+
+            // RunMAli("-input BB11002 -output test -debug");
+
+            // RunMAli("-input 1a0cA_1ubpC -output test -debug");
+
+
+            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+
+            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
+            // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
+            // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
+            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
+            // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
+            // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
+        }
+
+        static void TestingMAliScoreonly()
+        {
+            RunMAli("-input clustalformat_BB11001.aln -output test -scoreonly");
+        }
+
+
+        static void TestingMAliPareto()
+        {
+            // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
+        }
+
 
 
         public static void TestGapInsertion()
@@ -137,42 +183,7 @@ namespace DevConsole
             // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
         }
 
-        static void TestingMAli()
-        {
-            // clustalformat_BB11001.aln
-
-            // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
-
-            // RunMAli("-help");
-
-            // RunMAli("-input BB11001 -output test -debug -format clustal");
-
-
-            // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
-
-            RunMAli("-input BB11001 -output test -debug -seconds 100");
-
-            // RunMAli("-input synth_polarizing_checkerboard -output test -debug -seconds 100");
-            // RunMAli("-input 1a0cA_1ubpC -output test -debug -seconds 100");
-            // RunMAli("-input BB11001 -output test -debug");
-
-            // RunMAli("-input BB11002 -output test -debug");
-
-            // RunMAli("-input 1a0cA_1ubpC -output test -debug");
-
-            // RunMAli("-input 1a0cA_1ubpC -output test -scoreonly");
-
-
-
-            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
-
-            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
-            // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
-            // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
-        }
+        
 
         static void RunMAli(string arguments)
         {
