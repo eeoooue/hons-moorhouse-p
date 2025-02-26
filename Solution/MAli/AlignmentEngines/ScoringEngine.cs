@@ -1,8 +1,10 @@
 ﻿using LibAlignment;
 using LibBioInfo;
+using LibBioInfo.ScoringMatrices;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibScoring;
+using LibScoring.FitnessFunctions;
 using LibSimilarity;
 using MAli.Helpers;
 using MAli.UserRequests;
@@ -46,9 +48,8 @@ namespace MAli.AlignmentEngines
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
                     Alignment freshAlignment = new Alignment(sequences, true);
-                    SaveScoreFile(aligner.Objective, freshAlignment);
+                    SaveRichScoreFile(freshAlignment);
                 }
                 else
                 {
@@ -61,10 +62,40 @@ namespace MAli.AlignmentEngines
             }
         }
 
-        public void SaveScoreFile(IFitnessFunction objective, Alignment alignment)
+        public void SaveRichScoreFile(Alignment alignment)
         {
-            MAliScoreWriter writer = new MAliScoreWriter(objective);
+            List<IFitnessFunction> objectives = GetObjectives();
+            MAliScoreWriter writer = new MAliScoreWriter(objectives);
             writer.WriteAlignmentTo(alignment, Instructions.OutputPath);
         }
+
+        public List<IFitnessFunction> GetObjectives()
+        {
+            IScoringMatrix blosum62 = new BLOSUM62Matrix();
+            IFitnessFunction sopBlosum = new SumOfPairsFitnessFunction(blosum62);
+            IFitnessFunction sopBlosumGapPen = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum62);
+
+            IScoringMatrix pam250 = new PAM250Matrix();
+            IFitnessFunction sopPam = new SumOfPairsFitnessFunction(pam250);
+            IFitnessFunction sopPamGapPen = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(pam250);
+
+            IFitnessFunction affineGapPenalty = new AffineGapPenaltyFitnessFunction();
+            IFitnessFunction nonGapPenalty = new NonGapsFitnessFunction();
+            IFitnessFunction totallyConservedColumns = new TotallyConservedColumnsFitnessFunction();
+
+            List<IFitnessFunction> result = new List<IFitnessFunction>()
+            {
+                sopBlosum,
+                sopBlosumGapPen,
+                sopPam,
+                sopPamGapPen,
+                affineGapPenalty,
+                nonGapPenalty,
+                totallyConservedColumns,
+            };
+
+            return result;
+        }
+
     }
 }
