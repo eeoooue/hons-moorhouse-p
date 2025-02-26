@@ -14,6 +14,10 @@ namespace LibSimilarity
 
         public static SimilarityGraph Graph = new SimilarityGraph();
 
+        public static int CurrentSetSize = 0;
+
+        public static int NodeEdgeLimit = 10;
+
 
         public static void SetSequences(List<BioSequence> sequences)
         {
@@ -70,7 +74,7 @@ namespace LibSimilarity
             TryUpdateSimilarity();
 
             int n = Graph.Population;
-            int attempts = Randomizer.Random.Next(1, n+1);
+            int attempts = Randomizer.Random.Next(0, n-1);
 
             SequenceNode source = Graph.GetRandomStartingNode();
             List<SequenceNode> group = GetRandomSetAroundNode(source, attempts);
@@ -81,7 +85,18 @@ namespace LibSimilarity
                 result.Add(node.Sequence);
             }
 
+            CurrentSetSize = result.Count;
+
             return result;
+        }
+
+        public static string GetDebugString()
+        {
+
+            double graphSaturation = Math.Round(Graph.GetPercentageSaturation(), 0);
+            int edges = Math.Min(NodeEdgeLimit, Graph.Population - 1);
+
+            return $"Similarity Graph: Saturation: {graphSaturation}% (max. {edges} links per node) | Previous Set: {CurrentSetSize} seq(s) ";
         }
 
         public static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
