@@ -17,8 +17,6 @@ namespace DevConsole
     {
         private static DevHelper Helper = new DevHelper();
         private static MAliInterface Interface = new MAliInterface();
-        private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
-
 
         public static void Main(string[] args)
         {
