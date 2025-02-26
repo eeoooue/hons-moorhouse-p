@@ -92,7 +92,7 @@ namespace MAli.ParetoAlignmentConfigs
 
             NSGA2Aligner aligner = new NSGA2Aligner(objectives);
             // ParetoHillClimbAligner aligner = new ParetoHillClimbAligner(objectives);
-            aligner.Modifier = GetModifier();
+            aligner.MutationOperator = GetModifier();
 
             return aligner;
         }
