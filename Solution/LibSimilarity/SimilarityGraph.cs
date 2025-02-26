@@ -34,7 +34,7 @@ namespace LibSimilarity
             {
                 SequenceNode node = Nodes[identifier];
                 currentTotal += node.Connections.Count;
-                maximumTotal += Identifiers.Count - 1;
+                maximumTotal += Math.Min(Identifiers.Count - 1, node.MaxConnections);
             }
 
             return (double) 100.0 * currentTotal / maximumTotal;
