@@ -22,6 +22,16 @@ namespace LibParetoAlignment.Helpers
                 result.Add(wrappedTradeoff.Tradeoff);
             }
 
+            if (result.Count < tradeoffs.Count)
+            {
+                throw new Exception("too few solutions sorted");
+            }
+
+            if (result.Count > tradeoffs.Count)
+            {
+                throw new Exception("duplicate solutions in the sorted series");
+            }
+
             return result;
         }
 
@@ -38,7 +48,7 @@ namespace LibParetoAlignment.Helpers
                     {
                         p.DominatedSolutions.Add(q);
                     }
-                    else
+                    else if (ParetoHelper.ADominatesB(q, p))
                     {
                         p.DominationCounter += 1;
                     }
