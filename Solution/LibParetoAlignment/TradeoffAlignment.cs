@@ -13,6 +13,7 @@ namespace LibParetoAlignment
         public Dictionary<string, double> Scores = new Dictionary<string, double>();
 
         public int FrontRank = 0;
+        public double CrowdingDistance = 0.0;
 
         public TradeoffAlignment(Alignment alignment)
         {
