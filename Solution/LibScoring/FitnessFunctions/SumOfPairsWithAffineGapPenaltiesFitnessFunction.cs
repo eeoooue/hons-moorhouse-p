@@ -20,7 +20,7 @@ namespace LibScoring.FitnessFunctions
         }
         public override string GetName()
         {
-            return $"Sum of Pairs ({SumOfPairsScore.Matrix.GetName()}) Affine Gap Penalties (open={AffineGapPenalties.OpeningCost}, null={AffineGapPenalties.NullCost})";
+            return $"Sum of Pairs ({SumOfPairsScore.Matrix.GetName()}) Affine Gap Penalties (open={AffineGapPenalties.OpeningCost}) (null={AffineGapPenalties.NullCost})";
         }
 
         public override double GetBestPossibleScore(in char[,] alignment)
