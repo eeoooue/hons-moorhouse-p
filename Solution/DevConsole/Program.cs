@@ -24,7 +24,7 @@ namespace DevConsole
 
             // TestGapInsertion();
 
-            TestingBatchScoring();
+            TestingParetoAlignment();
 
             // RunMAli("-input BB11001 -output test -debug");
 
