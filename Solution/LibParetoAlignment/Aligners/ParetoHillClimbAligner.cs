@@ -16,7 +16,9 @@ namespace LibParetoAlignment.Aligners
     {
         public IAlignmentModifier Modifier = new MultiRowStochasticSwapOperator();
 
-        Queue<TradeoffAlignment> Archive = new Queue<TradeoffAlignment>();
+        private FastNonDominatedSort FastNonDominatedSort = new FastNonDominatedSort();
+
+        List<TradeoffAlignment> Archive = new List<TradeoffAlignment>();
         ParetoHelper ParetoHelper = new ParetoHelper();
 
         private TradeoffAlignment CurrentSolution = null!;
@@ -77,13 +79,31 @@ namespace LibParetoAlignment.Aligners
 
         private void AddSolutionToArchive(TradeoffAlignment alignment)
         {
-            if (Archive.Count == NumberOfTradeoffs)
-            {
-                Archive.Dequeue();
-            }
-
-            Archive.Enqueue(alignment);
+            Archive.Add(alignment);
             CurrentSolution = alignment;
+
+            if (Archive.Count > NumberOfTradeoffs)
+            {
+                SortAndTrimArchive();
+                CurrentSolution = Archive[0];
+                if (alignment.FrontRank == 1)
+                {
+                    CurrentSolution = alignment;
+                }
+            }
+        }
+
+        public void SortAndTrimArchive()
+        {
+            List<TradeoffAlignment> sorted = FastNonDominatedSort.SortTradeoffs(Archive);
+            Archive.Clear();
+
+            int n = Math.Min(NumberOfTradeoffs, sorted.Count);
+
+            for(int i=0; i<n; i++)
+            {
+                Archive.Add(sorted[i]);
+            }
         }
 
         public bool ShouldAddSolutionToArchive(TradeoffAlignment alignment)
