@@ -38,7 +38,7 @@ namespace LibModification.AlignmentModifiers.Guided
 
         public int PickGapWidth(Alignment alignment)
         {
-            int n = alignment.Width;
+            int n = Math.Max(10, alignment.Width / 4);
             int gapWidth = Randomizer.Random.Next(1, n + 1);
             return gapWidth;
         }
