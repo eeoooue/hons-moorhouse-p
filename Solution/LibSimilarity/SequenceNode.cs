@@ -17,6 +17,8 @@ namespace LibSimilarity
 
         public string Identifier { get { return Sequence.Identifier; } }
 
+        public int MaxConnections {  get { return SimilarityGuide.NodeEdgeLimit; } }
+
         public SequenceNode(BioSequence sequence)
         {
             Sequence = sequence;
@@ -31,7 +33,25 @@ namespace LibSimilarity
             {
                 Connections.Add(link);
                 ConnectedNodes.Add(identifier);
+                if (Connections.Count > MaxConnections)
+                {
+                    RemoveWeakestLink();
+                }
             }
+        }
+
+        private void RemoveWeakestLink()
+        {
+            SimilarityLink weakest = Connections[0];
+            for(int i=1; i<Connections.Count; i++)
+            {
+                SimilarityLink current = Connections[i];
+                if (current.SimilarityScore < weakest.SimilarityScore)
+                {
+                    weakest = current;
+                }
+            }
+            Connections.Remove(weakest);
         }
 
         public bool IsConnectedTo(SequenceNode node)
