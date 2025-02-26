@@ -26,7 +26,7 @@ namespace DevConsole
 
             // TestGapInsertion();
 
-            TestingMAliScoreonly();
+            TestingBatchScoring();
 
             // RunMAli("-input BB11001 -output test -debug");
 
@@ -173,6 +173,12 @@ namespace DevConsole
         static void TestingBatchAlignment()
         {
             RunMAli("-input batchin -output batchout -batch");
+            // RunMAli("-input batchin -output batchout -debug -batch");
+        }
+
+        static void TestingBatchScoring()
+        {
+            RunMAli("-input batchin -output batchout -batch -scoreonly");
             // RunMAli("-input batchin -output batchout -debug -batch");
         }
 
