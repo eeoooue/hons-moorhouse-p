@@ -75,9 +75,8 @@ namespace LibParetoAlignment.Aligners
 
         public override Alignment GetCurrentAlignment()
         {
-            throw new NotImplementedException();
+            return CurrentSolution.Alignment;
         }
-
 
         public override string GetName()
         {
