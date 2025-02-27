@@ -14,6 +14,9 @@ namespace LibModification.BlockShuffling
         public bool ResidueMarker;
         public bool GapMarker;
 
+        public int Height { get { return Alignment.Height; } }
+        public int Width { get { return Alignment.Width; } }
+
         public MaskedAlignment(Alignment alignment, bool[,] mask, bool residuesAsOnes = true)
         {
             Alignment = alignment;
