@@ -37,13 +37,47 @@ namespace DevConsole
             PrintMask(maskedAli.Mask);
             Console.WriteLine();
 
-            Console.WriteLine("Pasting the extracted block in the original position:");
+            Console.WriteLine("Trying to paste the extracted block in a new position:");
             bool isPossible = maskedAli.CanPlaceBlock(block, block.OriginalPosition);
-            Console.WriteLine($" -> is possible = {isPossible}");
-            maskedAli.PlaceBlock(block, block.OriginalPosition);
-            PrintMask(maskedAli.Mask);
+            List<int> possibleNewPositions = maskedAli.GetPossibleNewPositionsForBlock(block);
+            ListPossibleNewPositions(possibleNewPositions);
+
+            if (possibleNewPositions.Count > 0)
+            {
+                int newPosition = PickIntFromList(possibleNewPositions);
+                maskedAli.PlaceBlock(block, newPosition);
+                PrintMask(maskedAli.Mask);
+            }
+            else
+            {
+                Console.WriteLine("No new positions were possible");
+            }
+
             Console.WriteLine();
+
         }
+
+        public int PickIntFromList(List<int> options)
+        {
+            int n = options.Count;
+            int i = Randomizer.Random.Next(n);
+            return options[i];
+        }
+
+        public void ListPossibleNewPositions(List<int> positions)
+        {
+            Console.Write("Possible New Positions [ ");
+            foreach (int x in positions)
+            {
+                Console.Write($"{x}, ");
+            }
+            Console.Write(" ]");
+            Console.WriteLine();
+
+        }
+
+
+
 
         public void PrintBlock(CharacterBlock block)
         {
