@@ -66,7 +66,12 @@ namespace LibModification.BlockShuffling
 
         public bool CanPlaceBlockRow(CharacterBlock block, int jOffset, int blockMaskIndex, int sequenceIndex)
         {
-            if (block.Width + jOffset >= Width)
+            if (block.Width + jOffset > Width)
+            {
+                return false;
+            }
+
+            if (jOffset < 0)
             {
                 return false;
             }
@@ -106,6 +111,41 @@ namespace LibModification.BlockShuffling
                     Mask[sequenceIndex, j + jOffset] = block.Mask[blockMaskIndex, j];
                 }
             }
+        }
+
+        public List<int> GetPossibleNewPositionsForBlock(CharacterBlock block)
+        {
+            List<int> result = new List<int>();
+
+            int jPos = block.OriginalPosition;
+            while (true) // checking left
+            {
+                jPos -= 1;
+                if (CanPlaceBlock(block, jPos))
+                {
+                    result.Add(jPos);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            jPos = block.OriginalPosition;
+            while (true) // checking right
+            {
+                jPos += 1;
+                if (CanPlaceBlock(block, jPos))
+                {
+                    result.Add(jPos);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return result;
         }
 
 
