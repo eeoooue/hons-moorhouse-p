@@ -89,8 +89,10 @@ namespace MAli.ParetoAlignmentConfigs
         public override ParetoIterativeAligner CreateAligner()
         {
             List<IFitnessFunction> objectives = GetObjectives();
-            ParetoHillClimbAligner aligner = new ParetoHillClimbAligner(objectives);
-            aligner.Modifier = GetModifier();
+
+            NSGA2Aligner aligner = new NSGA2Aligner(objectives);
+            // ParetoHillClimbAligner aligner = new ParetoHillClimbAligner(objectives);
+            aligner.MutationOperator = GetModifier();
 
             return aligner;
         }
