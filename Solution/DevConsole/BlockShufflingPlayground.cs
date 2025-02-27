@@ -21,15 +21,23 @@ namespace DevConsole
             AlignmentMaskMaker maker = new AlignmentMaskMaker();
 
             MaskedAlignment maskedAli = maker.GetMaskedAlignment(alignment);
-            PrintMask(maskedAli);
+            PrintMask(maskedAli.Mask);
 
+            BlockFinder finder = new BlockFinder();
+
+            bool[] sequences = { true, true, false, false };
+
+            Console.WriteLine();
+            CharacterBlock block = finder.FindBlock(maskedAli, ref sequences);
+            PrintMask(block.Mask);
         }
 
-        public void PrintMask(MaskedAlignment maskedAli)
+        public void PrintMask(bool[,] mask)
         {
-            for (int i = 0; i < maskedAli.Height; i++)
+            int m = mask.GetLength(0);
+            for (int i = 0; i < m; i++)
             {
-                PrintMaskRow(maskedAli.Mask, i);
+                PrintMaskRow(mask, i);
             }
         }
 
