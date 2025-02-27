@@ -24,5 +24,38 @@ namespace LibModification.BlockShuffling
             ResidueMarker = residuesAsOnes;
             GapMarker = !ResidueMarker;
         }
+
+        public void SubtractBlock(CharacterBlock block, int jOffset)
+        {
+
+            int n = block.Height;
+
+            for(int i=0; i<n; i++)
+            {
+                int sequenceIndex = block.SequenceIndices[i];
+                SubtractBlockRow(block, jOffset, i, sequenceIndex);
+            }
+        }
+
+        private void SubtractBlockRow(CharacterBlock block, int jOffset, int blockMaskIndex, int sequenceIndex)
+        {
+            for(int j=0; j<block.Width; j++)
+            {
+                if (block.Mask[blockMaskIndex, j])
+                {
+                    Mask[sequenceIndex, j + jOffset] = false;
+                }
+            }
+        }
+
+        public void CanSubtractBlock(CharacterBlock block, int jOffset)
+        {
+
+
+
+
+        }
+
+
     }
 }
