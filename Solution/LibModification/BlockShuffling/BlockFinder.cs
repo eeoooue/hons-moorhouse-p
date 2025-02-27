@@ -29,7 +29,9 @@ namespace LibModification.BlockShuffling
         {
             List<int> startPositions = new List<int>();
             List<int> endPositions = new List<int>();
+            Console.WriteLine("FindBlock() called");
             FindBlock(alignment, ref sequences, ref startPositions, ref endPositions);
+
             List<int> sequenceIndices = GetMaskAsListOfIndices(sequences);
 
             return CreateBlock(alignment, sequenceIndices, startPositions, endPositions);
@@ -124,7 +126,9 @@ namespace LibModification.BlockShuffling
         {
             PickStartingPosition(alignment, sequences, out int iStart, out int jStart);
 
-            for(int i=0; i<alignment.Height; i++)
+            Console.WriteLine("PickStartingPosition() exited");
+
+            for (int i=0; i<alignment.Height; i++)
             {
                 if (!sequences[i])
                 {
@@ -155,7 +159,7 @@ namespace LibModification.BlockShuffling
             jEndInclusive = jStart;
             while (MaskContainsBitAt(alignment, i, jEndInclusive + 1))
             {
-                jFrontInclusive += 1;
+                jEndInclusive += 1;
             }
         }
 
