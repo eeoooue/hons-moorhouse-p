@@ -29,7 +29,6 @@ namespace LibModification.BlockShuffling
         {
             List<int> startPositions = new List<int>();
             List<int> endPositions = new List<int>();
-            Console.WriteLine("FindBlock() called");
             FindBlock(alignment, ref sequences, ref startPositions, ref endPositions);
 
             List<int> sequenceIndices = GetMaskAsListOfIndices(sequences);
@@ -50,6 +49,8 @@ namespace LibModification.BlockShuffling
             }
 
             IdentifyEarliestStartAndLatestEnd(startPositions, endPositions, out int earliestStart, out int latestEnd);
+            // Console.WriteLine($"IdentifyEarliestStartAndLatestEnd(): start={earliestStart} end={latestEnd}");
+
 
             List<bool[]> reads = CollectPaddedReads(alignment, sequenceIndices, startPositions, endPositions);
 
@@ -68,14 +69,29 @@ namespace LibModification.BlockShuffling
             {
                 int seqIndex = sequenceIndices[i];
                 int startPos = startPositions[i];
-                int endPos = startPositions[i];
+                int endPos = endPositions[i];
                 PaddingInstructions padding = CalculatePadding(startPos, endPos, earliestStart, latestEnd);
                 bool[] paddedRead = GetPaddedRead(alignment, seqIndex, startPos, endPos, padding);
+                // DebugPaddedRead(paddedRead, startPos, endPos);
                 result.Add(paddedRead);
             }
 
             return result;
         }
+
+        public void DebugPaddedRead(bool[] paddedRead, int startPos, int endPos)
+        {
+            Console.Write($"- padded read of ({startPos} to {endPos}) : ");
+            int n = paddedRead.GetLength(0);
+
+            for (int j = 0; j < n; j++)
+            {
+                char x = paddedRead[j] ? 'X' : '-';
+                Console.Write(x);
+            }
+            Console.WriteLine();
+        }
+
 
         public void IdentifyEarliestStartAndLatestEnd(in List<int> startPositions, in List<int> endPositions, out int earliestStart, out int latestEnd)
         {
@@ -126,7 +142,7 @@ namespace LibModification.BlockShuffling
         {
             PickStartingPosition(alignment, sequences, out int iStart, out int jStart);
 
-            Console.WriteLine("PickStartingPosition() exited");
+            // Console.WriteLine("PickStartingPosition() exited");
 
             for (int i=0; i<alignment.Height; i++)
             {
