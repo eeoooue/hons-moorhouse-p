@@ -48,12 +48,64 @@ namespace LibModification.BlockShuffling
             }
         }
 
-        public void CanSubtractBlock(CharacterBlock block, int jOffset)
+        public bool CanPlaceBlock(CharacterBlock block, int jOffset)
         {
+            int n = block.Height;
+            for (int i = 0; i < n; i++)
+            {
+                int sequenceIndex = block.SequenceIndices[i];
+                bool possible = CanPlaceBlockRow(block, jOffset, i, sequenceIndex);
+                if (!possible)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool CanPlaceBlockRow(CharacterBlock block, int jOffset, int blockMaskIndex, int sequenceIndex)
+        {
+            if (block.Width + jOffset >= Width)
+            {
+                return false;
+            }
+
+            for (int j = 0; j < block.Width; j++)
+            {
+                if (block.Mask[blockMaskIndex, j])
+                {
+                    bool valueAtPos = Mask[sequenceIndex, j + jOffset];
+                    if (valueAtPos)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
 
 
+        public void PlaceBlock(CharacterBlock block, int jOffset)
+        {
+            int n = block.Height;
+            for (int i = 0; i < n; i++)
+            {
+                int sequenceIndex = block.SequenceIndices[i];
+                PlaceBlockRow(block, jOffset, i, sequenceIndex);
+            }
+        }
 
-
+        public void PlaceBlockRow(CharacterBlock block, int jOffset, int blockMaskIndex, int sequenceIndex)
+        {
+            for (int j = 0; j < block.Width; j++)
+            {
+                if (block.Mask[blockMaskIndex, j])
+                {
+                    Mask[sequenceIndex, j + jOffset] = block.Mask[blockMaskIndex, j];
+                }
+            }
         }
 
 

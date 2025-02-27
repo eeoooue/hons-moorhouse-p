@@ -37,11 +37,13 @@ namespace DevConsole
             PrintMask(maskedAli.Mask);
             Console.WriteLine();
 
-            Console.WriteLine("Pasting the extracted block in a new position:");
-
+            Console.WriteLine("Pasting the extracted block in the original position:");
+            bool isPossible = maskedAli.CanPlaceBlock(block, block.OriginalPosition);
+            Console.WriteLine($" -> is possible = {isPossible}");
+            maskedAli.PlaceBlock(block, block.OriginalPosition);
+            PrintMask(maskedAli.Mask);
+            Console.WriteLine();
         }
-
-
 
         public void PrintBlock(CharacterBlock block)
         {
