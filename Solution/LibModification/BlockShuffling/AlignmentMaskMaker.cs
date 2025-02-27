@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibModification.BlockShuffling
 {
-    internal class AlignmentMaskMaker
+    public class AlignmentMaskMaker
     {
         public MaskedAlignment GetMaskedAlignment(Alignment alignment, bool residuesAsOnes = true)
         {

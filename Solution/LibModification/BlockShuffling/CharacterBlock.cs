@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibModification.BlockShuffling
 {
-    internal class CharacterBlock
+    public class CharacterBlock
     {
         public List<int> SequenceIndices;
 

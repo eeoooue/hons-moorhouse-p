@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibModification.BlockShuffling
 {
-    internal struct PaddingInstructions
+    public struct PaddingInstructions
     {
         public int Start = 0;
         public int End = 0;
@@ -21,7 +21,7 @@ namespace LibModification.BlockShuffling
         }
     }
 
-    internal class BlockFinder
+    public class BlockFinder
     {
         // aims to find a block of ones based on logic described in SAGA
 
