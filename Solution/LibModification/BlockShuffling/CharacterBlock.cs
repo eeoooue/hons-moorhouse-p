@@ -14,8 +14,11 @@ namespace LibModification.BlockShuffling
 
         public int Width;
 
-        public CharacterBlock(List<int> sequences, bool[,] mask)
+        public int OriginalPosition;
+
+        public CharacterBlock(int originalPosition, List<int> sequences, bool[,] mask)
         {
+            OriginalPosition = originalPosition;
             SequenceIndices = sequences;
             Mask = mask;
             Width = Mask.GetLength(1);
