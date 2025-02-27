@@ -23,17 +23,14 @@ namespace LibParetoAlignment.Aligners
         private CrowdingDistanceAssignment CrowdingDistanceAssignment = new CrowdingDistanceAssignment();
 
         List<TradeoffAlignment> Archive = new List<TradeoffAlignment>();
-        ParetoHelper ParetoHelper = new ParetoHelper();
 
         private TradeoffAlignment CurrentSolution = null!;
 
-        public int ParentPopSize = 50;
-        public int PopulationSize = 100;
+        public int ParentPopSize = 30;
+        public int PopulationSize = 50;
 
         public NSGA2Aligner(List<IFitnessFunction> objectives) : base(objectives)
         {
-
-
 
         }
 
@@ -48,7 +45,6 @@ namespace LibParetoAlignment.Aligners
 
             return result;
         }
-
 
         public override List<string> GetDebuggingInfo()
         {
@@ -72,6 +68,7 @@ namespace LibParetoAlignment.Aligners
             List<string> result = new List<string>()
             {
                 $"{GetName()}",
+                $" - [Tradeoffs] {NumberOfTradeoffs}",
                 $" - [Iterations] {IterationsCompleted}",
                 $" - [Population] {Archive.Count} solutions",
             };
