@@ -183,21 +183,16 @@ namespace DevConsole
         static void TestingParetoAlignment()
         {
             // RunMAli("-input BB11001 -output test -seconds 100 -debug");
-
-            RunMAli("-input 1a0cA_1ubpC -output test -iterations 1000 -debug -pareto 20");
-
-            // RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 20");
+            // RunMAli("-input 1a0cA_1ubpC -output test -iterations 1000 -debug -pareto 20");
+            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 10");
             // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
         }
-
-        
 
         static void RunMAli(string arguments)
         {
             string[] args = UnpackArguments(arguments);
             Interface.ProcessArguments(args);
         }
-
         static string[] UnpackArguments(string arguments)
         {
             if (arguments.Length > 0)
