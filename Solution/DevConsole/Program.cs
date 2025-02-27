@@ -17,14 +17,16 @@ namespace DevConsole
     {
         private static DevHelper Helper = new DevHelper();
         private static MAliInterface Interface = new MAliInterface();
+        private static BlockShufflingPlayground BlockShufflingPlayground = new BlockShufflingPlayground();
 
         public static void Main(string[] args)
         {
+            BlockShufflingPlayground.Main();
             // TestSimGuide();
 
             // TestGapInsertion();
 
-            TestingParetoAlignment();
+            // TestingParetoAlignment();
 
             // RunMAli("-input BB11001 -output test -debug");
 
