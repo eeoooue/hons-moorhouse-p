@@ -14,7 +14,7 @@ namespace LibSimilarity
 
         public int NodeCount { get { return Identifiers.Count; } }
 
-        public int Population { get { return Identifiers.Count; } }
+        public int Population { get { return Sequences.Count; } }
 
         private void ClearState()
         {
@@ -24,6 +24,19 @@ namespace LibSimilarity
             HasConnection.Clear();
             ConnectedIdentifiers.Clear();
         }
+
+        public void SetSequences(List<BioSequence> sequences)
+        {
+            ClearState();
+            Sequences = sequences;
+            List<SequenceNode> nodes = CreateNodes(sequences);
+            foreach (SequenceNode node in nodes)
+            {
+                Nodes[node.Identifier] = node;
+                Identifiers.Add(node.Identifier);
+            }
+        }
+
 
         public double GetPercentageSaturation()
         {
@@ -57,17 +70,7 @@ namespace LibSimilarity
             }
         }
 
-        public void SetSequences(List<BioSequence> sequences)
-        {
-            ClearState();
-            Sequences = sequences;
-            List<SequenceNode> nodes = CreateNodes(sequences);
-            foreach (SequenceNode node in nodes)
-            {
-                Nodes[node.Identifier] = node;
-                Identifiers.Add(node.Identifier);
-            }
-        }
+        
 
         public List<SequenceNode> CreateNodes(List<BioSequence> sequences)
         {

@@ -52,6 +52,9 @@ namespace LibSimilarity
                 }
             }
             Connections.Remove(weakest);
+
+            SequenceNode neighbour = weakest.GetNeighbour(this);
+            ConnectedNodes.Remove(neighbour.Identifier);
         }
 
         public bool IsConnectedTo(SequenceNode node)
