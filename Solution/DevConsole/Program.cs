@@ -25,7 +25,10 @@ namespace DevConsole
 
             // TestingParetoAlignment();
 
-            RunMAli("-input BB11001 -output test -debug");
+            // RunMAli("-input BB11001 -output test -debug -seconds 100");
+            // RunMAli("-input real_marine_life -output test -debug -seconds 100");
+            RunMAli("-input 1a0cA_1ubpC -output test -debug -seconds 100");
+
 
             // TestingConfigParsing();
         }
