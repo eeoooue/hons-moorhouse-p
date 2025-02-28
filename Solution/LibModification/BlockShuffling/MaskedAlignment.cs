@@ -25,6 +25,39 @@ namespace LibModification.BlockShuffling
             GapMarker = !ResidueMarker;
         }
 
+        public MaskedAlignment(Alignment alignment, bool residuesAsOnes = true)
+        {
+            Alignment = alignment;
+            Mask = CreateMask(alignment, residuesAsOnes);
+            ResidueMarker = residuesAsOnes;
+            GapMarker = !ResidueMarker;
+        }
+
+        public bool[,] CreateMask(Alignment alignment, bool residuesAsOnes = true)
+        {
+            // TODO: consider inserting empty columns first
+
+            bool residueMarker = residuesAsOnes;
+            bool gapMarker = !residuesAsOnes;
+
+            int m = alignment.Height;
+            int n = alignment.Width;
+
+            bool[,] mask = new bool[m, n];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    char x = alignment.CharacterMatrix[i, j];
+                    bool isGap = Bioinformatics.IsGap(x);
+                    mask[i, j] = isGap ? gapMarker : residueMarker;
+                }
+            }
+
+            return mask;
+        }
+
         public void SubtractBlock(CharacterBlock block, int jOffset)
         {
 
