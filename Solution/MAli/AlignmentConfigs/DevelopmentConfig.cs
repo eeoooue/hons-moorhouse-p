@@ -114,9 +114,12 @@ namespace MAli.AlignmentConfigs
                 new GuidedResidueShifter(),
                 // new GuidedRelativeScroll(),
 
-                new SwapOperator(),
-                new GapInserter(),
-                new ResidueShifter(),
+                //new SwapOperator(),
+                //new GapInserter(),
+                //new ResidueShifter(),
+
+                new BlockShuffler(),
+                new GapShuffler(),
 
                 // new GapShifter(),
                 // new MultiRowStochasticSwapOperator(),
