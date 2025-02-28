@@ -1,5 +1,8 @@
 ﻿using LibBioInfo;
 using LibModification.BlockShuffling;
+using LibModification.Helpers;
+using LibModification.Mechanisms;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,26 +15,33 @@ namespace LibModification.AlignmentModifiers
     {
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
+            alignment.CharacterMatrix = ColumnInsertion.AddEmptyColumnsAsPadding(alignment.CharacterMatrix, alignment.Height, alignment.Height);
+
             AlignmentMaskMaker maker = new AlignmentMaskMaker();
             MaskedAlignment maskedAli = maker.GetMaskedAlignment(alignment);
 
             BlockFinder finder = new BlockFinder();
-            bool[] sequences = { true, true, false, false };
-            CharacterBlock block = finder.FindBlock(maskedAli, ref sequences);
+
+            bool[] mask = SimilarityGuide.GetSetOfSimilarSequencesAsMask(alignment);
+            CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
 
             maskedAli.SubtractBlock(block, block.OriginalPosition);
 
             List<int> possibleNewPositions = maskedAli.GetPossibleNewPositionsForBlock(block);
 
-            if (possibleNewPositions.Count == 0)
+            if (possibleNewPositions.Count > 0)
             {
-                return alignment.CharacterMatrix;
+                int newPosition = Randomizer.PickIntFromList(possibleNewPositions);
+                maskedAli.PlaceBlock(block, newPosition);
+            }
+            else
+            {
+                maskedAli.PlaceBlock(block, block.OriginalPosition);
             }
 
-            int newPosition = Randomizer.PickIntFromList(possibleNewPositions);
-            maskedAli.PlaceBlock(block, newPosition);
+            char[,] modified = maskedAli.ExtractAlignment();
 
-            return maskedAli.ExtractAlignment();
+            return CharMatrixHelper.RemoveEmptyColumns(modified);
         }
     }
 }
