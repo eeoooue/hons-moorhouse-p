@@ -25,6 +25,11 @@ namespace LibModification.AlignmentModifiers
             bool[] mask = SimilarityGuide.GetSetOfSimilarSequencesAsMask(alignment);
             CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
 
+            if (Randomizer.CoinFlip())
+            {
+                BlockSplitter.SplitBlock(block);
+            }
+
             maskedAli.SubtractBlock(block, block.OriginalPosition);
 
             List<int> possibleNewPositions = maskedAli.GetPossibleNewPositionsForBlock(block);
