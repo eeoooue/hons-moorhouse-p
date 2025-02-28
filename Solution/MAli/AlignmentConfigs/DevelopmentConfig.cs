@@ -109,9 +109,9 @@ namespace MAli.AlignmentConfigs
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                new GuidedSwap(),
+                // new GuidedSwap(),
                 new GuidedGapInserter(),
-                new GuidedResidueShifter(),
+                // new GuidedResidueShifter(),
                 // new GuidedRelativeScroll(),
 
                 //new SwapOperator(),
