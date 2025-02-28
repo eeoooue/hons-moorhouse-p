@@ -12,12 +12,9 @@ namespace LibModification.AlignmentModifiers
     {
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-
             AlignmentMaskMaker maker = new AlignmentMaskMaker();
-
             MaskedAlignment maskedAli = maker.GetMaskedAlignment(alignment);
 
-            Console.WriteLine("Extracting a block randomly:");
             BlockFinder finder = new BlockFinder();
             bool[] sequences = { true, true, false, false };
             CharacterBlock block = finder.FindBlock(maskedAli, ref sequences);
@@ -34,10 +31,7 @@ namespace LibModification.AlignmentModifiers
             int newPosition = Randomizer.PickIntFromList(possibleNewPositions);
             maskedAli.PlaceBlock(block, newPosition);
 
-
-            // return maskedAli.get
-
-            throw new NotImplementedException();
+            return maskedAli.ExtractAlignment();
         }
     }
 }
