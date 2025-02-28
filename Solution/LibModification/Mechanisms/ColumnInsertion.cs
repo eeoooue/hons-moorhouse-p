@@ -21,5 +21,18 @@ namespace LibModification.Mechanisms
             bool[] mask = new bool[m];
             return GapInsertion.InsertGaps(matrix, mask, 1, j, j);
         }
+
+        public static char[,] AddEmptyColumnsAsPadding(char[,] matrix, int leftPadding, int rightPadding)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+            bool[] mask = new bool[m];
+
+            char[,] result;
+            result = GapInsertion.InsertGaps(matrix, mask, rightPadding, n, n);
+            result = GapInsertion.InsertGaps(matrix, mask, leftPadding, 0, 0);
+
+            return result;
+        }
     }
 }
