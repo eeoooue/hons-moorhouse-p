@@ -15,7 +15,7 @@ namespace LibModification.AlignmentModifiers
     {
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            alignment.CharacterMatrix = ColumnInsertion.AddEmptyColumnsAsPadding(alignment.CharacterMatrix, alignment.Height, alignment.Height);
+            alignment.CharacterMatrix = ColumnInsertion.AddEmptyColumnsAsPadding(alignment.CharacterMatrix, 1, 1);
 
             AlignmentMaskMaker maker = new AlignmentMaskMaker();
             MaskedAlignment maskedAli = maker.GetMaskedAlignment(alignment);
