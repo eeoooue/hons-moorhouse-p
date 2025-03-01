@@ -5,11 +5,14 @@ using System;
 using System.Text;
 using LibModification.AlignmentModifiers;
 using LibModification;
+using LibModification.AlignmentInitializers;
 
 namespace LibAlignment
 {
     public abstract class IterativeAligner
     {
+        public IAlignmentInitializer Initializer = new RelativeOffsetInitializer();
+
         public IFitnessFunction Objective { get; set; }
 
         public Alignment CurrentAlignment { get { return CurrentBest.Alignment; } }
@@ -64,20 +67,6 @@ namespace LibAlignment
         }
 
         public abstract string GetName();
-
-        public ScoredAlignment GetRandomScoredAlignment(List<BioSequence> sequences)
-        {
-            Alignment alignment = GetRandomAlignment(sequences);
-            return GetScoredAlignment(alignment);
-        }
-
-        public Alignment GetRandomAlignment(List<BioSequence> sequences)
-        {
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            Alignment alignment = new Alignment(sequences);
-            randomizer.ModifyAlignment(alignment);
-            return alignment;
-        }
 
         public ScoredAlignment GetScoredAlignment(Alignment alignment)
         {

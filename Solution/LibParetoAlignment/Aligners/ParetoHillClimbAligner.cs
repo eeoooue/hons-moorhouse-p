@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibModification;
+using LibModification.AlignmentInitializers;
 using LibModification.AlignmentModifiers;
 using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment.Helpers;
@@ -53,9 +54,7 @@ namespace LibParetoAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            Alignment alignment = new Alignment(sequences);
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            randomizer.ModifyAlignment(alignment);
+            Alignment alignment = Initializer.CreateInitialAlignment(sequences);
             InitializeForRefinement(alignment);
         }
 

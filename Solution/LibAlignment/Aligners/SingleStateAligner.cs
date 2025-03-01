@@ -1,4 +1,6 @@
 ﻿using LibBioInfo;
+using LibModification.AlignmentInitializers;
+using LibModification;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ namespace LibAlignment.Aligners
 {
     public abstract class SingleStateAligner : IterativeAligner
     {
+
         protected SingleStateAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
 
@@ -17,7 +20,8 @@ namespace LibAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            ScoredAlignment scoredAlignment = GetRandomScoredAlignment(sequences);
+            Alignment alignment = Initializer.CreateInitialAlignment(sequences);
+            ScoredAlignment scoredAlignment = GetScoredAlignment(alignment);
             InitialiseAroundState(scoredAlignment);
         }
 
