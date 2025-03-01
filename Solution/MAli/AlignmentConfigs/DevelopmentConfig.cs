@@ -28,8 +28,7 @@ namespace MAli.AlignmentConfigs
         public IFitnessFunction GetObjective()
         {
             IScoringMatrix matrix = new PAM250Matrix();
-            IFitnessFunction objective1 = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 2);
-
+            IFitnessFunction objective1 = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
             IFitnessFunction objective2 = new TotallyConservedColumnsFitnessFunction();
 
             List<IFitnessFunction> objectives = new List<IFitnessFunction> () { objective1, objective2 };
