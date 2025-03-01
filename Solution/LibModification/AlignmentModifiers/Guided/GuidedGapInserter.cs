@@ -12,8 +12,6 @@ namespace LibModification.AlignmentModifiers.Guided
 {
     public class GuidedGapInserter : AlignmentModifier, IAlignmentModifier
     {
-        private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             int gapWidth = PickGapWidth(alignment);
