@@ -15,16 +15,9 @@ namespace LibModification.AlignmentModifiers
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            //if (Randomizer.CoinFlip())
-            //{
-            //    int extent = Randomizer.Random.Next(alignment.Width);
-            //    CharMatrixHelper.SprinkleEmptyColumnsIntoAlignment(alignment, extent);
-            //}
-
-            return alignment.CharacterMatrix;
-
             bool[,] bitmask = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
             ShuffleMatrixRows(ref bitmask);
+
             char[,] modified = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, in bitmask);
             return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
