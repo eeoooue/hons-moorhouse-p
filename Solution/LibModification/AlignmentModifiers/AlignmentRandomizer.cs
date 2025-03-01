@@ -21,6 +21,8 @@ namespace LibModification.AlignmentModifiers
             //    CharMatrixHelper.SprinkleEmptyColumnsIntoAlignment(alignment, extent);
             //}
 
+            return alignment.CharacterMatrix;
+
             bool[,] bitmask = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
             ShuffleMatrixRows(ref bitmask);
             char[,] modified = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, in bitmask);
