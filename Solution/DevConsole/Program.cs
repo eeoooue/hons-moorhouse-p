@@ -25,6 +25,7 @@ namespace DevConsole
 
             // TestingParetoAlignment();
 
+            // RunMAli("-input BB11001 -output test -debug -iterations 10000");
             RunMAli("-input BB11001 -output test -debug -iterations 10000");
 
             // RunMAli("-input BB11001 -output test -debug -seconds 100");
