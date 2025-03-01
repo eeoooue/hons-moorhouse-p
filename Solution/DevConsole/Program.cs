@@ -21,14 +21,19 @@ namespace DevConsole
 
         public static void Main(string[] args)
         {
-            BlockShufflingPlayground.Main();
-            // TestSimGuide();
-
             // TestGapInsertion();
 
             // TestingParetoAlignment();
 
-            // RunMAli("-input BB11001 -output test -debug");
+            // RunMAli("-input BB11001 -output test -debug -iterations 10000");
+            RunMAli("-input BB11001 -output test -debug -iterations 10000");
+
+            // RunMAli("-input BB11001 -output test -debug -seconds 100");
+
+            // RunMAli("-input BB11002 -output test -debug -seconds 100 -pareto 3");
+            // RunMAli("-input real_marine_life -output test -debug -seconds 100");
+            // RunMAli("-input 1a0cA_1ubpC -output test -debug -seconds 100");
+
 
             // TestingConfigParsing();
         }

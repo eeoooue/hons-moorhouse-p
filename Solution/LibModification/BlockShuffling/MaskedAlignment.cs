@@ -13,6 +13,7 @@ namespace LibModification.BlockShuffling
         public bool[,] Mask;
         public bool ResidueMarker;
         public bool GapMarker;
+        public List<BioSequence> Sequences { get { return Alignment.Sequences; } }
 
         public int Height { get { return Alignment.Height; } }
         public int Width { get { return Alignment.Width; } }
@@ -25,9 +26,68 @@ namespace LibModification.BlockShuffling
             GapMarker = !ResidueMarker;
         }
 
+        public MaskedAlignment(Alignment alignment, bool residuesAsOnes = true)
+        {
+            Alignment = alignment;
+            Mask = CreateMask(alignment, residuesAsOnes);
+            ResidueMarker = residuesAsOnes;
+            GapMarker = !ResidueMarker;
+        }
+
+        public char[,] ExtractAlignment()
+        {
+            char[,] result = new char[Height, Width];
+            for (int i=0; i<Height; i++)
+            {
+                ExtractAlignmentRow(result, i);
+            }
+
+            return result;
+        }
+
+        public void ExtractAlignmentRow(char[,] alignment, int i)
+        {
+            int p = 0;
+            string residues = Sequences[i].Residues;
+
+            for(int j=0; j<Width; j++)
+            {
+                if (Mask[i, j] == ResidueMarker)
+                {
+                    alignment[i, j] = residues[p++];
+                }
+                else
+                {
+                    alignment[i, j] = '-';
+                }
+            }
+        }
+
+        public bool[,] CreateMask(Alignment alignment, bool residuesAsOnes = true)
+        {
+            // TODO: consider inserting empty columns first
+
+            bool residueMarker = residuesAsOnes;
+            bool gapMarker = !residuesAsOnes;
+            int m = alignment.Height;
+            int n = alignment.Width;
+            bool[,] mask = new bool[m, n];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    char x = alignment.CharacterMatrix[i, j];
+                    bool isGap = Bioinformatics.IsGap(x);
+                    mask[i, j] = isGap ? gapMarker : residueMarker;
+                }
+            }
+
+            return mask;
+        }
+
         public void SubtractBlock(CharacterBlock block, int jOffset)
         {
-
             int n = block.Height;
 
             for(int i=0; i<n; i++)

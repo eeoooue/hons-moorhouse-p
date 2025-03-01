@@ -42,5 +42,11 @@ namespace LibBioInfo
             }
         }
 
+        public static int PickIntFromList(List<int> options)
+        {
+            int n = options.Count;
+            int i = Randomizer.Random.Next(n);
+            return options[i];
+        }
     }
 }

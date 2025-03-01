@@ -6,19 +6,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibModification.AlignmentModifiers
+namespace LibModification.AlignmentInitializers
 {
-    public class AlignmentRandomizer : AlignmentModifier, IAlignmentModifier
+    public class RandomizationInitializer : IAlignmentInitializer
     {
         AlignmentStateHelper StateHelper = new AlignmentStateHelper();
-        CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
-        public override char[,] GetModifiedAlignmentState(Alignment alignment)
+        public Alignment CreateInitialAlignment(List<BioSequence> sequences)
+        {
+            Alignment alignment = new Alignment(sequences, true);
+            char[,] state = GetModifiedAlignmentState(alignment);
+            alignment.CharacterMatrix = state;
+            return alignment;
+        }
+
+        public char[,] GetModifiedAlignmentState(Alignment alignment)
         {
             bool[,] bitmask = StateHelper.ConvertMatrixFromCharToBool(in alignment.CharacterMatrix);
             ShuffleMatrixRows(ref bitmask);
-
             char[,] modified = StateHelper.ConvertMatrixFromBoolToChar(alignment.Sequences, in bitmask);
+
             return CharMatrixHelper.RemoveEmptyColumns(in modified);
         }
 

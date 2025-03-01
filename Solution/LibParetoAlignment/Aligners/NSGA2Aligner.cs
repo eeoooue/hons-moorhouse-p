@@ -108,13 +108,10 @@ namespace LibParetoAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            AlignmentRandomizer randomizer = new AlignmentRandomizer();
-
             Archive.Clear();
             while (Archive.Count < PopulationSize)
             {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
+                Alignment alignment = Initializer.CreateInitialAlignment(sequences);
                 TradeoffAlignment tradeoffMember = EvaluateAlignment(alignment);
                 AddSolutionToArchive(tradeoffMember);
             }

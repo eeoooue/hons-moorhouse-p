@@ -12,7 +12,7 @@ namespace MAli.Helpers
 {
     internal class DebuggingHelper
     {
-        private AlignmentDebugHelper DebugHelper = new AlignmentDebugHelper();
+        private AlignmentPreviewHelper DebugHelper = new AlignmentPreviewHelper();
 
         public int DebugCursorStart = -1;
         public string ProgressContext = "";

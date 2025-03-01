@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MAli.Helpers
 {
-    public class AlignmentDebugHelper
+    public class AlignmentPreviewHelper
     {
         public ResiduePalette ResiduePalette = new ResiduePalette();
         public NucleotidePalette NucleotidePalette = new NucleotidePalette();
@@ -16,7 +16,7 @@ namespace MAli.Helpers
         public string GapFiller = "";
         public int InfoWidthLimit = 110;
 
-        public AlignmentDebugHelper()
+        public AlignmentPreviewHelper()
         {
             GapFiller = BuildGapFiller(WidthLimit + 3);
         }

@@ -174,7 +174,12 @@ namespace MAli.AlignmentEngines
         public string GetTimelimitProgress(IterativeAligner aligner, DateTime start, DateTime time, double limit)
         {
             TimeSpan span = time - start;
-            string result = $"completed {aligner.IterationsCompleted} iterations in {span.Seconds} of {limit} seconds";
+
+            int hours = span.Hours;
+            int minutes = span.Minutes + (hours * 60);
+            int seconds = span.Seconds + (minutes * 60);
+
+            string result = $"completed {aligner.IterationsCompleted} iterations in {seconds} of {limit} seconds";
 
             return result;
         }

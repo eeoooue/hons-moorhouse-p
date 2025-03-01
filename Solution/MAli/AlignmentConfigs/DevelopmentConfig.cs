@@ -22,15 +22,19 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetAligner();
+            return GetGeneticAligner();
         }
 
         public IFitnessFunction GetObjective()
         {
-            IScoringMatrix matrix = new BLOSUM62Matrix();
-            IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+            IScoringMatrix matrix = new PAM250Matrix();
+            IFitnessFunction objective1 = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+            IFitnessFunction objective2 = new TotallyConservedColumnsFitnessFunction();
 
-            return objective;
+            List<IFitnessFunction> objectives = new List<IFitnessFunction> () { objective1, objective2 };
+            List<double> weights = new List<double>() { 1.0, 0.0 };
+
+            return new WeightedCombinationOfFitnessFunctions(objectives, weights);
         }
 
         private IterativeAligner GetGeneticAligner()
@@ -40,22 +44,8 @@ namespace MAli.AlignmentConfigs
             const int maxIterations = 100;
 
             ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, maxIterations, 50);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                // new SwapOperator(),
-                new GuidedGapInserter(),
-                new GuidedResidueShifter(),
-                // new GapShifter(),
-                // new MultiRowStochasticSwapOperator(),
-                new HeuristicPairwiseModifier(),
-                // new ResidueShifter(),
-                new GuidedSwap(),
-                //new SmartBlockPermutationOperator(new PAM250Matrix()),
-                //new SmartBlockScrollingOperator(new PAM250Matrix()),
-            };
-
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
+            aligner.SelectionSize = 5;
+            aligner.MutationOperator = GetMultiOperatorModifier();
 
             return aligner;
         }
@@ -68,35 +58,37 @@ namespace MAli.AlignmentConfigs
 
             MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations);
 
-            //List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            //{
-            //    new SwapOperator(),
-            //    new GuidedGapInserter(),
-            //    new MultiRowStochasticSwapOperator(),
-            //    new HeuristicPairwiseModifier(),
-            //    new ResidueShifter(),
-            //    // new SmartBlockPermutationOperator(new PAM250Matrix()),
-            //    // new SmartBlockScrollingOperator(new PAM250Matrix()),
-            //};
+            aligner.MutationOperator = GetMultiOperatorModifier();
+
+            return aligner;
+        }
+
+        private IAlignmentModifier GetMultiOperatorModifier()
+        {
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                // new SwapOperator(),
+                new GuidedSwap(),
                 new GuidedGapInserter(),
                 new GuidedResidueShifter(),
-                // new GapShifter(),
-                // new MultiRowStochasticSwapOperator(),
-                new HeuristicPairwiseModifier(),
+                //new GuidedRelativeScroll(),
+
+                //new SwapOperator(),
+                //new ResidueShifter(),
+                //new GapInserter(),
+
+                new BlockShuffler(),
+                new GapShuffler(),
+
+                //new GapShifter(),
+                //new MultiRowStochasticSwapOperator(),
+                // new HeuristicPairwiseModifier(),
                 // new ResidueShifter(),
-                new GuidedSwap(),
                 //new SmartBlockPermutationOperator(new PAM250Matrix()),
                 //new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
-
-
-            return aligner;
+            return new MultiOperatorModifier(modifiers);
         }
 
         private IterativeAligner GetAligner()
@@ -107,26 +99,7 @@ namespace MAli.AlignmentConfigs
 
             IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, maxIterations);
 
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new GuidedSwap(),
-                new GuidedGapInserter(),
-                new GuidedResidueShifter(),
-                // new GuidedRelativeScroll(),
-
-                new SwapOperator(),
-                new GapInserter(),
-                new ResidueShifter(),
-
-                // new GapShifter(),
-                // new MultiRowStochasticSwapOperator(),
-                new HeuristicPairwiseModifier(),
-                // new ResidueShifter(),
-                //new SmartBlockPermutationOperator(new PAM250Matrix()),
-                //new SmartBlockScrollingOperator(new PAM250Matrix()),
-            };
-
-            aligner.TweakModifier = new MultiOperatorModifier(modifiers);
+            aligner.TweakModifier = GetMultiOperatorModifier();
             aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
 
             return aligner;
