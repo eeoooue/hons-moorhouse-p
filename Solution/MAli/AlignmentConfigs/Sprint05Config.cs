@@ -22,7 +22,7 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetBestPerformer();
+            return GetILSAligner();
         }
 
         public IFitnessFunction GetObjective()
@@ -33,62 +33,8 @@ namespace MAli.AlignmentConfigs
             return objective;
         }
 
-        private IterativeAligner GetBestPerformer()
+        public IAlignmentModifier GetModifier()
         {
-            return GetCandidateC();
-        }
-
-        private IterativeAligner GetCandidateA()
-        {
-            IFitnessFunction objective = GetObjective();
-
-            const int maxIterations = 100;
-            const int mew = 5;
-            const int lambda = mew * 7;
-            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, maxIterations, mew, lambda);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new SwapOperator(),
-                new MultiRowStochasticSwapOperator(),
-                new GapInserter(),
-                new HeuristicPairwiseModifier(),
-            };
-
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
-            return aligner;
-        }
-
-        private IterativeAligner GetCandidateB()
-        {
-            IFitnessFunction objective = GetObjective();
-
-            const int maxIterations = 100;
-            const int populationSize = 35;
-            GeneticAlgorithmAligner aligner = new GeneticAlgorithmAligner(objective, maxIterations, populationSize);
-
-            aligner.CrossoverOperator = new ColBasedCrossoverOperator();
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new SwapOperator(),
-                new MultiRowStochasticSwapOperator(),
-                new GapInserter(),
-                new HeuristicPairwiseModifier(),
-            };
-
-            aligner.MutationOperator = new MultiOperatorModifier(modifiers);
-            return aligner;
-        }
-
-        private IterativeAligner GetCandidateC()
-        {
-            IFitnessFunction objective = GetObjective();
-
-            const int maxIterations = 100;
-
-            IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, maxIterations);
-
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new SwapOperator(),
@@ -97,29 +43,16 @@ namespace MAli.AlignmentConfigs
                 new HeuristicPairwiseModifier(),
             };
 
-            aligner.TweakModifier = new MultiOperatorModifier(modifiers);
+            return new MultiOperatorModifier(modifiers);
+        }
+
+        private IterativeAligner GetILSAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, 100);
+
+            aligner.TweakModifier = GetModifier();
             aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
-
-            return aligner;
-        }
-
-        private IterativeAligner GetCandidateD()
-        {
-            IFitnessFunction objective = GetObjective();
-
-            const int maxIterations = 100;
-
-            HillClimbWithRandomRestartsAligner aligner = new HillClimbWithRandomRestartsAligner(objective, maxIterations);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new SwapOperator(),
-                new GapInserter(),
-                new MultiRowStochasticSwapOperator(),
-                new HeuristicPairwiseModifier(),
-            };
-
-            aligner.Modifier = new MultiOperatorModifier(modifiers);
 
             return aligner;
         }

@@ -32,8 +32,6 @@ namespace MAli.AlignmentConfigs
             return objective;
         }
 
-
-
         private IterativeAligner GetNewExperimentalConfig()
         {
             IFitnessFunction objective = GetObjective();
@@ -48,32 +46,7 @@ namespace MAli.AlignmentConfigs
                 new GapInserter(),
                 new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
-                // new SmartBlockPermutationOperator(new PAM250Matrix()),
                 new SmartBlockScrollingOperator(new PAM250Matrix()),
-            };
-
-            aligner.TweakModifier = new MultiOperatorModifier(modifiers);
-            aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
-
-            return aligner;
-        }
-
-
-
-        private IterativeAligner GetSprint05Config()
-        {
-            IFitnessFunction objective = GetObjective();
-
-            const int maxIterations = 100;
-
-            IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, maxIterations);
-
-            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            {
-                new SwapOperator(),
-                new GapInserter(),
-                new MultiRowStochasticSwapOperator(),
-                new HeuristicPairwiseModifier(),
             };
 
             aligner.TweakModifier = new MultiOperatorModifier(modifiers);
