@@ -1,12 +1,12 @@
 
 ################################################################# 
 
-Metaheuristic Aligner - MAli (v1.21)
+Metaheuristic Aligner - MAli (v1.3)
 
 #################################################################
 
 'MAli' is an iterative alignment tool for performing Multiple Sequence Alignment.
-The current version (v1.21) is not intended for professional use.
+The current version (v1.3) is not intended for professional use.
 
 Functionality:
 
@@ -19,6 +19,8 @@ Functionality:
 	- Number of iterations can be specified using '-iterations <count>'
 
 	- Can specify a seed value using '-seed <value>'
+
+	- Can produce a variety of tradeoff alignments using '-pareto <tradeoff_count>' 
 
 Example usage:
 
@@ -37,4 +39,4 @@ Example usage:
 
 Dependencies:
 
-	In order to use MAli, the .NET 8.0 must be installed.
+	In order to use MAli, the .NET 8.0 runtime must be installed.
