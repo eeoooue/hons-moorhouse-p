@@ -68,6 +68,8 @@ namespace MAli.ParetoAlignmentConfigs
                 new GuidedGapInserter(),
                 new BlockShuffler(),
                 new GapShuffler(),
+
+                new HeuristicPairwiseModifier(),
             };
 
             IAlignmentModifier result = new MultiOperatorModifier(modifiers);
