@@ -11,10 +11,10 @@ The current version (v1.3) is not intended for professional use.
 Functionality:
 
 	- Reads a set of biological sequences from an input file
-	  given in the FASTA format.
+	  given in the FASTA or ClustalW format.
 
 	- Outputs an alignment of these sequences using the FASTA
-	  format also.
+	  format or ClustalW also (specify using -format).
 	
 	- Number of iterations can be specified using '-iterations <count>'
 
