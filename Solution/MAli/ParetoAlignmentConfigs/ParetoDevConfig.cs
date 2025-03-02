@@ -64,7 +64,7 @@ namespace MAli.ParetoAlignmentConfigs
 
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                // new GuidedSwap(),
+                new GuidedSwap(),
                 new GuidedGapInserter(),
                 // new GuidedResidueShifter(),
                 // new GuidedRelativeScroll(),

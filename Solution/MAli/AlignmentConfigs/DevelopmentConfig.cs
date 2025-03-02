@@ -22,17 +22,21 @@ namespace MAli.AlignmentConfigs
     {
         public override IterativeAligner CreateAligner()
         {
-            return GetGeneticAligner();
+            return GetILSAligner();
         }
 
         public IFitnessFunction GetObjective()
         {
             IScoringMatrix matrix = new PAM250Matrix();
             IFitnessFunction objective1 = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-            IFitnessFunction objective2 = new TotallyConservedColumnsFitnessFunction();
+            
+            return objective1;
 
-            List<IFitnessFunction> objectives = new List<IFitnessFunction> () { objective1, objective2 };
-            List<double> weights = new List<double>() { 1.0, 0.0 };
+            IFitnessFunction objectiveA = new SumOfPairsFitnessFunction(matrix);
+            IFitnessFunction objectiveB = new AffineGapPenaltyFitnessFunction(4, 1);
+
+            List<IFitnessFunction> objectives = new List<IFitnessFunction>() { objectiveA, objectiveB };
+            List<double> weights = new List<double>() { 0.7, 0.3 };
 
             return new WeightedCombinationOfFitnessFunctions(objectives, weights);
         }
@@ -70,7 +74,7 @@ namespace MAli.AlignmentConfigs
             {
                 new GuidedSwap(),
                 new GuidedGapInserter(),
-                new GuidedResidueShifter(),
+                //new GuidedResidueShifter(),
                 //new GuidedRelativeScroll(),
 
                 //new SwapOperator(),
@@ -82,7 +86,7 @@ namespace MAli.AlignmentConfigs
 
                 //new GapShifter(),
                 //new MultiRowStochasticSwapOperator(),
-                // new HeuristicPairwiseModifier(),
+                new HeuristicPairwiseModifier(),
                 // new ResidueShifter(),
                 //new SmartBlockPermutationOperator(new PAM250Matrix()),
                 //new SmartBlockScrollingOperator(new PAM250Matrix()),
@@ -91,7 +95,7 @@ namespace MAli.AlignmentConfigs
             return new MultiOperatorModifier(modifiers);
         }
 
-        private IterativeAligner GetAligner()
+        private IterativeAligner GetILSAligner()
         {
             IFitnessFunction objective = GetObjective();
 
