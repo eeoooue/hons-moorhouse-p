@@ -52,6 +52,9 @@ namespace LibModification.CrossoverOperators
             x.AlignmentCore = a.AlignmentCore;
             y.AlignmentCore = a.AlignmentCore;
 
+            CharMatrixHelper.RemoveEmptyColumns(x);
+            CharMatrixHelper.RemoveEmptyColumns(y);
+
             return new List<Alignment> { x, y };
         }
 
