@@ -16,10 +16,7 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
         public NeedlemanWunschPairwiseAligner GetAlignerWithScores(string a, string b)
         {
             NeedlemanWunschPairwiseAligner aligner = new NeedlemanWunschPairwiseAligner(a, b);
-
-            aligner.MatchScore = 1;
-            aligner.MismatchScore = -1;
-            aligner.GapScore = -2;
+            aligner.ScoringScheme = new PairwiseScoringScheme(1, -1, -2);
 
             return aligner;
         }
@@ -74,15 +71,13 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
 
         public bool AlignmentFeaturesResiduesInOrder(char[,] alignment, string residues, int i)
         {
-            Bioinformatics bioinformatics = new Bioinformatics();
-
             int n = alignment.GetLength(1);
             StringBuilder sb = new StringBuilder();
 
             for(int j=0; j<n; j++)
             {
                 char x = alignment[i, j];
-                if (!bioinformatics.IsGapChar(x))
+                if (!Bioinformatics.IsGapChar(x))
                 {
                     sb.Append(x);
                 }

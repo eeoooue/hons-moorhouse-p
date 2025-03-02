@@ -1,22 +1,23 @@
-﻿using LibAlignment;
-using LibBioInfo;
+﻿using LibBioInfo;
+using LibParetoAlignment;
+using MAli.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.DebugPrinters
 {
-    internal class DebuggingHelper
+    internal class ParetoDebugPrinter
     {
-        private AlignmentDebugHelper DebugHelper = new AlignmentDebugHelper();
+        private AlignmentPreviewHelper DebugHelper = new AlignmentPreviewHelper();
 
         public int DebugCursorStart = -1;
         public string ProgressContext = "";
 
-        public void ShowDebuggingInfo(IterativeAligner aligner)
+
+        public void ShowDebuggingInfo(ParetoIterativeAligner aligner)
         {
             if (DebugCursorStart == -1)
             {
@@ -26,13 +27,14 @@ namespace MAli.Helpers
 
             List<string> lines = new List<string>() { "Debugging:", "" };
             CollectAlignmentStrategy(aligner, lines);
+            lines.Add("");
             CollectAlignmentStateInfo(aligner, lines);
             List<string> output = DebugHelper.PadInfoLines(lines);
             string info = ConcatenateLines(output);
             Console.SetCursorPosition(0, DebugCursorStart);
 
             Console.WriteLine(info);
-            TryDisplayAlignment(aligner.CurrentAlignment);
+            TryDisplayAlignment(aligner.GetCurrentAlignment());
             Console.WriteLine();
         }
 
@@ -50,37 +52,34 @@ namespace MAli.Helpers
         }
 
 
-        public void CollectAlignmentStrategy(IterativeAligner aligner, List<string> lines)
+        public void CollectAlignmentStrategy(ParetoIterativeAligner aligner, List<string> lines)
         {
             double percentIterationsComplete = Math.Round(100.0 * aligner.IterationsCompleted / aligner.IterationsLimit, 3);
             string percentValue = percentIterationsComplete.ToString("0.0");
 
-            lines.Add(aligner.GetName());
-            lines.Add($" - {ProgressContext}");
-
-            // lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
-            lines.Add("");
+            foreach (string item in aligner.GetAlignerInfo())
+            {
+                lines.Add(item);
+            }
         }
 
-        public void CollectAlignmentStateInfo(IterativeAligner aligner, List<string> lines)
+        public void CollectAlignmentStateInfo(ParetoIterativeAligner aligner, List<string> lines)
         {
-            if (aligner.CurrentAlignment is Alignment alignment)
+            foreach (string item in aligner.GetSolutionInfo())
             {
-                int m = alignment.Height;
-                int n = alignment.Width;
-
-                lines.Add($"Current Alignment: ");
-                lines.Add($" - dimensions: ({m} x {n})");
-                lines.Add($" - objective function: {aligner.Objective.GetName()}");
-                lines.Add($" - score: {aligner.AlignmentScore}");
+                lines.Add(item);
             }
         }
 
         public void TryDisplayAlignment(Alignment? alignment)
         {
-            if (alignment is Alignment current)
+            if (alignment is Alignment current && alignment.Height < 10)
             {
                 DebugHelper.PaintAlignment(alignment);
+            }
+            else
+            {
+                Console.WriteLine("[ Alignment contains too many sequences to display. ]");
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibModification;
+using LibModification.AlignmentInitializers;
 using LibModification.AlignmentModifiers;
 using LibScoring;
 using System;
@@ -15,7 +16,7 @@ namespace LibAlignment.Aligners.SingleState
         public IAlignmentModifier Modifier = new SwapOperator();
         public int ResetPoint = 0;
         protected ScoredAlignment S = null!;
-
+        private IAlignmentInitializer RandomInitializer = new RandomizationInitializer();
 
         public HillClimbWithRandomRestartsAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
         {
@@ -62,6 +63,12 @@ namespace LibAlignment.Aligners.SingleState
 
             ScoredAlignment candidate = GetScoredAlignment(r);
             ContestS(candidate);
+        }
+
+        public ScoredAlignment GetRandomScoredAlignment(List<BioSequence> sequences)
+        {
+            Alignment alignment = RandomInitializer.CreateInitialAlignment(sequences);
+            return GetScoredAlignment(alignment);
         }
     }
 }

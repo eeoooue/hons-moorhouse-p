@@ -21,6 +21,7 @@ namespace TestsRequirements
         /// Can load a set of biological sequences from an appropriate bioinformatics file format. 
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("BB11001")]
         public void Req3x01(string inputPath)
         {
@@ -32,6 +33,7 @@ namespace TestsRequirements
         /// Can output aligned sets of sequences using an appropriate bioinformatics file format. 
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("BB11001")]
         public void Req3x02(string inputPath)
         {
@@ -44,6 +46,7 @@ namespace TestsRequirements
         /// Can load an existing alignment state from an appropriate bioinformatics file format, for iterative refinement.
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("clustalformat_BB11001.aln")]
         public void Req3x03(string inputPath)
         {
@@ -56,6 +59,7 @@ namespace TestsRequirements
         /// Supports multiple bioinformatics file formats for outputting alignments.
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("BB11001", "fasta", "faa")]
         [DataRow("BB11001", "clustal", "aln")]
         public void Req3x04(string inputPath, string format, string extension)

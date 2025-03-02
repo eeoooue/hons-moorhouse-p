@@ -9,42 +9,7 @@ namespace LibModification.Helpers
 {
     public class BiosequencePayloadHelper
     {
-        public Bioinformatics Bioinformatics = new Bioinformatics();
-
-        public string ExtractResiduesFromString(string payload)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach(char x in payload)
-            {
-                if (!Bioinformatics.IsGapChar(x))
-                {
-                    sb.Append(x);
-                }
-            }
-            return sb.ToString();
-        }
-
-
-
         
-
-
-
-        public string GetPayloadWithGapInserted(string payload, int gapWidth, int position)
-        {
-            string before = payload.Substring(0, position);
-            string after = payload.Substring(position);
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append(before);
-            for (int i = 0; i < gapWidth; i++)
-            {
-                sb.Append('-');
-            }
-            sb.Append(after);
-
-            return sb.ToString();
-        }
 
         public string GetPayloadWithGapRemovedAt(string payload, int gapPosition)
         {
@@ -95,26 +60,6 @@ namespace LibModification.Helpers
 
             throw new ArgumentOutOfRangeException();
         }
-
-
-
-        public List<int> CollectResiduePositions(string payload)
-        {
-            List<int> positions = new List<int>();
-            for(int i=0; i<payload.Length; i++)
-            {
-                char x = payload[i];
-                if (!Bioinformatics.IsGapChar(x))
-                {
-                    positions.Add(i);
-                }
-            }
-
-            return positions;
-        }
-
-
-
 
         public int CountResiduesInPayload(string payload)
         {

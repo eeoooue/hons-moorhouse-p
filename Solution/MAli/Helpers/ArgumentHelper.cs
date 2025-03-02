@@ -30,13 +30,17 @@ namespace MAli.Helpers
             if (table.ContainsKey("pareto"))
             {
                 request = new ParetoAlignmentRequest();
-
                 if (request is ParetoAlignmentRequest paretoReq)
                 {
                     paretoReq.NumberOfTradeoffs = int.Parse(table["pareto"]!);
-                }
 
+                    if (paretoReq.NumberOfTradeoffs < 0 || paretoReq.NumberOfTradeoffs > 30)
+                    {
+                        throw new Exception("Number of tradeoffs for '-pareto' must be in the range 1-30");
+                    }
+                }
             }
+
             if (table.ContainsKey("batch"))
             {
                 request = new BatchAlignmentRequest();
@@ -57,6 +61,11 @@ namespace MAli.Helpers
             request.InputPath = table["input"]!;
             request.OutputPath = BuildFullOutputFilename(table["output"]!, table);
             request.CheckAddDefaultRestrictions();
+
+            if (table.ContainsKey("scoreonly"))
+            {
+                request.SpecifiesScoreOnly = true;
+            }
 
             request.SpecifiesSeed = CommandsIncludeFlag(table, "seed");
             if (request.SpecifiesSeed)

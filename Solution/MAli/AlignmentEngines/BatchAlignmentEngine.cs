@@ -44,7 +44,7 @@ namespace MAli.AlignmentEngines
                 {
                     Console.Clear();
                 }
-                Console.WriteLine($"Batch Alignment: Alignment {i + 1} of {n}");
+                Console.WriteLine($"Batch Operation: Alignment {i + 1} of {n}");
                 PerformIndividualAlignment(inputPaths[i], outputPaths[i]);
                 Console.WriteLine();
             }

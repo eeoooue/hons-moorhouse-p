@@ -2,6 +2,9 @@
 using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentWriters;
+using LibScoring;
+using LibSimilarity;
+using MAli.DebugPrinters;
 using MAli.Helpers;
 using MAli.UserRequests;
 using System;
@@ -19,7 +22,7 @@ namespace MAli.AlignmentEngines
         private FrameHelper FrameHelper = new FrameHelper();
         private ResponseBank ResponseBank = new ResponseBank();
         private AlignmentConfig Config;
-        private DebuggingHelper DebuggingHelper = new DebuggingHelper();
+        private DefaultDebugPrinter DebuggingHelper = new DefaultDebugPrinter();
 
         private bool DebugMode = false;
         private AlignmentRequest Instructions = null!;
@@ -32,21 +35,29 @@ namespace MAli.AlignmentEngines
         public void PerformAlignment(AlignmentRequest instructions)
         {
             Instructions = instructions;
-            DebuggingHelper = new DebuggingHelper();
+            DebuggingHelper = new DefaultDebugPrinter();
             DebugMode = Instructions.Debug;
 
             try
             {
                 Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
+                SimilarityGuide.SetSequences(sequences);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())
                 {
-                    IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
-                    AlignIteratively(aligner, Instructions);
-                    SaveAlignment(instructions, aligner.CurrentAlignment!, Instructions.OutputPath);
-                    CheckSaveScorefile(aligner, aligner.CurrentAlignment!, Instructions);
+                    if (instructions.SpecifiesScoreOnly)
+                    {
+                        SaveRichScoreFile(alignment);
+                    }
+                    else
+                    {
+                        IterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
+                        AlignIteratively(aligner, Instructions);
+                        SaveAlignment(instructions, aligner.CurrentAlignment!, Instructions.OutputPath);
+                        CheckSaveScorefile(aligner, aligner.CurrentAlignment!, Instructions);
+                    }
                 }
                 else
                 {
@@ -57,6 +68,13 @@ namespace MAli.AlignmentEngines
             {
                 ResponseBank.ExplainException(e);
             }
+        }
+
+        public void SaveRichScoreFile(Alignment alignment)
+        {
+            List<IFitnessFunction> objectives = MAliSpecification.GetSupportedObjectives();
+            MAliScoreWriter writer = new MAliScoreWriter(objectives);
+            writer.WriteAlignmentTo(alignment, Instructions.OutputPath);
         }
 
         public void SaveAlignment(in AlignmentRequest request, Alignment alignment, string filepath)
@@ -157,7 +175,12 @@ namespace MAli.AlignmentEngines
         public string GetTimelimitProgress(IterativeAligner aligner, DateTime start, DateTime time, double limit)
         {
             TimeSpan span = time - start;
-            string result = $"completed {aligner.IterationsCompleted} iterations in {span.Seconds} of {limit} seconds";
+
+            int hours = span.Hours;
+            int minutes = span.Minutes + (hours * 60);
+            int seconds = span.Seconds + (minutes * 60);
+
+            string result = $"completed {aligner.IterationsCompleted} iterations in {seconds} of {limit} seconds";
 
             return result;
         }

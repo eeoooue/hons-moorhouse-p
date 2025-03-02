@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using LibModification;
 using LibModification.AlignmentModifiers;
 using LibModification.CrossoverOperators;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 
 namespace LibAlignment.Aligners.SingleState
 {

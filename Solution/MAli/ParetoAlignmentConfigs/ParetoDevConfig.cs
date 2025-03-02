@@ -3,6 +3,8 @@ using LibBioInfo;
 using LibBioInfo.ScoringMatrices;
 using LibModification;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.Guided;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment;
 using LibParetoAlignment.Aligners;
 using LibScoring;
@@ -17,11 +19,32 @@ namespace MAli.ParetoAlignmentConfigs
 {
     public class ParetoDevConfig : ParetoAlignmentConfig
     {
+        public override ParetoIterativeAligner CreateAligner()
+        {
+            List<IFitnessFunction> objectives = GetObjectives();
+
+            NSGA2Aligner aligner = new NSGA2Aligner(objectives);
+            aligner.MutationOperator = GetModifier();
+
+            return aligner;
+        }
+
+        public List<IFitnessFunction> GetObjectives()
+        {
+            List<IFitnessFunction> result = new List<IFitnessFunction>()
+            {
+                GetObjectiveOne(),
+                GetObjectiveTwo(),
+                GetObjectiveThree(),
+            };
+
+            return result;
+        }
 
         public IFitnessFunction GetObjectiveOne()
         {
-            IScoringMatrix blosum = new BLOSUM62Matrix();
-            IFitnessFunction result = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(blosum);
+            IScoringMatrix matrix = new PAM250Matrix();
+            IFitnessFunction result = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix);
             return result;
         }
 
@@ -37,41 +60,21 @@ namespace MAli.ParetoAlignmentConfigs
             return result;
         }
 
-        public List<IFitnessFunction> GetObjectives()
-        {
-            List<IFitnessFunction> result = new List<IFitnessFunction>()
-            {
-                GetObjectiveOne(),
-                GetObjectiveTwo(),
-                GetObjectiveThree(),
-            };
-
-            return result;
-        }
-
-
         public IAlignmentModifier GetModifier()
         {
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                new SwapOperator(),
-                new GapInserter(),
-                new MultiRowStochasticSwapOperator(),
+                new GuidedSwap(),
+                new GuidedGapInserter(),
+                new BlockShuffler(),
+                new GapShuffler(),
+
                 new HeuristicPairwiseModifier(),
             };
 
             IAlignmentModifier result = new MultiOperatorModifier(modifiers);
 
             return result;
-        }
-
-        public override ParetoIterativeAligner CreateAligner()
-        {
-            List<IFitnessFunction> objectives = GetObjectives();
-            ParetoHillClimbAligner aligner = new ParetoHillClimbAligner(objectives);
-            aligner.Modifier = GetModifier();
-
-            return aligner;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using LibBioInfo;
+using LibModification;
+using LibModification.AlignmentInitializers;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,8 @@ namespace LibParetoAlignment
     public abstract class ParetoIterativeAligner
     {
         public List<IFitnessFunction> Objectives;
+
+        public IAlignmentInitializer Initializer = new RelativeOffsetInitializer();
 
         public int IterationsCompleted { get; protected set; } = 0;
 

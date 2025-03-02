@@ -1,5 +1,6 @@
 ﻿using LibBioInfo;
 using LibModification;
+using LibModification.AlignmentInitializers;
 using LibModification.AlignmentModifiers;
 using LibScoring;
 using System;
@@ -39,12 +40,10 @@ namespace LibAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            AlignmentRandomizer randomizer = new AlignmentRandomizer();
             Population.Clear();
             while (Population.Count < PopulationSize)
             {
-                Alignment alignment = new Alignment(sequences);
-                randomizer.ModifyAlignment(alignment);
+                Alignment alignment = Initializer.CreateInitialAlignment(sequences);
                 Population.Add(alignment);
             }
 

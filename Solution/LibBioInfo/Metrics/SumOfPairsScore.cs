@@ -76,14 +76,14 @@ namespace LibBioInfo.Metrics
 
                     if (a != b)
                     {
-                        combinations = a_count * b_count / 2;
+                        combinations = a_count * b_count;
                     }
                     else
                     {
                         combinations = a_count * (a_count - 1) / 2;
                     }
 
-                    int score = Matrix.ScorePair(a, b);
+                    int score = ScorePair(a, b);
                     int contribution = score * combinations;
                     result += contribution;
                 }
@@ -92,12 +92,33 @@ namespace LibBioInfo.Metrics
             return result;
         }
 
+        public int ScorePair(char a, char b)
+        {
+            return Matrix.ScorePair(a, b);
+        }
+
         public int GetNumberOfPossiblePairs(in char[,] alignment)
         {
             int m = alignment.GetLength(0);
-            int n = alignment.GetLength(1);
+            int n = GetNumberOfResiduesInFirstRow(alignment);
             int pairsPerColumn = GetPossiblePairsInColumnOfHeight(m);
             return pairsPerColumn * n;
+        }
+
+        public int GetNumberOfResiduesInFirstRow(in char[,] alignment)
+        {
+            int n = alignment.GetLength(1);
+            int total = 0;
+
+            for (int j = 0; j < n; j++)
+            {
+                if (!Bioinformatics.IsGap(alignment[0, j]))
+                {
+                    total++;
+                }
+            }
+
+            return total;
         }
 
         public int GetPossiblePairsInColumnOfHeight(int n)

@@ -15,7 +15,7 @@ namespace LibAlignment.Aligners.PopulationBased
 {
     public class GeneticAlgorithmAligner : PopulationBasedAligner
     {
-        public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
+        public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new SwapOperator();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 

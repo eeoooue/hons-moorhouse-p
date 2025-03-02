@@ -1,5 +1,7 @@
 ﻿using LibBioInfo;
 using LibModification.Helpers;
+using LibModification.Mechanisms;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,60 +13,31 @@ namespace LibModification.AlignmentModifiers
 {
     public class GapInserter : AlignmentModifier, IAlignmentModifier
     {
-        public BiosequencePayloadHelper PayloadHelper = new BiosequencePayloadHelper();
         public CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-
-        public int GapWidthLimit;
-
-        public GapInserter(int gapSizeLimit = 4)
-        {
-            GapWidthLimit = gapSizeLimit;
-        }
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            int gapWidth = PickGapWidth();
-            char[,] modified = InsertGapOfWidth(in alignment.CharacterMatrix, gapWidth);
-            return CharMatrixHelper.RemoveEmptyColumns(in modified);
+            int gapWidth = PickGapWidth(alignment);
+            bool[] mapping = GetRandomRowMapping(alignment.Height);
+            SuggestPairOfGapPositions(alignment, out int j1, out int j2);
+            GapInsertion.InsertGaps(alignment, mapping, gapWidth, j1, j2);
+
+            return CharMatrixHelper.RemoveEmptyColumns(alignment.CharacterMatrix);
         }
 
-        public char[,] InsertGapOfWidth(in char[,] matrix, int gapWidth)
+        public void SuggestPairOfGapPositions(Alignment alignment, out int j1, out int j2)
         {
-            int m = matrix.GetLength(0);
-            int n = matrix.GetLength(1) + gapWidth;
-            int position1 = SuggestGapPosition(gapWidth, n);
-            int position2 = SuggestGapPosition(gapWidth, n);
+            int limit = alignment.Width + 1;
+            j1 = Randomizer.Random.Next(0, limit);
+            j2 = j1;
 
-            bool[] mapping = GetRowMapping(m);
-
-            char[,] result = new char[m, n];
-
-            for (int i = 0; i < m; i++)
+            while (j1 == j2)
             {
-                string payload = CharMatrixHelper.GetCharRowAsString(in matrix, i);
-
-                if (mapping[i])
-                {
-                    payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapWidth, position1);
-                }
-                else
-                {
-                    payload = PayloadHelper.GetPayloadWithGapInserted(payload, gapWidth, position2);
-                }
-
-                CharMatrixHelper.WriteStringOverMatrixRow(ref result, i, payload);
+                j2 = Randomizer.Random.Next(0, limit);
             }
-
-            return result;
         }
 
-        public int SuggestGapPosition(int gapWidth, int stateWidth)
-        {
-            int n = stateWidth - gapWidth;
-            return Randomizer.Random.Next(0, n);
-        }
-
-        public bool[] GetRowMapping(int n)
+        public bool[] GetRandomRowMapping(int n)
         {
             bool[] result = new bool[n];
             for (int i = 0; i < n; i++)
@@ -75,12 +48,11 @@ namespace LibModification.AlignmentModifiers
             return result;
         }
 
-        public int PickGapWidth()
+        public int PickGapWidth(Alignment alignment)
         {
-            int gapWidth = Randomizer.Random.Next(1, GapWidthLimit + 1);
+            int n = alignment.Width;
+            int gapWidth = Randomizer.Random.Next(1, n + 1);
             return gapWidth;
         }
-
-
     }
 }

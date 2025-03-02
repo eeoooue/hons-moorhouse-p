@@ -9,8 +9,6 @@ namespace LibScoring.FitnessFunctions
 {
     public class TotallyConservedColumnsFitnessFunction : NormalisedFitnessFunction
     {
-        private Bioinformatics Bioinformatics = new Bioinformatics();
-
         public override string GetName()
         {
             return "Percentage of Totally Conserved Columns";

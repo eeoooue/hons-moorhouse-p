@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace LibBioInfo.PairwiseAligners
 {
+    enum BacktrackingDirection
+    {
+        Diagonal,
+        Leftwise,
+        Upwards,
+    }
+
     public class NeedlemanWunschPairwiseAligner
     {
-        public int MatchScore = 1;
-        public int MismatchScore = -1;
-        public int GapScore = -2;
+        public int MatchScore { get { return ScoringScheme.ResidueMatch; } }
+        public int MismatchScore { get { return ScoringScheme.ResidueMismatch; } }
+        public int GapScore { get { return ScoringScheme.ResidueWithGap; } }
+
+        public PairwiseScoringScheme ScoringScheme;
 
         public int M;
         public int N;
@@ -21,6 +30,7 @@ namespace LibBioInfo.PairwiseAligners
 
         public NeedlemanWunschPairwiseAligner(string sequenceA, string sequenceB)
         {
+            ScoringScheme = new PairwiseScoringScheme(0, -20, -25);
             SequenceA = $"-{sequenceA}";
             SequenceB = $"-{sequenceB}";
             M = SequenceA.Length;
@@ -44,6 +54,16 @@ namespace LibBioInfo.PairwiseAligners
             }
 
             ScoresPopulated = true;
+        }
+
+        public int GetSimilarityScore()
+        {
+            if (!ScoresPopulated)
+            {
+                PopulateTable();
+            }
+
+            return Scores[M - 1, N - 1];
         }
 
         public void PopulateCoordinates(int i, int j)
@@ -97,18 +117,33 @@ namespace LibBioInfo.PairwiseAligners
 
             Backtrack(ref rowA, ref rowB, M - 1, N - 1);
 
-            return ConstructAsMatrix(rowA, rowB);
+            string sequenceA = RecoverPayload(rowA);
+            string sequenceB = RecoverPayload(rowB);
+
+            return ConstructAsMatrix(sequenceA, sequenceB);
         }
 
-        public char[,] ConstructAsMatrix(StringBuilder a, StringBuilder b)
+        public void ExtractPairwiseAlignment(out string sequenceA, out string sequenceB)
         {
-            string seqA = RecoverPayload(a);
-            string seqB = RecoverPayload(b);
+            if (!ScoresPopulated)
+            {
+                PopulateTable();
+            }
 
+            StringBuilder a = new StringBuilder();
+            StringBuilder b = new StringBuilder();
+
+            Backtrack(ref a, ref b, M - 1, N - 1);
+
+            sequenceA = RecoverPayload(a);
+            sequenceB = RecoverPayload(b);
+        }
+
+        public char[,] ConstructAsMatrix(string seqA, string seqB)
+        {
             int n = seqA.Length;
 
             char[,] result = new char[2, n];
-
             for (int j = 0; j < n; j++)
             {
                 result[0, j] = seqA[j];
@@ -130,22 +165,6 @@ namespace LibBioInfo.PairwiseAligners
             return result.ToString();
         }
 
-        public void ExtractPairwiseAlignment(out string sequenceA, out string sequenceB)
-        {
-            if (!ScoresPopulated)
-            {
-                PopulateTable();
-            }
-
-            StringBuilder a = new StringBuilder();
-            StringBuilder b = new StringBuilder();
-
-            Backtrack(ref a, ref b, M - 1, N - 1);
-
-            sequenceA = RecoverPayload(a);
-            sequenceB = RecoverPayload(b);
-        }
-
         public void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)
         {
             if (i == 0 && j == 0)
@@ -153,24 +172,58 @@ namespace LibBioInfo.PairwiseAligners
                 return;
             }
 
+            List<BacktrackingDirection> options = CollectOptions(i, j);
+            BacktrackingDirection choice = PickDirectionRandomly(options);
+
+            switch (choice)
+            {
+                case BacktrackingDirection.Diagonal:
+                    a.Append(SequenceA[i]);
+                    b.Append(SequenceB[j]);
+                    Backtrack(ref a, ref b, i - 1, j - 1);
+                    return;
+                case BacktrackingDirection.Upwards:
+                    a.Append(SequenceA[i]);
+                    b.Append('-');
+                    Backtrack(ref a, ref b, i - 1, j);
+                    return;
+                case BacktrackingDirection.Leftwise:
+                    a.Append('-');
+                    b.Append(SequenceB[j]);
+                    Backtrack(ref a, ref b, i, j - 1);
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private BacktrackingDirection PickDirectionRandomly(List<BacktrackingDirection> options)
+        {
+            int n = options.Count;
+            int i = Randomizer.Random.Next(n);
+
+            return options[i];
+        }
+
+
+        private List<BacktrackingDirection> CollectOptions(int i, int j)
+        {
+            List<BacktrackingDirection> options = new List<BacktrackingDirection>();
+
             if (CanReachByPair(i, j))
             {
-                a.Append(SequenceA[i]);
-                b.Append(SequenceB[j]);
-                Backtrack(ref a, ref b, i - 1, j - 1);
+                options.Add(BacktrackingDirection.Diagonal);
             }
-            else if (CanReachUpwards(i, j))
+            if (CanReachUpwards(i, j))
             {
-                a.Append(SequenceA[i]);
-                b.Append('-');
-                Backtrack(ref a, ref b, i - 1, j);
+                options.Add(BacktrackingDirection.Upwards);
             }
-            else if (CanReachLeftwise(i, j))
+            if (CanReachLeftwise(i, j))
             {
-                a.Append('-');
-                b.Append(SequenceB[j]);
-                Backtrack(ref a, ref b, i, j - 1);
+                options.Add(BacktrackingDirection.Leftwise);
             }
+
+            return options;
         }
 
         public bool CanReachByPair(int i, int j)

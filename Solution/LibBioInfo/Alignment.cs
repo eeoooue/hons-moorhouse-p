@@ -47,6 +47,25 @@ namespace LibBioInfo
         }
 
 
+        public int GetIndexOfSequence(BioSequence sequence)
+        {
+            return GetIndexOfSequence(sequence.Identifier);
+        }
+
+        public int GetIndexOfSequence(string identifier)
+        {
+
+            for(int i=0; i<Height; i++)
+            {
+                if (Sequences[i].Identifier == identifier)
+                {
+                    return i;
+                }
+            }
+
+            throw new ArgumentException("identifier not found in alignment");
+        }
+
         public char[,] CopyCharacterMatrix(char[,] matrix)
         {
             int m = matrix.GetLength(0);

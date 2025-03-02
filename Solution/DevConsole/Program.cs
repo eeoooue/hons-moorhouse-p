@@ -3,6 +3,10 @@ using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;
+using LibModification;
+using LibModification.AlignmentModifiers;
+using LibModification.Mechanisms;
+using LibSimilarity;
 using MAli;
 using MAli.AlignmentConfigs;
 using MAli.Helpers;
@@ -13,45 +17,55 @@ namespace DevConsole
     {
         private static DevHelper Helper = new DevHelper();
         private static MAliInterface Interface = new MAliInterface();
-        private static AlignmentDebugHelper Painter = new AlignmentDebugHelper();
+        private static BlockShufflingPlayground BlockShufflingPlayground = new BlockShufflingPlayground();
 
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            TestingMAli();
+            // TestGapInsertion();
 
-            // RunMAli("-input BB11001 -output test -debug");
+            // TestingParetoAlignment();
+
+            // RunMAli("-input BB11001 -output test -debug -iterations 10000");
+            RunMAli("-input BB11001 -output test -debug -iterations 10000 -pareto 10");
+
+            // RunMAli("-input BB11001 -output test -debug -seconds 100");
+
+            // RunMAli("-input BB11002 -output test -debug -seconds 100 -pareto 3");
+            // RunMAli("-input real_marine_life -output test -debug -seconds 100");
+            // RunMAli("-input 1a0cA_1ubpC -output test -debug -seconds 100");
+
 
             // TestingConfigParsing();
         }
 
-        static void TestingClustalWriter()
+
+        static void TestingMAli()
         {
-            FileHelper helper = new FileHelper();
-            Alignment alignment = helper.ReadAlignmentFrom("clustalformat_BB11001.aln");
+            // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
+            // RunMAli("-help");
+            // RunMAli("-input BB11001 -output test -debug -format clustal");
 
-            ClustalWriter writer = new ClustalWriter();
-            List<string> lines = writer.CreateAlignmentLines(alignment);
+            RunMAli("-input BB11001 -output test -debug -seconds 100");
 
-            foreach(string line in lines)
-            {
-                Console.WriteLine(line);
-            }
-            writer.WriteAlignmentTo(alignment, "clustalaln");
+            // RunMAli("-input BB11001 -output test -debug");
+            // RunMAli("-input 1a0cA_1ubpC -output test -debug");
 
-            FileHelper stuff = new FileHelper();
-
-            Alignment check = stuff.ReadAlignmentFrom("clustalaln.aln");
+            // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
+            // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
+            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
+            // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
+            // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
         }
 
-        static void TestingConfigParsing()
+        static void TestingMAliScoreonly()
         {
-            //Sprint05Config baseCfg = new Sprint05Config();
-            //UserConfig config = new UserConfig(baseCfg);
+            RunMAli("-input clustalformat_BB11001.aln -output test -scoreonly");
+        }
 
-            //config.CreateAligner();
 
-            RunMAli("-input BB11001 -output test -debug -config config.json");
+        static void TestingMAliPareto()
+        {
+            // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
         }
 
         static void TestingBatchAlignment()
@@ -60,39 +74,18 @@ namespace DevConsole
             // RunMAli("-input batchin -output batchout -debug -batch");
         }
 
+        static void TestingBatchScoring()
+        {
+            RunMAli("-input batchin -output batchout -batch -scoreonly");
+            // RunMAli("-input batchin -output batchout -debug -batch");
+        }
+
         static void TestingParetoAlignment()
         {
             // RunMAli("-input BB11001 -output test -seconds 100 -debug");
-            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 5");
+            // RunMAli("-input 1a0cA_1ubpC -output test -iterations 1000 -debug -pareto 20");
+            RunMAli("-input BB11001 -output test -iterations 1000 -debug -pareto 10");
             // RunMAli("-input BB11001 -output test -iterations 1000 -pareto");
-        }
-
-        static void TestingMAli()
-        {
-            // clustalformat_BB11001.aln
-
-            // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
-
-            // RunMAli("-help");
-
-            RunMAli("-input BB11001 -output test -debug -format clustal");
-
-
-            // RunMAli("-input BB11001 -output test -debug -scorefile -pareto");
-            // RunMAli("-input BB11001 -output test -debug -scorefile");
-
-
-            // RunMAli("-input BB11001 -output test -debug -scorefile");
-
-
-            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
-
-            // RunMAli("-input BB11001 -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
-            // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
-            // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
         }
 
         static void RunMAli(string arguments)
@@ -100,7 +93,6 @@ namespace DevConsole
             string[] args = UnpackArguments(arguments);
             Interface.ProcessArguments(args);
         }
-
         static string[] UnpackArguments(string arguments)
         {
             if (arguments.Length > 0)

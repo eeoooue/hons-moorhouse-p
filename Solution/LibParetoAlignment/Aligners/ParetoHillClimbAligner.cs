@@ -1,6 +1,8 @@
 ﻿using LibBioInfo;
 using LibModification;
+using LibModification.AlignmentInitializers;
 using LibModification.AlignmentModifiers;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment.Helpers;
 using LibScoring;
 using System;
@@ -15,7 +17,10 @@ namespace LibParetoAlignment.Aligners
     {
         public IAlignmentModifier Modifier = new MultiRowStochasticSwapOperator();
 
-        Queue<TradeoffAlignment> Archive = new Queue<TradeoffAlignment>();
+        private FastNonDominatedSort FastNonDominatedSort = new FastNonDominatedSort();
+        private CrowdingDistanceAssignment CrowdingDistanceAssignment = new CrowdingDistanceAssignment();
+
+        List<TradeoffAlignment> Archive = new List<TradeoffAlignment>();
         ParetoHelper ParetoHelper = new ParetoHelper();
 
         private TradeoffAlignment CurrentSolution = null!;
@@ -49,9 +54,7 @@ namespace LibParetoAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            Alignment alignment = new Alignment(sequences);
-            IAlignmentModifier randomizer = new AlignmentRandomizer();
-            randomizer.ModifyAlignment(alignment);
+            Alignment alignment = Initializer.CreateInitialAlignment(sequences);
             InitializeForRefinement(alignment);
         }
 
@@ -68,21 +71,30 @@ namespace LibParetoAlignment.Aligners
             Modifier.ModifyAlignment(alignment);
             TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
 
-            if (ShouldAddSolutionToArchive(tradeoff))
-            {
-                AddSolutionToArchive(tradeoff);
-            }
+            AddSolutionToArchive(tradeoff);
         }
 
         private void AddSolutionToArchive(TradeoffAlignment alignment)
         {
-            if (Archive.Count == NumberOfTradeoffs)
-            {
-                Archive.Dequeue();
-            }
+            Archive.Add(alignment);
+            SortAndTrimArchive();
+            CurrentSolution = Archive[0];
+        }
 
-            Archive.Enqueue(alignment);
-            CurrentSolution = alignment;
+        public void SortAndTrimArchive()
+        {
+            List<TradeoffAlignment> sorted = FastNonDominatedSort.SortTradeoffs(Archive);
+            CrowdingDistanceAssignment.AssignDistances(sorted);
+            CrowdedComparisonOperator.SortTradeoffs(sorted);
+
+            Archive.Clear();
+
+            int n = Math.Min(NumberOfTradeoffs, sorted.Count);
+
+            for(int i=0; i<n; i++)
+            {
+                Archive.Add(sorted[i]);
+            }
         }
 
         public bool ShouldAddSolutionToArchive(TradeoffAlignment alignment)

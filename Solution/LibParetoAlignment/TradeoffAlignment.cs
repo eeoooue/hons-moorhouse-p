@@ -12,9 +12,29 @@ namespace LibParetoAlignment
         public Alignment Alignment;
         public Dictionary<string, double> Scores = new Dictionary<string, double>();
 
+        public double CrowdingDistance = 0.0;
+
+        public int FrontRank = 0;
+        public int DominationCounter = 0;
+        public List<TradeoffAlignment> DominatedSolutions = new List<TradeoffAlignment>();
+        public bool AddedToFront = false;
+
         public TradeoffAlignment(Alignment alignment)
         {
             Alignment = alignment;
+        }
+
+        public void ResetDominationVariables()
+        {
+            FrontRank = 0;
+            DominationCounter = 0;
+            DominatedSolutions.Clear();
+            AddedToFront = false;
+        }
+
+        public void SetFrontRank(int rank)
+        {
+            FrontRank = rank;
         }
 
         public void SetScore(string key, double value)
