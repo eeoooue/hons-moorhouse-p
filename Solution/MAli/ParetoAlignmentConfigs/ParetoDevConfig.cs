@@ -19,6 +19,27 @@ namespace MAli.ParetoAlignmentConfigs
 {
     public class ParetoDevConfig : ParetoAlignmentConfig
     {
+        public override ParetoIterativeAligner CreateAligner()
+        {
+            List<IFitnessFunction> objectives = GetObjectives();
+
+            NSGA2Aligner aligner = new NSGA2Aligner(objectives);
+            aligner.MutationOperator = GetModifier();
+
+            return aligner;
+        }
+
+        public List<IFitnessFunction> GetObjectives()
+        {
+            List<IFitnessFunction> result = new List<IFitnessFunction>()
+            {
+                GetObjectiveOne(),
+                GetObjectiveTwo(),
+                GetObjectiveThree(),
+            };
+
+            return result;
+        }
 
         public IFitnessFunction GetObjectiveOne()
         {
@@ -39,65 +60,21 @@ namespace MAli.ParetoAlignmentConfigs
             return result;
         }
 
-        public List<IFitnessFunction> GetObjectives()
-        {
-            List<IFitnessFunction> result = new List<IFitnessFunction>()
-            {
-                GetObjectiveOne(),
-                GetObjectiveTwo(),
-                GetObjectiveThree(),
-            };
-
-            return result;
-        }
-
-
         public IAlignmentModifier GetModifier()
         {
-            //List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
-            //{
-            //    new SwapOperator(),
-            //    new GapInserter(),
-            //    new MultiRowStochasticSwapOperator(),
-            //    new HeuristicPairwiseModifier(),
-            //};
-
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new GuidedSwap(),
                 new GuidedGapInserter(),
-                // new GuidedResidueShifter(),
-                // new GuidedRelativeScroll(),
-
-                //new SwapOperator(),
-                //new GapInserter(),
-                //new ResidueShifter(),
-
                 new BlockShuffler(),
                 new GapShuffler(),
 
-                // new GapShifter(),
-                // new MultiRowStochasticSwapOperator(),
                 new HeuristicPairwiseModifier(),
-                // new ResidueShifter(),
-                //new SmartBlockPermutationOperator(new PAM250Matrix()),
-                //new SmartBlockScrollingOperator(new PAM250Matrix()),
             };
 
             IAlignmentModifier result = new MultiOperatorModifier(modifiers);
 
             return result;
-        }
-
-        public override ParetoIterativeAligner CreateAligner()
-        {
-            List<IFitnessFunction> objectives = GetObjectives();
-
-            NSGA2Aligner aligner = new NSGA2Aligner(objectives);
-            // ParetoHillClimbAligner aligner = new ParetoHillClimbAligner(objectives);
-            aligner.MutationOperator = GetModifier();
-
-            return aligner;
         }
     }
 }

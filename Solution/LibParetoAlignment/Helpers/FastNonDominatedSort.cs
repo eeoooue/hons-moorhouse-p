@@ -12,14 +12,15 @@ namespace LibParetoAlignment.Helpers
 
         public List<TradeoffAlignment> SortTradeoffs(List<TradeoffAlignment> tradeoffs)
         {
-            List<DominationDecorator> decorated = DecorateTradeoffs(tradeoffs);
-            List<DominationDecorator> frontSeries = new List<DominationDecorator>();
-            ExtractFronts(decorated, frontSeries);
+            ResetDominationState(tradeoffs);
+
+            List<TradeoffAlignment> frontSeries = new List<TradeoffAlignment>();
+            ExtractFronts(tradeoffs, frontSeries);
 
             List<TradeoffAlignment> result = new List<TradeoffAlignment>();
-            foreach(DominationDecorator wrappedTradeoff in frontSeries)
+            foreach(TradeoffAlignment tradeoff in frontSeries)
             {
-                result.Add(wrappedTradeoff.Tradeoff);
+                result.Add(tradeoff);
             }
 
             if (result.Count < tradeoffs.Count)
@@ -35,13 +36,22 @@ namespace LibParetoAlignment.Helpers
             return result;
         }
 
-        public void ExtractFronts(List<DominationDecorator> tradeoffs, List<DominationDecorator> frontSeries)
+        public void ResetDominationState(List<TradeoffAlignment> tradeoffs)
         {
-            List <DominationDecorator> currentFront = new List<DominationDecorator>();
-
-            foreach (DominationDecorator p in tradeoffs)
+            foreach(TradeoffAlignment alignment in tradeoffs)
             {
-                foreach(DominationDecorator q in tradeoffs)
+                alignment.ResetDominationVariables();
+            }
+        }
+
+
+        public void ExtractFronts(List<TradeoffAlignment> tradeoffs, List<TradeoffAlignment> frontSeries)
+        {
+            List <TradeoffAlignment> currentFront = new List<TradeoffAlignment>();
+
+            foreach (TradeoffAlignment p in tradeoffs)
+            {
+                foreach(TradeoffAlignment q in tradeoffs)
                 {
                     bool pDominatesQ = ParetoHelper.ADominatesB(p, q);
                     if (pDominatesQ)
@@ -65,18 +75,18 @@ namespace LibParetoAlignment.Helpers
             ExtractNextFront(currentFront, frontSeries, 2);
         }
 
-        public void ExtractNextFront(List<DominationDecorator> previousFront, List<DominationDecorator> frontSeries, int frontRank)
+        public void ExtractNextFront(List<TradeoffAlignment> previousFront, List<TradeoffAlignment> frontSeries, int frontRank)
         {
             if (previousFront.Count == 0)
             {
                 return;
             }
 
-            List<DominationDecorator> currentFront = new List<DominationDecorator>();
+            List<TradeoffAlignment> currentFront = new List<TradeoffAlignment>();
 
-            foreach (DominationDecorator p in previousFront)
+            foreach (TradeoffAlignment p in previousFront)
             {
-                foreach (DominationDecorator q in p.DominatedSolutions)
+                foreach (TradeoffAlignment q in p.DominatedSolutions)
                 {
                     q.DominationCounter -= 1;
                     if (q.DominationCounter == 0)
@@ -89,18 +99,6 @@ namespace LibParetoAlignment.Helpers
             }
 
             ExtractNextFront(currentFront, frontSeries, frontRank+1);
-        }
-
-        public List<DominationDecorator> DecorateTradeoffs(List<TradeoffAlignment> tradeoffs)
-        {
-            List<DominationDecorator> result = new List<DominationDecorator>();
-            foreach(TradeoffAlignment tradeoff in tradeoffs)
-            {
-                DominationDecorator decorated = new DominationDecorator(tradeoff);
-                result.Add(decorated);
-            }
-
-            return result;
         }
     }
 }

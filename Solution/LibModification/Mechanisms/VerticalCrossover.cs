@@ -17,6 +17,9 @@ namespace LibModification.Mechanisms
             Alignment child1 = ProduceChildUsingMapping(a, b, mapping);
             Alignment child2 = ProduceChildUsingMapping(b, a, mapping);
 
+            CharMatrixHelper.RemoveEmptyColumns(child1);
+            CharMatrixHelper.RemoveEmptyColumns(child2);
+
             return new List<Alignment> { child1, child2 };
         }
 

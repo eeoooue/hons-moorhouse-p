@@ -33,6 +33,11 @@ namespace MAli.Helpers
                 if (request is ParetoAlignmentRequest paretoReq)
                 {
                     paretoReq.NumberOfTradeoffs = int.Parse(table["pareto"]!);
+
+                    if (paretoReq.NumberOfTradeoffs < 0 || paretoReq.NumberOfTradeoffs > 30)
+                    {
+                        throw new Exception("Number of tradeoffs for '-pareto' must be in the range 1-30");
+                    }
                 }
             }
 

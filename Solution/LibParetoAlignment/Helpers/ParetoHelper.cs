@@ -49,11 +49,5 @@ namespace LibParetoAlignment.Helpers
             List<string> objectives = a.Scores.Keys.ToList();
             return ADominatesB(a, b, objectives);
         }
-
-
-        public bool ADominatesB(DominationDecorator a, DominationDecorator b)
-        {
-            return ADominatesB(a.Tradeoff, b.Tradeoff);
-        }
     }
 }

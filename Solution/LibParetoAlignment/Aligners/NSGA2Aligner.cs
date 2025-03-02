@@ -10,19 +10,22 @@ using System.Text;
 using System.Threading.Tasks;
 using LibModification.AlignmentModifiers;
 using LibModification.CrossoverOperators;
+using System.Globalization;
 
 namespace LibParetoAlignment.Aligners
 {
     public class NSGA2Aligner : ParetoIterativeAligner
     {
         public IAlignmentModifier RefinementPerturbOperator = new GapShifter();
-        public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
         public IAlignmentModifier MutationOperator = new MultiRowStochasticSwapOperator();
+
+        public ICrossoverOperator CrossoverOperatorA = new RowBasedCrossoverOperator();
+        public ICrossoverOperator CrossoverOperatorB = new ColBasedCrossoverOperator();
 
         private FastNonDominatedSort FastNonDominatedSort = new FastNonDominatedSort();
         private CrowdingDistanceAssignment CrowdingDistanceAssignment = new CrowdingDistanceAssignment();
 
-        List<TradeoffAlignment> Archive = new List<TradeoffAlignment>();
+        List<TradeoffAlignment> Population = new List<TradeoffAlignment>();
 
         private TradeoffAlignment CurrentSolution = null!;
 
@@ -37,8 +40,8 @@ namespace LibParetoAlignment.Aligners
         public override List<Alignment> CollectTradeoffSolutions()
         {
             List<Alignment> result = new List<Alignment>();
-            List<TradeoffAlignment> population = PickBestNFromArchive(NumberOfTradeoffs);
-            foreach (TradeoffAlignment tradeoff in population)
+            List<TradeoffAlignment> selection = PickBestNFromArchive(NumberOfTradeoffs);
+            foreach (TradeoffAlignment tradeoff in selection)
             {
                 result.Add(tradeoff.Alignment);
             }
@@ -70,7 +73,7 @@ namespace LibParetoAlignment.Aligners
                 $"{GetName()}",
                 $" - [Tradeoffs] {NumberOfTradeoffs}",
                 $" - [Iterations] {IterationsCompleted}",
-                $" - [Population] {Archive.Count} solutions",
+                $" - [Population] {Population.Count} solutions",
             };
 
             return result;
@@ -108,32 +111,31 @@ namespace LibParetoAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
-            Archive.Clear();
-            while (Archive.Count < PopulationSize)
+            Population.Clear();
+            while (Population.Count < PopulationSize)
             {
                 Alignment alignment = Initializer.CreateInitialAlignment(sequences);
                 TradeoffAlignment tradeoffMember = EvaluateAlignment(alignment);
-                AddSolutionToArchive(tradeoffMember);
+                Population.Add(tradeoffMember);
             }
-
-            SortAndTrimArchive();
+            CurrentSolution = Population[0];
         }
 
         public override void InitializeForRefinement(Alignment alignment)
         {
-            Archive.Clear();
+            Population.Clear();
             TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
-            AddSolutionToArchive(tradeoff);
+            Population.Add(tradeoff);
 
-            while (Archive.Count < PopulationSize)
+            while (Population.Count < PopulationSize)
             {
                 Alignment member = alignment.GetCopy();
                 RefinementPerturbOperator.ModifyAlignment(member);
                 TradeoffAlignment tradeoffMember = EvaluateAlignment(member);
-                AddSolutionToArchive(tradeoffMember);
+                Population.Add(tradeoffMember);
             }
 
-            SortAndTrimArchive();
+            CurrentSolution = Population[0];
         }
 
         public override void PerformIteration()
@@ -141,29 +143,43 @@ namespace LibParetoAlignment.Aligners
             Alignment alignment = CurrentSolution.Alignment.GetCopy();
 
             List<TradeoffAlignment> parents = PickBestNFromArchive(ParentPopSize);
-            List<TradeoffAlignment> children = CreateChildren(parents);
+            List<TradeoffAlignment> children = CreateChildTradeoffs(parents);
             ReplacePopulationWithParentsAndChildren(parents, children);
-            SortAndTrimArchive();
         }
 
         public void ReplacePopulationWithParentsAndChildren(List<TradeoffAlignment> parents, List<TradeoffAlignment> children)
         {
-            Archive.Clear();
+            Population.Clear();
             foreach(TradeoffAlignment parent in parents)
             {
-                AddSolutionToArchive(parent);
+                Population.Add(parent);
             }
             foreach(TradeoffAlignment child in children)
             {
-                AddSolutionToArchive(child);
+                Population.Add(child);
             }
         }
 
-
-        public List<TradeoffAlignment> CreateChildren(List<TradeoffAlignment> parents)
+        public List<TradeoffAlignment> CreateChildTradeoffs(List<TradeoffAlignment> parents)
         {
             int targetCount = PopulationSize - parents.Count;
-            List<TradeoffAlignment> children = new List<TradeoffAlignment>();
+            List<TradeoffAlignment> result = new List<TradeoffAlignment>();
+
+            List<Alignment> children = CreateChildAlignments(parents);
+
+            foreach(Alignment alignment in children)
+            {
+                TradeoffAlignment childTradeoff = EvaluateAlignment(alignment);
+                result.Add(childTradeoff);
+            }
+
+            return result;
+        }
+
+        public List<Alignment> CreateChildAlignments(List<TradeoffAlignment> parents)
+        {
+            int targetCount = PopulationSize - parents.Count;
+            List<Alignment> children = new List<Alignment>();
 
             while (children.Count < targetCount)
             {
@@ -174,30 +190,48 @@ namespace LibParetoAlignment.Aligners
                     b = PickRandomTradeoff(parents).Alignment;
                 }
 
-                Alignment child;
-                if (Randomizer.CoinFlip())
-                {
-                    child = a.GetCopy();
-                    MutationOperator.ModifyAlignment(child);
-                }
-                else if (Randomizer.CoinFlip())
-                {
-                    child = b.GetCopy();
-                    MutationOperator.ModifyAlignment(child);
-                }
-                else
-                {
-                    List<Alignment> pair = CrossoverOperator.CreateAlignmentChildren(a, b);
-                    int i = Randomizer.CoinFlip() ? 0 : 1;
-                    child = pair[i];
-                }
+                List<Alignment> childPair = CreateChildrenOf(a, b);
 
-                TradeoffAlignment childTradeoff = EvaluateAlignment(child);
-                children.Add(childTradeoff);
+                foreach(Alignment child in childPair)
+                {
+                    if (RollToMutateChild())
+                    {
+                        MutationOperator.ModifyAlignment(child);
+                    }
+
+                    bool notExistingParent = DuplicationChecker.SolutionNotInList(child, parents);
+                    bool notExistingChild = DuplicationChecker.SolutionNotInList(child, children);
+                    bool novelSolution = notExistingParent && notExistingChild;
+
+                    if (novelSolution && children.Count < targetCount)
+                    {
+                        children.Add(child);
+                    }
+                }
             }
 
             return children;
         }
+
+
+        public List<Alignment> CreateChildrenOf(Alignment a, Alignment b)
+        {
+            if (Randomizer.CoinFlip())
+            {
+                return CrossoverOperatorA.CreateAlignmentChildren(a, b);
+            }
+            else
+            {
+                return CrossoverOperatorB.CreateAlignmentChildren(a, b);
+            }
+        }
+
+        public bool RollToMutateChild()
+        {
+            int roll = Randomizer.Random.Next(1, 7);
+            return roll == 6;
+        }
+
 
         public TradeoffAlignment PickRandomTradeoff(List<TradeoffAlignment> tradeoffs)
         {
@@ -205,44 +239,97 @@ namespace LibParetoAlignment.Aligners
             return tradeoffs[i];
         }
 
-
-
         public List<TradeoffAlignment> PickBestNFromArchive(int n)
         {
-            n = Math.Min(n, Archive.Count);
+            SortPopulationByDominationRanks();
+            n = Math.Min(n, Population.Count);
 
-            List<TradeoffAlignment> result = new List<TradeoffAlignment>();
-            for (int i=0; i<n; i++)
+            Stack<TradeoffAlignment> stack = CollectNTradeoffsByDominationRankOnly(n);
+
+            int worstRank = stack.Pop().FrontRank;
+
+            while (stack.Count > 0)
             {
-                result.Add(Archive[i]);
+                TradeoffAlignment ali = stack.Pop();
+                if (ali.FrontRank != worstRank)
+                {
+                    stack.Push(ali);
+                    break;
+                }
+            }
+
+            int missingSolutions = n - stack.Count;
+
+            List<TradeoffAlignment> result = PickNBestSolutionsOfRank(missingSolutions, worstRank);
+
+            while (stack.Count > 0)
+            {
+                result.Add(stack.Pop());
             }
 
             return result;
         }
 
 
-
-        private void AddSolutionToArchive(TradeoffAlignment alignment)
+        public Stack<TradeoffAlignment> CollectNTradeoffsByDominationRankOnly(int n)
         {
-            Archive.Add(alignment);
-        }
+            SortPopulationByDominationRanks();
 
-        public void SortAndTrimArchive()
-        {
-            List<TradeoffAlignment> sorted = FastNonDominatedSort.SortTradeoffs(Archive);
-            CrowdingDistanceAssignment.AssignDistances(sorted);
-            CrowdedComparisonOperator.SortTradeoffs(sorted);
-
-            Archive.Clear();
-
-            int n = Math.Min(PopulationSize, sorted.Count);
-
+            Stack<TradeoffAlignment> result = new Stack<TradeoffAlignment>();
             for (int i = 0; i < n; i++)
             {
-                Archive.Add(sorted[i]);
+                result.Push(Population[i]);
             }
 
-            CurrentSolution = Archive[0];
+            return result;
+        }
+
+
+        public List<TradeoffAlignment> PickNBestSolutionsOfRank(int n, int rank)
+        {
+            List<TradeoffAlignment> candidates = CollectSolutionsOfRank(rank);
+
+            CrowdingDistanceAssignment.AssignDistances(candidates);
+            CrowdedComparisonOperator.SortTradeoffs(candidates);
+
+            List<TradeoffAlignment> result = new List<TradeoffAlignment>();
+
+            for(int i=0; i<n; i++)
+            {
+                result.Add(candidates[i]);
+            }
+
+            return result;
+        }
+
+
+        public List<TradeoffAlignment> CollectSolutionsOfRank(int rank)
+        {
+            List<TradeoffAlignment> result = new List<TradeoffAlignment>();
+
+            foreach (TradeoffAlignment alignment in Population)
+            {
+                if (alignment.FrontRank == rank)
+                {
+                    result.Add(alignment);
+                }
+            }
+
+            return result;
+        }
+
+        public void SortPopulationByDominationRanks()
+        {
+            List<TradeoffAlignment> sorted = FastNonDominatedSort.SortTradeoffs(Population);
+
+            Population.Clear();
+            int n = Math.Min(PopulationSize, sorted.Count);
+            for (int i = 0; i < n; i++)
+            {
+                Population.Add(sorted[i]);
+            }
+
+            CurrentSolution = Population[0];
         }
     }
 }

@@ -20,7 +20,7 @@ Functionality:
 
 	- Can specify a seed value using '-seed <value>'
 
-	- Can produce a variety of tradeoff alignments using '-pareto <tradeoff_count>' 
+	- Can produce up to 30 tradeoff alignments using '-pareto <tradeoff_count>'
 
 Example usage:
 
