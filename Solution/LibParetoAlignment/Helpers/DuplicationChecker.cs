@@ -25,7 +25,7 @@ namespace LibParetoAlignment.Helpers
 
         public static bool SolutionNotInList(Alignment solution, List<Alignment> list)
         {
-            foreach(Alignment alignment in list)
+            foreach (Alignment alignment in list)
             {
                 if (SolutionsAreIdentical(solution, alignment))
                 {
