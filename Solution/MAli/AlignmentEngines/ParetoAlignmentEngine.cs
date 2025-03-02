@@ -4,6 +4,7 @@ using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
 using LibSimilarity;
+using MAli.DebugPrinters;
 using MAli.Helpers;
 using MAli.ParetoAlignmentConfigs;
 using MAli.UserRequests;
@@ -19,7 +20,7 @@ namespace MAli.AlignmentEngines
     {
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        private ParetoDebuggingHelper DebuggingHelper = new ParetoDebuggingHelper();
+        private ParetoDebugPrinter DebuggingHelper = new ParetoDebugPrinter();
         private ParetoAlignmentConfig Config;
         private AlignmentRequest Instructions = null!;
 
@@ -46,7 +47,7 @@ namespace MAli.AlignmentEngines
         private void PerformAlignment(ParetoAlignmentRequest instructions)
         {
             Instructions = instructions;
-            DebuggingHelper = new ParetoDebuggingHelper();
+            DebuggingHelper = new ParetoDebugPrinter();
             DebugMode = Instructions.Debug;
 
             try

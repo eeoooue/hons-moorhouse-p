@@ -1,15 +1,15 @@
-﻿using LibAlignment;
-using LibBioInfo;
+﻿using LibBioInfo;
 using LibParetoAlignment;
+using MAli.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.DebugPrinters
 {
-    public class ParetoDebuggingHelper
+    internal class ParetoDebugPrinter
     {
         private AlignmentPreviewHelper DebugHelper = new AlignmentPreviewHelper();
 

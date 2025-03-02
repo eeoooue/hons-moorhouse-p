@@ -1,16 +1,16 @@
 ﻿using LibAlignment;
 using LibBioInfo;
 using LibSimilarity;
+using MAli.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.Helpers
+namespace MAli.DebugPrinters
 {
-    internal class DebuggingHelper
+    internal class DefaultDebugPrinter
     {
         private AlignmentPreviewHelper DebugHelper = new AlignmentPreviewHelper();
 

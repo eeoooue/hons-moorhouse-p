@@ -4,6 +4,7 @@ using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibScoring;
 using LibSimilarity;
+using MAli.DebugPrinters;
 using MAli.Helpers;
 using MAli.UserRequests;
 using System;
@@ -21,7 +22,7 @@ namespace MAli.AlignmentEngines
         private FrameHelper FrameHelper = new FrameHelper();
         private ResponseBank ResponseBank = new ResponseBank();
         private AlignmentConfig Config;
-        private DebuggingHelper DebuggingHelper = new DebuggingHelper();
+        private DefaultDebugPrinter DebuggingHelper = new DefaultDebugPrinter();
 
         private bool DebugMode = false;
         private AlignmentRequest Instructions = null!;
@@ -34,7 +35,7 @@ namespace MAli.AlignmentEngines
         public void PerformAlignment(AlignmentRequest instructions)
         {
             Instructions = instructions;
-            DebuggingHelper = new DebuggingHelper();
+            DebuggingHelper = new DefaultDebugPrinter();
             DebugMode = Instructions.Debug;
 
             try
