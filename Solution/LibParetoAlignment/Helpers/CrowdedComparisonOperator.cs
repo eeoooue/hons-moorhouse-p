@@ -14,18 +14,18 @@ namespace LibParetoAlignment.Helpers
             int n = tradeoffs.Count;
             for (int i = 0; i < n - 1; i++)
             {
-                int currentMinIndex = i;
+                int currentBestIndex = i;
                 for (int j = i + 1; j < n; j++)
                 {
-                    if (PreferAOverB(tradeoffs[j], tradeoffs[currentMinIndex]))
+                    if (PreferAOverB(tradeoffs[j], tradeoffs[currentBestIndex]))
                     {
-                        currentMinIndex = j;
+                        currentBestIndex = j;
                     }
                 }
 
                 TradeoffAlignment temp = tradeoffs[i];
-                tradeoffs[i] = tradeoffs[currentMinIndex];
-                tradeoffs[currentMinIndex] = temp;
+                tradeoffs[i] = tradeoffs[currentBestIndex];
+                tradeoffs[currentBestIndex] = temp;
             }
         }
 
@@ -41,7 +41,7 @@ namespace LibParetoAlignment.Helpers
                 return false;
             }
 
-            return a.CrowdingDistance < b.CrowdingDistance;
+            return a.CrowdingDistance > b.CrowdingDistance;
         }
     }
 }
