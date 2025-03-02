@@ -34,9 +34,9 @@ namespace MAli.Helpers
                 {
                     paretoReq.NumberOfTradeoffs = int.Parse(table["pareto"]!);
 
-                    if (paretoReq.NumberOfTradeoffs < 0 || paretoReq.NumberOfTradeoffs > 50)
+                    if (paretoReq.NumberOfTradeoffs < 0 || paretoReq.NumberOfTradeoffs > 30)
                     {
-                        throw new Exception("Number of tradeoffs for '-pareto' must be in the range 1-50");
+                        throw new Exception("Number of tradeoffs for '-pareto' must be in the range 1-30");
                     }
                 }
             }
