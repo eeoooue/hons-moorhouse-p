@@ -21,7 +21,7 @@ namespace LibSimilarity
             Graph.SetSequences(sequences);
         }
 
-        public static void TryUpdateSimilarity()
+        private static void TryUpdateSimilarity()
         {
             List<BioSequence> sequences = Graph.TryFindPairOfUnconnectedSequences();
             if (sequences.Count == 2)
@@ -30,7 +30,7 @@ namespace LibSimilarity
             }
         }
 
-        public static void UpdateSimilarity(BioSequence a, BioSequence b)
+        private static void UpdateSimilarity(BioSequence a, BioSequence b)
         {
             double similarity = Judge.GetSimilarity(a, b);
             Graph.RecordSimilarity(a, b, similarity);
@@ -38,16 +38,11 @@ namespace LibSimilarity
 
         public static bool[] GetSetOfSimilarSequencesAsMask(Alignment alignment)
         {
-            return GetSetOfSimilarSequencesAsMask(alignment.Sequences);
-        }
-
-        public static bool[] GetSetOfSimilarSequencesAsMask(List<BioSequence> sequences)
-        {
+            List<BioSequence> sequences = alignment.Sequences;
             HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences(sequences);
             int m = sequences.Count;
 
             bool[] result = new bool[m];
-
             for (int i = 0; i < m; i++)
             {
                 BioSequence sequence = sequences[i];
@@ -101,10 +96,7 @@ namespace LibSimilarity
             return result;
         }
 
-
-        
-
-        public static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
+        private static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
         {
             List<SequenceNode> members = new List<SequenceNode>();
             HashSet<string> blacklist = new HashSet<string>();
