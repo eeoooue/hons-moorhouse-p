@@ -26,7 +26,7 @@ namespace LibModification.AlignmentModifiers
 
             if (Randomizer.CoinFlip())
             {
-                BlockSplitter.SplitBlock(block);
+                block = BlockSplitter.SplitBlock(block);
             }
 
             maskedAli.SubtractBlock(block, block.OriginalPosition);
