@@ -13,6 +13,11 @@ namespace LibModification.BlockShuffling
         {
             int width = PickNewWidth(block);
 
+            if (width == block.Width)
+            {
+                return block;
+            }
+
             if (Randomizer.CoinFlip())
             {
                 return ExtractLeftSide(block, width);
@@ -45,14 +50,11 @@ namespace LibModification.BlockShuffling
 
             bool[,] mask = new bool[block.Height, width];
 
-            for(int i=0; i<block.Height; i++)
+            for (int i = 0; i < block.Height; i++)
             {
-                int jRight = block.Width - 1;
-
-                for(int j=0; j<width; j++)
+                for (int j = 0; j < width; j++)
                 {
-                    mask[i, j] = block.Mask[i, jRight];
-                    jRight--;
+                    mask[i, j] = block.Mask[i, j + charactersSkipped];
                 }
             }
 

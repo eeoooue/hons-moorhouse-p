@@ -18,14 +18,6 @@ namespace LibModification.BlockShuffling
         public int Height { get { return Alignment.Height; } }
         public int Width { get { return Alignment.Width; } }
 
-        public MaskedAlignment(Alignment alignment, bool[,] mask, bool residuesAsOnes = true)
-        {
-            Alignment = alignment;
-            Mask = mask;
-            ResidueMarker = residuesAsOnes;
-            GapMarker = !ResidueMarker;
-        }
-
         public MaskedAlignment(Alignment alignment, bool residuesAsOnes = true)
         {
             Alignment = alignment;
@@ -37,7 +29,7 @@ namespace LibModification.BlockShuffling
         public char[,] ExtractAlignment()
         {
             char[,] result = new char[Height, Width];
-            for (int i=0; i<Height; i++)
+            for (int i = 0; i < Height; i++)
             {
                 ExtractAlignmentRow(result, i);
             }
@@ -50,7 +42,7 @@ namespace LibModification.BlockShuffling
             int p = 0;
             string residues = Sequences[i].Residues;
 
-            for(int j=0; j<Width; j++)
+            for (int j = 0; j < Width; j++)
             {
                 if (Mask[i, j] == ResidueMarker)
                 {
@@ -65,8 +57,6 @@ namespace LibModification.BlockShuffling
 
         public bool[,] CreateMask(Alignment alignment, bool residuesAsOnes = true)
         {
-            // TODO: consider inserting empty columns first
-
             bool residueMarker = residuesAsOnes;
             bool gapMarker = !residuesAsOnes;
             int m = alignment.Height;
@@ -90,7 +80,7 @@ namespace LibModification.BlockShuffling
         {
             int n = block.Height;
 
-            for(int i=0; i<n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int sequenceIndex = block.SequenceIndices[i];
                 SubtractBlockRow(block, jOffset, i, sequenceIndex);
@@ -99,7 +89,7 @@ namespace LibModification.BlockShuffling
 
         private void SubtractBlockRow(CharacterBlock block, int jOffset, int blockMaskIndex, int sequenceIndex)
         {
-            for(int j=0; j<block.Width; j++)
+            for (int j = 0; j < block.Width; j++)
             {
                 if (block.Mask[blockMaskIndex, j])
                 {

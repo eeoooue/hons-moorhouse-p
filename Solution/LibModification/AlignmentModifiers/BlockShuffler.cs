@@ -17,8 +17,7 @@ namespace LibModification.AlignmentModifiers
         {
             alignment.CharacterMatrix = ColumnInsertion.AddEmptyColumnsAsPadding(alignment.CharacterMatrix, 1, 1);
 
-            AlignmentMaskMaker maker = new AlignmentMaskMaker();
-            MaskedAlignment maskedAli = maker.GetMaskedAlignment(alignment);
+            MaskedAlignment maskedAli = new MaskedAlignment(alignment);
 
             BlockFinder finder = new BlockFinder();
 
@@ -27,7 +26,7 @@ namespace LibModification.AlignmentModifiers
 
             if (Randomizer.CoinFlip())
             {
-                BlockSplitter.SplitBlock(block);
+                block = BlockSplitter.SplitBlock(block);
             }
 
             maskedAli.SubtractBlock(block, block.OriginalPosition);
