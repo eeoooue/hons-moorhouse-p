@@ -17,7 +17,6 @@ namespace DevConsole
     {
         private static DevHelper Helper = new DevHelper();
         private static MAliInterface Interface = new MAliInterface();
-        private static BlockShufflingPlayground BlockShufflingPlayground = new BlockShufflingPlayground();
 
         public static void Main(string[] args)
         {
@@ -37,7 +36,6 @@ namespace DevConsole
 
             // TestingConfigParsing();
         }
-
 
         static void TestingMAli()
         {
