@@ -10,7 +10,6 @@ namespace LibModification.AlignmentModifiers.MultiRowStochastic
 {
     public class MultiRowStochasticGapShifter : AlignmentModifier, IAlignmentModifier
     {
-        CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
         private GapShifter GapShifter = new GapShifter();
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
