@@ -16,10 +16,18 @@ namespace LibSimilarity
         public static int CurrentSetSize = 0;
         public static int NodeEdgeLimit = 10;
 
+
+        #region Initialization
+
         public static void SetSequences(List<BioSequence> sequences)
         {
             Graph.SetSequences(sequences);
         }
+
+        #endregion
+
+
+        #region Iterative construction of restricted graph
 
         private static void TryUpdateSimilarity()
         {
@@ -35,6 +43,11 @@ namespace LibSimilarity
             double similarity = Judge.GetSimilarity(a, b);
             Graph.RecordSimilarity(a, b, similarity);
         }
+
+        #endregion
+
+
+        #region Retrieval of similar sequences
 
         public static bool[] GetSetOfSimilarSequencesAsMask(Alignment alignment)
         {
@@ -126,6 +139,8 @@ namespace LibSimilarity
             int i = Randomizer.Random.Next(n);
             return nodes[i];
         }
+
+        #endregion
 
 
         #region Debugging info
