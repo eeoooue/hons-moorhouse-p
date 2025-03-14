@@ -26,15 +26,9 @@ namespace MAli.AlignmentConfigs
         public IFitnessFunction GetObjective()
         {
             IScoringMatrix matrix = new PAM250Matrix();
-            IFitnessFunction objectiveA = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-            IFitnessFunction objectiveB = new NonGapsFitnessFunction();
+            IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
 
-            List<IFitnessFunction> objectives = new List<IFitnessFunction>() { objectiveA, objectiveB };
-            // List<double> weights = new List<double>() { 0.9, 0.1 };
-            List<double> weights = new List<double>() { 0.90, 0.1 };
-
-            WeightedCombinationOfFitnessFunctions combo = new WeightedCombinationOfFitnessFunctions(objectives, weights);
-            return combo;
+            return objective;
         }
 
         private IAlignmentModifier GetMultiOperatorModifier()
