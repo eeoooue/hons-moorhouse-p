@@ -10,8 +10,8 @@ namespace LibSimilarity
 {
     public static class SimilarityGuide
     {
-        public static SimilarityJudge Judge = new SimilarityJudge();
-        public static SimilarityGraph Graph = new SimilarityGraph();
+        private static SimilarityJudge Judge = new SimilarityJudge();
+        private static SimilarityGraph Graph = new SimilarityGraph();
 
         public static int CurrentSetSize = 0;
         public static int NodeEdgeLimit = 10;

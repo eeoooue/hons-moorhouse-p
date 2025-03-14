@@ -29,7 +29,9 @@ namespace LibSimilarity
             return slices[i].Link;
         }
 
-        public static List<RouletteSlice> CreateRouletteSlices(List<SimilarityLink> links)
+        #region Private
+
+        private static List<RouletteSlice> CreateRouletteSlices(List<SimilarityLink> links)
         {
             double minValue = GetMinimumValue(links);
             List<RouletteSlice> result = new List<RouletteSlice>();
@@ -43,7 +45,7 @@ namespace LibSimilarity
             return result;
         }
 
-        public static double GetMinimumValue(List<SimilarityLink> links)
+        private static double GetMinimumValue(List<SimilarityLink> links)
         {
             double result = double.MaxValue;
             foreach(SimilarityLink link in links)
@@ -55,14 +57,14 @@ namespace LibSimilarity
         }
 
 
-        public static double RollThreshhold(List<RouletteSlice> options)
+        private static double RollThreshhold(List<RouletteSlice> options)
         {
             double total = GetTotalScore(options);
             double roll = Randomizer.Random.NextDouble();
             return total * roll;
         }
 
-        public static double GetTotalScore(List<RouletteSlice> options)
+        private static double GetTotalScore(List<RouletteSlice> options)
         {
             double total = 0.0;
             foreach (RouletteSlice option in options)
@@ -72,5 +74,7 @@ namespace LibSimilarity
 
             return total;
         }
+
+        #endregion
     }
 }
