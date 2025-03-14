@@ -11,13 +11,10 @@ namespace LibSimilarity
     public static class SimilarityGuide
     {
         public static SimilarityJudge Judge = new SimilarityJudge();
-
         public static SimilarityGraph Graph = new SimilarityGraph();
 
         public static int CurrentSetSize = 0;
-
         public static int NodeEdgeLimit = 10;
-
 
         public static void SetSequences(List<BioSequence> sequences)
         {
@@ -41,23 +38,28 @@ namespace LibSimilarity
 
         public static bool[] GetSetOfSimilarSequencesAsMask(Alignment alignment)
         {
-            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences();
-            int m = alignment.Height;
+            return GetSetOfSimilarSequencesAsMask(alignment.Sequences);
+        }
+
+        public static bool[] GetSetOfSimilarSequencesAsMask(List<BioSequence> sequences)
+        {
+            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences(sequences);
+            int m = sequences.Count;
 
             bool[] result = new bool[m];
 
             for (int i = 0; i < m; i++)
             {
-                BioSequence sequence = alignment.Sequences[i];
+                BioSequence sequence = sequences[i];
                 result[i] = selected.Contains(sequence.Identifier);
             }
 
             return result;
         }
 
-        public static HashSet<string> GetIdentifiersOfSetOfSimilarSequences()
+        public static HashSet<string> GetIdentifiersOfSetOfSimilarSequences(List<BioSequence> sequences)
         {
-            List<BioSequence> selection = GetSetOfSimilarSequences();
+            List<BioSequence> selection = GetSetOfSimilarSequences(sequences);
 
             HashSet<string> result = new HashSet<string>();
             foreach (BioSequence sequence in selection)
@@ -68,19 +70,28 @@ namespace LibSimilarity
             return result;
         }
 
-
-        public static List<BioSequence> GetSetOfSimilarSequences()
+        public static List<BioSequence> GetSetOfSimilarSequences(Alignment alignment)
         {
+            return GetSetOfSimilarSequences(alignment.Sequences);
+        }
+
+        public static List<BioSequence> GetSetOfSimilarSequences(List<BioSequence> sequences)
+        {
+            if (Graph.Population == 0)
+            {
+                Graph.SetSequences(sequences);
+            }
+
             TryUpdateSimilarity();
 
             int n = Graph.Population;
-            int attempts = Randomizer.Random.Next(0, n-1);
+            int attempts = Randomizer.Random.Next(0, n - 1);
 
             SequenceNode source = Graph.GetRandomStartingNode();
             List<SequenceNode> group = GetRandomSetAroundNode(source, attempts);
 
             List<BioSequence> result = new List<BioSequence>();
-            foreach(SequenceNode node in group)
+            foreach (SequenceNode node in group)
             {
                 result.Add(node.Sequence);
             }
@@ -89,6 +100,7 @@ namespace LibSimilarity
 
             return result;
         }
+
 
         public static string GetDebugString()
         {
