@@ -30,6 +30,7 @@ namespace TestsRequirements
         /// Leverages multiple objective functions to guide the alignment optimization process.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         public void Req5x01()
         {
             ParetoIterativeAligner aligner = GetMultiObjectiveAligner();
@@ -41,6 +42,7 @@ namespace TestsRequirements
         /// Approximates the Pareto Front, outputting a set of solutions that offer different trade-offs.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         public void Req5x02()
         {
             ParetoIterativeAligner aligner = GetMultiObjectiveAligner();
