@@ -51,14 +51,20 @@ namespace MAli
 
         private IAlignmentEngine ConstructEngine(AlignmentRequest request)
         {
+            AlignmentConfig config = Config;
+            if (request.RefineOnly)
+            {
+                config = new RefinementConfig();
+            }
+
             switch (request)
             {
                 case ParetoAlignmentRequest:
                     return new ParetoAlignmentEngine(ParetoConfig);
                 case BatchAlignmentRequest:
-                    return new BatchAlignmentEngine(Config);
+                    return new BatchAlignmentEngine(config);
                 default:
-                    return new AlignmentEngine(Config);
+                    return new AlignmentEngine(config);
             }
         }
     }
