@@ -10,10 +10,6 @@ namespace LibSimilarity
         private List<string> ConnectedIdentifiers = new List<string>();
         public List<BioSequence> Sequences = new List<BioSequence>();
 
-        public int ConnectedNodes { get { return ConnectedIdentifiers.Count; } }
-
-        public int NodeCount { get { return Identifiers.Count; } }
-
         public int Population { get { return Sequences.Count; } }
 
         private void ClearState()
@@ -52,25 +48,6 @@ namespace LibSimilarity
 
             return (double) 100.0 * currentTotal / maximumTotal;
         }
-
-        public void DebugConnections()
-        {
-            foreach(string identifier in Identifiers)
-            {
-                SequenceNode node = Nodes[identifier];
-                foreach(SimilarityLink link in node.Connections)
-                {
-                    SequenceNode other = link.GetNeighbour(node);
-
-                    string a = node.Identifier;
-                    string b = other.Identifier;
-                    Console.WriteLine($"SimilarityLink: {a} -> {b} ({link.SimilarityScore})");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        
 
         public List<SequenceNode> CreateNodes(List<BioSequence> sequences)
         {
