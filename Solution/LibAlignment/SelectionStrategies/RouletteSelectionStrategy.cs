@@ -1,5 +1,4 @@
-﻿using LibAlignment.Helpers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using LibScoring;
 using System;
 using System.Collections.Generic;
