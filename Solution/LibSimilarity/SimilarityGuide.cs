@@ -85,11 +85,6 @@ namespace LibSimilarity
 
         public static List<BioSequence> GetSetOfSimilarSequences(List<BioSequence> sequences)
         {
-            if (Graph.Population == 0)
-            {
-                Graph.SetSequences(sequences);
-            }
-
             TryUpdateSimilarity();
 
             int n = Graph.Population;
