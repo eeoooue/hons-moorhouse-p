@@ -45,7 +45,7 @@ namespace MAli.AlignmentConfigs
                 new GuidedGapInserter(),
                 new BlockShuffler(),
                 new GapShuffler(),
-                new HeuristicPairwiseModifier(),
+                // new HeuristicPairwiseModifier(), // commented as this can disrupt refinement
             };
 
             return new MultiOperatorModifier(modifiers);
