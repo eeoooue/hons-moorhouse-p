@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using MAli.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace MAli.Helpers
 {
     public class AlignmentPreviewHelper
     {
-        public ResiduePalette ResiduePalette = new ResiduePalette();
-        public NucleotidePalette NucleotidePalette = new NucleotidePalette();
+        private ResiduePalette ResiduePalette = new ResiduePalette();
+        private NucleotidePalette NucleotidePalette = new NucleotidePalette();
 
         public int WidthLimit = 100;
         public string GapFiller = "";

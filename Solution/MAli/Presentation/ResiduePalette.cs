@@ -1,12 +1,13 @@
-﻿using System;
+﻿using LibBioInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibBioInfo
+namespace MAli.Presentation
 {
-    public class ResiduePalette
+    internal class ResiduePalette
     {
         public ConsoleColor GetForegroundColour(char x)
         {
