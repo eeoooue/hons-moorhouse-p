@@ -97,18 +97,6 @@ namespace LibParetoAlignment.Aligners
             }
         }
 
-        public bool ShouldAddSolutionToArchive(TradeoffAlignment alignment)
-        {
-            if (Archive.Count < NumberOfTradeoffs)
-            {
-                return true;
-            }
-
-            List<TradeoffAlignment> population = Archive.ToList();
-
-            return ParetoHelper.SolutionIsNonDominated(alignment, population);
-        }
-
         public override List<string> GetDebuggingInfo()
         {
             List<string> result = new List<string>();
