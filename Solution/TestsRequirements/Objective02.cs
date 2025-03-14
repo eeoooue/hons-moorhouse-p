@@ -20,6 +20,7 @@ namespace TestsRequirements
         /// Employs a metaheuristic algorithm (such as Genetic Algorithm) to guide the alignment process.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         public void Req2x01()
         {
             IFitnessFunction objective = new SumOfPairsFitnessFunction(new BLOSUM62Matrix());
@@ -31,6 +32,7 @@ namespace TestsRequirements
         /// Demonstrates MSA using a single-state metaheuristic algorithm - such as Simulated Annealing.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         public void Req2x02()
         {
             IFitnessFunction objective = new SumOfPairsFitnessFunction(new BLOSUM62Matrix());
