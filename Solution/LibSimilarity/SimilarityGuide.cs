@@ -102,14 +102,7 @@ namespace LibSimilarity
         }
 
 
-        public static string GetDebugString()
-        {
-
-            double graphSaturation = Math.Round(Graph.GetPercentageSaturation(), 0);
-            int edges = Math.Min(NodeEdgeLimit, Graph.Population - 1);
-
-            return $"Similarity Graph: Saturation: {graphSaturation}% (max. {edges} links per node) | Previous Set: {CurrentSetSize} seq(s) ";
-        }
+        
 
         public static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
         {
@@ -141,5 +134,19 @@ namespace LibSimilarity
             int i = Randomizer.Random.Next(n);
             return nodes[i];
         }
+
+
+        #region Debugging info
+
+        public static string GetDebugString()
+        {
+
+            double graphSaturation = Math.Round(Graph.GetPercentageSaturation(), 0);
+            int edges = Math.Min(NodeEdgeLimit, Graph.Population - 1);
+
+            return $"Similarity Graph: Saturation: {graphSaturation}% (max. {edges} links per node) | Previous Set: {CurrentSetSize} seq(s) ";
+        }
+
+        #endregion
     }
 }
