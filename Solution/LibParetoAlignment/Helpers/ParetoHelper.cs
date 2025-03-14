@@ -8,20 +8,6 @@ namespace LibParetoAlignment.Helpers
 {
     internal class ParetoHelper
     {
-        public bool SolutionIsNonDominated(TradeoffAlignment solution, List<TradeoffAlignment> population)
-        {
-            foreach(TradeoffAlignment existingSolution in population)
-            {
-                bool isDominated = ADominatesB(existingSolution, solution);
-                if (isDominated)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         public bool ADominatesB(TradeoffAlignment a, TradeoffAlignment b, List<string> objectives)
         {
             bool includesImprovement = false;
