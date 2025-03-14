@@ -5,6 +5,7 @@ using LibModification.AlignmentModifiers;
 using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibParetoAlignment.Helpers;
 using LibScoring;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,12 +55,14 @@ namespace LibParetoAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
+            SimilarityGuide.SetSequences(sequences);
             Alignment alignment = Initializer.CreateInitialAlignment(sequences);
             InitializeForRefinement(alignment);
         }
 
         public override void InitializeForRefinement(Alignment alignment)
         {
+            SimilarityGuide.SetSequences(alignment.Sequences);
             TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
             AddSolutionToArchive(tradeoff);
         }

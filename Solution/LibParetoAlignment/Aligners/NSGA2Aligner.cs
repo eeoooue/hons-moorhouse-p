@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using LibModification.AlignmentModifiers;
 using LibModification.CrossoverOperators;
 using System.Globalization;
+using LibSimilarity;
 
 namespace LibParetoAlignment.Aligners
 {
@@ -68,6 +69,7 @@ namespace LibParetoAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
+            SimilarityGuide.SetSequences(sequences);
             Population.Clear();
             while (Population.Count < PopulationSize)
             {
@@ -80,6 +82,7 @@ namespace LibParetoAlignment.Aligners
 
         public override void InitializeForRefinement(Alignment alignment)
         {
+            SimilarityGuide.SetSequences(alignment.Sequences);
             Population.Clear();
             TradeoffAlignment tradeoff = EvaluateAlignment(alignment);
             Population.Add(tradeoff);
