@@ -24,8 +24,8 @@ namespace DevConsole
 
         static void TestingMAli()
         {
-            // RunMAli("-input BB11001 -output test -debug -iterations 10000");
-            RunMAli("-input clustalformat_BB11001.aln -output test -pareto 10 -debug");
+            RunMAli("-input BB11001 -output test -debug -iterations 10000");
+            // RunMAli("-input clustalformat_BB11001.aln -output test -pareto 10 -debug -iterations 10000");
         }
 
         static void TestingMAliScoreonly()
@@ -64,6 +64,7 @@ namespace DevConsole
             string[] args = UnpackArguments(arguments);
             Interface.ProcessArguments(args);
         }
+
         static string[] UnpackArguments(string arguments)
         {
             if (arguments.Length > 0)
