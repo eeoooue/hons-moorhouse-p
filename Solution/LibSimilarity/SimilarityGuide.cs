@@ -15,7 +15,7 @@ namespace LibSimilarity
 
         public static int CurrentSetSize = 0;
         public static int NodeEdgeLimit = 10;
-
+        public static int Population { get { return Graph.Population; } }
 
         #region Initialization
 
