@@ -239,5 +239,28 @@ namespace LibModification.Helpers
 
             return result;
         }
+
+        public static char[,] ConstructAlignmentStateFromStrings(int m, int n, List<string> payloads)
+        {
+            char[,] result = new char[m, n];
+
+            for (int i = 0; i < m; i++)
+            {
+                string payload = payloads[i];
+                for (int j = 0; j < n; j++)
+                {
+                    if (j < payload.Length)
+                    {
+                        result[i, j] = payload[j];
+                    }
+                    else
+                    {
+                        result[i, j] = '-';
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }
