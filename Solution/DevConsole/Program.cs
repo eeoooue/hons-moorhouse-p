@@ -1,5 +1,4 @@
-﻿using LibAlignment.Helpers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;

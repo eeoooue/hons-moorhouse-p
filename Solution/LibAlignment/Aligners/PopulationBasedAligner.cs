@@ -3,6 +3,7 @@ using LibModification;
 using LibModification.AlignmentInitializers;
 using LibModification.AlignmentModifiers;
 using LibScoring;
+using LibSimilarity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace LibAlignment.Aligners
 
         public override void InitializeForRefinement(Alignment alignment)
         {
+            SimilarityGuide.SetSequences(alignment.Sequences);
             Population.Clear();
             Population.Add(alignment);
 
@@ -40,6 +42,7 @@ namespace LibAlignment.Aligners
 
         public override void Initialize(List<BioSequence> sequences)
         {
+            SimilarityGuide.SetSequences(sequences);
             Population.Clear();
             while (Population.Count < PopulationSize)
             {

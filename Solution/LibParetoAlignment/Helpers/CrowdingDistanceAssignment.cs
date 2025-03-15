@@ -48,7 +48,6 @@ namespace LibParetoAlignment.Helpers
             }
         }
 
-
         public void AssignDistancesToSortedTradeoffs(List<TradeoffAlignment> tradeoffs, string objective, double scoreRange)
         {
             int n = tradeoffs.Count;

@@ -11,7 +11,6 @@ namespace LibModification.AlignmentModifiers
     public class AlignmentRandomizer : AlignmentModifier, IAlignmentModifier
     {
         AlignmentStateHelper StateHelper = new AlignmentStateHelper();
-        CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {

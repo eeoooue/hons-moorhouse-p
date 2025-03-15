@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibSimilarity
 {
-    public class RouletteSlice
+    internal class RouletteSlice
     {
         public SimilarityLink Link;
         public double Weighting;

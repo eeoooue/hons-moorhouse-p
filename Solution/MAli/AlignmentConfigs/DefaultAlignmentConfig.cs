@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class Sprint08Config : AlignmentConfig
+    internal class DefaultAlignmentConfig : AlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibScoring;
-using LibAlignment.Helpers;
 using LibAlignment.SelectionStrategies;
 using LibModification;
 using LibModification.AlignmentModifiers;

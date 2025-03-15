@@ -1,5 +1,8 @@
 ﻿using LibBioInfo;
 using LibBioInfo.ScoringMatrices;
+using LibModification.AlignmentModifiers.Guided;
+using LibModification.AlignmentModifiers;
+using LibModification;
 using LibParetoAlignment;
 using LibParetoAlignment.Aligners;
 using LibScoring;
@@ -11,18 +14,23 @@ using System.Text;
 using System.Threading.Tasks;
 using TestsHarness;
 using TestsHarness.Tools;
+using MAli;
+using MAli.ParetoAlignmentConfigs;
+using LibFileIO;
 
 namespace TestsRequirements
 {
     [TestClass]
     public class Objective05
     {
-        ExampleAlignments ExampleAlignments = Harness.ExampleAlignments;
+        ParetoAlignmentConfig Config = new ParetoDevConfig();
+        FileHelper FileHelper = new FileHelper();
 
         /// <summary>
         /// Leverages multiple objective functions to guide the alignment optimization process.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         public void Req5x01()
         {
             ParetoIterativeAligner aligner = GetMultiObjectiveAligner();
@@ -34,6 +42,7 @@ namespace TestsRequirements
         /// Approximates the Pareto Front, outputting a set of solutions that offer different trade-offs.
         /// </summary>
         [TestMethod]
+        [DoNotParallelize]
         public void Req5x02()
         {
             ParetoIterativeAligner aligner = GetMultiObjectiveAligner();
@@ -46,7 +55,7 @@ namespace TestsRequirements
 
         private void InitializeAlignerWithSequences(ParetoIterativeAligner aligner)
         {
-            Alignment alignment = ExampleAlignments.GetExampleA();
+            Alignment alignment = FileHelper.ReadAlignmentFrom("BB11001");
             List<BioSequence> sequences = alignment.Sequences;
             aligner.Initialize(sequences);
         }
@@ -61,17 +70,7 @@ namespace TestsRequirements
 
         private ParetoIterativeAligner GetMultiObjectiveAligner()
         {
-            IScoringMatrix matrix = new BLOSUM62Matrix();
-
-            List<IFitnessFunction> objectives = new List<IFitnessFunction>()
-            {
-                new SumOfPairsFitnessFunction(matrix),
-                new TotallyConservedColumnsFitnessFunction(),
-                new NonGapsFitnessFunction(),
-            };
-
-            ParetoIterativeAligner aligner = new ParetoHillClimbAligner(objectives);
-            return aligner;
+            return Config.CreateAligner();
         }
     }
 }

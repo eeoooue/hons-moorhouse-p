@@ -42,7 +42,6 @@ namespace MAli.AlignmentEngines
             {
                 Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
-                SimilarityGuide.SetSequences(sequences);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())

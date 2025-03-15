@@ -12,11 +12,9 @@ namespace LibModification.AlignmentModifiers.Guided
 {
     public class GuidedResidueShifter : AlignmentModifier
     {
-        private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences();
+            List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences(alignment);
             HashSet<string> identifiers = new HashSet<string>();
             foreach(BioSequence sequence in sequences)
             {
