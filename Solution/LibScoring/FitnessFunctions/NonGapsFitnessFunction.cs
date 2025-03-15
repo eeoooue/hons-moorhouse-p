@@ -36,7 +36,7 @@ namespace LibScoring.FitnessFunctions
             int result = 0;
             for(int j=0; j<n; j++)
             {
-                if (!Bioinformatics.IsGapChar(alignment[i, j]))
+                if (alignment[i, j] != Bioinformatics.GapCharacter)
                 {
                     result += 1;
                 }

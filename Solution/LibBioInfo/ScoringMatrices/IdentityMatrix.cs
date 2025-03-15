@@ -32,7 +32,7 @@ namespace LibBioInfo.ScoringMatrices
 
         public int ScorePair(char a, char b)
         {
-            if (Bioinformatics.IsGapChar(a) || Bioinformatics.IsGapChar(b))
+            if (a == Bioinformatics.GapCharacter || b == Bioinformatics.GapCharacter)
             {
                 return 0;
             }

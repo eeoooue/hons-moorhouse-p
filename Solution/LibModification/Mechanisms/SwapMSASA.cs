@@ -51,7 +51,7 @@ namespace LibModification.Mechanisms
 
             for (int j = startPos; j < sequence.Length; j++)
             {
-                bool isResidue = !Bioinformatics.IsGapChar(sequence[j]);
+                bool isResidue = sequence[j] != Bioinformatics.GapCharacter;
 
                 if (isResidue)
                 {
@@ -83,7 +83,7 @@ namespace LibModification.Mechanisms
             int residuesPlaced = 0;
             for (int i = startPos; i < result.Length; i++)
             {
-                if (Bioinformatics.IsGapChar(result[i]))
+                if (result[i] == Bioinformatics.GapCharacter)
                 {
                     int p = residuePositions[residuesPlaced++];
                     result[i] = payload[p];

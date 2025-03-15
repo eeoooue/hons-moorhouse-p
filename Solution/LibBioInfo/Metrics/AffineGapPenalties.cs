@@ -108,7 +108,7 @@ namespace LibBioInfo.Metrics
             for (int i = 0; i < payload.Length; i++)
             {
                 char x = payload[i];
-                if (Bioinformatics.IsGapChar(x))
+                if (x == Bioinformatics.GapCharacter)
                 {
                     gaplength++;
                 }
@@ -144,7 +144,7 @@ namespace LibBioInfo.Metrics
         {
             for (int i = 0; i < payload.Length; i++)
             {
-                if (!Bioinformatics.IsGapChar(payload[i]))
+                if (payload[i] != Bioinformatics.GapCharacter)
                 {
                     return i;
                 }
@@ -157,7 +157,7 @@ namespace LibBioInfo.Metrics
         {
             for (int i = payload.Length - 1; i >= 0; i--)
             {
-                if (!Bioinformatics.IsGapChar(payload[i]))
+                if (payload[i] != Bioinformatics.GapCharacter)
                 {
                     return i;
                 }

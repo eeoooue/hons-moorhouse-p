@@ -16,7 +16,7 @@ namespace MAli.Presentation
 
         public ConsoleColor GetBackgroundColour(char x)
         {
-            if (Bioinformatics.IsGapChar(x) || x == ' ')
+            if (x == Bioinformatics.GapCharacter || x == ' ')
             {
                 return ConsoleColor.Black;
             }
