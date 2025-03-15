@@ -11,8 +11,6 @@ namespace LibBioInfo
 
         public char[,] CharacterMatrix;
 
-        public int[] ProgressiveOrder;
-
         public AlignmentCore AlignmentCore;
 
         public Alignment(List<BioSequence> sequences, bool conserveState=false)
@@ -26,44 +24,12 @@ namespace LibBioInfo
             {
                 CharacterMatrix = ConstructInitialAlignmentState(sequences);
             }
-
-            ProgressiveOrder = new int[Height];
-            for(int i=0; i<Height; i++)
-            {
-                ProgressiveOrder[i] = i;
-            }
         }
 
         public Alignment(Alignment other)
         {
             AlignmentCore = other.AlignmentCore;
             CharacterMatrix = CopyCharacterMatrix(other.CharacterMatrix);
-
-            ProgressiveOrder = new int[Height];
-            for (int i = 0; i < Height; i++)
-            {
-                ProgressiveOrder[i] = other.ProgressiveOrder[i];
-            }
-        }
-
-
-        public int GetIndexOfSequence(BioSequence sequence)
-        {
-            return GetIndexOfSequence(sequence.Identifier);
-        }
-
-        public int GetIndexOfSequence(string identifier)
-        {
-
-            for(int i=0; i<Height; i++)
-            {
-                if (Sequences[i].Identifier == identifier)
-                {
-                    return i;
-                }
-            }
-
-            throw new ArgumentException("identifier not found in alignment");
         }
 
         public char[,] CopyCharacterMatrix(char[,] matrix)
@@ -82,7 +48,6 @@ namespace LibBioInfo
 
             return result;
         }
-
 
         public char[,] ConstructConservedAlignmentState(List<BioSequence> sequences)
         {
@@ -169,32 +134,19 @@ namespace LibBioInfo
 
         private int DecideWidth(List<BioSequence> sequences)
         {
-            // placeholder logic
-
+            int extra = 8;
             int width = 0;
             foreach (BioSequence seq in sequences)
             {
                 width = Math.Max(width, seq.Residues.Length);
             }
-            // int extra = (int)Math.Ceiling(width * 0.4);
-            int extra = 8;
 
             return width + extra;
         }
 
-        public bool ContainsNucleicsOnly()
-        {
-            return AlignmentCore.ContainsNucleicsOnly();
-        }
-
-        public bool ContainsProteinsOnly()
-        {
-            return AlignmentCore.ContainsProteinsOnly();
-        }
-
         public bool SequencesCanBeAligned()
         {
-            return ContainsNucleicsOnly() || ContainsProteinsOnly();
+            return AlignmentCore.ContainsNucleicsOnly() || AlignmentCore.ContainsProteinsOnly();
         }
     }
 }
