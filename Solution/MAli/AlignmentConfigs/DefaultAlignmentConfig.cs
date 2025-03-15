@@ -33,7 +33,7 @@ namespace MAli.AlignmentConfigs
 
             List<IFitnessFunction> objectives = new List<IFitnessFunction>() { objectiveA, objectiveB };
             // List<double> weights = new List<double>() { 0.9, 0.1 };
-            List<double> weights = new List<double>() { 0.90, 0.10 };
+            List<double> weights = new List<double>() { 0.9, 0.1 };
 
             WeightedCombinationOfFitnessFunctions combo = new WeightedCombinationOfFitnessFunctions(objectives, weights);
             return combo;
@@ -44,9 +44,9 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new GuidedSwap(),
-                new GuidedGapInserter(),
                 new BlockShuffler(),
                 new GapShuffler(),
+                new GuidedGapInserter(),
                 new HeuristicPairwiseModifier(),
             };
 
@@ -59,7 +59,19 @@ namespace MAli.AlignmentConfigs
             IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, 100);
 
             aligner.TweakModifier = GetMultiOperatorModifier();
-            aligner.PerturbModifier = new BlockShuffler();
+            aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
+
+            return aligner;
+        }
+
+        private IterativeAligner GetGeneticAlgorithmAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, 100);
+            aligner.MutationOperator = GetMultiOperatorModifier();
+
+            aligner.PopulationSize = 100;
+            aligner.SelectionSize = 30;
 
             return aligner;
         }
