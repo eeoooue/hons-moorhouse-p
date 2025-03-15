@@ -23,7 +23,7 @@ namespace LibModification.Mechanisms
 
         public static char[,] ShiftResidue(char[,] original, int i, int j, ShiftDirection direction)
         {
-            if (Bioinformatics.IsGap(original[i, j]))
+            if (Bioinformatics.GapCharacter == original[i, j])
             {
                 return original;
             }
@@ -98,7 +98,7 @@ namespace LibModification.Mechanisms
                 }
 
                 char x = matrix[i, j];
-                if (Bioinformatics.IsGap(x))
+                if (Bioinformatics.GapCharacter == x)
                 {
                     return j;
                 }

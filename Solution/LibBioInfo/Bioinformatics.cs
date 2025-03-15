@@ -13,6 +13,7 @@ namespace LibBioInfo
         public static HashSet<char> ProteinResidues = GetProteinResidues();
         public static HashSet<char> GapCharacters = new HashSet<char> { '-', '.' };
         public static HashSet<char> GapChars = new HashSet<char> { '-', '.' };
+        public static readonly char GapCharacter = '-';
 
         private static HashSet<char> GetProteinResidues()
         {
@@ -23,11 +24,6 @@ namespace LibBioInfo
             }
 
             return result;
-        }
-
-        public static bool IsGap(char c)
-        {
-            return GapCharacters.Contains(c);
         }
 
         public static bool IsGapChar(char c)

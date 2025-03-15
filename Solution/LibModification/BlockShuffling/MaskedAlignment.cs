@@ -68,7 +68,7 @@ namespace LibModification.BlockShuffling
                 for (int j = 0; j < n; j++)
                 {
                     char x = alignment.CharacterMatrix[i, j];
-                    bool isGap = Bioinformatics.IsGap(x);
+                    bool isGap = x == Bioinformatics.GapCharacter;
                     mask[i, j] = isGap ? gapMarker : residueMarker;
                 }
             }

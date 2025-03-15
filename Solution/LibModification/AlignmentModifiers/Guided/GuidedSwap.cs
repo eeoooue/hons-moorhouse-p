@@ -26,7 +26,7 @@ namespace LibModification.AlignmentModifiers.Guided
                 if (identifiers.Contains(sequence.Identifier))
                 {
                     char x = alignment.CharacterMatrix[i, j];
-                    if (!Bioinformatics.IsGap(x))
+                    if (x != Bioinformatics.GapCharacter)
                     {
                         SwapMSASA.Swap(alignment, i, j, k, direction);
                     }

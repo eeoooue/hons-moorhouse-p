@@ -29,16 +29,8 @@ namespace MAli.AlignmentConfigs
         {
             IScoringMatrix matrix = new PAM250Matrix();
             IFitnessFunction objective1 = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
-            
+
             return objective1;
-
-            IFitnessFunction objectiveA = new SumOfPairsFitnessFunction(matrix);
-            IFitnessFunction objectiveB = new AffineGapPenaltyFitnessFunction(4, 1);
-
-            List<IFitnessFunction> objectives = new List<IFitnessFunction>() { objectiveA, objectiveB };
-            List<double> weights = new List<double>() { 0.7, 0.3 };
-
-            return new WeightedCombinationOfFitnessFunctions(objectives, weights);
         }
 
         private IterativeAligner GetGeneticAligner()
