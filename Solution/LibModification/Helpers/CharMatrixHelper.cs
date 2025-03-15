@@ -240,6 +240,18 @@ namespace LibModification.Helpers
             return result;
         }
 
+        public static char[,] ConstructAlignmentStateFromStrings(List<string> payloads)
+        {
+            int m = payloads.Count;
+            int n = 0;
+            foreach(string s in payloads)
+            {
+                n = Math.Max(n, s.Length);
+            }
+
+            return ConstructAlignmentStateFromStrings(m, n, payloads);
+        }
+
         public static char[,] ConstructAlignmentStateFromStrings(int m, int n, List<string> payloads)
         {
             char[,] result = new char[m, n];
