@@ -34,39 +34,38 @@ namespace LibModification.CrossoverOperators
 
         public List<Alignment> CrossoverAtPosition(Alignment a, Alignment b, int position)
         {
-            List<BioSequence> sequencesA = a.GetAlignedSequences();
-            List<BioSequence> sequencesB = b.GetAlignedSequences();
+            List<string> payloadsA = a.GetAlignedPayloads();
+            List<string> payloadsB = b.GetAlignedPayloads();
 
-            List<BioSequence> xParts = new List<BioSequence>();
-            List<BioSequence> yParts = new List<BioSequence>();
+            List<string> xParts = new List<string>();
+            List<string> yParts = new List<string>();
 
             for (int i = 0; i < a.Height; i++)
             {
-                List<BioSequence> pair = CrossoverSequencesAtPosition(sequencesA[i], sequencesB[i], position);
+                List<string> pair = CrossoverSequencesAtPosition(payloadsA[i], payloadsB[i], position);
                 xParts.Add(pair[0]);
                 yParts.Add(pair[1]);
             }
 
-            Alignment x = new Alignment(xParts, true);
-            Alignment y = new Alignment(yParts, true);
-            x.AlignmentCore = a.AlignmentCore;
-            y.AlignmentCore = a.AlignmentCore;
-
+            Alignment x = a.GetCopy();
+            x.CharacterMatrix = CharMatrixHelper.ConstructAlignmentStateFromStrings(xParts);
             CharMatrixHelper.RemoveEmptyColumns(x);
+
+            Alignment y = b.GetCopy();
+            y.CharacterMatrix = CharMatrixHelper.ConstructAlignmentStateFromStrings(yParts);
             CharMatrixHelper.RemoveEmptyColumns(y);
 
             return new List<Alignment> { x, y };
         }
 
-
-        public List<BioSequence> CrossoverSequences(BioSequence a, BioSequence b)
+        public List<string> CrossoverSequences(string a, string b)
         {
-            int n = a.Payload.Length;
+            int n = a.Length;
             int i = Randomizer.Random.Next(1, n);
             return CrossoverSequencesAtPosition(a, b, i);
         }
 
-        public List<BioSequence> CrossoverSequencesAtPosition(BioSequence a, BioSequence b, int i)
+        public List<string> CrossoverSequencesAtPosition(string a, string b, int i)
         {
             List<string> partsA = PayloadHelper.PartitionPayloadAtPosition(a, i);
             string aLeft = partsA[0];
@@ -78,21 +77,17 @@ namespace LibModification.CrossoverOperators
             string xPayload = $"{aLeft}{bRight}";
             string yPayload = $"{bLeft}{aRight}";
 
-            BioSequence x = new BioSequence(a.Identifier, xPayload);
-            BioSequence y = new BioSequence(a.Identifier, yPayload);
-
-            return new List<BioSequence> { x, y };
+            return new List<string> { xPayload, yPayload };
         }
 
-        public string ExtractLeftComplement(BioSequence sequence, string right)
+        public string ExtractLeftComplement(string payload, string right)
         {
-            string payload = sequence.Payload;
             int totalResidues = PayloadHelper.CountResiduesInPayload(payload);
             int residuesInRight = PayloadHelper.CountResiduesInPayload(right);
 
             if (residuesInRight == 0)
             {
-                return sequence.Payload;
+                return payload;
             }
 
             if (residuesInRight == totalResidues)
@@ -102,20 +97,19 @@ namespace LibModification.CrossoverOperators
 
             int residuesInLeft = totalResidues - residuesInRight;
             int residueToStopBefore = residuesInLeft + 1;
-            int i = PayloadHelper.GetPositionOfNthResidue(sequence, residueToStopBefore);
+            int i = PayloadHelper.GetPositionOfNthResidue(payload, residueToStopBefore);
 
             return payload.Substring(0, i);
         }
 
-        public string ExtractRightComplement(string left, BioSequence sequence)
+        public string ExtractRightComplement(string left, string payload)
         {
-            string payload = sequence.Payload;
             int totalResidues = PayloadHelper.CountResiduesInPayload(payload);
             int residuesInLeft = PayloadHelper.CountResiduesInPayload(left);
 
             if (residuesInLeft == 0)
             {
-                return sequence.Payload;
+                return payload;
             }
 
             if (residuesInLeft == totalResidues)
@@ -123,9 +117,8 @@ namespace LibModification.CrossoverOperators
                 return "";
             }
 
-            int residuesInRight = totalResidues - residuesInLeft;
             int residueToStartFrom = residuesInLeft + 1;
-            int i = PayloadHelper.GetPositionOfNthResidue(sequence, residueToStartFrom);
+            int i = PayloadHelper.GetPositionOfNthResidue(payload, residueToStartFrom);
 
             return payload.Substring(i);
         }
