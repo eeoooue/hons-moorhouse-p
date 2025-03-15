@@ -24,8 +24,8 @@ namespace DevConsole
 
         static void TestingMAli()
         {
-            RunMAli("-input clustalformat_BB11001.aln -output test -debug -iterations 10000 -refine");
-            // RunMAli("-input BB11001 -output test -debug -iterations 10000 -refine");
+            // RunMAli("-input clustalformat_BB11001.aln -output test -debug -iterations 10000 -refine");
+            RunMAli("-input BB11001 -output test -debug -iterations 10000");
         }
 
         static void TestingMAliScoreonly()
