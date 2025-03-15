@@ -54,10 +54,10 @@ namespace MAli.AlignmentEngines
             {
                 Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
-                SimilarityGuide.SetSequences(sequences);
                 Alignment alignment = new Alignment(sequences, true);
 
-                if (alignment.SequencesCanBeAligned())
+
+            if (alignment.SequencesCanBeAligned())
                 {
                     ParetoIterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
                     aligner.NumberOfTradeoffs = instructions.NumberOfTradeoffs;
@@ -72,12 +72,12 @@ namespace MAli.AlignmentEngines
                 {
                     Console.WriteLine("Error: Sequences cannot be aligned.");
                 }
-            }
+        }
             catch (Exception e)
             {
                 ResponseBank.ExplainException(e);
             }
-        }
+}
 
         public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentRequest instructions)
         {
