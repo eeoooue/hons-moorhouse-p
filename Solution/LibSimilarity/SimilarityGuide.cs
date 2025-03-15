@@ -96,10 +96,7 @@ namespace LibSimilarity
             List<BioSequence> result = new List<BioSequence>();
             foreach (SequenceNode node in group)
             {
-                if (result.Count < n)
-                {
-                    result.Add(node.Sequence);
-                }
+                result.Add(node.Sequence);
             }
 
             CurrentSetSize = result.Count;
