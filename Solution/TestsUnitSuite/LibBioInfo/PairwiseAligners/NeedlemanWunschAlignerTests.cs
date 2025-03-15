@@ -77,7 +77,7 @@ namespace TestsUnitSuite.LibBioInfo.PairwiseAligners
             for(int j=0; j<n; j++)
             {
                 char x = alignment[i, j];
-                if (!Bioinformatics.IsGapChar(x))
+                if (x != Bioinformatics.GapCharacter)
                 {
                     sb.Append(x);
                 }

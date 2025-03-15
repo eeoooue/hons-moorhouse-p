@@ -48,7 +48,7 @@ namespace LibModification.Helpers
             int total = 0;
             for (int i = 0; i < payload.Length; i++)
             {
-                if (!Bioinformatics.IsGapChar(payload[i]))
+                if (payload[i] != Bioinformatics.GapCharacter)
                 {
                     total++;
                     if (total == n)
@@ -66,7 +66,7 @@ namespace LibModification.Helpers
             int total = 0;
             foreach (char x in payload)
             {
-                if (!Bioinformatics.IsGapChar(x))
+                if (x != Bioinformatics.GapCharacter)
                 {
                     total++;
                 }

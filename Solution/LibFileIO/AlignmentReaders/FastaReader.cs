@@ -75,10 +75,9 @@ namespace LibFileIO.AlignmentReaders
             }
 
             string payload = sb.ToString();
+            payload = FileConventions.ReplaceForeignGapCharactersInPayload(payload);
 
             return new BioSequence(identifier, payload);
         }
-
-        
     }
 }

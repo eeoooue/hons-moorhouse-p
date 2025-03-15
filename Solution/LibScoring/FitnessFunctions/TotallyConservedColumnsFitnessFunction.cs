@@ -38,7 +38,7 @@ namespace LibScoring.FitnessFunctions
             int m = alignment.GetLength(0);
             char target = alignment[0, j];
 
-            if (Bioinformatics.IsGapChar(target))
+            if (target == Bioinformatics.GapCharacter)
             {
                 return false;
             }

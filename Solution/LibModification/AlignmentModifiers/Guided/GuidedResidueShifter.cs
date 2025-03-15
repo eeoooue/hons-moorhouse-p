@@ -32,7 +32,7 @@ namespace LibModification.AlignmentModifiers.Guided
                 if (identifiers.Contains(sequence.Identifier))
                 {
                     char x = alignment.CharacterMatrix[i, j];
-                    if (!Bioinformatics.IsGap(x))
+                    if (x == Bioinformatics.GapCharacter)
                     {
                         ResidueShift.ShiftResidue(alignment, i, j, direction);
                     }

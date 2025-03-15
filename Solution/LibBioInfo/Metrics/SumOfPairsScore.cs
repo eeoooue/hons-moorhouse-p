@@ -112,7 +112,7 @@ namespace LibBioInfo.Metrics
 
             for (int j = 0; j < n; j++)
             {
-                if (!Bioinformatics.IsGap(alignment[0, j]))
+                if (alignment[0, j] != Bioinformatics.GapCharacter)
                 {
                     total++;
                 }

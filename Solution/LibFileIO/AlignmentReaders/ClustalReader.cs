@@ -117,6 +117,8 @@ namespace LibFileIO.AlignmentReaders
             {
                 StringBuilder sb = builders[identifier];
                 string payload = sb.ToString();
+                payload = FileConventions.ReplaceForeignGapCharactersInPayload(payload);
+
                 BioSequence sequence = new BioSequence(identifier, payload);
                 result.Add(sequence);
             }

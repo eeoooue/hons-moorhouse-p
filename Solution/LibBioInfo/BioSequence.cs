@@ -50,7 +50,7 @@ namespace LibBioInfo
             StringBuilder sb = new StringBuilder();
             foreach(char c in Payload)
             {
-                if (Bioinformatics.IsGapChar(c))
+                if (c == Bioinformatics.GapCharacter)
                 {
                     continue;
                 }
