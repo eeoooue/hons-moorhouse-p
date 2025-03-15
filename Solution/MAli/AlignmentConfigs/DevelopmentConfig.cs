@@ -18,7 +18,7 @@ using LibModification.AlignmentModifiers.Guided;
 
 namespace MAli.AlignmentConfigs
 {
-    public class DevelopmentConfig : AlignmentConfig
+    public class DevelopmentConfig : BaseAlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {

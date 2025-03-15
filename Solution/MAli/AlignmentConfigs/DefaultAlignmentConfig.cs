@@ -17,7 +17,7 @@ using LibAlignment.Aligners.PopulationBased;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class DefaultAlignmentConfig : AlignmentConfig
+    internal class DefaultAlignmentConfig : BaseAlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {

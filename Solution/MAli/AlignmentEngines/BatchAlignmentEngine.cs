@@ -17,7 +17,7 @@ namespace MAli.AlignmentEngines
         private AlignmentEngine AlignmentEngine;
         private AlignmentRequest Instructions = null!;
 
-        public BatchAlignmentEngine(AlignmentConfig config)
+        public BatchAlignmentEngine(BaseAlignmentConfig config)
         {
             AlignmentEngine = new AlignmentEngine(config);
         }

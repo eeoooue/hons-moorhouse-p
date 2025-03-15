@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class RefinementConfig : AlignmentConfig
+    internal class RefinementConfig : BaseAlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {

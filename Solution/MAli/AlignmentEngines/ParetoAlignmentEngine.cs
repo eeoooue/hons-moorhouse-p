@@ -4,9 +4,9 @@ using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
 using LibSimilarity;
+using MAli.AlignmentConfigs;
 using MAli.DebugPrinters;
 using MAli.Helpers;
-using MAli.ParetoAlignmentConfigs;
 using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
@@ -21,12 +21,12 @@ namespace MAli.AlignmentEngines
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
         private ParetoDebugPrinter DebuggingHelper = new ParetoDebugPrinter();
-        private ParetoAlignmentConfig Config;
+        private BaseParetoAlignmentConfig Config;
         private AlignmentRequest Instructions = null!;
 
         private bool DebugMode = false;
 
-        public ParetoAlignmentEngine(ParetoAlignmentConfig config)
+        public ParetoAlignmentEngine(BaseParetoAlignmentConfig config)
         {
             Config = config;
         }

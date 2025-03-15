@@ -14,16 +14,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TestsHarness;
 using TestsHarness.Tools;
-using MAli;
-using MAli.ParetoAlignmentConfigs;
 using LibFileIO;
+using MAli.AlignmentConfigs;
 
 namespace TestsRequirements
 {
     [TestClass]
     public class Objective05
     {
-        ParetoAlignmentConfig Config = new ParetoDevConfig();
+        BaseParetoAlignmentConfig Config = new ParetoDevConfig();
         FileHelper FileHelper = new FileHelper();
 
         /// <summary>
