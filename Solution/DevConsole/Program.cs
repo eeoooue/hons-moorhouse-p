@@ -25,6 +25,7 @@ namespace DevConsole
         static void TestingMAli()
         {
             RunMAli("-input BB11001 -output test -debug -iterations 10000");
+            // RunMAli("-input real_marine_life -output test -debug -iterations 10000");
             // RunMAli("-input clustalformat_BB11001.aln -output test -pareto 10 -debug -iterations 10000");
         }
 
