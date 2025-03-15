@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibAlignment.Aligners.PopulationBased;
 
 namespace MAli.AlignmentConfigs
 {
@@ -58,6 +59,15 @@ namespace MAli.AlignmentConfigs
 
             aligner.TweakModifier = GetMultiOperatorModifier();
             aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
+
+            return aligner;
+        }
+
+        private IterativeAligner GetMewLambdaEVAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, 100);
+            aligner.MutationOperator = GetMultiOperatorModifier();
 
             return aligner;
         }
