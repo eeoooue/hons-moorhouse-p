@@ -109,6 +109,18 @@ namespace LibBioInfo
             return result;
         }
 
+        public List<string> GetAlignedPayloads()
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < Height; i++)
+            {
+                string alignedPayload = GetAlignedPayload(i);
+                result.Add(alignedPayload);
+            }
+
+            return result;
+        }
+
         public Alignment GetCopy()
         {
             return new Alignment(this);
