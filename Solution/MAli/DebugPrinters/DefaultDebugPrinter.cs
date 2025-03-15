@@ -59,6 +59,7 @@ namespace MAli.DebugPrinters
 
             lines.Add(aligner.GetName());
             lines.Add($" - {ProgressContext}");
+            lines.Add($" - {BioSequence.SequencesInstantiated} sequence(s) instantiated @ runtime");
 
             // lines.Add($" - completed {IterationsCompleted} of {IterationsLimit} iterations ({percentValue}%)");
             lines.Add("");
