@@ -59,7 +59,7 @@ namespace MAli.AlignmentConfigs
             IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, 100);
 
             aligner.TweakModifier = GetMultiOperatorModifier();
-            aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
+            aligner.PerturbModifier = new BlockShuffler();
 
             return aligner;
         }
