@@ -14,11 +14,12 @@ namespace LibAlignment.Aligners.PopulationBased
 {
     public class ElitistGeneticAlgorithmAligner : PopulationBasedAligner
     {
-        public ICrossoverOperator CrossoverOperator = new RowBasedCrossoverOperator();
+        public ICrossoverOperator CrossoverOperator = new ColBasedCrossoverOperator();
+
         public IAlignmentModifier MutationOperator = new GapShifter();
         public ISelectionStrategy SelectionStrategy = new RouletteSelectionStrategy();
 
-        public double MutationRate = 0.50;
+        public double MutationRate = 0.80;
         public int SelectionSize = 6;
 
         public ElitistGeneticAlgorithmAligner(IFitnessFunction objective, int iterations, int populationSize = 18) : base(objective, iterations, populationSize)
@@ -65,6 +66,7 @@ namespace LibAlignment.Aligners.PopulationBased
         {
             Alignment a = SelectionStrategy.SelectCandidate();
             Alignment b = SelectionStrategy.SelectCandidate();
+
             return CrossoverOperator.CreateAlignmentChildren(a, b);
         }
     }
