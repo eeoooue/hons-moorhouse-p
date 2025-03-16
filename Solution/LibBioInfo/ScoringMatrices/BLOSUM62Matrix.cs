@@ -190,7 +190,36 @@ namespace LibBioInfo.ScoringMatrices
         {
             if (a == 'Z')
             {
-                throw new NotImplementedException();
+                if (b == 'C')
+                {
+                    return -3;
+                }
+
+                if (b == 'D')
+                {
+                    return 1;
+                }
+
+                if (b == 'E')
+                {
+                    return 4;
+                }
+
+                if (b == 'M')
+                {
+                    return -1;
+                }
+
+                if (b == 'Q')
+                {
+                    return 3;
+                }
+
+
+                int score1 = ScorePair('E', b);
+                int score2 = ScorePair('Q', b);
+
+                return Math.Min(score1, score2);
             }
             else
             {
