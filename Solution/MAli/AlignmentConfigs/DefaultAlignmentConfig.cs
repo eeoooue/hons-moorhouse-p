@@ -36,7 +36,9 @@ namespace MAli.AlignmentConfigs
             List<double> weights = new List<double>() { 0.9, 0.1 };
 
             WeightedCombinationOfFitnessFunctions combo = new WeightedCombinationOfFitnessFunctions(objectives, weights);
-            return combo;
+            // return combo;
+
+            return objectiveA;
         }
 
         private IAlignmentModifier GetMultiOperatorModifier()
