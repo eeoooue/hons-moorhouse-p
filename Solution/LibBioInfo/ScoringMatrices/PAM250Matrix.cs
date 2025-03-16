@@ -166,16 +166,22 @@ namespace LibBioInfo.ScoringMatrices
         {
             if (a == 'X')
             {
-                if ("STA".Contains(b))
+                if ("STAN".Contains(b))
                 {
                     return 0;
                 }
-
-                if ("WCP".Contains(b))
+                if ("FY".Contains(b))
                 {
                     return -2;
                 }
-
+                if ("C".Contains(b))
+                {
+                    return -3;
+                }
+                if ("W".Contains(b))
+                {
+                    return -4;
+                }
                 return -1;
             }
             else
