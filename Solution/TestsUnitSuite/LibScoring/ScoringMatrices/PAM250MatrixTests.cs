@@ -228,13 +228,96 @@ namespace TestsUnitSuite.LibScoring.ScoringMatrices
         [DataRow('Y', 'F', 7.0)]
         [DataRow('F', 'F', 9.0)]
 
-        public void MatrixAgreesWithBiopythonScores(char a, char b, double expected)
+        public void MatchesBiopython(char a, char b, double expected)
+        {
+            double actual = Matrix.ScorePair(a, b);
+            Assert.AreEqual(expected, actual, 0.01);
+        }
+
+        [DataTestMethod]
+        [DataRow('C', 'B', -4.0)]
+        [DataRow('S', 'B', 0.0)]
+        [DataRow('T', 'B', 0.0)]
+        [DataRow('A', 'B', 0.0)]
+        [DataRow('G', 'B', 0.0)]
+        [DataRow('P', 'B', -1.0)]
+        [DataRow('D', 'B', 3.0)]
+        [DataRow('E', 'B', 3.0)]
+        [DataRow('Q', 'B', 1.0)]
+        [DataRow('N', 'B', 2.0)]
+        [DataRow('H', 'B', 1.0)]
+        [DataRow('R', 'B', -1.0)]
+        [DataRow('K', 'B', 1.0)]
+        [DataRow('M', 'B', -2.0)]
+        [DataRow('I', 'B', -2.0)]
+        [DataRow('L', 'B', -3.0)]
+        [DataRow('V', 'B', -2.0)]
+        [DataRow('W', 'B', -5.0)]
+        [DataRow('Y', 'B', -3.0)]
+        [DataRow('F', 'B', -4.0)]
+
+        public void MatchesBiopythonForBResidues(char a, char b, double expected)
         {
             double actual = Matrix.ScorePair(a, b);
             Assert.AreEqual(expected, actual, 0.01);
         }
 
 
+        [DataTestMethod]
+        [DataRow('C', 'X', -3.0)]
+        [DataRow('S', 'X', 0.0)]
+        [DataRow('T', 'X', 0.0)]
+        [DataRow('A', 'X', 0.0)]
+        [DataRow('G', 'X', -1.0)]
+        [DataRow('P', 'X', -1.0)]
+        [DataRow('D', 'X', -1.0)]
+        [DataRow('E', 'X', -1.0)]
+        [DataRow('Q', 'X', -1.0)]
+        [DataRow('N', 'X', 0.0)]
+        [DataRow('H', 'X', -1.0)]
+        [DataRow('R', 'X', -1.0)]
+        [DataRow('K', 'X', -1.0)]
+        [DataRow('M', 'X', -1.0)]
+        [DataRow('I', 'X', -1.0)]
+        [DataRow('L', 'X', -1.0)]
+        [DataRow('V', 'X', -1.0)]
+        [DataRow('W', 'X', -4.0)]
+        [DataRow('Y', 'X', -2.0)]
+        [DataRow('F', 'X', -2.0)]
+
+        public void MatchesBiopythonForXResidues(char a, char b, double expected)
+        {
+            double actual = Matrix.ScorePair(a, b);
+            Assert.AreEqual(expected, actual, 0.01);
+        }
+
+        [DataTestMethod]
+        [DataRow('C', 'Z', -5.0)]
+        [DataRow('S', 'Z', 0.0)]
+        [DataRow('T', 'Z', -1.0)]
+        [DataRow('A', 'Z', 0.0)]
+        [DataRow('G', 'Z', 0.0)]
+        [DataRow('P', 'Z', 0.0)]
+        [DataRow('D', 'Z', 3.0)]
+        [DataRow('E', 'Z', 3.0)]
+        [DataRow('Q', 'Z', 3.0)]
+        [DataRow('N', 'Z', 1.0)]
+        [DataRow('H', 'Z', 2.0)]
+        [DataRow('R', 'Z', 0.0)]
+        [DataRow('K', 'Z', 0.0)]
+        [DataRow('M', 'Z', -2.0)]
+        [DataRow('I', 'Z', -2.0)]
+        [DataRow('L', 'Z', -3.0)]
+        [DataRow('V', 'Z', -2.0)]
+        [DataRow('W', 'Z', -6.0)]
+        [DataRow('Y', 'Z', -4.0)]
+        [DataRow('F', 'Z', -5.0)]
+
+        public void MatchesBiopythonForZResidues(char a, char b, double expected)
+        {
+            double actual = Matrix.ScorePair(a, b);
+            Assert.AreEqual(expected, actual, 0.01);
+        }
 
         #endregion
     }

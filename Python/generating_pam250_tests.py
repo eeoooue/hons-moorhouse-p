@@ -1,15 +1,9 @@
 
 from Bio.Align import substitution_matrices
 
-blosum_62 = substitution_matrices.load('PAM250') 
-
-score = blosum_62.get(('A', 'R'))
-
-print(score)
+matrix = substitution_matrices.load('PAM250') 
 
 POSSIBLE_CHARACTERS = "CSTAGPDEQNHRKMILVWYF"
-
-# POSSIBLE_CHARACTERS = "CSTAGPDEQNHRKMILVWYF" + "XBZ"
 
 n = len(POSSIBLE_CHARACTERS)
 
@@ -19,7 +13,7 @@ for i in range(n):
     x = POSSIBLE_CHARACTERS[i]
     for j in range(i, n):
         y = POSSIBLE_CHARACTERS[j]
-        score = blosum_62.get((x, y))
+        score = matrix.get((x, y))
         line = f"[DataRow('{x}', '{y}', {score})]"
         print(line)
         lines.append(line)
@@ -33,7 +27,7 @@ lines = []
 for i in range(n):
     x = POSSIBLE_CHARACTERS[i]
     for y in "Z":
-        score = blosum_62.get((x, y))
+        score = matrix.get((x, y))
         line = f"[DataRow('{x}', '{y}', {score})]"
         print(line)
         lines.append(line)
