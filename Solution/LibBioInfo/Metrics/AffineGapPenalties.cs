@@ -92,7 +92,7 @@ namespace LibBioInfo.Metrics
             foreach (int size in sizes)
             {
                 result += OpeningCost;
-                result += size * NullCost;
+                result += (size - 1) * NullCost;
             }
 
             return result;
