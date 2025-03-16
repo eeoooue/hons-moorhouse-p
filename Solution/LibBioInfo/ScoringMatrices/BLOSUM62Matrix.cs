@@ -168,7 +168,17 @@ namespace LibBioInfo.ScoringMatrices
         {
             if (a == 'X')
             {
-                throw new NotImplementedException();
+                if ("STA".Contains(b))
+                {
+                    return 0;
+                }
+
+                if ("WCP".Contains(b))
+                {
+                    return -2;
+                }
+
+                return -1;
             }
             else
             {
