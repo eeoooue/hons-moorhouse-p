@@ -22,16 +22,16 @@ namespace LibModification.AlignmentModifiers
             BlockFinder finder = new BlockFinder();
 
             bool[] mask = SimilarityGuide.GetSetOfSimilarSequencesAsMask(alignment);
-            if (Randomizer.CoinFlip())
-            {
-                TryInvertMask(mask);
-            }
+            //if (Randomizer.CoinFlip())
+            //{
+            //    TryInvertMask(mask);
+            //}
 
             CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
-            if (Randomizer.CoinFlip())
-            {
-                block = BlockSplitter.SplitBlock(block);
-            }
+            //if (Randomizer.CoinFlip())
+            //{
+            //    block = BlockSplitter.SplitBlock(block);
+            //}
 
             maskedAli.SubtractBlock(block, block.OriginalPosition);
 
