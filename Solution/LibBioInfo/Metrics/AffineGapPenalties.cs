@@ -33,22 +33,6 @@ namespace LibBioInfo.Metrics
             return 0.0;
         }
 
-        public int GetNumberOfResiduesInFirstRow(in char[,] alignment)
-        {
-            int n = alignment.GetLength(1);
-            int total = 0;
-
-            for(int j=0; j<n; j++)
-            {
-                if (alignment[0, j] != Bioinformatics.GapCharacter)
-                {
-                    total++;
-                }
-            }
-
-            return total;
-        }
-
         public double GetPenaltyForAlignmentMatrix(in char[,] alignment)
         {
             double result = 0;
@@ -58,30 +42,6 @@ namespace LibBioInfo.Metrics
             }
 
             return result;
-        }
-
-        public List<string> ExtractPayloads(in char[,] alignment)
-        {
-            List<string> result = new List<string>();
-            for (int i = 0; i < alignment.GetLength(0); i++)
-            {
-                string payload = ExtractPayload(alignment, i);
-                result.Add(payload);
-            }
-
-            return result;
-        }
-
-        public string ExtractPayload(in char[,] alignment, int i)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < alignment.GetLength(1); j++)
-            {
-                char x = alignment[i, j];
-                sb.Append(x);
-            }
-
-            return sb.ToString();
         }
 
         public double ScorePayload(string payload)
@@ -98,7 +58,7 @@ namespace LibBioInfo.Metrics
             return result;
         }
 
-        public List<int> CollectGapSizes(string payload)
+        private List<int> CollectGapSizes(string payload)
         {
             payload = TrimPayload(payload);
 
@@ -130,7 +90,52 @@ namespace LibBioInfo.Metrics
             return result;
         }
 
-        public string TrimPayload(string payload)
+        
+
+        private int GetNumberOfResiduesInFirstRow(in char[,] alignment)
+        {
+            int n = alignment.GetLength(1);
+            int total = 0;
+
+            for (int j = 0; j < n; j++)
+            {
+                if (alignment[0, j] != Bioinformatics.GapCharacter)
+                {
+                    total++;
+                }
+            }
+
+            return total;
+        }
+
+
+        private List<string> ExtractPayloads(in char[,] alignment)
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < alignment.GetLength(0); i++)
+            {
+                string payload = ExtractPayload(alignment, i);
+                result.Add(payload);
+            }
+
+            return result;
+        }
+
+        private string ExtractPayload(in char[,] alignment, int i)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < alignment.GetLength(1); j++)
+            {
+                char x = alignment[i, j];
+                sb.Append(x);
+            }
+
+            return sb.ToString();
+        }
+
+
+
+        private string TrimPayload(string payload)
         {
             int i = GetIndexOfFirstResidue(payload);
             int j = GetIndexOfLastResidue(payload);
@@ -140,7 +145,7 @@ namespace LibBioInfo.Metrics
             return trimmed;
         }
 
-        public int GetIndexOfFirstResidue(string payload)
+        private int GetIndexOfFirstResidue(string payload)
         {
             for (int i = 0; i < payload.Length; i++)
             {
@@ -153,7 +158,7 @@ namespace LibBioInfo.Metrics
             return payload.Length;
         }
 
-        public int GetIndexOfLastResidue(string payload)
+        private int GetIndexOfLastResidue(string payload)
         {
             for (int i = payload.Length - 1; i >= 0; i--)
             {
