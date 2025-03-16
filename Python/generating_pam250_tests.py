@@ -1,7 +1,7 @@
 
 from Bio.Align import substitution_matrices
 
-blosum_62 = substitution_matrices.load('BLOSUM62') 
+blosum_62 = substitution_matrices.load('PAM250') 
 
 score = blosum_62.get(('A', 'R'))
 
@@ -24,7 +24,7 @@ for i in range(n):
         print(line)
         lines.append(line)
 
-with open(f"blosum_tests.txt", "w") as file:
+with open(f"pam_tests.txt", "w") as file:
     for line in lines:
         file.write(line)
         file.write("\n")
@@ -38,7 +38,7 @@ for i in range(n):
         print(line)
         lines.append(line)
 
-with open(f"blosum_tests_2.txt", "w") as file:
+with open(f"pam_tests_2.txt", "w") as file:
     for line in lines:
         file.write(line)
         file.write("\n")
