@@ -126,29 +126,34 @@ namespace LibBioInfo.ScoringMatrices
         {
             if (a == 'B')
             {
-                if (b == 'N')
+                if ("CF".Contains(b))
+                {
+                    return -4;
+                }
+
+                if ("DE".Contains(b))
                 {
                     return 3;
                 }
 
-                if (b == 'D')
+                if ("LY".Contains(b))
                 {
-                    return 4;
+                    return -3;
                 }
 
-                if (b == 'R')
-                {
-                    return -1;
-                }
-
-                if (b == 'K' || b == 'H')
-                {
-                    return 0;
-                }
-
-                if (b == 'E')
+                if (b == 'K')
                 {
                     return 1;
+                }
+
+                if (b == 'M')
+                {
+                    return -2;
+                }
+
+                if (b == 'W')
+                {
+                    return -5;
                 }
 
                 int score1 = ScorePair('D', b);
