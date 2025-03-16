@@ -70,6 +70,9 @@ namespace LibBioInfo.ScoringMatrices
             ResidueIndexes['F'] = 19;
 
             Residues = ResidueIndexes.Keys.ToList();
+            Residues.Add('B');
+            Residues.Add('X');
+            Residues.Add('Z');
         }
 
 

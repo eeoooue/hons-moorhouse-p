@@ -11,6 +11,7 @@ namespace LibBioInfo.ScoringMatrices
     {
         public int[,] ScoreValues;
         public Dictionary<char, int> ResidueIndexes = new Dictionary<char, int>();
+        public List<char> Residues = new List<char>();
 
         public PAM250Matrix()
         {
@@ -67,6 +68,11 @@ namespace LibBioInfo.ScoringMatrices
             ResidueIndexes['F'] = 17;
             ResidueIndexes['Y'] = 18;
             ResidueIndexes['W'] = 19;
+
+            Residues = ResidueIndexes.Keys.ToList();
+            Residues.Add('B');
+            Residues.Add('X');
+            Residues.Add('Z');
         }
 
 
@@ -77,7 +83,7 @@ namespace LibBioInfo.ScoringMatrices
 
         public List<char> GetResidues()
         {
-            return ResidueIndexes.Keys.ToList();
+            return Residues;
         }
 
         public double GetBestPairwiseScorePossible()
