@@ -20,17 +20,6 @@ namespace LibAlignment.SelectionStrategies
             TotalValue = CalculateTotalValue(Candidates);
         }
 
-        public double CalculateTotalValue(List<ScoredAlignment> candidates)
-        {
-            double result = 0;
-            foreach(ScoredAlignment candidate in candidates)
-            {
-                result += candidate.Fitness;
-            }
-
-            return result;
-        }
-
         public List<Alignment> SelectCandidates(int n)
         {
             List<Alignment> result = new List<Alignment>();
@@ -60,6 +49,17 @@ namespace LibAlignment.SelectionStrategies
             }
 
             return Candidates[Candidates.Count-1].Alignment;
+        }
+
+        private double CalculateTotalValue(List<ScoredAlignment> candidates)
+        {
+            double result = 0;
+            foreach (ScoredAlignment candidate in candidates)
+            {
+                result += candidate.Fitness;
+            }
+
+            return result;
         }
     }
 }
