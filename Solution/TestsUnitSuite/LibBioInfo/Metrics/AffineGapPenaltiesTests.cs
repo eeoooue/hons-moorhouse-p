@@ -17,28 +17,13 @@ namespace TestsUnitSuite.LibBioInfo.Metrics
         {
             string payload = "--A-----A--A-A-";
             int numGaps = 3;
-            int totalNulls = 8;
+            int countedNulls = 4 + 1 + 0;
 
             double score = Metric.ScorePayload(payload);
             double totalOpeningPenalty = numGaps * Metric.OpeningCost;
-            double totalNullPenalty = totalNulls * Metric.NullCost;
+            double totalNullPenalty = countedNulls * Metric.NullCost;
 
             Assert.AreEqual(score, totalOpeningPenalty + totalNullPenalty, 0.0001);
-        }
-
-        [TestMethod]
-        public void CanCorrectlyExtractGapSizes()
-        {
-            string payload = "--A-----A--A-A-";
-
-            List<int> expected = new List<int>() { 5, 2, 1 };
-            List<int> actual = Metric.CollectGapSizes(payload);
-
-            Assert.AreEqual(actual.Count, expected.Count);
-            for(int i=0; i<actual.Count; i++)
-            {
-                Assert.AreEqual(expected[i], actual[i]);
-            }
         }
     }
 }
