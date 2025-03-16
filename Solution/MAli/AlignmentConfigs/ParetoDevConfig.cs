@@ -15,9 +15,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli.ParetoAlignmentConfigs
+namespace MAli.AlignmentConfigs
 {
-    public class ParetoDevConfig : ParetoAlignmentConfig
+    public class ParetoDevConfig : BaseParetoAlignmentConfig
     {
         public override ParetoIterativeAligner CreateAligner()
         {

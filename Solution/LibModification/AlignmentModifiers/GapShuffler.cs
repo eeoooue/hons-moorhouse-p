@@ -22,8 +22,12 @@ namespace LibModification.AlignmentModifiers
             BlockFinder finder = new BlockFinder();
 
             bool[] mask = SimilarityGuide.GetSetOfSimilarSequencesAsMask(alignment);
-            CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
+            if (Randomizer.CoinFlip())
+            {
+                TryInvertMask(mask);
+            }
 
+            CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
             if (Randomizer.CoinFlip())
             {
                 block = BlockSplitter.SplitBlock(block);
@@ -46,6 +50,17 @@ namespace LibModification.AlignmentModifiers
             char[,] modified = maskedAli.ExtractAlignment();
 
             return CharMatrixHelper.RemoveEmptyColumns(modified);
+        }
+
+        private void TryInvertMask(bool[] mask)
+        {
+            if (mask.Contains(false))
+            {
+                for(int i=0; i<mask.Length; i++)
+                {
+                    mask[i] = !mask[i];
+                }
+            }
         }
     }
 }

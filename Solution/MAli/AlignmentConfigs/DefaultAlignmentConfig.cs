@@ -13,10 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibAlignment.Aligners.PopulationBased;
 
 namespace MAli.AlignmentConfigs
 {
-    internal class DefaultAlignmentConfig : AlignmentConfig
+    internal class DefaultAlignmentConfig : BaseAlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {
@@ -26,12 +27,13 @@ namespace MAli.AlignmentConfigs
         public IFitnessFunction GetObjective()
         {
             IScoringMatrix matrix = new PAM250Matrix();
+
             IFitnessFunction objectiveA = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
             IFitnessFunction objectiveB = new NonGapsFitnessFunction();
 
             List<IFitnessFunction> objectives = new List<IFitnessFunction>() { objectiveA, objectiveB };
             // List<double> weights = new List<double>() { 0.9, 0.1 };
-            List<double> weights = new List<double>() { 0.90, 0.1 };
+            List<double> weights = new List<double>() { 0.9, 0.1 };
 
             WeightedCombinationOfFitnessFunctions combo = new WeightedCombinationOfFitnessFunctions(objectives, weights);
             return combo;
@@ -42,9 +44,9 @@ namespace MAli.AlignmentConfigs
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
                 new GuidedSwap(),
-                new GuidedGapInserter(),
                 new BlockShuffler(),
                 new GapShuffler(),
+                new GuidedGapInserter(),
                 new HeuristicPairwiseModifier(),
             };
 
@@ -58,6 +60,27 @@ namespace MAli.AlignmentConfigs
 
             aligner.TweakModifier = GetMultiOperatorModifier();
             aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
+
+            return aligner;
+        }
+
+        private IterativeAligner GetGeneticAlgorithmAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, 100);
+            aligner.MutationOperator = GetMultiOperatorModifier();
+
+            aligner.PopulationSize = 100;
+            aligner.SelectionSize = 30;
+
+            return aligner;
+        }
+
+        private IterativeAligner GetMewLambdaEVAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, 100);
+            aligner.MutationOperator = GetMultiOperatorModifier();
 
             return aligner;
         }

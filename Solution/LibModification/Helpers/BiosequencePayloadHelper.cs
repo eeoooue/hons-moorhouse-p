@@ -25,22 +25,12 @@ namespace LibModification.Helpers
             return $"{front}-{back}";
         }
 
-        public List<string> PartitionPayloadAtPosition(BioSequence a, int i)
-        {
-            return PartitionPayloadAtPosition(a.Payload, i);
-        }
-
         public List<string> PartitionPayloadAtPosition(string payload, int i)
         {
             string left = payload.Substring(0, i);
             string right = payload.Substring(i);
 
             return new List<string> { left, right };
-        }
-
-        public int GetPositionOfNthResidue(BioSequence sequence, int n)
-        {
-            return GetPositionOfNthResidue(sequence.Payload, n);
         }
 
         public int GetPositionOfNthResidue(string payload, int n)

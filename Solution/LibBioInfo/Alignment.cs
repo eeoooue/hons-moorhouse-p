@@ -38,13 +38,7 @@ namespace LibBioInfo
             int n = matrix.GetLength(1);
 
             char[,] result = new char[m, n];
-            for(int i=0; i<m; i++)
-            {
-                for(int j=0; j<n; j++)
-                {
-                    result[i, j] = matrix[i, j];
-                }
-            }
+            Array.Copy(matrix, result, matrix.Length);
 
             return result;
         }
@@ -110,6 +104,18 @@ namespace LibBioInfo
                 string alignedPayload = GetAlignedPayload(i);
                 BioSequence aligned = new BioSequence(identifier, alignedPayload);
                 result.Add(aligned);
+            }
+
+            return result;
+        }
+
+        public List<string> GetAlignedPayloads()
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < Height; i++)
+            {
+                string alignedPayload = GetAlignedPayload(i);
+                result.Add(alignedPayload);
             }
 
             return result;

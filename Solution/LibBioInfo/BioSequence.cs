@@ -12,11 +12,14 @@ namespace LibBioInfo
         public string Payload { get; private set; }
         public string Residues { get; private set; }
 
+        public static int SequencesInstantiated = 0;
+
         public BioSequence(string identifier, string payload)
         {
             Identifier = identifier;
             Payload = payload.ToUpper();
             Residues = ExtractResidues();
+            SequencesInstantiated++;
         }
 
         public bool IsNucleic()

@@ -9,7 +9,6 @@ namespace LibScoring.FitnessFunctions
 {
     public class NonGapsFitnessFunction : NormalisedFitnessFunction
     {
-
         public override string GetName()
         {
             return "Percentage Non-Gaps";
@@ -21,7 +20,7 @@ namespace LibScoring.FitnessFunctions
             int n = alignment.GetLength(1);
             int totalPositions = m * n;
 
-            int totalResidues = 0;
+            double totalResidues = 0;
             for (int i=0; i<m; i++)
             {
                 totalResidues += CountResiduesInRow(alignment, i);

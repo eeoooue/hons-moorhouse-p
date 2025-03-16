@@ -1,6 +1,5 @@
 ﻿using LibAlignment;
 using LibBioInfo;
-using LibParetoAlignment;
 using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
@@ -8,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MAli
+namespace MAli.AlignmentConfigs
 {
-    public abstract class ParetoAlignmentConfig
+    public abstract class BaseAlignmentConfig
     {
-        public abstract ParetoIterativeAligner CreateAligner();
+        public abstract IterativeAligner CreateAligner();
 
-        public ParetoIterativeAligner InitialiseAligner(Alignment alignment, AlignmentRequest instructions)
+        public IterativeAligner InitialiseAligner(Alignment alignment, AlignmentRequest instructions)
         {
-            ParetoIterativeAligner aligner = CreateAligner();
+            IterativeAligner aligner = CreateAligner();
 
             if (instructions.IterationsLimit > 0)
             {
