@@ -179,11 +179,11 @@ namespace LibBioInfo.ScoringMatrices
                 {
                     return -2;
                 }
-                if ("C".Contains(b))
+                if ('C' == b)
                 {
                     return -3;
                 }
-                if ("W".Contains(b))
+                if ('W' == b)
                 {
                     return -4;
                 }
@@ -199,31 +199,25 @@ namespace LibBioInfo.ScoringMatrices
         {
             if (a == 'Z')
             {
-                if (b == 'C')
-                {
-                    return -3;
-                }
-
-                if (b == 'D')
-                {
-                    return 1;
-                }
-
-                if (b == 'E')
-                {
-                    return 4;
-                }
-
-                if (b == 'M')
-                {
-                    return -1;
-                }
-
-                if (b == 'Q')
+                if ("DEQ".Contains(b))
                 {
                     return 3;
                 }
 
+                if ("GPRS".Contains(b))
+                {
+                    return 0;
+                }
+
+                if ('H' == b)
+                {
+                    return 2;
+                }
+
+                if ('W' == b)
+                {
+                    return -6;
+                }
 
                 int score1 = ScorePair('E', b);
                 int score2 = ScorePair('Q', b);
