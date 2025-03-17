@@ -40,6 +40,6 @@ namespace LibAlignment.Aligners
             AdditionalSetup();
         }
 
-        public virtual void AdditionalSetup() { }
+        protected virtual void AdditionalSetup() { }
     }
 }

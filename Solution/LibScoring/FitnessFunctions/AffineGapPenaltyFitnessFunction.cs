@@ -12,6 +12,10 @@ namespace LibScoring.FitnessFunctions
     {
         private AffineGapPenalties Penalties;
 
+        private bool _rangeUndefined = true;
+        private double _maximum = 0.0;
+        private double _minimum = 0.0;
+
         public AffineGapPenaltyFitnessFunction(double openingCost = 4, double nullCost = 1)
         {
             Penalties = new AffineGapPenalties(openingCost, nullCost);
@@ -29,17 +33,34 @@ namespace LibScoring.FitnessFunctions
 
         public override double GetBestPossibleScore(in char[,] alignment)
         {
-            return -1 * Penalties.GetMinimumPossiblePenalty();
+            if (_rangeUndefined)
+            {
+                CalculateRangeEndpoints(alignment);
+            }
+
+            return _maximum;
         }
 
         public override double GetWorstPossibleScore(in char[,] alignment)
         {
-            return -1 * Penalties.GetMaximumPossiblePenalty(alignment);
+            if (_rangeUndefined)
+            {
+                CalculateRangeEndpoints(alignment);
+            }
+
+            return _minimum;
         }
 
         public override string GetAbbreviation()
         {
             return "Inv.AffineGaps";
+        }
+
+        private void CalculateRangeEndpoints(in char[,] alignment)
+        {
+            _maximum = -1 * Penalties.GetMinimumPossiblePenalty();
+            _minimum = -1 * Penalties.GetMaximumPossiblePenalty(alignment);
+            _rangeUndefined = false;
         }
     }
 }

@@ -12,6 +12,10 @@ namespace LibScoring.FitnessFunctions
     {
         SumOfPairsScore SumOfPairsScore;
 
+        private bool _rangeUndefined = true;
+        private double _maximum = 0.0;
+        private double _minimum = 0.0;
+
         public SumOfPairsFitnessFunction(IScoringMatrix matrix)
         {
             SumOfPairsScore = new SumOfPairsScore(matrix);
@@ -29,17 +33,34 @@ namespace LibScoring.FitnessFunctions
 
         public override double GetBestPossibleScore(in char[,] alignment)
         {
-            return SumOfPairsScore.GetBestPossibleScore(alignment);
+            if (_rangeUndefined)
+            {
+                CalculateRangeEndpoints(alignment);
+            }
+
+            return _maximum;
         }
 
         public override double GetWorstPossibleScore(in char[,] alignment)
         {
-            return SumOfPairsScore.GetWorstPossibleScore(alignment);
+            if (_rangeUndefined)
+            {
+                CalculateRangeEndpoints(alignment);
+            }
+
+            return _minimum;
         }
 
         public override string GetAbbreviation()
         {
             return "SumOfPairs";
+        }
+
+        private void CalculateRangeEndpoints(in char[,] alignment)
+        {
+            _maximum = SumOfPairsScore.GetBestPossibleScore(alignment);
+            _minimum = SumOfPairsScore.GetWorstPossibleScore(alignment);
+            _rangeUndefined = false;
         }
     }
 }

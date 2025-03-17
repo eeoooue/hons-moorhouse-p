@@ -17,8 +17,8 @@ namespace LibAlignment.Aligners.SingleState
         public IAlignmentModifier PerturbModifier = new MultiRowStochasticSwapOperator();
         public IAlignmentModifier TweakModifier = new MultiRowStochasticSwapOperator();
 
-        public int ResetPoint = 0;
-        public ScoredAlignment HomeBase = null!;
+        private int ResetPoint = 0;
+        private ScoredAlignment HomeBase = null!;
         protected ScoredAlignment S = null!;
 
         public IteratedLocalSearchAligner(IFitnessFunction objective, int iterations) : base(objective, iterations)
@@ -29,36 +29,6 @@ namespace LibAlignment.Aligners.SingleState
         public override string GetName()
         {
             return $"Iterated Local Search : (next restart @ {ResetPoint}, home base score = {HomeBase.Score})";
-        }
-
-        public override void AdditionalSetup()
-        {
-            S = CurrentBest.GetCopy();
-            HomeBase = S.GetCopy();
-            MarkUpcomingResetPoint();
-        }
-
-        public void ContestS(ScoredAlignment candidate)
-        {
-            if (candidate.Score > S.Score)
-            {
-                S = candidate;
-                CheckNewBest(S);
-            }
-        }
-
-        public ScoredAlignment GetPerturbationOfH()
-        {
-            Alignment homeCopy = HomeBase.Alignment.GetCopy();
-            PerturbModifier.ModifyAlignment(homeCopy);
-            return GetScoredAlignment(homeCopy);
-        }
-
-        public void MarkUpcomingResetPoint()
-        {
-            int range = 200;
-            int roll = Randomizer.Random.Next(1, range + 1);
-            ResetPoint = IterationsCompleted + roll;
         }
 
         public override void PerformIteration()
@@ -77,7 +47,37 @@ namespace LibAlignment.Aligners.SingleState
             ContestS(candidate);
         }
 
-        public void ContestHomeBase(ScoredAlignment candidate)
+        protected override void AdditionalSetup()
+        {
+            S = CurrentBest.GetCopy();
+            HomeBase = S.GetCopy();
+            MarkUpcomingResetPoint();
+        }
+
+        private void ContestS(ScoredAlignment candidate)
+        {
+            if (candidate.Score > S.Score)
+            {
+                S = candidate;
+                CheckNewBest(S);
+            }
+        }
+
+        private ScoredAlignment GetPerturbationOfH()
+        {
+            Alignment homeCopy = HomeBase.Alignment.GetCopy();
+            PerturbModifier.ModifyAlignment(homeCopy);
+            return GetScoredAlignment(homeCopy);
+        }
+
+        private void MarkUpcomingResetPoint()
+        {
+            int range = 200;
+            int roll = Randomizer.Random.Next(1, range + 1);
+            ResetPoint = IterationsCompleted + roll;
+        }
+
+        private void ContestHomeBase(ScoredAlignment candidate)
         {
             if (candidate.Score > HomeBase.Score)
             {

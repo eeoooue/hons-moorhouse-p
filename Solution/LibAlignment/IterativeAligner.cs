@@ -52,7 +52,7 @@ namespace LibAlignment
             IterationsCompleted++;
         }
 
-        public void CheckNewBest(ScoredAlignment candidate)
+        protected void CheckNewBest(ScoredAlignment candidate)
         {
             if (candidate.Score > CurrentBest.Score)
             {
@@ -60,14 +60,14 @@ namespace LibAlignment
             }
         }
 
-        public double ScoreAlignment(Alignment alignment)
+        protected double ScoreAlignment(Alignment alignment)
         {
             return Objective.GetFitness(alignment.CharacterMatrix);
         }
 
         public abstract string GetName();
 
-        public ScoredAlignment GetScoredAlignment(Alignment alignment)
+        protected ScoredAlignment GetScoredAlignment(Alignment alignment)
         {
             double score = ScoreAlignment(alignment);
             return new ScoredAlignment(alignment, score);

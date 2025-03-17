@@ -45,7 +45,7 @@ namespace LibAlignment.SelectionStrategies
             return choice.Alignment;
         }
 
-        public void SortScoredAlignments(List<ScoredAlignment> alignments)
+        private void SortScoredAlignments(List<ScoredAlignment> alignments)
         {
             alignments.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
         }
