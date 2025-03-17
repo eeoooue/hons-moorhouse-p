@@ -16,7 +16,7 @@ namespace MAli
 {
     public class MAliFacade
     {
-        public BaseAlignmentConfig Config = new AlignmentConfigs.DefaultAlignmentConfig();
+        public BaseAlignmentConfig Config = new DevelopmentConfig();
         public BaseParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
 
         public void CheckSetSeed(AlignmentRequest request)
