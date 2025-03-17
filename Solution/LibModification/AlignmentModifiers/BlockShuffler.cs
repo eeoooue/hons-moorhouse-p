@@ -28,10 +28,10 @@ namespace LibModification.AlignmentModifiers
             //}
 
             CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
-            //if (Randomizer.CoinFlip())
-            //{
-            //    block = BlockSplitter.SplitBlock(block);
-            //}
+            if (Randomizer.CoinFlip())
+            {
+                block = BlockSplitter.SplitBlock(block);
+            }
 
             maskedAli.SubtractBlock(block, block.OriginalPosition);
 
