@@ -25,11 +25,6 @@ namespace LibModification.Helpers
             return $"{front}-{back}";
         }
 
-        public List<string> PartitionPayloadAtPosition(BioSequence a, int i)
-        {
-            return PartitionPayloadAtPosition(a.Payload, i);
-        }
-
         public List<string> PartitionPayloadAtPosition(string payload, int i)
         {
             string left = payload.Substring(0, i);
@@ -38,17 +33,12 @@ namespace LibModification.Helpers
             return new List<string> { left, right };
         }
 
-        public int GetPositionOfNthResidue(BioSequence sequence, int n)
-        {
-            return GetPositionOfNthResidue(sequence.Payload, n);
-        }
-
         public int GetPositionOfNthResidue(string payload, int n)
         {
             int total = 0;
             for (int i = 0; i < payload.Length; i++)
             {
-                if (!Bioinformatics.IsGapChar(payload[i]))
+                if (payload[i] != Bioinformatics.GapCharacter)
                 {
                     total++;
                     if (total == n)
@@ -66,7 +56,7 @@ namespace LibModification.Helpers
             int total = 0;
             foreach (char x in payload)
             {
-                if (!Bioinformatics.IsGapChar(x))
+                if (x != Bioinformatics.GapCharacter)
                 {
                     total++;
                 }

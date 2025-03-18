@@ -17,17 +17,20 @@ namespace LibModification.AlignmentModifiers
         {
             alignment.CharacterMatrix = ColumnInsertion.AddEmptyColumnsAsPadding(alignment.CharacterMatrix, 1, 1);
 
-            AlignmentMaskMaker maker = new AlignmentMaskMaker();
-            MaskedAlignment maskedAli = maker.GetMaskedAlignment(alignment, false);
+            MaskedAlignment maskedAli = new MaskedAlignment(alignment, false);
 
             BlockFinder finder = new BlockFinder();
 
             bool[] mask = SimilarityGuide.GetSetOfSimilarSequencesAsMask(alignment);
-            CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
+            //if (Randomizer.CoinFlip())
+            //{
+            //    TryInvertMask(mask);
+            //}
 
+            CharacterBlock block = finder.FindBlock(maskedAli, ref mask);
             if (Randomizer.CoinFlip())
             {
-                BlockSplitter.SplitBlock(block);
+                block = BlockSplitter.SplitBlock(block);
             }
 
             maskedAli.SubtractBlock(block, block.OriginalPosition);
@@ -47,6 +50,17 @@ namespace LibModification.AlignmentModifiers
             char[,] modified = maskedAli.ExtractAlignment();
 
             return CharMatrixHelper.RemoveEmptyColumns(modified);
+        }
+
+        private void TryInvertMask(bool[] mask)
+        {
+            if (mask.Contains(false))
+            {
+                for(int i=0; i<mask.Length; i++)
+                {
+                    mask[i] = !mask[i];
+                }
+            }
         }
     }
 }

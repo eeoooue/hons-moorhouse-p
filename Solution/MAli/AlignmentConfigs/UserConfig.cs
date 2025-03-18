@@ -17,15 +17,15 @@ using System.Xml.Linq;
 
 namespace MAli.AlignmentConfigs
 {
-    public class UserConfig : AlignmentConfig
+    public class UserConfig : BaseAlignmentConfig
     {
         // allows the user to provide a customized configuration of objectives
 
-        private AlignmentConfig BaseConfig;
+        private BaseAlignmentConfig BaseConfig;
         private JsonConfigHelper Helper = new JsonConfigHelper();
         private string FilePath;
 
-        public UserConfig(AlignmentConfig baseConfig, string filepath)
+        public UserConfig(BaseAlignmentConfig baseConfig, string filepath)
         {
             BaseConfig = baseConfig;
             FilePath = filepath;

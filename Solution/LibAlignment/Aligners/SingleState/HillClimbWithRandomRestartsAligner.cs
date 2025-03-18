@@ -28,7 +28,7 @@ namespace LibAlignment.Aligners.SingleState
             return $"Hill Climb w/ Random Restarts : (next restart @ {ResetPoint})";
         }
 
-        public override void AdditionalSetup()
+        protected override void AdditionalSetup()
         {
             S = CurrentBest.GetCopy();
             MarkUpcomingResetPoint();

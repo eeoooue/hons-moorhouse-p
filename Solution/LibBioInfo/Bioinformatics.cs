@@ -8,32 +8,11 @@ namespace LibBioInfo
 {
     public static class Bioinformatics
     {
-        public static HashSet<char> DNAResidues = new HashSet<char> { 'A', 'C', 'G', 'T' };
-        public static HashSet<char> RNAResidues = new HashSet<char> { 'A', 'C', 'G', 'U' };
-        public static HashSet<char> ProteinResidues = GetProteinResidues();
-        public static HashSet<char> GapCharacters = new HashSet<char> { '-', '.' };
-        public static HashSet<char> GapChars = new HashSet<char> { '-', '.' };
+        public const char GapCharacter = '-';
 
-        private static HashSet<char> GetProteinResidues()
-        {
-            HashSet<char> result = new HashSet<char>();
-            foreach (char c in "CSTAGPDEQNHRKMILVWYF")
-            {
-                result.Add(c);
-            }
-
-            return result;
-        }
-
-        public static bool IsGap(char c)
-        {
-            return GapCharacters.Contains(c);
-        }
-
-        public static bool IsGapChar(char c)
-        {
-            return GapCharacters.Contains(c);
-        }
+        private static HashSet<char> DNAResidues = new HashSet<char> { 'A', 'C', 'G', 'T' };
+        private static HashSet<char> RNAResidues = new HashSet<char> { 'A', 'C', 'G', 'U' };
+        private static HashSet<char> ProteinResidues = "CSTAGPDEQNHRKMILVWYF".ToHashSet();
 
         public static bool IsDNAChar(char residue)
         {

@@ -61,6 +61,8 @@ namespace MAli.DebugPrinters
             {
                 lines.Add(item);
             }
+            lines.Add($" - {BioSequence.SequencesInstantiated} sequence(s) instantiated @ runtime");
+
         }
 
         public void CollectAlignmentStateInfo(ParetoIterativeAligner aligner, List<string> lines)

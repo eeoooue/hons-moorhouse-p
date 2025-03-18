@@ -1,12 +1,13 @@
 
 ################################################################# 
 
-Metaheuristic Aligner - MAli (v1.3)
+Metaheuristic Aligner - MAli (v1.31)
 
 #################################################################
 
 'MAli' is an iterative alignment tool for performing Multiple Sequence Alignment.
-The current version (v1.3) is not intended for professional use.
+More specifically, MAli performs global alignment of protein sequences.
+The current version (v1.31) is not intended for professional use.
 
 Functionality:
 

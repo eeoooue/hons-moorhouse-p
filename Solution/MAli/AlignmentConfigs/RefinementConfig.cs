@@ -1,7 +1,9 @@
 ﻿using LibAlignment;
-using LibAlignment.Aligners.PopulationBased;
+using LibAlignment.Aligners.SingleState;
 using LibBioInfo.ScoringMatrices;
 using LibBioInfo;
+using LibModification.AlignmentModifiers.Guided;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
 using LibModification.AlignmentModifiers;
 using LibModification;
 using LibScoring.FitnessFunctions;
@@ -11,14 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LibModification.CrossoverOperators;
-using System.Security.AccessControl;
-using LibAlignment.Aligners.SingleState;
-using LibModification.AlignmentModifiers.MultiRowStochastic;
 
 namespace MAli.AlignmentConfigs
 {
-    public class Sprint05Config : AlignmentConfig
+    internal class RefinementConfig : BaseAlignmentConfig
     {
         public override IterativeAligner CreateAligner()
         {
@@ -27,20 +25,21 @@ namespace MAli.AlignmentConfigs
 
         public IFitnessFunction GetObjective()
         {
-            IScoringMatrix matrix = new BLOSUM62Matrix();
+            IScoringMatrix matrix = new PAM250Matrix();
             IFitnessFunction objective = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
 
             return objective;
         }
 
-        public IAlignmentModifier GetModifier()
+        private IAlignmentModifier GetMultiOperatorModifier()
         {
             List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
             {
-                new SwapOperator(),
-                new GapInserter(),
-                new MultiRowStochasticSwapOperator(),
-                new HeuristicPairwiseModifier(),
+                new GuidedSwap(),
+                new GuidedGapInserter(),
+                new BlockShuffler(),
+                new GapShuffler(),
+                // new HeuristicPairwiseModifier(), // commented as this can disrupt refinement
             };
 
             return new MultiOperatorModifier(modifiers);
@@ -51,7 +50,7 @@ namespace MAli.AlignmentConfigs
             IFitnessFunction objective = GetObjective();
             IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, 100);
 
-            aligner.TweakModifier = GetModifier();
+            aligner.TweakModifier = GetMultiOperatorModifier();
             aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
 
             return aligner;

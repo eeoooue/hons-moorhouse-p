@@ -16,6 +16,7 @@ namespace TestsRequirements
         /// Supports batch alignment of a series of sets of sequences from a directory.
         /// </summary>
         [DataTestMethod]
+        [DoNotParallelize]
         [DataRow("batchin", "batchout")]
         public void Req6x01(string inputDirPath, string outputDirPath)
         {

@@ -11,7 +11,7 @@ using LibBioInfo.PairwiseAligners;
 
 namespace LibSimilarity
 {
-    public class SimilarityJudge
+    internal class SimilarityJudge
     {
         public double GetSimilarity(BioSequence a, BioSequence b)
         {

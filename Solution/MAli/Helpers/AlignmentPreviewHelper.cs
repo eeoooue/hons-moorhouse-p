@@ -1,4 +1,6 @@
 ﻿using LibBioInfo;
+using LibModification.Helpers;
+using MAli.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,8 @@ namespace MAli.Helpers
 {
     public class AlignmentPreviewHelper
     {
-        public ResiduePalette ResiduePalette = new ResiduePalette();
-        public NucleotidePalette NucleotidePalette = new NucleotidePalette();
+        private ResiduePalette ResiduePalette = new ResiduePalette();
+        private NucleotidePalette NucleotidePalette = new NucleotidePalette();
 
         public int WidthLimit = 100;
         public string GapFiller = "";
@@ -62,21 +64,34 @@ namespace MAli.Helpers
 
         public void PaintAlignment(Alignment alignment)
         {
-            foreach (BioSequence sequence in alignment.GetAlignedSequences())
+            for(int i=0; i<alignment.Height; i++)
             {
-                PaintSequence(sequence);
+                string payload = CollectRowOfAlignment(alignment.CharacterMatrix, i);
+                PaintSequencePayload(payload);
             }
         }
 
-        public void PaintSequence(BioSequence sequence)
+        private string CollectRowOfAlignment(char[,] matrix, int i)
+        {
+            int n = matrix.GetLength(1);
+
+            StringBuilder sb = new StringBuilder();
+            for(int j=0; j<n; j++)
+            {
+                sb.Append(matrix[i, j]);
+            }
+
+            return sb.ToString();
+        }
+
+        public void PaintSequencePayload(string payload)
         {
             Console.ResetColor();
 
             Console.Write("   ");
 
-            bool cropNeeded = sequence.Payload.Length > WidthLimit;
+            bool cropNeeded = payload.Length > WidthLimit;
 
-            string payload = sequence.Payload;
             if (cropNeeded)
             {
                 payload = payload.Substring(0, WidthLimit) + "...";
@@ -87,19 +102,9 @@ namespace MAli.Helpers
                 payload += GapFiller.Substring(0, gapSize);
             }
 
-            if (sequence.IsNucleic())
+            foreach (char x in payload)
             {
-                foreach (char x in payload)
-                {
-                    PaintNucleotide(x);
-                }
-            }
-            else
-            {
-                foreach (char x in payload)
-                {
-                    PaintResidue(x);
-                }
+                PaintResidue(x);
             }
 
             Console.ResetColor();

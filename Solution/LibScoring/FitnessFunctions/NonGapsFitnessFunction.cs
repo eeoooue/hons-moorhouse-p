@@ -9,7 +9,6 @@ namespace LibScoring.FitnessFunctions
 {
     public class NonGapsFitnessFunction : NormalisedFitnessFunction
     {
-
         public override string GetName()
         {
             return "Percentage Non-Gaps";
@@ -17,24 +16,32 @@ namespace LibScoring.FitnessFunctions
 
         public override double ScoreAlignment(in char[,] alignment)
         {
-            double result = 0.0;
             int m = alignment.GetLength(0);
             int n = alignment.GetLength(1);
             int totalPositions = m * n;
 
+            double totalResidues = 0;
             for (int i=0; i<m; i++)
             {
-                for(int j=0; j<n; j++)
+                totalResidues += CountResiduesInRow(alignment, i);
+            }
+
+            return totalResidues / totalPositions;
+        }
+
+        private int CountResiduesInRow(in char[,] alignment, int i)
+        {
+            int n = alignment.GetLength(1);
+            int result = 0;
+            for(int j=0; j<n; j++)
+            {
+                if (alignment[i, j] != Bioinformatics.GapCharacter)
                 {
-                    char x = alignment[i, j];
-                    if (!Bioinformatics.IsGapChar(x))
-                    {
-                        result += 1.0;
-                    }
+                    result += 1;
                 }
             }
 
-            return result / totalPositions;
+            return result;
         }
 
         public override double GetBestPossibleScore(in char[,] alignment)

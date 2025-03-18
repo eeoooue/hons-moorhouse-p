@@ -1,32 +1,33 @@
-﻿using LibBioInfo;
+﻿using LibAlignment.SelectionStrategies;
+using LibBioInfo;
+using LibModification.AlignmentModifiers;
+using LibModification;
+using LibScoring;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LibScoring;
-using LibAlignment.SelectionStrategies;
-using LibModification;
-using LibModification.AlignmentModifiers;
 
 namespace LibAlignment.Aligners.PopulationBased
 {
-    public class MewLambdaEvolutionaryAlgorithmAligner : PopulationBasedAligner
+    public class MewPlusLambdaEvolutionStrategyAligner : PopulationBasedAligner
     {
         public IAlignmentModifier MutationOperator = new GapShifter();
         public ISelectionStrategy SelectionStrategy = new TruncationSelectionStrategy();
 
         public int Mew = 5; // selection size
-        public int Lambda { get { return PopulationSize; } } // population size
+        public int Lambda = 20; // population size
 
-        public MewLambdaEvolutionaryAlgorithmAligner(IFitnessFunction objective, int iterations, int mew = 10, int lambda = 70) : base(objective, iterations, lambda)
+        public MewPlusLambdaEvolutionStrategyAligner(IFitnessFunction objective, int iterations, int mew = 10, int lambda = 70) : base(objective, iterations, mew + lambda)
         {
             Mew = mew;
+            Lambda = lambda;
         }
 
         public override string GetName()
         {
-            return $"MewLambdaEvolutionaryAlgorithmAligner (selection={Mew}, population={Lambda})";
+            return $"(Mew + Lambda) Evolution Strategy ({Mew}, {Lambda})";
         }
 
         public override void PerformIteration()
@@ -35,7 +36,17 @@ namespace LibAlignment.Aligners.PopulationBased
             SelectionStrategy.PreprocessCandidateAlignments(candidates);
             List<Alignment> parents = SelectionStrategy.SelectCandidates(Mew);
             Population.Clear();
-            Population = ProduceNewPopulation(parents);
+            List<Alignment> children = ProduceNewPopulation(parents);
+            AddAlignmentsToPopulation(parents);
+            AddAlignmentsToPopulation(children);
+        }
+
+        private void AddAlignmentsToPopulation(List<Alignment> alignments)
+        {
+            foreach(Alignment alignment in alignments)
+            {
+                Population.Add(alignment);
+            }
         }
 
         public Alignment GetMutationOfParent(Alignment parent)

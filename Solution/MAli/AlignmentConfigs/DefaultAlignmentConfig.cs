@@ -1,0 +1,90 @@
+﻿using LibAlignment.Aligners.SingleState;
+using LibAlignment;
+using LibBioInfo.ScoringMatrices;
+using LibBioInfo;
+using LibModification.AlignmentModifiers.Guided;
+using LibModification.AlignmentModifiers.MultiRowStochastic;
+using LibModification.AlignmentModifiers;
+using LibModification;
+using LibScoring.FitnessFunctions;
+using LibScoring;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using LibAlignment.Aligners.PopulationBased;
+
+namespace MAli.AlignmentConfigs
+{
+    internal class DefaultAlignmentConfig : BaseAlignmentConfig
+    {
+        public override IterativeAligner CreateAligner()
+        {
+            return GetILSAligner();
+        }
+
+        public IFitnessFunction GetObjective()
+        {
+            IScoringMatrix matrix = new PAM250Matrix();
+
+            IFitnessFunction objectiveA = new SumOfPairsWithAffineGapPenaltiesFitnessFunction(matrix, 4, 1);
+            IFitnessFunction objectiveB = new NonGapsFitnessFunction();
+
+            List<IFitnessFunction> objectives = new List<IFitnessFunction>() { objectiveA, objectiveB };
+            // List<double> weights = new List<double>() { 0.9, 0.1 };
+            List<double> weights = new List<double>() { 0.9, 0.1 };
+
+            WeightedCombinationOfFitnessFunctions combo = new WeightedCombinationOfFitnessFunctions(objectives, weights);
+            // return combo;
+
+            return objectiveA;
+        }
+
+        private IAlignmentModifier GetMultiOperatorModifier()
+        {
+            List<IAlignmentModifier> modifiers = new List<IAlignmentModifier>()
+            {
+                new GuidedSwap(),
+                new BlockShuffler(),
+                new GapShuffler(),
+                new GuidedGapInserter(),
+                new HeuristicPairwiseModifier(),
+            };
+
+            return new MultiOperatorModifier(modifiers);
+        }
+
+        private IterativeAligner GetILSAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            IteratedLocalSearchAligner aligner = new IteratedLocalSearchAligner(objective, 100);
+
+            aligner.TweakModifier = GetMultiOperatorModifier();
+            aligner.PerturbModifier = new MultiRowStochasticSwapOperator();
+
+            return aligner;
+        }
+
+        private IterativeAligner GetGeneticAlgorithmAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            ElitistGeneticAlgorithmAligner aligner = new ElitistGeneticAlgorithmAligner(objective, 100);
+            aligner.MutationOperator = GetMultiOperatorModifier();
+
+            aligner.PopulationSize = 100;
+            aligner.SelectionSize = 30;
+
+            return aligner;
+        }
+
+        private IterativeAligner GetMewLambdaEVAligner()
+        {
+            IFitnessFunction objective = GetObjective();
+            MewLambdaEvolutionaryAlgorithmAligner aligner = new MewLambdaEvolutionaryAlgorithmAligner(objective, 100);
+            aligner.MutationOperator = GetMultiOperatorModifier();
+
+            return aligner;
+        }
+    }
+}

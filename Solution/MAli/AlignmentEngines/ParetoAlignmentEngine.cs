@@ -4,9 +4,9 @@ using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibParetoAlignment;
 using LibSimilarity;
+using MAli.AlignmentConfigs;
 using MAli.DebugPrinters;
 using MAli.Helpers;
-using MAli.ParetoAlignmentConfigs;
 using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
@@ -21,12 +21,12 @@ namespace MAli.AlignmentEngines
         private FileHelper FileHelper = new FileHelper();
         private ResponseBank ResponseBank = new ResponseBank();
         private ParetoDebugPrinter DebuggingHelper = new ParetoDebugPrinter();
-        private ParetoAlignmentConfig Config;
+        private BaseParetoAlignmentConfig Config;
         private AlignmentRequest Instructions = null!;
 
         private bool DebugMode = false;
 
-        public ParetoAlignmentEngine(ParetoAlignmentConfig config)
+        public ParetoAlignmentEngine(BaseParetoAlignmentConfig config)
         {
             Config = config;
         }
@@ -54,10 +54,10 @@ namespace MAli.AlignmentEngines
             {
                 Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
-                SimilarityGuide.SetSequences(sequences);
                 Alignment alignment = new Alignment(sequences, true);
 
-                if (alignment.SequencesCanBeAligned())
+
+            if (alignment.SequencesCanBeAligned())
                 {
                     ParetoIterativeAligner aligner = Config.InitialiseAligner(alignment, Instructions);
                     aligner.NumberOfTradeoffs = instructions.NumberOfTradeoffs;
@@ -72,12 +72,12 @@ namespace MAli.AlignmentEngines
                 {
                     Console.WriteLine("Error: Sequences cannot be aligned.");
                 }
-            }
+        }
             catch (Exception e)
             {
                 ResponseBank.ExplainException(e);
             }
-        }
+}
 
         public void CheckSaveScorefiles(ParetoIterativeAligner aligner, List<Alignment> solutions, string outPath, AlignmentRequest instructions)
         {

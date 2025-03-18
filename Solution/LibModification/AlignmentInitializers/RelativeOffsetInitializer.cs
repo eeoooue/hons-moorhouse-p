@@ -1,4 +1,5 @@
 ﻿using LibBioInfo;
+using LibModification.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,40 @@ namespace LibModification.AlignmentInitializers
     {
         public Alignment CreateInitialAlignment(List<BioSequence> sequences)
         {
-            List<BioSequence> offsetSequences = GetSequencesWithOffsetPayloads(sequences);
-            return new Alignment(offsetSequences, true);
+            Alignment alignment = new Alignment(sequences);
+            char[,] matrix = ConstructMatrixWithOffsetSequences(sequences);
+            alignment.CharacterMatrix = matrix;
+
+            return alignment;
         }
 
-        public List<BioSequence> GetSequencesWithOffsetPayloads(List<BioSequence> sequences)
+
+        public char[,] ConstructMatrixWithOffsetSequences(List<BioSequence> sequences)
         {
-            List<BioSequence> result = new List<BioSequence>();
-                
+            List<string> payloads = CollectOffsetPayloads(sequences);
+
+            int m = payloads.Count;
+            int n = GetLongestPayload(payloads);
+
+            return CharMatrixHelper.ConstructAlignmentStateFromStrings(m, n, payloads);
+        }
+
+        public int GetLongestPayload(List<string> payloads)
+        {
+            int result = 0;
+            foreach(string payload in payloads)
+            {
+                result = Math.Max(payload.Length, result);
+            }
+
+            return result;
+        }
+
+
+        public List<string> CollectOffsetPayloads(List<BioSequence> sequences)
+        {
+            List<string> result = new List<string>();
+
             int width = GetMaximumSequenceWidth(sequences);
             int offsetLimit = Math.Max(20, width / 4);
 
@@ -26,8 +53,7 @@ namespace LibModification.AlignmentInitializers
             {
                 int offset = Randomizer.Random.Next(0, offsetLimit + 1);
                 string payload = GetPayloadWithOffset(sequence.Residues, offset);
-                BioSequence offsetSequence = new BioSequence(sequence.Identifier, payload);
-                result.Add(offsetSequence);
+                result.Add(payload);
             }
 
             return result;

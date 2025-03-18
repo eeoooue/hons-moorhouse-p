@@ -21,7 +21,7 @@ namespace LibModification.Helpers
                 for (int j = 0; j < n; j++)
                 {
                     result[i, j] = false;
-                    if (Bioinformatics.IsGapChar(state[i, j]))
+                    if (state[i, j] == Bioinformatics.GapCharacter)
                     {
                         result[i, j] = true;
                     }

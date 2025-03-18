@@ -11,6 +11,7 @@ namespace LibBioInfo.ScoringMatrices
     {
         public int[,] ScoreValues;
         public Dictionary<char, int> ResidueIndexes = new Dictionary<char, int>();
+        public List<char> Residues = new List<char>();
 
         public PAM250Matrix()
         {
@@ -21,9 +22,9 @@ namespace LibBioInfo.ScoringMatrices
                 { -2 ,    1,3,0,0,0,  0,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
                 { -3 ,    1,0,6,0,0,  0,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
                 { -2 ,    1,1,1,2,0,  0,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
-                { -3 ,    1,0,-1,1,5,  0,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
+                { -3 ,    1,0,0,1,5,  0,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
 
-                { -4 ,  1  ,0  ,-1  ,0  ,0  ,  2,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
+                { -4 ,  1  ,0  ,0  ,0  ,0  ,  2,0,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
                 { -5 ,  0  ,0  ,-1  ,0  ,1  ,  2,4,0,0,    0,0,0,  0,0,0,0,    0,0,0 },
                 { -5 ,  0  ,0  ,-1  ,0  ,0  ,  1,3,4,0,    0,0,0,  0,0,0,0,    0,0,0 },
                 { -5 ,  -1  ,-1  ,0  ,0  ,-1  ,  1,2,2,4,    0,0,0,  0,0,0,0,    0,0,0 },
@@ -37,7 +38,7 @@ namespace LibBioInfo.ScoringMatrices
                 { -6 ,  -3  ,-2 ,-3 ,-2 ,-4 ,    -3 ,-4 ,-3 ,-2 ,    -2 ,-3 ,-3 ,    4  ,2  ,6  ,0  ,    0,0,0 },
                 { -2 ,  -1  ,0  ,-1 ,0  ,-1 ,    -2 ,-2 ,-2 ,-2 ,    -2 ,-2 ,-2 ,  2  ,4  ,2  ,4  ,  0  ,0  ,0   },
 
-                { -4 ,  -3 ,-3 ,-5 ,-4 ,-5 ,    -4 ,-6 ,-5 ,-5 ,    -2 ,-4 ,-5 ,   0 , 1 , 2 ,-1 ,  9  , 0  , 0   },
+                { -4 ,  -3 ,-3 ,-5 ,-3 ,-5 ,    -3 ,-6 ,-5 ,-5 ,    -2 ,-4 ,-5 ,   0 , 1 , 2 ,-1 ,  9  , 0  , 0   },
                 { 0  ,  -3 ,-3 ,-5 ,-3 ,-5 ,    -2 ,-4 ,-4 ,-4 ,     0 ,-4 ,-4 ,  -2 ,-1 ,-1 ,-2 ,  7  , 10 , 0   },
                 { -8 ,  -2 ,-5 ,-6 ,-6 ,-7 ,    -4 ,-7 ,-7 ,-5 ,    -3 , 2 ,-3 ,  -4 ,-5 ,-2 ,-6 ,  0  , 0  , 17  },
             };
@@ -67,6 +68,11 @@ namespace LibBioInfo.ScoringMatrices
             ResidueIndexes['F'] = 17;
             ResidueIndexes['Y'] = 18;
             ResidueIndexes['W'] = 19;
+
+            Residues = ResidueIndexes.Keys.ToList();
+            Residues.Add('B');
+            Residues.Add('X');
+            Residues.Add('Z');
         }
 
 
@@ -77,7 +83,7 @@ namespace LibBioInfo.ScoringMatrices
 
         public List<char> GetResidues()
         {
-            return ResidueIndexes.Keys.ToList();
+            return Residues;
         }
 
         public double GetBestPairwiseScorePossible()
@@ -92,6 +98,23 @@ namespace LibBioInfo.ScoringMatrices
 
         public int ScorePair(char a, char b)
         {
+            if (a == 'B' || b == 'B')
+            {
+                return ScoreBPair(a, b);
+            }
+
+            if (a == 'X' || b == 'X')
+            {
+                return ScoreXPair(a, b);
+            }
+
+            if (a == 'Z' || b == 'Z')
+            {
+                return ScoreZPair(a, b);
+            }
+
+
+
             if (ResidueIndexes.ContainsKey(a) && ResidueIndexes.ContainsKey(b))
             {
                 int val1 = ResidueIndexes[a];
@@ -102,6 +125,115 @@ namespace LibBioInfo.ScoringMatrices
             }
 
             return 0;
+        }
+
+
+        public int ScoreBPair(char a, char b)
+        {
+            if (a == 'B')
+            {
+                if ("CF".Contains(b))
+                {
+                    return -4;
+                }
+
+                if ("DE".Contains(b))
+                {
+                    return 3;
+                }
+
+                if ("LY".Contains(b))
+                {
+                    return -3;
+                }
+
+                if (b == 'K')
+                {
+                    return 1;
+                }
+
+                if (b == 'M')
+                {
+                    return -2;
+                }
+
+                if (b == 'W')
+                {
+                    return -5;
+                }
+
+                int score1 = ScorePair('D', b);
+                int score2 = ScorePair('N', b);
+
+                return Math.Min(score1, score2);
+            }
+            else
+            {
+                return ScorePair(b, a);
+            }
+        }
+
+        public int ScoreXPair(char a, char b)
+        {
+            if (a == 'X')
+            {
+                if ("STAN".Contains(b))
+                {
+                    return 0;
+                }
+                if ("FY".Contains(b))
+                {
+                    return -2;
+                }
+                if ('C' == b)
+                {
+                    return -3;
+                }
+                if ('W' == b)
+                {
+                    return -4;
+                }
+                return -1;
+            }
+            else
+            {
+                return ScorePair(b, a);
+            }
+        }
+
+        public int ScoreZPair(char a, char b)
+        {
+            if (a == 'Z')
+            {
+                if ("DEQ".Contains(b))
+                {
+                    return 3;
+                }
+
+                if ("GPRS".Contains(b))
+                {
+                    return 0;
+                }
+
+                if ('H' == b)
+                {
+                    return 2;
+                }
+
+                if ('W' == b)
+                {
+                    return -6;
+                }
+
+                int score1 = ScorePair('E', b);
+                int score2 = ScorePair('Q', b);
+
+                return Math.Min(score1, score2);
+            }
+            else
+            {
+                return ScorePair(b, a);
+            }
         }
     }
 }

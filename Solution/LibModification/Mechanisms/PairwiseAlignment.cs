@@ -135,7 +135,7 @@ namespace LibModification.Mechanisms
             for (int i = 0; i < payload.Length; i++)
             {
                 char x = payload[i];
-                if (Bioinformatics.IsGapChar(x))
+                if (x == Bioinformatics.GapCharacter)
                 {
                     distance++;
                 }

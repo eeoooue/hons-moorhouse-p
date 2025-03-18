@@ -1,5 +1,4 @@
-﻿using LibAlignment.Helpers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using LibFileIO;
 using LibFileIO.AlignmentReaders;
 using LibFileIO.AlignmentWriters;
@@ -17,44 +16,17 @@ namespace DevConsole
     {
         private static DevHelper Helper = new DevHelper();
         private static MAliInterface Interface = new MAliInterface();
-        private static BlockShufflingPlayground BlockShufflingPlayground = new BlockShufflingPlayground();
 
         public static void Main(string[] args)
         {
-            // TestGapInsertion();
-
-            // TestingParetoAlignment();
-
-            // RunMAli("-input BB11001 -output test -debug -iterations 10000");
-            RunMAli("-input BB11001 -output test -debug -iterations 10000 -pareto 10");
-
-            // RunMAli("-input BB11001 -output test -debug -seconds 100");
-
-            // RunMAli("-input BB11002 -output test -debug -seconds 100 -pareto 3");
-            // RunMAli("-input real_marine_life -output test -debug -seconds 100");
-            // RunMAli("-input 1a0cA_1ubpC -output test -debug -seconds 100");
-
-
-            // TestingConfigParsing();
+            TestingMAli();
         }
-
 
         static void TestingMAli()
         {
-            // RunMAli("-input clustalformat_BB11001.aln -output test -iterations 1000 -debug -refine");
-            // RunMAli("-help");
-            // RunMAli("-input BB11001 -output test -debug -format clustal");
-
-            RunMAli("-input BB11001 -output test -debug -seconds 100");
-
-            // RunMAli("-input BB11001 -output test -debug");
-            // RunMAli("-input 1a0cA_1ubpC -output test -debug");
-
-            // RunMAli("-input synth_polarizer_one -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_cropped_segments -output test -iterations 1000 -debug");
-            // RunMAli("-input synth_polarizing_checkerboard -output test -iterations 1000 -debug"); // crashes with refine
-            // RunMAli("-input synth_polarizer_two -output test -iterations 1000 -debug");
-            // RunMAli("-input real_marine_life -output test -iterations 1000 -debug");
+            RunMAli("-input BB11001 -output test -debug -iterations 10000");
+            // RunMAli("-input real_marine_life -output test -debug -iterations 10000");
+            // RunMAli("-input clustalformat_BB11001.aln -output test -pareto 10 -debug -iterations 10000");
         }
 
         static void TestingMAliScoreonly()
@@ -93,6 +65,7 @@ namespace DevConsole
             string[] args = UnpackArguments(arguments);
             Interface.ProcessArguments(args);
         }
+
         static string[] UnpackArguments(string arguments)
         {
             if (arguments.Length > 0)

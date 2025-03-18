@@ -23,7 +23,7 @@ namespace TestsUnitSuite.LibSimilarity
             SimilarityGraph graph = SimilarityGuide.Graph;
             graph.RecordSimilarity(sequences[0], sequences[1], 200);
 
-            List<BioSequence> set = SimilarityGuide.GetSetOfSimilarSequences();
+            List<BioSequence> set = SimilarityGuide.GetSetOfSimilarSequences(sequences);
             Assert.IsTrue(set.Count > 0);
         }
 

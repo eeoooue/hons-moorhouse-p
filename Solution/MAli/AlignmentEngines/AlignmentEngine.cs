@@ -4,6 +4,7 @@ using LibFileIO;
 using LibFileIO.AlignmentWriters;
 using LibScoring;
 using LibSimilarity;
+using MAli.AlignmentConfigs;
 using MAli.DebugPrinters;
 using MAli.Helpers;
 using MAli.UserRequests;
@@ -21,13 +22,13 @@ namespace MAli.AlignmentEngines
         private FileHelper FileHelper = new FileHelper();
         private FrameHelper FrameHelper = new FrameHelper();
         private ResponseBank ResponseBank = new ResponseBank();
-        private AlignmentConfig Config;
+        private BaseAlignmentConfig Config;
         private DefaultDebugPrinter DebuggingHelper = new DefaultDebugPrinter();
 
         private bool DebugMode = false;
         private AlignmentRequest Instructions = null!;
 
-        public AlignmentEngine(AlignmentConfig config)
+        public AlignmentEngine(BaseAlignmentConfig config)
         {
             Config = config;
         }
@@ -42,7 +43,6 @@ namespace MAli.AlignmentEngines
             {
                 Console.WriteLine($"Reading sequences from source: '{Instructions.InputPath}'");
                 List<BioSequence> sequences = FileHelper.ReadSequencesFrom(Instructions.InputPath);
-                SimilarityGuide.SetSequences(sequences);
                 Alignment alignment = new Alignment(sequences, true);
 
                 if (alignment.SequencesCanBeAligned())

@@ -27,7 +27,7 @@ namespace LibModification.AlignmentModifiers
                 j = Randomizer.Random.Next(alignment.Width);
                 char x = alignment.CharacterMatrix[i, j];
 
-                if (!Bioinformatics.IsGap(x))
+                if (x != Bioinformatics.GapCharacter)
                 {
                     return;
                 }

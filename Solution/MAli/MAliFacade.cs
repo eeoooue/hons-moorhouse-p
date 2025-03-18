@@ -5,7 +5,6 @@ using LibFileIO;
 using LibScoring;
 using MAli.AlignmentConfigs;
 using MAli.AlignmentEngines;
-using MAli.ParetoAlignmentConfigs;
 using MAli.UserRequests;
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,8 @@ namespace MAli
 {
     public class MAliFacade
     {
-        public AlignmentConfig Config = new Sprint07Config();
-        public ParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
+        public BaseAlignmentConfig Config = new DevelopmentConfig();
+        public BaseParetoAlignmentConfig ParetoConfig = new ParetoDevConfig();
 
         public void CheckSetSeed(AlignmentRequest request)
         {
@@ -51,14 +50,20 @@ namespace MAli
 
         private IAlignmentEngine ConstructEngine(AlignmentRequest request)
         {
+            BaseAlignmentConfig config = Config;
+            if (request.RefineOnly)
+            {
+                config = new RefinementConfig();
+            }
+
             switch (request)
             {
                 case ParetoAlignmentRequest:
                     return new ParetoAlignmentEngine(ParetoConfig);
                 case BatchAlignmentRequest:
-                    return new BatchAlignmentEngine(Config);
+                    return new BatchAlignmentEngine(config);
                 default:
-                    return new AlignmentEngine(Config);
+                    return new AlignmentEngine(config);
             }
         }
     }

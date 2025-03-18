@@ -16,7 +16,7 @@ namespace LibModification.AlignmentModifiers.Guided
 
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            HashSet<string> identifiers = GetHashsetOfIdentifiers();
+            HashSet<string> identifiers = GetHashsetOfIdentifiers(alignment);
 
             GetRandomParams(alignment, out int j, out int k, out SwapDirection direction);
 
@@ -26,7 +26,7 @@ namespace LibModification.AlignmentModifiers.Guided
                 if (identifiers.Contains(sequence.Identifier))
                 {
                     char x = alignment.CharacterMatrix[i, j];
-                    if (!Bioinformatics.IsGap(x))
+                    if (x != Bioinformatics.GapCharacter)
                     {
                         SwapMSASA.Swap(alignment, i, j, k, direction);
                     }
@@ -36,9 +36,9 @@ namespace LibModification.AlignmentModifiers.Guided
             return CharMatrixHelper.RemoveEmptyColumns(alignment.CharacterMatrix);
         }
 
-        public HashSet<string> GetHashsetOfIdentifiers()
+        public HashSet<string> GetHashsetOfIdentifiers(Alignment alignment)
         {
-            List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences();
+            List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences(alignment);
             HashSet<string> result = new HashSet<string>();
             foreach (BioSequence sequence in sequences)
             {

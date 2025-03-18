@@ -70,6 +70,9 @@ namespace LibBioInfo.ScoringMatrices
             ResidueIndexes['F'] = 19;
 
             Residues = ResidueIndexes.Keys.ToList();
+            Residues.Add('B');
+            Residues.Add('X');
+            Residues.Add('Z');
         }
 
 
@@ -96,6 +99,21 @@ namespace LibBioInfo.ScoringMatrices
 
         public int ScorePair(char a, char b)
         {
+            if (a == 'B' || b == 'B')
+            {
+                return ScoreBPair(a, b);
+            }
+
+            if (a == 'X' || b == 'X')
+            {
+                return ScoreXPair(a, b);
+            }
+
+            if (a == 'Z' || b == 'Z')
+            {
+                return ScoreZPair(a, b);
+            }
+
             if (ResidueIndexes.ContainsKey(a) && ResidueIndexes.ContainsKey(b))
             {
                 int val1 = ResidueIndexes[a];
@@ -106,6 +124,110 @@ namespace LibBioInfo.ScoringMatrices
             }
 
             return 0;
+        }
+
+
+        public int ScoreBPair(char a, char b)
+        {
+            if (a == 'B')
+            {
+                if (b == 'N')
+                {
+                    return 3;
+                }
+
+                if (b == 'D')
+                {
+                    return 4;
+                }
+
+                if (b == 'R')
+                {
+                    return -1;
+                }
+
+                if (b == 'K' || b == 'H')
+                {
+                    return 0;
+                }
+
+                if (b == 'E')
+                {
+                    return 1;
+                }
+
+                int score1 = ScorePair('D', b);
+                int score2 = ScorePair('N', b);
+
+                return Math.Min(score1, score2);
+            }
+            else
+            {
+                return ScorePair(b, a);
+            }
+        }
+
+        public int ScoreXPair(char a, char b)
+        {
+            if (a == 'X')
+            {
+                if ("STA".Contains(b))
+                {
+                    return 0;
+                }
+
+                if ("WCP".Contains(b))
+                {
+                    return -2;
+                }
+
+                return -1;
+            }
+            else
+            {
+                return ScorePair(b, a);
+            }
+        }
+
+        public int ScoreZPair(char a, char b)
+        {
+            if (a == 'Z')
+            {
+                if (b == 'C')
+                {
+                    return -3;
+                }
+
+                if (b == 'D')
+                {
+                    return 1;
+                }
+
+                if (b == 'E')
+                {
+                    return 4;
+                }
+
+                if (b == 'M')
+                {
+                    return -1;
+                }
+
+                if (b == 'Q')
+                {
+                    return 3;
+                }
+
+
+                int score1 = ScorePair('E', b);
+                int score2 = ScorePair('Q', b);
+
+                return Math.Min(score1, score2);
+            }
+            else
+            {
+                return ScorePair(b, a);
+            }
         }
     }
 }

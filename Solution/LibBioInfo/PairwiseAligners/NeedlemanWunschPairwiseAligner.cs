@@ -66,7 +66,7 @@ namespace LibBioInfo.PairwiseAligners
             return Scores[M - 1, N - 1];
         }
 
-        public void PopulateCoordinates(int i, int j)
+        private void PopulateCoordinates(int i, int j)
         {
             if (i == 0 && j == 0)
             {
@@ -97,7 +97,7 @@ namespace LibBioInfo.PairwiseAligners
             Scores[i, j] = bestScore;
         }
 
-        public int GetPairwiseScore(int i, int j)
+        private int GetPairwiseScore(int i, int j)
         {
             return (SequenceA[i] == SequenceB[j]) ? MatchScore : MismatchScore;
         }
@@ -123,23 +123,7 @@ namespace LibBioInfo.PairwiseAligners
             return ConstructAsMatrix(sequenceA, sequenceB);
         }
 
-        public void ExtractPairwiseAlignment(out string sequenceA, out string sequenceB)
-        {
-            if (!ScoresPopulated)
-            {
-                PopulateTable();
-            }
-
-            StringBuilder a = new StringBuilder();
-            StringBuilder b = new StringBuilder();
-
-            Backtrack(ref a, ref b, M - 1, N - 1);
-
-            sequenceA = RecoverPayload(a);
-            sequenceB = RecoverPayload(b);
-        }
-
-        public char[,] ConstructAsMatrix(string seqA, string seqB)
+        private char[,] ConstructAsMatrix(string seqA, string seqB)
         {
             int n = seqA.Length;
 
@@ -153,7 +137,7 @@ namespace LibBioInfo.PairwiseAligners
             return result;
         }
 
-        public string RecoverPayload(StringBuilder sb)
+        private string RecoverPayload(StringBuilder sb)
         {
             string reversed = sb.ToString();
             StringBuilder result = new StringBuilder();
@@ -165,7 +149,7 @@ namespace LibBioInfo.PairwiseAligners
             return result.ToString();
         }
 
-        public void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)
+        private void Backtrack(ref StringBuilder a, ref StringBuilder b, int i, int j)
         {
             if (i == 0 && j == 0)
             {
@@ -226,7 +210,7 @@ namespace LibBioInfo.PairwiseAligners
             return options;
         }
 
-        public bool CanReachByPair(int i, int j)
+        private bool CanReachByPair(int i, int j)
         {
             if (i > 0 && j > 0)
             {
@@ -243,7 +227,7 @@ namespace LibBioInfo.PairwiseAligners
             return false;
         }
 
-        public bool CanReachUpwards(int i, int j)
+        private bool CanReachUpwards(int i, int j)
         {
             if (i > 0)
             {
@@ -258,7 +242,7 @@ namespace LibBioInfo.PairwiseAligners
             return false;
         }
 
-        public bool CanReachLeftwise(int i, int j)
+        private bool CanReachLeftwise(int i, int j)
         {
             if (j > 0)
             {

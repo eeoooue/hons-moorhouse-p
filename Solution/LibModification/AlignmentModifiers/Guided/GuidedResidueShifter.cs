@@ -12,11 +12,9 @@ namespace LibModification.AlignmentModifiers.Guided
 {
     public class GuidedResidueShifter : AlignmentModifier
     {
-        private CharMatrixHelper CharMatrixHelper = new CharMatrixHelper();
-
         public override char[,] GetModifiedAlignmentState(Alignment alignment)
         {
-            List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences();
+            List<BioSequence> sequences = SimilarityGuide.GetSetOfSimilarSequences(alignment);
             HashSet<string> identifiers = new HashSet<string>();
             foreach(BioSequence sequence in sequences)
             {
@@ -34,7 +32,7 @@ namespace LibModification.AlignmentModifiers.Guided
                 if (identifiers.Contains(sequence.Identifier))
                 {
                     char x = alignment.CharacterMatrix[i, j];
-                    if (!Bioinformatics.IsGap(x))
+                    if (x == Bioinformatics.GapCharacter)
                     {
                         ResidueShift.ShiftResidue(alignment, i, j, direction);
                     }

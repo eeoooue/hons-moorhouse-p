@@ -170,15 +170,14 @@ namespace LibModification.Helpers
         public static bool ColumnIsEmpty(in char[,] matrix, int j)
         {
             int m = matrix.GetLength(0);
-
             for (int i = 0; i < m; i++)
             {
-                char x = matrix[i, j];
-                if (!Bioinformatics.IsGapChar(x))
+                if (matrix[i, j] != Bioinformatics.GapCharacter)
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -196,8 +195,7 @@ namespace LibModification.Helpers
 
             for (int j = 0; j < n; j++)
             {
-                char x = matrix[i, j];
-                if (Bioinformatics.IsGapChar(x))
+                if (matrix[i, j] == Bioinformatics.GapCharacter)
                 {
                     return true;
                 }
@@ -215,7 +213,7 @@ namespace LibModification.Helpers
             for (int j = 0; j < n; j++)
             {
                 char x = matrix[i, j];
-                if (Bioinformatics.IsGapChar(x))
+                if (x == Bioinformatics.GapCharacter)
                 {
                     result.Add(j);
                 }
@@ -233,9 +231,44 @@ namespace LibModification.Helpers
             for (int j = 0; j < n; j++)
             {
                 char x = matrix[i, j];
-                if (!Bioinformatics.IsGapChar(x))
+                if (x != Bioinformatics.GapCharacter)
                 {
                     result.Add(j);
+                }
+            }
+
+            return result;
+        }
+
+        public static char[,] ConstructAlignmentStateFromStrings(List<string> payloads)
+        {
+            int m = payloads.Count;
+            int n = 0;
+            foreach(string s in payloads)
+            {
+                n = Math.Max(n, s.Length);
+            }
+
+            return ConstructAlignmentStateFromStrings(m, n, payloads);
+        }
+
+        public static char[,] ConstructAlignmentStateFromStrings(int m, int n, List<string> payloads)
+        {
+            char[,] result = new char[m, n];
+
+            for (int i = 0; i < m; i++)
+            {
+                string payload = payloads[i];
+                for (int j = 0; j < n; j++)
+                {
+                    if (j < payload.Length)
+                    {
+                        result[i, j] = payload[j];
+                    }
+                    else
+                    {
+                        result[i, j] = '-';
+                    }
                 }
             }
 

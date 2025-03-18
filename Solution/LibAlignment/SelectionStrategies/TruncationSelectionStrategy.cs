@@ -1,5 +1,4 @@
-﻿using LibAlignment.Helpers;
-using LibBioInfo;
+﻿using LibBioInfo;
 using LibScoring;
 using System;
 using System.Collections.Generic;
@@ -11,14 +10,13 @@ namespace LibAlignment.SelectionStrategies
 {
     public class TruncationSelectionStrategy : ISelectionStrategy
     {
-        AlignmentSelectionHelper Helper = new AlignmentSelectionHelper();
         List<ScoredAlignment> Candidates = new List<ScoredAlignment>();
         public int CurrentIndex = 0;
 
         public void PreprocessCandidateAlignments(List<ScoredAlignment> candidates)
         {
             Candidates = candidates;
-            Helper.SortScoredAlignments(Candidates);
+            SortScoredAlignments(Candidates);
             CurrentIndex = 0;
         }
 
@@ -45,6 +43,11 @@ namespace LibAlignment.SelectionStrategies
             ScoredAlignment choice = Candidates[CurrentIndex];
             CurrentIndex++;
             return choice.Alignment;
+        }
+
+        private void SortScoredAlignments(List<ScoredAlignment> alignments)
+        {
+            alignments.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
         }
     }
 }

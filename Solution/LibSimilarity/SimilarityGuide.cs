@@ -10,21 +10,26 @@ namespace LibSimilarity
 {
     public static class SimilarityGuide
     {
-        public static SimilarityJudge Judge = new SimilarityJudge();
-
+        private static SimilarityJudge Judge = new SimilarityJudge();
         public static SimilarityGraph Graph = new SimilarityGraph();
 
         public static int CurrentSetSize = 0;
-
         public static int NodeEdgeLimit = 10;
+        public static int Population { get { return Graph.Population; } }
 
+        #region Initialization
 
         public static void SetSequences(List<BioSequence> sequences)
         {
             Graph.SetSequences(sequences);
         }
 
-        public static void TryUpdateSimilarity()
+        #endregion
+
+
+        #region Iterative construction of restricted graph
+
+        private static void TryUpdateSimilarity()
         {
             List<BioSequence> sequences = Graph.TryFindPairOfUnconnectedSequences();
             if (sequences.Count == 2)
@@ -33,31 +38,36 @@ namespace LibSimilarity
             }
         }
 
-        public static void UpdateSimilarity(BioSequence a, BioSequence b)
+        private static void UpdateSimilarity(BioSequence a, BioSequence b)
         {
             double similarity = Judge.GetSimilarity(a, b);
             Graph.RecordSimilarity(a, b, similarity);
         }
 
+        #endregion
+
+
+        #region Retrieval of similar sequences
+
         public static bool[] GetSetOfSimilarSequencesAsMask(Alignment alignment)
         {
-            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences();
-            int m = alignment.Height;
+            List<BioSequence> sequences = alignment.Sequences;
+            HashSet<string> selected = GetIdentifiersOfSetOfSimilarSequences(sequences);
+            int m = sequences.Count;
 
             bool[] result = new bool[m];
-
             for (int i = 0; i < m; i++)
             {
-                BioSequence sequence = alignment.Sequences[i];
+                BioSequence sequence = sequences[i];
                 result[i] = selected.Contains(sequence.Identifier);
             }
 
             return result;
         }
 
-        public static HashSet<string> GetIdentifiersOfSetOfSimilarSequences()
+        public static HashSet<string> GetIdentifiersOfSetOfSimilarSequences(List<BioSequence> sequences)
         {
-            List<BioSequence> selection = GetSetOfSimilarSequences();
+            List<BioSequence> selection = GetSetOfSimilarSequences(sequences);
 
             HashSet<string> result = new HashSet<string>();
             foreach (BioSequence sequence in selection)
@@ -68,19 +78,23 @@ namespace LibSimilarity
             return result;
         }
 
+        public static List<BioSequence> GetSetOfSimilarSequences(Alignment alignment)
+        {
+            return GetSetOfSimilarSequences(alignment.Sequences);
+        }
 
-        public static List<BioSequence> GetSetOfSimilarSequences()
+        public static List<BioSequence> GetSetOfSimilarSequences(List<BioSequence> sequences)
         {
             TryUpdateSimilarity();
 
             int n = Graph.Population;
-            int attempts = Randomizer.Random.Next(0, n-1);
+            int attempts = Randomizer.Random.Next(0, n - 1);
 
             SequenceNode source = Graph.GetRandomStartingNode();
             List<SequenceNode> group = GetRandomSetAroundNode(source, attempts);
 
             List<BioSequence> result = new List<BioSequence>();
-            foreach(SequenceNode node in group)
+            foreach (SequenceNode node in group)
             {
                 result.Add(node.Sequence);
             }
@@ -90,16 +104,7 @@ namespace LibSimilarity
             return result;
         }
 
-        public static string GetDebugString()
-        {
-
-            double graphSaturation = Math.Round(Graph.GetPercentageSaturation(), 0);
-            int edges = Math.Min(NodeEdgeLimit, Graph.Population - 1);
-
-            return $"Similarity Graph: Saturation: {graphSaturation}% (max. {edges} links per node) | Previous Set: {CurrentSetSize} seq(s) ";
-        }
-
-        public static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
+        private static List<SequenceNode> GetRandomSetAroundNode(SequenceNode start, int attempts)
         {
             List<SequenceNode> members = new List<SequenceNode>();
             HashSet<string> blacklist = new HashSet<string>();
@@ -129,5 +134,21 @@ namespace LibSimilarity
             int i = Randomizer.Random.Next(n);
             return nodes[i];
         }
+
+        #endregion
+
+
+        #region Debugging info
+
+        public static string GetDebugString()
+        {
+
+            double graphSaturation = Math.Round(Graph.GetPercentageSaturation(), 0);
+            int edges = Math.Min(NodeEdgeLimit, Graph.Population - 1);
+
+            return $"Similarity Graph: Saturation: {graphSaturation}% (max. {edges} links per node) | Previous Set: {CurrentSetSize} seq(s) ";
+        }
+
+        #endregion
     }
 }
