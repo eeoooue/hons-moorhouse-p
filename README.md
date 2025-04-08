@@ -2,7 +2,7 @@
 
 MAli is a software tool for performing [Multiple Sequence Alignment](https://en.wikipedia.org/wiki/Multiple_sequence_alignment) iteratively.
 
-MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignments in FASTA.
+The executable accepts sequence inputs in FASTA and CLUSTAL, and can output alignments in either of these file formats.
 
 ### Screenshot
 
@@ -33,4 +33,4 @@ The plot below shows recorded performances of each released iteration of MAli. T
 
 The [release of MAli v1.31](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.31) is accompanied by a reproducibility package:  ```MAli-reproducibility-package.zip```
 
-The package includes instructions and supports the reproduction of tests relating to requirements testing, release testing (as above) and a case study against alterative alignment software.
+The package includes instructions and supports the reproduction of tests relating to requirements testing, release testing (as above) and a case study against alterative aligners.
