@@ -19,11 +19,18 @@ MAli supports FASTA and CLUSTAL formats for sequence input, and outputs alignmen
 | 5  | 15/01/25  | 28/01/25   | [```v1.2```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.2) | ```Iterative Refinement``` ```Needleman-Wunsch Alg.``` |
 | 6  | 29/01/25  | 19/02/25   | [```v1.21```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.21) | ```Multi-Objective Alignment``` ```ClustalW Format``` |
 | 7  | 19/02/25  | 26/02/25   | [```v1.3```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.3)  | ```NSGA-II``` ```Similarity Graph``` |
-| 7  | 12/03/25  | 19/02/25   | [```v1.31```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.31) | ```(μ + λ) Evolution Strategy``` ```Block Splitting``` |
+| 8  | 12/03/25  | 19/03/25   | [```v1.31```](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.31) | ```(μ + λ) Evolution Strategy``` ```Block Splitting``` |
 
 ### Performance
 
-The plot below shows the performance of MAli iterations in release testing. These tests were conducted using structural benchmarking on testcases from BALIS-2, a subset of BAliBASE specific to this project.
+The plot below shows recorded performances of each released iteration of MAli. These tests were conducted using structural benchmarking on testcases from BALIS-2.
 
-![Image](./Misc/MAliPerformance.png)
 
+![Image](./Misc/MAli_performances_BALIS-2.png)
+
+
+### Reproducibility
+
+The [release of MAli v1.31](https://github.com/eeoooue/hons-moorhouse-p/releases/tag/v1.31) is accompanied by a reproducibility package:  ```MAli-reproducibility-package.zip```
+
+The package includes instructions and supports the reproduction of tests relating to requirements testing, release testing (as above) and a case study against alterative alignment software.
