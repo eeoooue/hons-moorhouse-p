@@ -1,0 +1,147 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "MAli/1.0.0": {
+        "dependencies": {
+          "LibAlignment": "1.0.0",
+          "LibBioInfo": "1.0.0",
+          "LibFileIO": "1.0.0",
+          "LibParetoAlignment": "1.0.0",
+          "LibSimilarity": "1.0.0"
+        },
+        "runtime": {
+          "MAli.dll": {}
+        }
+      },
+      "LibAlignment/1.0.0": {
+        "dependencies": {
+          "LibBioInfo": "1.0.0",
+          "LibModification": "1.0.0",
+          "LibScoring": "1.0.0"
+        },
+        "runtime": {
+          "LibAlignment.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LibBioInfo/1.0.0": {
+        "runtime": {
+          "LibBioInfo.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LibFileIO/1.0.0": {
+        "dependencies": {
+          "LibBioInfo": "1.0.0",
+          "LibScoring": "1.0.0"
+        },
+        "runtime": {
+          "LibFileIO.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LibModification/1.0.0": {
+        "dependencies": {
+          "LibBioInfo": "1.0.0",
+          "LibScoring": "1.0.0",
+          "LibSimilarity": "1.0.0"
+        },
+        "runtime": {
+          "LibModification.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LibParetoAlignment/1.0.0": {
+        "dependencies": {
+          "LibBioInfo": "1.0.0",
+          "LibModification": "1.0.0",
+          "LibScoring": "1.0.0"
+        },
+        "runtime": {
+          "LibParetoAlignment.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LibScoring/1.0.0": {
+        "dependencies": {
+          "LibBioInfo": "1.0.0"
+        },
+        "runtime": {
+          "LibScoring.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "LibSimilarity/1.0.0": {
+        "dependencies": {
+          "LibBioInfo": "1.0.0",
+          "LibScoring": "1.0.0"
+        },
+        "runtime": {
+          "LibSimilarity.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MAli/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibAlignment/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibBioInfo/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibFileIO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibModification/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibParetoAlignment/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibScoring/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibSimilarity/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

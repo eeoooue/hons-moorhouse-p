@@ -1,0 +1,8 @@
+Objective,Score
+Sum of Pairs (BLOSUM62 Matrix),0.29915
+Sum of Pairs (BLOSUM62 Matrix) Affine Gap Penalties (open=4) (null=1),0.36515
+Sum of Pairs (PAM250 Matrix),0.34527
+Sum of Pairs (PAM250 Matrix) Affine Gap Penalties (open=4) (null=1),0.38341
+Affine Gap Penalties (open=4) (null=1),0.86012
+Percentage Non-Gaps,0.42392
+Percentage of Totally Conserved Columns,0.00264

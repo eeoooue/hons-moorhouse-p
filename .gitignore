@@ -398,3 +398,22 @@ FodyWeavers.xsd
 *.sln.iml
 ObsidianVault/.obsidian/workspace.json
 ObsidianVault/.obsidian/workspace.json
+
+# Ignoring reproducibility package outputs
+
+Reproducibility/02-Releases/aligners/MAli-v0.1/output/*
+Reproducibility/02-Releases/aligners/MAli-v0.2/output/*
+Reproducibility/02-Releases/aligners/MAli-v1.0/output/*
+Reproducibility/02-Releases/aligners/MAli-v1.1/output/*
+Reproducibility/02-Releases/aligners/MAli-v1.2/output/*
+Reproducibility/02-Releases/aligners/MAli-v1.21/output/*
+Reproducibility/02-Releases/aligners/MAli-v1.3/output/*
+Reproducibility/02-Releases/aligners/MAli-v1.31/output/*
+
+Reproducibility/03-CaseStudy/aligners/ClustalOmega/output/*
+Reproducibility/03-CaseStudy/aligners/ClustalW2/output/*
+Reproducibility/03-CaseStudy/aligners/MAli-v1.31/output/*
+Reproducibility/03-CaseStudy/aligners/MUSCLE/output/*
+
+Reproducibility/03-CaseStudy/refinement/MAli-v1.31/output/*
+
